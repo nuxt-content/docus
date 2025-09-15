@@ -1,13 +1,16 @@
 <script setup lang="ts">
-const { locale, isEnabled } = useDocusI18n()
+import type { ContentNavigationItem } from '@nuxt/content'
+
 const route = useRoute()
-const isLanding = computed(() => isEnabled.value ? route.path === `/${locale.value}` : route.path === '/')
+const docsNavigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const docsLink = computed(() => docsNavigation?.value.flatMap(item => item.children || [item]) || [])
+const isDocs = computed(() => docsLink.value.findIndex(item => item.path === route.path) !== -1)
 </script>
 
 <template>
   <AppHeader />
   <UMain>
-    <slot v-if="isLanding" />
+    <slot v-if="!isDocs" />
     <UContainer v-else>
       <UPage>
         <template #left>
