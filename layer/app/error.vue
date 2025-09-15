@@ -32,7 +32,7 @@ useSeoMeta({
 
 if (isEnabled.value) {
   const route = useRoute()
-  const defaultLocale = useRuntimeConfig().public.i18n.defaultLocale
+  const defaultLocale = useRuntimeConfig().public.i18n.defaultLocale!
   onMounted(() => {
     const currentLocale = route.path.split('/')[1]
     if (!locales.some(locale => locale.code === currentLocale)) {

@@ -4,10 +4,6 @@ import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nu
 import { findPageHeadline } from '@nuxt/content/utils'
 import { addPrerenderPath } from '../../utils/prerender'
 
-definePageMeta({
-  layout: 'docs',
-})
-
 const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
@@ -26,10 +22,6 @@ const [{ data: page }, { data: surround }] = await Promise.all([
 
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
-}
-
-if (page.value.layout) {
-  setPageLayout(page.value.layout as never)
 }
 
 // Add the page path to the prerender list
