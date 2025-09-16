@@ -31,7 +31,7 @@ Docus intègre le meilleur de l’écosystème Nuxt.
   to: https://github.com/nuxt-content/docus
   variant: outline
   ---
-  Étoile sur GitHub
+  Voir sur GitHub
   :::
 
 #headline

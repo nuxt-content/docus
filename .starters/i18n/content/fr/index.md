@@ -32,7 +32,7 @@ Docus rassemble le meilleur de l'écosystème Nuxt en une seule CLI.
   to: https://github.com/nuxt-content/docus
   variant: outline
   ---
-  Étoile sur GitHub
+  Voir sur GitHub
   :::
 ::
 

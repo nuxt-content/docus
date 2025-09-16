@@ -3,8 +3,5 @@
 
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
-}
-
-:root {
   --ui-container: 90rem;
 }
