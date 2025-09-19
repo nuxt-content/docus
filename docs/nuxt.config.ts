@@ -25,5 +25,4 @@ export default defineNuxtConfig({
       description: 'Write beautiful docs with Markdown.',
     },
   },
-
 })

@@ -64,13 +64,13 @@ Docus intègre le meilleur de l’écosystème Nuxt.
     spotlight: true
     class: col-span-2
     target: _blank
-    to: https://ui.nuxt.com/pro
+    to: https://ui.nuxt.com
     ---
       :::::u-color-mode-image
       ---
       height: 320
       width: 859
-      alt: Magnifique visuel propulsé par UI Pro
+      alt: Magnifique visuel propulsé par UI
       class: w-full h-80 object-cover rounded-lg
       dark: /landing/dark/templates-ui-pro.webp
       light: /landing/light/templates-ui-pro.webp
@@ -78,10 +78,10 @@ Docus intègre le meilleur de l’écosystème Nuxt.
       :::::
     
     #title
-    Propulsé par [Nuxt UI Pro]{.text-primary}
+    Propulsé par [Nuxt UI]{.text-primary}
     
     #description
-    Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI Pro pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
+    Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
     ::::
   
     ::::u-page-card

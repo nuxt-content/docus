@@ -10,8 +10,6 @@ export default defineAppConfig({
         itemLeadingIcon: 'size-4 mx-0.5',
       },
     },
-  },
-  uiPro: {
     contentNavigation: {
       slots: {
         linkLeadingIcon: 'size-4 mr-1',

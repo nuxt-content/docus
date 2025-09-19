@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
 import type { PageCollections } from '@nuxt/content'
-import * as nuxtUiProLocales from '@nuxt/ui-pro/locale'
+import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 const props = defineProps<{
   error: NuxtError
@@ -9,8 +9,8 @@ const props = defineProps<{
 
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
-const lang = computed(() => nuxtUiProLocales[locale.value as keyof typeof nuxtUiProLocales]?.code || 'en')
-const dir = computed(() => nuxtUiProLocales[locale.value as keyof typeof nuxtUiProLocales]?.dir || 'ltr')
+const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
+const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
 useHead({
   htmlAttrs: {
     lang,

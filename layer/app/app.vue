@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { PageCollections } from '@nuxt/content'
-import * as nuxtUiProLocales from '@nuxt/ui-pro/locale'
+import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 
-const lang = computed(() => nuxtUiProLocales[locale.value as keyof typeof nuxtUiProLocales]?.code || 'en')
-const dir = computed(() => nuxtUiProLocales[locale.value as keyof typeof nuxtUiProLocales]?.dir || 'ltr')
+const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
+const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
 useHead({
@@ -58,7 +58,7 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <UApp :locale="nuxtUiProLocales[locale as keyof typeof nuxtUiProLocales]">
+  <UApp :locale="nuxtUiLocales[locale as keyof typeof nuxtUiLocales]">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <NuxtLayout>

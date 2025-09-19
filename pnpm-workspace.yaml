@@ -12,5 +12,6 @@ ignoredBuiltDependencies:
   - vue-demi
 
 onlyBuiltDependencies:
+  - '@vercel/speed-insights'
   - better-sqlite3
   - sharp

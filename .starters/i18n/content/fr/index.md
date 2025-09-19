@@ -29,7 +29,7 @@ Docus rassemble le meilleur de l'écosystème Nuxt en une seule CLI.
   color: neutral
   icon: simple-icons-github
   size: xl
-  to: https://github.com/nuxt-ui-pro/docus
+  to: https://github.com/nuxt-content/docus
   variant: outline
   ---
   Voir sur GitHub
@@ -61,10 +61,10 @@ Livré avec de nombreuses fonctionnalités
   to: https://ui.nuxt.com/
   ---
   #title
-  Propulsé par [Nuxt UI Pro]{.text-primary}
+  Désigné par [Nuxt UI]{.text-primary}
   
   #description
-  Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI Pro pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
+  Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
   :::
 
   :::u-page-feature

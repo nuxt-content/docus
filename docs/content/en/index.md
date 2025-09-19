@@ -3,7 +3,7 @@ seo:
   title: Write beautiful docs with Markdown
   description: Ship fast, flexible, and SEO-optimized documentation with beautiful
     design out of the box. Docus brings together the best of the Nuxt ecosystem.
-    Powered by Nuxt UI Pro.
+    Powered by Nuxt UI.
 ---
 
 ::u-page-hero
@@ -66,13 +66,13 @@ Docus brings the best of the Nuxt ecosystem.
     spotlight: true
     class: col-span-2
     target: _blank
-    to: https://ui.nuxt.com/pro
+    to: https://ui.nuxt.com
     ---
       :::::u-color-mode-image
       ---
       height: 320
       width: 859
-      alt: Beautiful visual powered by UI Pro
+      alt: Beautiful visual powered by UI
       class: w-full h-80 object-cover rounded-lg
       dark: /landing/dark/templates-ui-pro.webp
       light: /landing/light/templates-ui-pro.webp
@@ -80,10 +80,10 @@ Docus brings the best of the Nuxt ecosystem.
       :::::
     
     #title
-    Powered by [Nuxt UI Pro]{.text-primary}
+    Powered by [Nuxt UI]{.text-primary}
     
     #description
-    Beautiful out of the box, minimal by design but highly customizable. Docus leverages Nuxt UI Pro to give you the best docs writing experience with zero boilerplate, just focus on your content.
+    Beautiful out of the box, minimal by design but highly customizable. Docus leverages Nuxt UI to give you the best docs writing experience with zero boilerplate, just focus on your content.
     ::::
   
     ::::u-page-card

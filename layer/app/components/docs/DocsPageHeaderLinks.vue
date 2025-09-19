@@ -42,7 +42,7 @@ async function copyPage() {
 </script>
 
 <template>
-  <UButtonGroup size="sm">
+  <UFieldGroup size="sm">
     <UButton
       :label="t('docs.copy.page')"
       :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
@@ -70,5 +70,5 @@ async function copyPage() {
         class="border-l border-muted"
       />
     </UDropdownMenu>
-  </UButtonGroup>
+  </UFieldGroup>
 </template>

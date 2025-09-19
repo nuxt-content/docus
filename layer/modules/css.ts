@@ -11,7 +11,7 @@ export default defineNuxtModule({
     const resolver = createResolver(import.meta.url)
 
     const contentDir = joinURL(dir, 'content')
-    const uiProPath = resolveModulePath('@nuxt/ui-pro', { from: import.meta.url, conditions: ['style'] })
+    const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
     const layerDir = resolver.resolve('../app')
 
@@ -19,7 +19,7 @@ export default defineNuxtModule({
       filename: 'docus.css',
       getContents: () => {
         return `@import ${JSON.stringify(tailwindPath)};
-@import ${JSON.stringify(uiProPath)};
+@import ${JSON.stringify(uiPath)};
 
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";

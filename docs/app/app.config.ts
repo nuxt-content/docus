@@ -11,19 +11,13 @@ export default defineAppConfig({
     bottom: {
       links: [{
         icon: 'i-lucide-book-open',
-        label: 'Nuxt UI Pro docs',
-        to: 'https://ui.nuxt.com/getting-started/installation/pro/nuxt',
-        target: '_blank',
-      },
-      {
-        icon: 'i-lucide-credit-card',
-        label: 'Purchase a license',
-        to: 'https://ui.nuxt.com/pro/purchase',
+        label: 'Nuxt UI docs',
+        to: 'https://ui.nuxt.com/getting-started/installation/nuxt',
         target: '_blank',
       }],
     },
   },
-  uiPro: {
+  ui: {
     pageHero: {
       slots: {
         title: 'font-semibold sm:text-6xl',
