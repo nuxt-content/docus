@@ -1,7 +1,7 @@
 {
   "name": "create-docus",
   "description": "CLI for creating Docus documentation projects",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-content/docus.git"

@@ -1,7 +1,7 @@
 {
   "name": "docus-workspace",
   "description": "Minimal Documentation theme and CLI for shared usage across Nuxt modules",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-content/docus.git"
@@ -26,9 +26,9 @@
     "@release-it/conventional-changelog": "^10.0.1",
     "eslint": "^9.35.0",
     "nuxt": "4.1.2",
-    "release-it": "^19.0.4",
+    "release-it": "^19.0.5",
     "typescript": "^5.9.2",
     "vue-tsc": "^3.0.7"
   },
-  "packageManager": "pnpm@10.16.1"
+  "packageManager": "pnpm@10.17.0"
 }

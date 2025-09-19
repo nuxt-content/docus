@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.2.0](https://github.com/nuxt-content/docus/compare/v4.1.4...v4.2.0) (2025-09-19)
+
+### Features
+
+* **i18n:** add BE, PL, and RU locales ([#1186](https://github.com/nuxt-content/docus/issues/1186)) ([db3edb4](https://github.com/nuxt-content/docus/commit/db3edb46a65d494c04ff3c8fb9c7a128dab56cf4))
+* support custom layouts ([#1187](https://github.com/nuxt-content/docus/issues/1187)) ([a4cd642](https://github.com/nuxt-content/docus/commit/a4cd64205dac9ef572e17485f82353e2bdb9cab2))
+
+### Bug Fixes
+
+* unshift custom css to give a priority ([681d88e](https://github.com/nuxt-content/docus/commit/681d88e7467bb6963f1c60d6cc3da49bcda5407e))
+
 ## [4.1.4](https://github.com/nuxt-content/docus/compare/v4.1.3...v4.1.4) (2025-09-11)
 
 ### Bug Fixes
