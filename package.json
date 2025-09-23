@@ -24,11 +24,11 @@
     "@nuxt/eslint-config": "^1.9.0",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
-    "eslint": "^9.35.0",
+    "eslint": "^9.36.0",
     "nuxt": "4.1.2",
     "release-it": "^19.0.5",
     "typescript": "^5.9.2",
-    "vue-tsc": "^3.0.7"
+    "vue-tsc": "^3.0.8"
   },
-  "packageManager": "pnpm@10.17.0"
+  "packageManager": "pnpm@10.17.1"
 }
