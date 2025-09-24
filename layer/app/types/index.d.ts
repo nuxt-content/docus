@@ -32,7 +32,7 @@ declare module 'nuxt/schema' {
       url: string
       branch: string
       rootDir?: string
-    }
+    } | false
   }
 }
 
