@@ -6,7 +6,7 @@ const site = useSiteConfig()
 
 const { localePath, isEnabled, locales } = useDocusI18n()
 
-const links = computed(() => appConfig.github?.url
+const links = computed(() => appConfig.github && appConfig.github.url
   ? [
       {
         'icon': 'i-simple-icons-github',

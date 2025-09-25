@@ -8,7 +8,7 @@ const links = computed(() => [
     'target': '_blank',
     'aria-label': `${key} social link`,
   })),
-  appConfig.github?.url && {
+  appConfig.github && appConfig.github.url && {
     'icon': 'i-simple-icons-github',
     'to': appConfig.github.url,
     'target': '_blank',

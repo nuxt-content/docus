@@ -46,16 +46,18 @@ defineOgImageComponent('Docs', {
   headline: headline.value,
 })
 
+const github = computed(() => appConfig.github ? appConfig.github : null)
+
 const editLink = computed(() => {
-  if (!appConfig.github) {
+  if (!github.value) {
     return
   }
 
   return [
-    appConfig.github.url,
+    github.value.url,
     'edit',
-    appConfig.github.branch,
-    appConfig.github.rootDir,
+    github.value.branch,
+    github.value.rootDir,
     'content',
     `${page.value?.stem}.${page.value?.extension}`,
   ].filter(Boolean).join('/')
@@ -92,7 +94,7 @@ const editLink = computed(() => {
 
       <USeparator>
         <div
-          v-if="editLink"
+          v-if="github"
           class="flex items-center gap-2 text-sm text-muted"
         >
           <UButton
@@ -109,7 +111,7 @@ const editLink = computed(() => {
           <UButton
             variant="link"
             color="neutral"
-            :to="`${appConfig.github.url}/issues/new/choose`"
+            :to="`${github.url}/issues/new/choose`"
             target="_blank"
             icon="i-lucide-alert-circle"
             :ui="{ leadingIcon: 'size-4' }"
