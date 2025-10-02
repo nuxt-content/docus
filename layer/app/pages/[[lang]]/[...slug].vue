@@ -4,6 +4,10 @@ import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nu
 import { findPageHeadline } from '@nuxt/content/utils'
 import { addPrerenderPath } from '../../utils/prerender'
 
+definePageMeta({
+  layout: 'docs',
+})
+
 const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
