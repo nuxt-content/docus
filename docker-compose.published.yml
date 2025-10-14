@@ -1,0 +1,8 @@
+services:
+  test-published:
+    build:
+      context: .
+      dockerfile: Dockerfile.published
+    stdin_open: true
+    tty: true
+

@@ -1,0 +1,10 @@
+FROM node:22-alpine
+
+# Install necessary tools
+RUN apk add --no-cache git
+
+WORKDIR /test
+
+# Run the published create-docus package (--yes to skip confirmation)
+CMD ["npx", "--yes", "create-docus@latest", "my-docs"]
+

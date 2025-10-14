@@ -1,0 +1,6 @@
+services:
+  test-docus:
+    build: .
+    stdin_open: true
+    tty: true
+
