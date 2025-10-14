@@ -1,6 +1,10 @@
 {
   "common": {
-    "or": "o"
+    "or": "o",
+    "error": {
+      "title": "Pagina non trovata",
+      "description": "Ci scusiamo, ma sembra che questa pagina non sia disponibile."
+    }
   },
   "docs": {
     "copy": {
