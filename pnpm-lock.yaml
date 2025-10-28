@@ -100,8 +100,8 @@ importers:
         specifier: workspace:*
         version: link:../layer
       nuxt-studio:
-        specifier: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@d9269c4
-        version: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@d9269c4(db0@0.3.4(better-sqlite3@12.4.1))(ioredis@5.8.1)(magicast@0.3.5)(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3))
+        specifier: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@0263856
+        version: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@0263856(db0@0.3.4(better-sqlite3@12.4.1))(idb-keyval@6.2.2)(ioredis@5.8.1)(magicast@0.3.5)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.14
@@ -661,6 +661,9 @@ packages:
   '@iconify-json/lucide@1.2.69':
     resolution: {integrity: sha512-xOhNf74m+C+nSCObfEqYi34dXk1GMfMUcOB+gfqKY/bn0RcsPLinGfgouOvrUFEreDEFbCti7sdheTf5HESLTA==}
 
+  '@iconify-json/lucide@1.2.71':
+    resolution: {integrity: sha512-KL+3JHW+wN8QqT3CN+7e1SzTe+gIunFBuUICtVmdCmdVRx+MdGNkX4xJhXoYHfhYO2azrEhoGPG+It9k30aZkw==}
+
   '@iconify-json/simple-icons@1.2.54':
     resolution: {integrity: sha512-OQQYl8yC5j3QklZOYnK31QYe5h47IhyCoxSLd53f0e0nA4dgi8VOZS30SgSAbsecQ+S0xlGJMjXIHTIqZ+ML3w==}
 
@@ -1135,9 +1138,6 @@ packages:
 
   '@nuxtjs/robots@5.5.5':
     resolution: {integrity: sha512-ZJZQHFrahJITNakvRx2+TAHH2xQMO0BHYANlPVQ2ZU7s3wQMnOjaYAyAuTjzbHlLqUqurpQQtYT3WNrsl3QpJg==}
-
-  '@nuxtlabs/monarch-mdc@0.8.1':
-    resolution: {integrity: sha512-lHsHEQ7ACcxU/b0VGBX0IxnS8bSekgYkGsuWm4kBZFSn2oOmMj1IA3vgSvZkLrrOoDbS74I2FotoJDbQOvrmww==}
 
   '@octokit/auth-token@6.0.0':
     resolution: {integrity: sha512-P4YJBPdPSpWTQ1NU4XYdvHvXJJDxM6YwpS0FZHRgP7YFkdVxsWcpWGy/NVqlAA7PcPCnMacXlRm1y2PFZRWL/w==}
@@ -2379,12 +2379,6 @@ packages:
   '@unocss/rule-utils@66.5.4':
     resolution: {integrity: sha512-LFzLuXQfZKI/qJBrsqkaVKlw0ECU8Xw7m+MaKIKyFH/hqggzkvNG0PyWU2HnPNzz1dIiVBn+Epfpz8pzi+MLFA==}
     engines: {node: '>=14'}
-
-  '@unpic/core@1.0.2':
-    resolution: {integrity: sha512-wZFg5K///uWutEKXS2PJeZZ1jpVj1Ao75pxBcDXbp5QVg7l347gUX/Q2w+cQdBBghHbJE+ndRaaVvnt8ACmiVQ==}
-
-  '@unpic/vue@1.0.0':
-    resolution: {integrity: sha512-vLilucD5RPzYusHPxGRL6uKw3ysPz5pMuhfYSc4GACyVp2SSh80yHyjQUaGveSbAlcjSLaXT8CvHWAwjWbSx7Q==}
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -5094,8 +5088,8 @@ packages:
     peerDependencies:
       h3: ^1
 
-  nuxt-studio@https://pkg.pr.new/nuxt-content/studio/nuxt-studio@d9269c4:
-    resolution: {tarball: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@d9269c4}
+  nuxt-studio@https://pkg.pr.new/nuxt-content/studio/nuxt-studio@0263856:
+    resolution: {tarball: https://pkg.pr.new/nuxt-content/studio/nuxt-studio@0263856}
     version: 0.0.1
 
   nuxt@4.1.3:
@@ -6385,9 +6379,6 @@ packages:
   universal-user-agent@7.0.3:
     resolution: {integrity: sha512-TmnEAEAsBJVZM/AADELsK76llnwcf9vMKuPz8JflO1frO8Lchitr0fNaN9d+Ap0BjKtqWqd/J17qeDnXh8CL2A==}
 
-  unpic@4.1.3:
-    resolution: {integrity: sha512-ZXxitZC81D+szUorVQAKaaGchZjUhI6vUyHVVLaHToai9iToNIjoeg6XDUpd/0VthFIRyHbEe7XcxF4L933yQw==}
-
   unplugin-auto-import@20.2.0:
     resolution: {integrity: sha512-vfBI/SvD9hJqYNinipVOAj5n8dS8DJXFlCKFR5iLDp2SaQwsfdnfLXgZ+34Kd3YY3YEY9omk8XQg0bwos3Q8ug==}
     engines: {node: '>=14'}
@@ -7372,6 +7363,10 @@ snapshots:
   '@iarna/toml@3.0.0': {}
 
   '@iconify-json/lucide@1.2.69':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/lucide@1.2.71':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -8456,8 +8451,6 @@ snapshots:
       - magicast
       - vue
 
-  '@nuxtlabs/monarch-mdc@0.8.1': {}
-
   '@octokit/auth-token@6.0.0': {}
 
   '@octokit/core@7.0.5':
@@ -9435,17 +9428,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.5.4
       magic-string: 0.30.19
-
-  '@unpic/core@1.0.2':
-    dependencies:
-      unpic: 4.1.3
-
-  '@unpic/vue@1.0.0(typescript@5.9.3)':
-    dependencies:
-      '@unpic/core': 1.0.2
-      vue: 3.5.22(typescript@5.9.3)
-    transitivePeerDependencies:
-      - typescript
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     optional: true
@@ -11414,7 +11396,8 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  idb-keyval@6.2.2: {}
+  idb-keyval@6.2.2:
+    optional: true
 
   ieee754@1.2.1: {}
 
@@ -12573,20 +12556,12 @@ snapshots:
       - magicast
       - vue
 
-  nuxt-studio@https://pkg.pr.new/nuxt-content/studio/nuxt-studio@d9269c4(db0@0.3.4(better-sqlite3@12.4.1))(ioredis@5.8.1)(magicast@0.3.5)(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3)):
+  nuxt-studio@https://pkg.pr.new/nuxt-content/studio/nuxt-studio@0263856(db0@0.3.4(better-sqlite3@12.4.1))(idb-keyval@6.2.2)(ioredis@5.8.1)(magicast@0.3.5):
     dependencies:
-      '@iconify-json/simple-icons': 1.2.54
+      '@iconify-json/lucide': 1.2.71
       '@nuxtjs/mdc': 0.18.0(magicast@0.3.5)
-      '@nuxtlabs/monarch-mdc': 0.8.1
-      '@unhead/vue': 2.0.19(vue@3.5.22(typescript@5.9.3))
-      '@unpic/vue': 1.0.0(typescript@5.9.3)
-      '@vueuse/core': 13.9.0(vue@3.5.22(typescript@5.9.3))
       defu: 6.1.4
       destr: 2.0.5
-      idb-keyval: 6.2.2
-      js-yaml: 4.1.0
-      minimark: 0.2.0
-      ofetch: 1.4.1
       unstorage: 1.17.1(db0@0.3.4(better-sqlite3@12.4.1))(idb-keyval@6.2.2)(ioredis@5.8.1)
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -12605,12 +12580,11 @@ snapshots:
       - '@vercel/kv'
       - aws4fetch
       - db0
+      - idb-keyval
       - ioredis
       - magicast
       - supports-color
-      - typescript
       - uploadthing
-      - vue
 
   nuxt@4.1.3(@parcel/watcher@2.5.1)(@types/node@24.7.2)(@vue/compiler-sfc@3.5.22)(better-sqlite3@12.4.1)(db0@0.3.4(better-sqlite3@12.4.1))(eslint@9.37.0(jiti@2.6.1))(idb-keyval@6.2.2)(ioredis@5.8.1)(lightningcss@1.30.1)(magicast@0.3.5)(meow@13.2.0)(optionator@0.9.4)(rollup@4.52.4)(terser@5.44.0)(tsx@4.20.6)(typescript@5.9.3)(vite@7.1.10(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue-tsc@3.1.1(typescript@5.9.3))(yaml@2.8.1):
     dependencies:
@@ -14345,8 +14319,6 @@ snapshots:
       unist-util-visit-parents: 6.0.1
 
   universal-user-agent@7.0.3: {}
-
-  unpic@4.1.3: {}
 
   unplugin-auto-import@20.2.0(@nuxt/kit@4.1.3(magicast@0.3.5))(@vueuse/core@13.9.0(vue@3.5.22(typescript@5.9.3))):
     dependencies:
