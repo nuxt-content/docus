@@ -6,14 +6,6 @@ export default defineNuxtConfig({
     name: 'Docus',
   },
   compatibilityDate: '2025-07-18',
-  contentStudio: {
-    repository: {
-      owner: 'nuxt-content',
-      repo: 'docus',
-      branch: 'main',
-      rootDir: 'docs',
-    },
-  },
   i18n: {
     defaultLocale: 'en',
     locales: [{
@@ -31,6 +23,15 @@ export default defineNuxtConfig({
     full: {
       title: 'Docus',
       description: 'Write beautiful docs with Markdown.',
+    },
+  },
+  studio: {
+    route: '/admin',
+    repository: {
+      owner: 'nuxt-content',
+      repo: 'docus',
+      branch: 'main',
+      rootDir: 'docs',
     },
   },
 })
