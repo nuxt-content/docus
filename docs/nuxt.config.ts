@@ -5,12 +5,6 @@ export default defineNuxtConfig({
   site: {
     name: 'Docus',
   },
-  content: {
-    preview: {
-      api: 'https://api.nuxt.studio',
-      dev: true,
-    },
-  },
   compatibilityDate: '2025-07-18',
   contentStudio: {
     repository: {
