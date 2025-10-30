@@ -29,22 +29,6 @@ function createServer(event: H3Event) {
   )
 
   server.tool(
-    'search',
-    'Search documentation pages by query string (searches in title and description)',
-    {
-      query: z.string().min(1).describe('Search query'),
-      locale: availableLocales.length > 0
-        ? z.enum(availableLocales as [string, ...string[]]).optional()
-        : z.string().optional(),
-      limit: z.number().min(1).max(20).optional().default(10).describe('Maximum number of results'),
-    },
-    async (params) => {
-      const result = await $fetch('/api/mcp/search-content', { query: params })
-      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
-    },
-  )
-
-  server.tool(
     'get_page',
     'Retrieves the full markdown content of a specific documentation page by path',
     {
