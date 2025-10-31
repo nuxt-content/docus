@@ -25,6 +25,7 @@
     "@iconify-json/lucide": "^1.2.69",
     "@iconify-json/simple-icons": "^1.2.54",
     "@iconify-json/vscode-icons": "^1.2.32",
+    "@modelcontextprotocol/sdk": "^1.0.4",
     "@nuxt/content": "https://pkg.pr.new/@nuxt/content@dd854d5",
     "@nuxt/image": "^1.11.0",
     "@nuxt/kit": "^4.1.3",
@@ -43,7 +44,8 @@
     "pkg-types": "^2.3.0",
     "scule": "^1.3.0",
     "tailwindcss": "^4.1.14",
-    "ufo": "^1.6.1"
+    "ufo": "^1.6.1",
+    "zod": "^3.24.1"
   },
   "peerDependencies": {
     "better-sqlite3": "12.x",
