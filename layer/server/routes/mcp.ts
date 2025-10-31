@@ -6,6 +6,7 @@ import type { H3Event } from 'h3'
 function createServer(event: H3Event) {
   const config = useRuntimeConfig(event).public
 
+  // @ts-expect-error - FIXME: This should be typed
   const siteName = config.site?.name || 'Docus Documentation'
   const availableLocales = getAvailableLocales(config)
 

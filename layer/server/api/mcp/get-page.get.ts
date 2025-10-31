@@ -11,6 +11,7 @@ export default defineCachedEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, querySchema.parse)
   const config = useRuntimeConfig(event).public
 
+  // @ts-expect-error - FIXME: This should be typed
   const siteUrl = config.site?.url || 'http://localhost:3000'
   const availableLocales = getAvailableLocales(config)
   const collectionName = config.i18n?.locales
