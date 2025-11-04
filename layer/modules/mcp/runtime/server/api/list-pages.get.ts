@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
+import { getCollectionsToQuery, getAvailableLocales } from '../utils'
 
 const querySchema = z.object({
   locale: z.string().optional().describe('Language code (e.g., "en", "fr")'),
@@ -10,8 +11,7 @@ export default defineCachedEventHandler(async (event) => {
   const { locale } = await getValidatedQuery(event, querySchema.parse)
   const config = useRuntimeConfig(event).public
 
-  // @ts-expect-error - FIXME: This should be typed
-  const siteUrl = config.site?.url || 'http://localhost:3000'
+  const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin
   const availableLocales = getAvailableLocales(config)
   const collections = getCollectionsToQuery(locale, availableLocales)
 

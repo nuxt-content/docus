@@ -1,6 +1,11 @@
 import type { LocaleObject } from '@nuxtjs/i18n'
 
-export function getAvailableLocales(config: { i18n?: { locales?: Array<string | LocaleObject> }, docus?: { filteredLocales?: LocaleObject<string>[] } }): string[] {
+type ConfigWithLocales = {
+  i18n?: { locales?: Array<string | LocaleObject> }
+  docus?: { filteredLocales?: LocaleObject<string>[] }
+}
+
+export function getAvailableLocales(config: ConfigWithLocales): string[] {
   if (config.docus?.filteredLocales) {
     return config.docus.filteredLocales.map(locale => locale.code)
   }

@@ -1,18 +1,16 @@
 import { z } from 'zod'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
+import { getAvailableLocales } from './utils'
 import type { H3Event } from 'h3'
 
-function createServer(event: H3Event) {
-  const config = useRuntimeConfig(event).public
-
-  // @ts-expect-error - FIXME: This should be typed
-  const siteName = config.site?.name || 'Docus Documentation'
-  const availableLocales = getAvailableLocales(config)
+function createMcpServer(event: H3Event) {
+  const { name, version } = useRuntimeConfig(event).mcp
+  const availableLocales = getAvailableLocales(useRuntimeConfig(event).public)
 
   const server = new McpServer({
-    name: siteName,
-    version: '1.0.0',
+    name,
+    version,
   })
 
   server.tool(
@@ -24,7 +22,7 @@ function createServer(event: H3Event) {
         : z.string().optional(),
     },
     async (params) => {
-      const result = await $fetch('/api/mcp/list-pages', { query: params })
+      const result = await $fetch('/.docus-mcp/list-pages', { query: params })
       return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
     },
   )
@@ -36,7 +34,7 @@ function createServer(event: H3Event) {
       path: z.string().describe('The page path (e.g., /en/getting-started/installation)'),
     },
     async (params) => {
-      const result = await $fetch('/api/mcp/get-page', { query: params })
+      const result = await $fetch('/.docus-mcp/get-page', { query: params })
       return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
     },
   )
@@ -45,11 +43,13 @@ function createServer(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
+  const { redirectTo } = useRuntimeConfig(event).mcp
+
   if (getHeader(event, 'accept')?.includes('text/html')) {
-    return sendRedirect(event, '/')
+    return sendRedirect(event, redirectTo)
   }
 
-  const server = createServer(event)
+  const server = createMcpServer(event)
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
   })

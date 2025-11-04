@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/routing'),
     resolve('./modules/css'),
+    resolve('./modules/mcp'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',

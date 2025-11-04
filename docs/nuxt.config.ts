@@ -25,6 +25,9 @@ export default defineNuxtConfig({
       description: 'Write beautiful docs with Markdown.',
     },
   },
+  mcp: {
+    name: 'Docus documentation',
+  },
   studio: {
     route: '/admin',
     repository: {

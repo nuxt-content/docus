@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 import { stringify } from 'minimark/stringify'
+import { getAvailableLocales, getCollectionFromPath } from '../utils'
 
 const querySchema = z.object({
   path: z.string().describe('The page path (e.g., /en/getting-started/installation)'),
@@ -11,8 +12,7 @@ export default defineCachedEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, querySchema.parse)
   const config = useRuntimeConfig(event).public
 
-  // @ts-expect-error - FIXME: This should be typed
-  const siteUrl = config.site?.url || 'http://localhost:3000'
+  const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin
   const availableLocales = getAvailableLocales(config)
   const collectionName = config.i18n?.locales
     ? getCollectionFromPath(path, availableLocales)
@@ -30,12 +30,14 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  if (page.body.value[0]?.[0] !== 'h1') {
-    page.body.value.unshift(['blockquote', {}, page.description])
-    page.body.value.unshift(['h1', {}, page.title])
+  const body = page.body as { value: unknown[] }
+
+  if (Array.isArray(body.value) && body.value[0] && Array.isArray(body.value[0]) && body.value[0][0] !== 'h1') {
+    body.value.unshift(['blockquote', {}, page.description])
+    body.value.unshift(['h1', {}, page.title])
   }
 
-  const content = stringify({ ...page.body, type: 'minimark' }, { format: 'markdown/html' })
+  const content = stringify({ ...body, type: 'minimark' } as Parameters<typeof stringify>[0], { format: 'markdown/html' })
 
   return {
     title: page.title,
