@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 import { stringify } from 'minimark/stringify'
-import { getAvailableLocales, getCollectionFromPath } from '../utils'
+import { getAvailableLocales, getCollectionFromPath } from '../../utils/content'
 
 const querySchema = z.object({
   path: z.string().describe('The page path (e.g., /en/getting-started/installation)'),

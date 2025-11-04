@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getCollectionsToQuery, getAvailableLocales } from '../utils'
+import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
 
 const querySchema = z.object({
   locale: z.string().optional().describe('Language code (e.g., "en", "fr")'),
