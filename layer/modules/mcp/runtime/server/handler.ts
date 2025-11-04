@@ -5,8 +5,9 @@ import { getAvailableLocales } from './utils'
 import type { H3Event } from 'h3'
 
 function createMcpServer(event: H3Event) {
-  const { name, version } = useRuntimeConfig(event).mcp
-  const availableLocales = getAvailableLocales(useRuntimeConfig(event).public)
+  const runtimeConfig = useRuntimeConfig(event)
+  const { name, version } = runtimeConfig.mcp
+  const availableLocales = getAvailableLocales(runtimeConfig.public)
 
   const server = new McpServer({
     name,

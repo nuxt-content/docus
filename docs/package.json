@@ -16,7 +16,8 @@
     "docus": "workspace:*",
     "nuxt-studio": "https://pkg.pr.new/nuxt-content/studio/nuxt-studio@dc78b20",
     "tailwindcss": "^4.1.14",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "nuxt": "4.1.3"
