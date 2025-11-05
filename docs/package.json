@@ -14,7 +14,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "docus": "workspace:*",
-    "nuxt-studio": "https://pkg.pr.new/nuxt-content/studio/nuxt-studio@22ae221",
+    "nuxt-studio": "https://pkg.pr.new/nuxt-content/studio/nuxt-studio@dc7ddb6",
     "tailwindcss": "^4.1.14",
     "unist-util-visit": "^5.0.0"
   },
