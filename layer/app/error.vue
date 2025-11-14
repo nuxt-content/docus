@@ -9,6 +9,9 @@ const props = defineProps<{
 
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
+const matchedUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales])
+const uiLocale = computed(() => matchedUiLocale.value || nuxtUiLocales.en)
+
 const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
 const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
 useHead({
@@ -22,6 +25,7 @@ const localizedError = computed(() => {
   return {
     ...props.error,
     statusMessage: t('common.error.title'),
+    message: t('common.error.description'),
   }
 })
 
@@ -59,7 +63,7 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="uiLocale">
     <AppHeader />
 
     <UError :error="localizedError" />
