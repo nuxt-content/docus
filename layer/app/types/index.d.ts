@@ -1,5 +1,6 @@
 declare module 'nuxt/schema' {
   interface AppConfig {
+    locale: string
     seo: {
       titleTemplate: string
       title: string
