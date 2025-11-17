@@ -28,7 +28,7 @@
     "@nuxt/content": "https://pkg.pr.new/@nuxt/content@dd854d5",
     "@nuxt/image": "^1.11.0",
     "@nuxt/kit": "^4.2.1",
-    "@nuxt/ui": "^4.0.1",
+    "@nuxt/ui": "^4.1.0",
     "@nuxtjs/i18n": "^10.2.1",
     "@nuxtjs/mdc": "^0.18.3",
     "@nuxtjs/robots": "^5.5.6",
