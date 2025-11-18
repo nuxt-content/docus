@@ -2,6 +2,13 @@ import { field, group } from '@nuxt/content/preview'
 
 export default defineNuxtSchema({
   appConfig: {
+    locale: field({
+      type: 'string',
+      title: 'Locale',
+      description: 'Locale to use when @nuxtjs/i18n is not being used.',
+      icon: 'i-lucide-languages',
+      default: 'en',
+    }),
     ui: group({
       title: 'UI',
       description: 'UI Customization.',

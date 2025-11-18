@@ -6,8 +6,10 @@ const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 
-const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
-const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
+const matchedUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales])
+const uiLocale = computed(() => matchedUiLocale.value || nuxtUiLocales.en)
+const lang = computed(() => matchedUiLocale.value.code || 'en')
+const dir = computed(() => matchedUiLocale.value?.dir || 'ltr')
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
 useHead({
@@ -58,7 +60,7 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <UApp :locale="nuxtUiLocales[locale as keyof typeof nuxtUiLocales]">
+  <UApp :locale="uiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <AppHeader v-if="$route.meta.header !== false" />
