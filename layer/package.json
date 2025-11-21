@@ -22,6 +22,7 @@
     "README.md"
   ],
   "dependencies": {
+    "nuxt-mcp-toolkit": "^0.0.2",
     "@iconify-json/lucide": "^1.2.73",
     "@iconify-json/simple-icons": "^1.2.59",
     "@iconify-json/vscode-icons": "^1.2.35",
