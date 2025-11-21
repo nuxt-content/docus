@@ -31,7 +31,7 @@ export function createCLI(opts: CLIOptions) {
         throw new Error('Invalid template')
       }
 
-      const { runCommand } = await import('nuxi')
+      const { runCommand } = await import('@nuxt/cli')
       await runCommand('init', [dir, '-t', `gh:nuxt-content/docus/.starters/${template}`])
     },
   })
