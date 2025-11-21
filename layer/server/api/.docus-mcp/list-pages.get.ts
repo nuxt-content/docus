@@ -31,7 +31,15 @@ export default defineCachedEventHandler(async (event) => {
         }))
       }
       catch {
-        return []
+        return {
+          content: [
+            {
+              type: 'text',
+              text: 'Failed to list pages',
+            },
+          ],
+          isError: true,
+        }
       }
     }),
   )

@@ -17,33 +17,46 @@ export default defineCachedEventHandler(async (event) => {
     ? getCollectionFromPath(path, availableLocales)
     : 'docs'
 
-  const page = await queryCollection(event, collectionName as keyof Collections)
-    .where('path', '=', path)
-    .select('title', 'path', 'description')
-    .first()
+  try {
+    const page = await queryCollection(event, collectionName as keyof Collections)
+      .where('path', '=', path)
+      .select('title', 'path', 'description')
+      .first()
 
-  if (!page) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Page not found',
+    if (!page) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: 'Page not found',
+          },
+        ],
+        isError: true,
+      }
+    }
+
+    const content = await $fetch<string>(`/raw${path}.md`, {
+      baseURL: siteUrl,
     })
+
+    return {
+      title: page.title,
+      path: page.path,
+      description: page.description,
+      content,
+      url: `${siteUrl}${page.path}`,
+    }
   }
-
-  const content = await $fetch<string>(`/raw${path}.md`, {
-    baseURL: siteUrl,
-  }).catch(() => {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Raw content not found',
-    })
-  })
-
-  return {
-    title: page.title,
-    path: page.path,
-    description: page.description,
-    content,
-    url: `${siteUrl}${page.path}`,
+  catch {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: 'Failed to get page',
+        },
+      ],
+      isError: true,
+    }
   }
 }, {
   maxAge: 60 * 60,
