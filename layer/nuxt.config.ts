@@ -52,7 +52,7 @@ export default defineNuxtConfig({
     },
     compatibilityDate: {
       // Don't generate observability routes for now
-      vercel: '2025-07-14'
+      vercel: '2025-07-14',
     },
   },
   hooks: {
