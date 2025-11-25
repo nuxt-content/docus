@@ -142,6 +142,9 @@ importers:
       '@nuxtjs/i18n':
         specifier: ^10.2.1
         version: 10.2.1(@vue/compiler-dom@3.5.24)(db0@0.3.4(better-sqlite3@12.4.1))(eslint@9.39.1(jiti@2.6.1))(idb-keyval@6.2.2)(ioredis@5.8.1)(magicast@0.3.5)(rollup@4.53.2)(vue@3.5.24(typescript@5.9.3))
+      '@nuxtjs/mcp-toolkit':
+        specifier: ^0.0.1
+        version: 0.0.1(magicast@0.3.5)(zod@3.25.76)
       '@nuxtjs/mdc':
         specifier: ^0.18.3
         version: 0.18.3(magicast@0.3.5)
@@ -175,9 +178,6 @@ importers:
       nuxt-llms:
         specifier: ^0.1.3
         version: 0.1.3(magicast@0.3.5)
-      nuxt-mcp-toolkit:
-        specifier: ^0.0.2
-        version: 0.0.2(magicast@0.3.5)(zod@3.25.76)
       nuxt-og-image:
         specifier: ^5.1.12
         version: 5.1.12(@unhead/vue@2.0.19(vue@3.5.24(typescript@5.9.3)))(h3@1.15.4)(magicast@0.3.5)(unstorage@1.17.2(db0@0.3.4(better-sqlite3@12.4.1))(idb-keyval@6.2.2)(ioredis@5.8.1))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.24(typescript@5.9.3))
@@ -1536,6 +1536,11 @@ packages:
   '@nuxtjs/i18n@10.2.1':
     resolution: {integrity: sha512-/CHAIpYbFgobxeMsnKcD8xBUHxBpqipRMjaI3ol9MVZKscJM+IetYdNL9lGNFdEtlxzkV8COxnoa60rE4sPjuQ==}
     engines: {node: '>=20.11.1'}
+
+  '@nuxtjs/mcp-toolkit@0.0.1':
+    resolution: {integrity: sha512-wjZTSWsW8Yh8NuerF/JLqcl+/tUzfBGv/V7RzKjjLhTRSRQ2n8jqyr7qyRlbQXc4LW6gqFwoC+xnbxUGGscJPA==}
+    peerDependencies:
+      zod: ^3.25.76
 
   '@nuxtjs/mdc@0.18.3':
     resolution: {integrity: sha512-Fl64a9OZBH3J7ZpqzSWkrS64oFmLLvledZMcnYH3UzVtgFPo/GaICdJN3Ml83NSs/J9At6HHaP0k3+nrxu2qJw==}
@@ -6211,11 +6216,6 @@ packages:
   nuxt-llms@0.1.3:
     resolution: {integrity: sha512-+LaySko5UnlZw37GoTbsRX6KBFccSAzh6ENAYjV+xlVwsG8lSMz+IWnE7z5rstyVxHiX3Rx62M9JVut4jotJ3w==}
 
-  nuxt-mcp-toolkit@0.0.2:
-    resolution: {integrity: sha512-BU9D7HDhzGj6p7kZytqymWSsXIvbum/LD4VFGRSFc+5EjSDlHh7rbfw0TgalLg9f0YuToyBLCv85DaQeTKf8Pg==}
-    peerDependencies:
-      zod: ^3.25.76
-
   nuxt-og-image@5.1.12:
     resolution: {integrity: sha512-BrQI7+g8Jqa7QtN+dDUPCs5WBCQM93YlnMJvyCtCOL0M5WKP7JMHyj51dvi9SxQklVvXpfc8FhUDm290K/OuYw==}
     engines: {node: '>=18.0.0'}
@@ -10694,6 +10694,23 @@ snapshots:
       - supports-color
       - uploadthing
       - vue
+
+  '@nuxtjs/mcp-toolkit@0.0.1(magicast@0.3.5)(zod@3.25.76)':
+    dependencies:
+      '@clack/prompts': 0.11.0
+      '@modelcontextprotocol/sdk': 1.22.0
+      '@nuxt/kit': 4.2.1(magicast@0.3.5)
+      automd: 0.4.2(magicast@0.3.5)
+      chokidar: 4.0.3
+      defu: 6.1.4
+      pathe: 2.0.3
+      scule: 1.3.0
+      tinyglobby: 0.2.15
+      zod: 3.25.76
+    transitivePeerDependencies:
+      - '@cfworker/json-schema'
+      - magicast
+      - supports-color
 
   '@nuxtjs/mdc@0.18.3(magicast@0.3.5)':
     dependencies:
@@ -15774,23 +15791,6 @@ snapshots:
       '@nuxt/kit': 3.19.3(magicast@0.3.5)
     transitivePeerDependencies:
       - magicast
-
-  nuxt-mcp-toolkit@0.0.2(magicast@0.3.5)(zod@3.25.76):
-    dependencies:
-      '@clack/prompts': 0.11.0
-      '@modelcontextprotocol/sdk': 1.22.0
-      '@nuxt/kit': 4.2.1(magicast@0.3.5)
-      automd: 0.4.2(magicast@0.3.5)
-      chokidar: 4.0.3
-      defu: 6.1.4
-      pathe: 2.0.3
-      scule: 1.3.0
-      tinyglobby: 0.2.15
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@cfworker/json-schema'
-      - magicast
-      - supports-color
 
   nuxt-og-image@5.1.12(@unhead/vue@2.0.19(vue@3.5.24(typescript@5.9.3)))(h3@1.15.4)(magicast@0.3.5)(unstorage@1.17.2(db0@0.3.4(better-sqlite3@12.4.1))(idb-keyval@6.2.2)(ioredis@5.8.1))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.24(typescript@5.9.3)):
     dependencies:

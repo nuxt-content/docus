@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',
-    'nuxt-mcp-toolkit',
+    '@nuxtjs/mcp-toolkit',
     'nuxt-og-image',
     'nuxt-llms',
     () => {
