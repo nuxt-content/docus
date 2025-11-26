@@ -50,6 +50,10 @@ export default defineNuxtConfig({
       failOnError: false,
       autoSubfolderIndex: false,
     },
+    compatibilityDate: {
+      // Don't generate observability routes for now
+      vercel: '2025-07-14',
+    },
   },
   hooks: {
     'nitro:config'(nitroConfig) {

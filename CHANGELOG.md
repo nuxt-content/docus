@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.2.3](https://github.com/nuxt-content/docus/compare/v5.2.2...v5.2.3) (2025-11-17)
+
+### Bug Fixes
+
+* **cli:** rollback nuxi ([6441c2d](https://github.com/nuxt-content/docus/commit/6441c2dfea95b6ceac24af722276b67371e88662))
+
+## [5.2.2](https://github.com/nuxt-content/docus/compare/v5.2.1...v5.2.2) (2025-11-17)
+
+### Features
+
+* **i18n:** add Dutch (nl) locale ([#1205](https://github.com/nuxt-content/docus/issues/1205)) ([ef48f7e](https://github.com/nuxt-content/docus/commit/ef48f7ecc8a30cf1a4337168089506fda7ae5b95))
+* **i18n:** add Finish (fi) locale ([6d10951](https://github.com/nuxt-content/docus/commit/6d1095100dcf11b84d70c7ca4673eefe4272d821))
+* **i18n:** add Spanish (es) locale ([#1208](https://github.com/nuxt-content/docus/issues/1208)) ([30f8c6b](https://github.com/nuxt-content/docus/commit/30f8c6b81ce67b1d41fb2fe012bb1972a2ed05a5))
+
 ## [5.2.1](https://github.com/nuxt-content/docus/compare/v5.2.0...v5.2.1) (2025-10-14)
 
 ### Bug Fixes
