@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.3.1](///compare/v5.3.0...v5.3.1) (2025-11-26)
+
+### Bug Fixes
+
+* **i18n:** do not redirect to locale if 18n not enabled 9b31392
+
+## [5.3.0](///compare/v5.2.3...v5.3.0) (2025-11-26)
+
+### Features
+
+* **i18n:** add Bulgarian (bg) locales ([#1212](undefined/undefined/undefined/issues/1212)) 61f6736
+* **i18n:** add Romanian (ro) locale ([#1215](undefined/undefined/undefined/issues/1215)) a52c35f
+* **i18n:** support locale configuration without i18n ([#1209](undefined/undefined/undefined/issues/1209)) 237a79f
+
+### Bug Fixes
+
+* **cli:** switch to `@nuxt/cli` ([#1214](undefined/undefined/undefined/issues/1214)) 73616c9
+* **deploy:** Add compatibility date for Vercel observability ([#1216](undefined/undefined/undefined/issues/1216)) e642fab
+* **layer:** center icons in command menu 43b1ca5
+
 ## [5.2.3](https://github.com/nuxt-content/docus/compare/v5.2.2...v5.2.3) (2025-11-17)
 
 ### Bug Fixes

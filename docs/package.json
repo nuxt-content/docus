@@ -7,9 +7,9 @@
     "dev": "nuxt dev"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.1.0",
-    "@nuxtjs/i18n": "^10.2.0",
-    "@nuxtjs/mdc": "^0.18.3",
+    "@nuxt/ui": "^4.2.1",
+    "@nuxtjs/i18n": "^10.2.1",
+    "@nuxtjs/mdc": "^0.18.4",
     "@nuxtjs/plausible": "^2.0.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",

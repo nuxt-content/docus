@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  docus: {
+    locale: 'en',
+  },
   ui: {
     colors: {
       primary: 'emerald',
