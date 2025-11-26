@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   },
   mcp: {
     name: 'Docus documentation',
+    browserRedirect: '/en/ai/mcp',
   },
   studio: {
     route: '/admin',
