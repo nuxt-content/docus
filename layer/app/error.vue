@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
-import type { PageCollections } from '@nuxt/content'
+import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 const props = defineProps<{
@@ -9,11 +9,10 @@ const props = defineProps<{
 
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
-const matchedUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales])
-const uiLocale = computed(() => matchedUiLocale.value || nuxtUiLocales.en)
+const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
+const lang = computed(() => nuxtUiLocale.value.code)
+const dir = computed(() => nuxtUiLocale.value.dir)
 
-const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
-const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
 useHead({
   htmlAttrs: {
     lang,
@@ -48,7 +47,7 @@ if (isEnabled.value) {
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
 const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data) => {
+  transform: (data: ContentNavigationItem[]) => {
     const rootResult = data.find(item => item.path === '/docs')?.children || data || []
 
     return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
@@ -63,7 +62,7 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <UApp :locale="uiLocale">
+  <UApp :locale="nuxtUiLocale">
     <AppHeader />
 
     <UError :error="localizedError" />
