@@ -5,7 +5,7 @@ export const useDocusI18n = () => {
   const isEnabled = ref(!!config.i18n)
 
   if (!isEnabled.value) {
-    const locale = useNuxtApp().$locale
+    const locale = useNuxtApp().$locale as string
     const localeMessages = useNuxtApp().$localeMessages as Record<string, unknown>
 
     return {
