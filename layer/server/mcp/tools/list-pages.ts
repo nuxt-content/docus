@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export default defineMcpTool({
-  description: 'Lists all available documentation pages with their titles, paths, and descriptions',
+  description: 'Lists all documentation pages with titles, paths, and descriptions. ALWAYS call this first to discover available pages before using get-page, unless the user provides a specific path.',
   inputSchema: {
     locale: z.string().optional().describe('The locale to filter pages by'),
   },
