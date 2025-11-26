@@ -140,8 +140,8 @@ importers:
         specifier: ^10.2.1
         version: 10.2.1(@vue/compiler-dom@3.5.24)(db0@0.3.4(better-sqlite3@12.4.1))(eslint@9.39.1(jiti@2.6.1))(idb-keyval@6.2.2)(ioredis@5.8.1)(magicast@0.3.5)(rollup@4.53.2)(vue@3.5.24(typescript@5.9.3))
       '@nuxtjs/mcp-toolkit':
-        specifier: ^0.1.0
-        version: 0.1.0(magicast@0.3.5)(zod@3.25.76)
+        specifier: ^0.1.1
+        version: 0.1.1(magicast@0.3.5)(zod@3.25.76)
       '@nuxtjs/mdc':
         specifier: ^0.18.4
         version: 0.18.4(magicast@0.3.5)
@@ -1640,8 +1640,8 @@ packages:
     resolution: {integrity: sha512-/CHAIpYbFgobxeMsnKcD8xBUHxBpqipRMjaI3ol9MVZKscJM+IetYdNL9lGNFdEtlxzkV8COxnoa60rE4sPjuQ==}
     engines: {node: '>=20.11.1'}
 
-  '@nuxtjs/mcp-toolkit@0.1.0':
-    resolution: {integrity: sha512-0xsRcLVVMuhzZgmZ0lyI56OvOJQpS7Tdw9FOh3GQ5SCYS7eulXnACvf9OB3AHM0bx4ClFLq2RzpHmV1uua2GNg==}
+  '@nuxtjs/mcp-toolkit@0.1.1':
+    resolution: {integrity: sha512-K/JSrPMbPplafDTmiSGLpxIdE9Ve3OLm7F3rvTuk/HNxw7Q/phkQLn+42VI0tEBGUjpMDjFKO+gnkJDTt2zUCQ==}
     peerDependencies:
       zod: ^3.25.76
 
@@ -10705,7 +10705,7 @@ snapshots:
       - uploadthing
       - vue
 
-  '@nuxtjs/mcp-toolkit@0.1.0(magicast@0.3.5)(zod@3.25.76)':
+  '@nuxtjs/mcp-toolkit@0.1.1(magicast@0.3.5)(zod@3.25.76)':
     dependencies:
       '@clack/prompts': 0.11.0
       '@modelcontextprotocol/sdk': 1.22.0
