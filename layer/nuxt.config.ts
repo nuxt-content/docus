@@ -44,6 +44,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  experimental: {
+    asyncContext: true,
+  },
   compatibilityDate: '2025-07-22',
   nitro: {
     prerender: {
