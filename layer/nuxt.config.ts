@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',
+    '@nuxtjs/mcp-toolkit',
     'nuxt-og-image',
     'nuxt-llms',
     () => {
@@ -42,6 +43,9 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  experimental: {
+    asyncContext: true,
   },
   compatibilityDate: '2025-07-22',
   nitro: {
