@@ -2,11 +2,12 @@
 import { useClipboard } from '@vueuse/core'
 
 const route = useRoute()
+const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 
 const { copy, copied } = useClipboard()
 const { t } = useDocusI18n()
 
-const markdownLink = computed(() => `${window?.location?.origin}/raw${route.path}.md`)
+const markdownLink = computed(() => `${window?.location?.origin}${appBaseURL}raw${route.path}.md`)
 const items = [
   {
     label: t('docs.copy.link'),
