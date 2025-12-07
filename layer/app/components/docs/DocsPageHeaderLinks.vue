@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+import { useRuntimeConfig } from '#imports'
 
 const route = useRoute()
 const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
