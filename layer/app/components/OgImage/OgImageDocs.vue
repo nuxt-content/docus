@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 const props = withDefaults(defineProps<{ title?: string, description?: string, headline?: string }>(), {
   title: 'title',
   description: 'description',
