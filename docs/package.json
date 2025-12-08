@@ -16,8 +16,7 @@
     "docus": "workspace:*",
     "nuxt-studio": "v1.0.0-alpha.3",
     "tailwindcss": "^4.1.17",
-    "unist-util-visit": "^5.0.0",
-    "zod": "^3.24.1"
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "nuxt": "4.2.1"
