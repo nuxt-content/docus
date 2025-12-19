@@ -263,5 +263,55 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     #description
     Docus convertit automatiquement les images Markdown pour utiliser `<NuxtImg>`.
     ::::
+
+    ::::u-page-card
+    ---
+    spotlight: true
+    class: col-span-2 lg:col-span-1
+    target: _blank
+    to: /fr/concepts/internationalization
+    ---
+      :::::u-color-mode-image
+      ---
+      height: 195
+      width: 403
+      alt: Illustration de l'internationalisation
+      class: w-full h-auto rounded-lg
+      dark: /landing/dark/i18n.svg
+      light: /landing/light/i18n.svg
+      ---
+      :::::
+
+    #title
+    Support d'[internationalisation]{.text-primary}
+
+    #description
+    Support i18n intégré avec routage automatique et gestion de contenu. Créez une documentation multilingue sans effort.
+    ::::
+
+    ::::u-page-card
+    ---
+    spotlight: true
+    class: col-span-2
+    target: _blank
+    to: /fr/ai/mcp
+    ---
+      :::::u-color-mode-image
+      ---
+      height: 400
+      width: 859
+      alt: Illustration du serveur MCP natif et contenu prêt pour l'IA
+      class: w-full h-auto rounded-lg
+      dark: /landing/dark/mcp.svg
+      light: /landing/light/mcp.svg
+      ---
+      :::::
+
+    #title
+    Prêt pour l'[IA]{.text-primary} avec MCP natif
+
+    #description
+    Serveur Model Context Protocol intégré qui connecte votre documentation aux outils IA comme Cursor, VS Code et Claude. Génération automatique des fichiers `llms.txt` et `llms-full.txt` pour une intégration LLM transparente.
+    ::::
   :::
 ::

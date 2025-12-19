@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.4.1](https://github.com/nuxt-content/docus/compare/v5.4.0...v5.4.1) (2025-12-19)
+
+### Bug Fixes
+
+* **search:** trigger files fetch when locale changes ([#1226](https://github.com/nuxt-content/docus/issues/1226)) ([d99a35c](https://github.com/nuxt-content/docus/commit/d99a35c7ddc5c9b3c90751feefa74e354da82edf))
+
 ## [5.4.0](///compare/v5.3.1...v5.4.0) (2025-12-09)
 
 ### Features
