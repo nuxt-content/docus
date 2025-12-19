@@ -6,6 +6,9 @@
 [![npm downloads](https://img.shields.io/npm/dm/docus.svg?style=flat&colorA=020420&colorB=EEEEEE)](https://npm.chart.dev/docus)
 [![License](https://img.shields.io/npm/l/docus.svg?style=flat&colorA=020420&colorB=EEEEEE)](https://npmjs.com/package/docus)
 
+[![Install MCP in Cursor](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink)
+[![Install MCP in VS Code](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?ide=vscode&url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink?ide=vscode)
+
 ## 🚀 Quick Start
 
 Create a new documentation project in seconds:
@@ -31,7 +34,7 @@ That's it! Your documentation site will be running at `http://localhost:3000`
 The CLI scaffolds a complete documentation project with:
 
 - ✨ **Beautiful Design** - Clean, modern documentation theme
-- 📱 **Responsive** - Mobile-first responsive design  
+- 📱 **Responsive** - Mobile-first responsive design
 - 🌙 **Dark Mode** - Built-in dark/light mode support
 - 🌍 **Internationalization** - Native i18n support for multi-language docs
 - 🔍 **Search** - Full-text search functionality
@@ -39,6 +42,8 @@ The CLI scaffolds a complete documentation project with:
 - 🎨 **Customizable** - Easy theming and brand customization
 - ⚡ **Fast** - Optimized for performance with Nuxt 4
 - 🔧 **TypeScript** - Full TypeScript support
+- 🤖 **AI-Ready** - Automatic generation of `llms.txt` and `llms-full.txt` files for LLM integration
+- 🔌 **Native MCP Server** - Built-in Model Context Protocol server for AI tool integration (Cursor, VS Code, Claude, etc.)
 
 Learn more on the [Docus documentation](https://docus.dev).
 
