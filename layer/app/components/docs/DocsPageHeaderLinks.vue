@@ -3,6 +3,7 @@ import { useClipboard } from '@vueuse/core'
 import { useRuntimeConfig } from '#imports'
 
 const route = useRoute()
+const toast = useToast()
 const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 
 const { copy, copied } = useClipboard()
@@ -10,7 +11,7 @@ const { t } = useDocusI18n()
 
 const markdownLink = computed(() => `${window?.location?.origin}${appBaseURL}raw${route.path}.md`)
 const items = [
-  {
+  [{
     label: t('docs.copy.link'),
     icon: 'i-lucide-link',
     onSelect() {
@@ -34,7 +35,26 @@ const items = [
     icon: 'i-simple-icons:anthropic',
     target: '_blank',
     to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${markdownLink.value} so I can ask questions about it.`)}`,
-  },
+  }],
+  [
+    {
+      label: 'Copy MCP Server URL',
+      icon: 'i-lucide-link',
+      onSelect() {
+        copy(`${window?.location?.origin}${appBaseURL}mcp`)
+        toast.add({
+          title: 'Copied to clipboard',
+          icon: 'i-lucide-check-circle',
+        })
+      },
+    },
+    {
+      label: 'Add MCP Server',
+      icon: 'i-simple-icons:cursor',
+      target: '_blank',
+      to: `/mcp/deeplink`,
+    },
+  ],
 ]
 
 async function copyPage() {
