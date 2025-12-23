@@ -6,10 +6,9 @@
 [![npm downloads](https://img.shields.io/npm/dm/docus.svg?style=flat&colorA=020420&colorB=EEEEEE)](https://npm.chart.dev/docus)
 [![License](https://img.shields.io/npm/l/docus.svg?style=flat&colorA=020420&colorB=EEEEEE)](https://npmjs.com/package/docus)
 
-[![Install MCP in Cursor](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink)
-[![Install MCP in VS Code](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?ide=vscode&url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink?ide=vscode)
-
 ## 🚀 Quick Start
+
+### Local Development
 
 Create a new documentation project in seconds:
 
@@ -29,6 +28,12 @@ npm run dev
 
 That's it! Your documentation site will be running at `http://localhost:3000`
 
+### Online Development
+
+Start by deploying the docus template and create your git repository directly from Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-description=Markdown-based%20documentation%20starter%20with%20Nuxt%20and%20Vue%20components.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5rLcegeMuG3ggDNfQt7rj9%2F040036056f7b30d2c99dc8998dc6b132%2Fdocus.png&demo-title=Docus&demo-url=https%3A%2F%2Fdocus.dev%2F&from=templates&project-name=Docus&repository-name=docus&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-content%2Fdocus%2Ftree%2Fmain%2F.starters%2Fdefault&skippable-integrations=1&teamSlug=vercel)
+
 ## 🎯 What it creates
 
 The CLI scaffolds a complete documentation project with:
@@ -46,6 +51,13 @@ The CLI scaffolds a complete documentation project with:
 - 🔌 **Native MCP Server** - Built-in Model Context Protocol server for AI tool integration (Cursor, VS Code, Claude, etc.)
 
 Learn more on the [Docus documentation](https://docus.dev).
+
+## 🤖 Docus MCP Server
+
+Add the Docus MCP server to help you write your documentation faster with LLMs:
+
+[![Install MCP in Cursor](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink)
+[![Install MCP in VS Code](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?ide=vscode&url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink?ide=vscode)
 
 ## 📁 Project Structure
 
