@@ -1,0 +1,22 @@
+{
+	"common": {
+		"or": "veya",
+		"error": {
+			"title": "Sayfa bulunamadı",
+			"description": "Üzgünüz, bu sayfa bulunamadı."
+		}
+	},
+	"docs": {
+		"copy": {
+			"page": "Sayfayı kopyala",
+			"link": "Markdown bağlantısını kopyala",
+			"view": "Markdown olarak görüntüle",
+			"gpt": "ChatGPT'de aç",
+			"claude": "Claude'da aç"
+		},
+		"links": "Topluluk",
+		"toc": "Bu sayfada",
+		"report": "Sorun bildir",
+		"edit": "Bu sayfayı düzenle"
+	}
+}
