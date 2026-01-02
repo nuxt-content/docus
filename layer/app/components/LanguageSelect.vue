@@ -29,6 +29,7 @@ function getEmojiFlag(locale: string): string {
     ur: 'pk', // Urdu -> Pakistan
     vi: 'vn', // Vietnamese -> Vietnam
     es: 'es', // Spanish -> Spain
+    id: 'id', // Indonesian -> Indonesia
   }
 
   const baseLanguage = locale.split('-')[0]?.toLowerCase() || locale
