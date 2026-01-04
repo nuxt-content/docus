@@ -214,5 +214,33 @@ export default defineNuxtSchema({
         }),
       },
     }),
+    aiChat: group({
+      title: 'AI Chat',
+      description: 'AI Chat configuration.',
+      icon: 'i-lucide-sparkles',
+      fields: {
+        title: field({
+          type: 'string',
+          title: 'Title',
+          description: 'Title of the AI chat slideover.',
+          icon: 'i-lucide-type',
+          default: 'Ask AI',
+        }),
+        placeholder: field({
+          type: 'string',
+          title: 'Placeholder',
+          description: 'Placeholder text for the input field.',
+          icon: 'i-lucide-text',
+          default: 'Ask a question...',
+        }),
+        faqQuestions: field({
+          type: 'array',
+          title: 'FAQ Questions',
+          description: 'List of FAQ questions. Can be an array of strings or an array of categories with questions.',
+          icon: 'i-lucide-help-circle',
+          default: [],
+        }),
+      },
+    }),
   },
 })

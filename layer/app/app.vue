@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '~/types'
 
-const { seo } = useAppConfig()
+const { seo, aiChat } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
+const { isEnabled: isAiChatEnabled } = useAIChat()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
@@ -57,6 +59,43 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 })
 
 provide('navigation', navigation)
+
+function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
+  if (!questions || (Array.isArray(questions) && questions.length === 0)) {
+    return []
+  }
+
+  // Check if first item is a string (simple format) or object (category format)
+  if (typeof questions[0] === 'string') {
+    return [{
+      category: 'Questions',
+      items: questions as string[],
+    }]
+  }
+
+  return questions as FaqCategory[]
+}
+
+const faqQuestions = computed<FaqCategory[]>(() => {
+  const config = aiChat?.faqQuestions
+  if (!config) return []
+
+  // Check if it's a localized object (has locale keys like 'en', 'fr')
+  if (!Array.isArray(config)) {
+    const localizedConfig = config as LocalizedFaqQuestions
+    const currentLocale = locale.value
+    const defaultLocale = useRuntimeConfig().public.i18n?.defaultLocale || 'en'
+
+    // Try current locale, then default locale, then first available
+    const questions = localizedConfig[currentLocale]
+      || localizedConfig[defaultLocale]
+      || Object.values(localizedConfig)[0]
+
+    return normalizeFaqQuestions(questions || [])
+  }
+
+  return normalizeFaqQuestions(config)
+})
 </script>
 
 <template>
@@ -74,6 +113,14 @@ provide('navigation', navigation)
         :files="files"
         :navigation="navigation"
       />
+      <template v-if="isAiChatEnabled">
+        <LazyAiChatFloatingInput />
+        <LazyAiChatSlideover
+          :title="aiChat?.title"
+          :placeholder="aiChat?.placeholder"
+          :faq-questions="faqQuestions"
+        />
+      </template>
     </ClientOnly>
   </UApp>
 </template>

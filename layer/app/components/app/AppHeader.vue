@@ -4,6 +4,7 @@ import { useDocusI18n } from '../../composables/useDocusI18n'
 const appConfig = useAppConfig()
 const site = useSiteConfig()
 
+const { isEnabled: isAiChatEnabled } = useAIChat()
 const { localePath, isEnabled, locales } = useDocusI18n()
 
 const links = computed(() => appConfig.github && appConfig.github.url
@@ -32,6 +33,10 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
     <template #right>
       <AppHeaderCTA />
+
+      <template v-if="isAiChatEnabled">
+        <AiChat />
+      </template>
 
       <template v-if="isEnabled && locales.length > 1">
         <ClientOnly>
