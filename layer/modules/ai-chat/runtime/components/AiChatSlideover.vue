@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { DefineComponent } from 'vue'
+import type { UIMessage } from 'ai'
 import type { FaqCategory } from '~/types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
@@ -23,7 +24,7 @@ const config = useRuntimeConfig()
 
 const input = ref('')
 
-watch(pendingMessage, (message) => {
+watch(pendingMessage, (message: string | undefined) => {
   if (message) {
     if (messages.value.length === 0 && chat.messages.length > 0) {
       chat.messages.length = 0
@@ -35,7 +36,7 @@ watch(pendingMessage, (message) => {
   }
 }, { immediate: true })
 
-watch(messages, (newMessages) => {
+watch(messages, (newMessages: UIMessage[]) => {
   if (newMessages.length === 0 && chat.messages.length > 0) {
     chat.messages.length = 0
   }
