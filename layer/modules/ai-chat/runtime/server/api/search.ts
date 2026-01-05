@@ -43,11 +43,18 @@ export default defineEventHandler(async (event) => {
 
   const siteName = siteConfig.name || 'Documentation'
 
-  const mcpPath = config.aiChat.mcpPath
+  const mcpServer = config.aiChat.mcpServer
+  const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
+  const mcpUrl = isExternalUrl
+    ? mcpServer
+    : import.meta.dev
+      ? `http://localhost:3000${mcpServer}`
+      : `${getRequestURL(event).origin}${mcpServer}`
+
   const httpClient = await createMCPClient({
     transport: {
       type: 'http',
-      url: import.meta.dev ? `http://localhost:3000${mcpPath}` : `${getRequestURL(event).origin}${mcpPath}`,
+      url: mcpUrl,
     },
   })
   const mcpTools = await httpClient.tools()

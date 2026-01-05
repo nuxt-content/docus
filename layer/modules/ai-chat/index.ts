@@ -7,10 +7,12 @@ export interface AiChatModuleOptions {
    */
   apiPath?: string
   /**
-   * MCP server path to connect to
+   * MCP server URL or path.
+   * - Use a path like '/mcp' to use the built-in Docus MCP server
+   * - Use a full URL like 'https://docs.example.com/mcp' for external MCP servers
    * @default '/mcp'
    */
-  mcpPath?: string
+  mcpServer?: string
   /**
    * AI model to use via AI SDK Gateway
    * @default 'moonshotai/kimi-k2-turbo'
@@ -25,14 +27,11 @@ export default defineNuxtModule<AiChatModuleOptions>({
   },
   defaults: {
     apiPath: '/api/ai-chat',
-    mcpPath: '/mcp',
+    mcpServer: '/mcp',
     model: 'moonshotai/kimi-k2-turbo',
   },
   setup(options, nuxt) {
-    const hasApiKey = !!(
-      process.env.AI_GATEWAY_API_KEY
-      || process.env.OPENAI_API_KEY
-    )
+    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
 
     const { resolve } = createResolver(import.meta.url)
 
@@ -49,12 +48,12 @@ export default defineNuxtModule<AiChatModuleOptions>({
     ])
 
     if (!hasApiKey) {
-      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENAI_API_KEY found')
+      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY found')
       return
     }
 
     nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!,
+      mcpServer: options.mcpServer!,
       model: options.model!,
     }
 
@@ -97,7 +96,7 @@ declare module 'nuxt/schema' {
   }
   interface RuntimeConfig {
     aiChat: {
-      mcpPath: string
+      mcpServer: string
       model: string
     }
   }
