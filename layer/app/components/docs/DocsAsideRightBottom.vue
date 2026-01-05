@@ -29,7 +29,8 @@ const showExplainWithAi = computed(() => {
       icon="i-lucide-brain"
       label="Explain with AI"
       size="sm"
-      variant="ghost"
+      variant="link"
+      class="p-0"
       color="neutral"
       @click="open(`Explain the page ${pageUrl}`, true)"
     />

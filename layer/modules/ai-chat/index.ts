@@ -58,26 +58,20 @@ export default defineNuxtModule<AiChatModuleOptions>({
       model: options.model!,
     }
 
-    addComponent({
-      name: 'AiChat',
-      filePath: resolve('./runtime/components/AiChat.vue'),
-    })
-    addComponent({
-      name: 'AiChatSlideover',
-      filePath: resolve('./runtime/components/AiChatSlideover.vue'),
-    })
-    addComponent({
-      name: 'AiChatToolCall',
-      filePath: resolve('./runtime/components/AiChatToolCall.vue'),
-    })
-    addComponent({
-      name: 'AiChatFloatingInput',
-      filePath: resolve('./runtime/components/AiChatFloatingInput.vue'),
-    })
-    addComponent({
-      name: 'AiTextShimmer',
-      filePath: resolve('./runtime/components/AiTextShimmer.vue'),
-    })
+    const components = [
+      'AiChat',
+      'AiChatSlideover',
+      'AiChatToolCall',
+      'AiChatFloatingInput',
+      'AiTextShimmer',
+    ]
+
+    components.forEach(name =>
+      addComponent({
+        name,
+        filePath: resolve(`./runtime/components/${name}.vue`),
+      }),
+    )
 
     addImports([
       {
