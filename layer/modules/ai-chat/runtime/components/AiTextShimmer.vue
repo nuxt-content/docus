@@ -3,7 +3,7 @@ import { motion } from 'motion-v'
 
 interface Props {
   text: string
-  as?: string
+  as?: keyof typeof motion
   duration?: number
   spread?: number
 }
@@ -15,11 +15,12 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const dynamicSpread = computed(() => props.text.length * props.spread)
+const MotionComponent = computed(() => motion[props.as])
 </script>
 
 <template>
   <component
-    :is="motion[as]"
+    :is="MotionComponent"
     :animate="{ backgroundPosition: '0% center' }"
     :initial="{ backgroundPosition: '100% center' }"
     :transition="{
