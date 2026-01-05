@@ -309,5 +309,57 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     #description
     Serveur Model Context Protocol intégré qui connecte votre documentation aux outils IA comme Cursor, VS Code et Claude. Génération automatique des fichiers `llms.txt` et `llms-full.txt` pour une intégration LLM transparente.
     ::::
+
+    ::::u-page-card
+    ---
+    class: col-span-2 lg:col-span-2
+    ---
+    :ai-chat-demo
+
+    #title
+    [Assistant IA]{.text-primary} intégré
+
+    #description
+    Permettez à vos visiteurs de poser des questions sur votre documentation en langage naturel. L'IA recherche votre contenu et fournit des réponses précises avec les sources citées.
+    ::::
+
+    ::::u-page-card
+    ---
+    spotlight: true
+    class: col-span-2 lg:col-span-1
+    ---
+      :::::div{.flex-1.flex.flex-col.items-center.justify-center.py-8.text-center}
+        ::::::div{.flex.flex-col.gap-3.w-full.max-w-xs}
+          :::::::u-button
+          ---
+          block: true
+          color: primary
+          size: lg
+          to: /fr/getting-started/introduction
+          trailing-icon: i-lucide-arrow-right
+          ---
+          Lire la documentation
+          :::::::
+          :::::::u-button
+          ---
+          block: true
+          color: neutral
+          size: lg
+          target: _blank
+          to: https://github.com/nuxt-content/docus
+          icon: i-simple-icons-github
+          variant: outline
+          ---
+          Voir sur GitHub
+          :::::::
+        ::::::
+      :::::
+
+    #title
+    [Prêt]{.text-primary} à commencer ?
+
+    #description
+    Explorez toutes les fonctionnalités qui font de Docus la solution idéale pour votre documentation.
+    ::::
   :::
 ::
