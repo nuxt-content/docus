@@ -5,15 +5,11 @@ import type { FaqCategory } from '~/types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
 import AiChatPreStream from './AiChatPreStream.vue'
+import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
-const props = withDefaults(defineProps<{
-  title?: string
-  placeholder?: string
+const props = defineProps<{
   faqQuestions?: FaqCategory[]
-}>(), {
-  title: 'Ask AI',
-  placeholder: 'Ask a question...',
-})
+}>()
 
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent,
@@ -21,46 +17,15 @@ const components = {
 
 const { isOpen, messages, pendingMessage, clearPending } = useAIChat()
 const config = useRuntimeConfig()
+const appConfig = useAppConfig()
+const toast = useToast()
+const { t } = useDocusI18n()
 
 const input = ref('')
 
-watch(pendingMessage, (message: string | undefined) => {
-  if (message) {
-    if (messages.value.length === 0 && chat.messages.length > 0) {
-      chat.messages.length = 0
-    }
-    chat.sendMessage({
-      text: message,
-    })
-    clearPending()
-  }
-}, { immediate: true })
-
-watch(messages, (newMessages: UIMessage[]) => {
-  if (newMessages.length === 0 && chat.messages.length > 0) {
-    chat.messages.length = 0
-  }
-}, { deep: true })
-
-const toast = useToast()
-const lastMessage = computed(() => chat.messages.at(-1))
-const showThinking = computed(() =>
-  chat.status === 'streaming'
-  && lastMessage.value?.role === 'assistant'
-  && lastMessage.value?.parts?.length === 0,
-)
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getToolLabel(toolName: string, args: any) {
-  const path = args?.path || ''
-
-  const labels: Record<string, string> = {
-    'list-pages': 'Listed documentation pages',
-    'get-page': `Read ${path || 'page'}`,
-  }
-
-  return labels[toolName] || toolName
-}
+const triggerIcon = computed(() => appConfig.aiChat?.icons?.trigger || 'i-lucide-sparkles')
+const displayTitle = computed(() => t('aiChat.title'))
+const displayPlaceholder = computed(() => t('aiChat.placeholder'))
 
 const chat = new Chat({
   messages: messages.value,
@@ -81,6 +46,43 @@ const chat = new Chat({
     messages.value = chat.messages
   },
 })
+
+watch(pendingMessage, (message: string | undefined) => {
+  if (message) {
+    if (messages.value.length === 0 && chat.messages.length > 0) {
+      chat.messages.length = 0
+    }
+    chat.sendMessage({
+      text: message,
+    })
+    clearPending()
+  }
+}, { immediate: true })
+
+watch(messages, (newMessages: UIMessage[]) => {
+  if (newMessages.length === 0 && chat.messages.length > 0) {
+    chat.messages.length = 0
+  }
+}, { deep: true })
+
+const lastMessage = computed(() => chat.messages.at(-1))
+const showThinking = computed(() =>
+  chat.status === 'streaming'
+  && lastMessage.value?.role === 'assistant'
+  && lastMessage.value?.parts?.length === 0,
+)
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getToolLabel(toolName: string, args: any) {
+  const path = args?.path || ''
+
+  const labels: Record<string, string> = {
+    'list-pages': t('aiChat.toolListPages'),
+    'get-page': t('aiChat.toolReadPage').replace('{path}', path || 'page'),
+  }
+
+  return labels[toolName] || toolName
+}
 
 function handleSubmit(event?: Event) {
   event?.preventDefault()
@@ -138,16 +140,16 @@ onMounted(() => {
         <div class="flex items-center gap-2">
           <div class="size-6 rounded-full bg-primary/10 flex items-center justify-center">
             <UIcon
-              name="i-lucide-sparkles"
+              :name="triggerIcon"
               class="size-3.5 text-primary"
             />
           </div>
-          <span class="font-medium text-highlighted">{{ props.title }}</span>
+          <span class="font-medium text-highlighted">{{ displayTitle }}</span>
         </div>
         <div class="flex items-center gap-1">
           <UTooltip
             v-if="chat.messages.length > 0"
-            text="Clear chat"
+            :text="t('aiChat.clearChat')"
           >
             <UButton
               icon="i-lucide-trash-2"
@@ -158,7 +160,7 @@ onMounted(() => {
               @click="resetChat"
             />
           </UTooltip>
-          <UTooltip text="Close">
+          <UTooltip :text="t('aiChat.close')">
             <UButton
               icon="i-lucide-x"
               color="neutral"
@@ -186,7 +188,7 @@ onMounted(() => {
         <template #content="{ message }">
           <div class="flex flex-col gap-2">
             <div v-if="showThinking && message.role === 'assistant'">
-              <AiTextShimmer text="Thinking..." />
+              <AiTextShimmer :text="t('aiChat.thinking')" />
             </div>
             <template
               v-for="(part, index) in message.parts"
@@ -229,16 +231,16 @@ onMounted(() => {
             />
           </div>
           <h3 class="text-base font-medium text-highlighted mb-2">
-            Ask me anything
+            {{ t('aiChat.askMeAnything') }}
           </h3>
           <p class="text-sm text-muted max-w-xs">
-            I can help you navigate the documentation, explain concepts, and answer your questions.
+            {{ t('aiChat.askMeAnythingDescription') }}
           </p>
         </div>
 
         <template v-else>
           <p class="text-sm font-medium text-muted mb-4">
-            FAQ
+            {{ t('aiChat.faq') }}
           </p>
 
           <div class="flex flex-col gap-5">
@@ -274,7 +276,7 @@ onMounted(() => {
             :rows="1"
             autoresize
             variant="none"
-            :placeholder="props.placeholder"
+            :placeholder="displayPlaceholder"
             class="flex-1 text-sm bg-transparent resize-none"
             :ui="{
               base: 'bg-transparent! ring-0! shadow-none!',
@@ -292,9 +294,9 @@ onMounted(() => {
           />
         </div>
         <div class="flex justify-between items-center mt-2 px-1 text-xs text-dimmed">
-          <span>Chat is cleared on refresh</span>
+          <span>{{ t('aiChat.chatCleared') }}</span>
           <div class="flex items-center gap-1">
-            <span>Line break</span>
+            <span>{{ t('aiChat.lineBreak') }}</span>
             <UKbd value="shift" />
             <UKbd value="enter" />
           </div>

@@ -219,20 +219,6 @@ export default defineNuxtSchema({
       description: 'AI Chat configuration.',
       icon: 'i-lucide-sparkles',
       fields: {
-        title: field({
-          type: 'string',
-          title: 'Title',
-          description: 'Title of the AI chat slideover.',
-          icon: 'i-lucide-type',
-          default: 'Ask AI',
-        }),
-        placeholder: field({
-          type: 'string',
-          title: 'Placeholder',
-          description: 'Placeholder text for the input field.',
-          icon: 'i-lucide-text',
-          default: 'Ask a question...',
-        }),
         floatingInput: field({
           type: 'boolean',
           title: 'Floating Input',
@@ -253,6 +239,41 @@ export default defineNuxtSchema({
           description: 'List of FAQ questions. Can be an array of strings or an array of categories with questions.',
           icon: 'i-lucide-help-circle',
           default: [],
+        }),
+        shortcuts: group({
+          title: 'Shortcuts',
+          description: 'Keyboard shortcuts configuration.',
+          icon: 'i-lucide-keyboard',
+          fields: {
+            focusInput: field({
+              type: 'string',
+              title: 'Focus Input',
+              description: 'Shortcut to focus the floating input (e.g., meta_i, ctrl_k).',
+              icon: 'i-lucide-keyboard',
+              default: 'meta_i',
+            }),
+          },
+        }),
+        icons: group({
+          title: 'Icons',
+          description: 'Icons configuration.',
+          icon: 'i-lucide-settings',
+          fields: {
+            trigger: field({
+              type: 'icon',
+              title: 'Trigger',
+              description: 'Icon for the AI chat trigger button and slideover header.',
+              icon: 'i-lucide-sparkles',
+              default: 'i-lucide-sparkles',
+            }),
+            explain: field({
+              type: 'icon',
+              title: 'Explain',
+              description: 'Icon for the "Explain with AI" button.',
+              icon: 'i-lucide-brain',
+              default: 'i-lucide-brain',
+            }),
+          },
         }),
       },
     }),

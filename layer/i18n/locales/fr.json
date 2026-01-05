@@ -18,5 +18,23 @@
     "toc": "Sur cette page",
     "report": "Signaler un problème",
     "edit": "Éditer cette page"
+  },
+  "aiChat": {
+    "title": "Demander à l'IA",
+    "placeholder": "Posez une question...",
+    "tooltip": "Poser une question à l'IA",
+    "tryAsking": "Essayez de poser une question",
+    "askAnything": "Demandez n'importe quoi...",
+    "clearChat": "Effacer le chat",
+    "close": "Fermer",
+    "thinking": "Réflexion...",
+    "askMeAnything": "Posez-moi une question",
+    "askMeAnythingDescription": "Je peux vous aider à naviguer dans la documentation, expliquer des concepts et répondre à vos questions.",
+    "faq": "FAQ",
+    "chatCleared": "Le chat est effacé au rechargement",
+    "lineBreak": "Retour à la ligne",
+    "explainWithAi": "Expliquer avec l'IA",
+    "toolListPages": "Pages de documentation listées",
+    "toolReadPage": "Lecture de {path}"
   }
-} 
+}

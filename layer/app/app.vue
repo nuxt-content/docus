@@ -115,11 +115,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
       />
       <template v-if="isAiChatEnabled">
         <LazyAiChatFloatingInput />
-        <LazyAiChatSlideover
-          :title="aiChat?.title"
-          :placeholder="aiChat?.placeholder"
-          :faq-questions="faqQuestions"
-        />
+        <LazyAiChatSlideover :faq-questions="faqQuestions" />
       </template>
     </ClientOnly>
   </UApp>

@@ -9,6 +9,8 @@ const { isEnabled, open } = useAIChat()
 const showExplainWithAi = computed(() => {
   return isEnabled.value && appConfig.aiChat?.explainWithAi !== false
 })
+
+const explainIcon = computed(() => appConfig.aiChat?.icons?.explain || 'i-lucide-brain')
 </script>
 
 <template>
@@ -31,8 +33,8 @@ const showExplainWithAi = computed(() => {
 
     <UButton
       v-if="showExplainWithAi"
-      icon="i-lucide-brain"
-      label="Explain with AI"
+      :icon="explainIcon"
+      :label="t('aiChat.explainWithAi')"
       size="sm"
       variant="link"
       class="p-0 text-sm"

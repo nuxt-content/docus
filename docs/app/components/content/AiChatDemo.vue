@@ -4,15 +4,25 @@ import { DefaultChatTransport } from 'ai'
 import { motion } from 'motion-v'
 
 const config = useRuntimeConfig()
+const { t, locale } = useDocusI18n()
 const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 
 const input = ref('')
 
-const suggestedQuestions = [
-  'How do I get started?',
-  'What is Docus?',
-  'How to customize the theme?',
-]
+const suggestedQuestionsMap: Record<string, string[]> = {
+  en: [
+    'How do I get started?',
+    'What is Docus?',
+    'How to customize the theme?',
+  ],
+  fr: [
+    'Comment démarrer ?',
+    'Qu\'est-ce que Docus ?',
+    'Comment personnaliser le thème ?',
+  ],
+}
+
+const suggestedQuestions = computed(() => suggestedQuestionsMap[locale.value] || suggestedQuestionsMap.en)
 
 const chat = isEnabled.value
   ? new Chat({
@@ -38,8 +48,8 @@ function getToolLabel(toolName: string, args: any) {
   const path = args?.path || ''
 
   const labels: Record<string, string> = {
-    'list-pages': 'Listed documentation pages',
-    'get-page': `Read ${path || 'page'}`,
+    'list-pages': t('aiChat.toolListPages'),
+    'get-page': t('aiChat.toolReadPage').replace('{path}', path || 'page'),
   }
 
   return labels[toolName] || toolName
@@ -88,7 +98,7 @@ function resetChat() {
             />
           </div>
           <p class="text-sm text-muted mb-4">
-            Try asking a question
+            {{ t('aiChat.tryAsking') }}
           </p>
           <div class="flex flex-wrap gap-2 justify-center">
             <motion.button
@@ -117,7 +127,7 @@ function resetChat() {
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
               <div v-if="showThinking && message.role === 'assistant'">
-                <AiTextShimmer text="Thinking..." />
+                <AiTextShimmer :text="t('aiChat.thinking')" />
               </div>
               <template
                 v-for="(part, index) in message.parts"
@@ -154,7 +164,7 @@ function resetChat() {
         <UInput
           v-model="input"
           :disabled="!isEnabled"
-          placeholder="Ask anything..."
+          :placeholder="t('aiChat.askAnything')"
           size="sm"
           class="flex-1"
           :ui="{

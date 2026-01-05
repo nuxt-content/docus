@@ -18,5 +18,23 @@
     "toc": "On this page",
     "report": "Report an issue",
     "edit": "Edit this page"
+  },
+  "aiChat": {
+    "title": "Ask AI",
+    "placeholder": "Ask a question...",
+    "tooltip": "Ask AI a question",
+    "tryAsking": "Try asking a question",
+    "askAnything": "Ask anything...",
+    "clearChat": "Clear chat",
+    "close": "Close",
+    "thinking": "Thinking...",
+    "askMeAnything": "Ask me anything",
+    "askMeAnythingDescription": "I can help you navigate the documentation, explain concepts, and answer your questions.",
+    "faq": "FAQ",
+    "chatCleared": "Chat is cleared on refresh",
+    "lineBreak": "Line break",
+    "explainWithAi": "Explain with AI",
+    "toolListPages": "Listed documentation pages",
+    "toolReadPage": "Read {path}"
   }
 }

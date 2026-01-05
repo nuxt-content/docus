@@ -45,8 +45,6 @@ declare module 'nuxt/schema' {
       rootDir?: string
     } | false
     aiChat?: {
-      title?: string
-      placeholder?: string
       /**
        * Show the floating input at the bottom of documentation pages.
        * @default true
@@ -65,6 +63,31 @@ declare module 'nuxt/schema' {
        * @example Localized format: { en: ['How to install?'], fr: ['Comment installer ?'] }
        */
       faqQuestions?: FaqQuestions | LocalizedFaqQuestions
+      /**
+       * Keyboard shortcuts configuration.
+       */
+      shortcuts?: {
+        /**
+         * Shortcut to focus the floating input.
+         * @default 'meta_i'
+         */
+        focusInput?: string
+      }
+      /**
+       * Icons configuration.
+       */
+      icons?: {
+        /**
+         * Icon for the AI chat trigger button and slideover header.
+         * @default 'i-lucide-sparkles'
+         */
+        trigger?: string
+        /**
+         * Icon for the "Explain with AI" button.
+         * @default 'i-lucide-brain'
+         */
+        explain?: string
+      }
     }
   }
 }

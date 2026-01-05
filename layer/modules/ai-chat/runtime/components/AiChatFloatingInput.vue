@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import { AnimatePresence, motion } from 'motion-v'
+import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const route = useRoute()
 const appConfig = useAppConfig()
 const { open, isOpen } = useAIChat()
+const { t } = useDocusI18n()
 const input = ref('')
 const isVisible = ref(true)
 const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
 
 const isDocsRoute = computed(() => route.meta.layout === 'docs')
 const isFloatingInputEnabled = computed(() => appConfig.aiChat?.floatingInput !== false)
+const focusInputShortcut = computed(() => appConfig.aiChat?.shortcuts?.focusInput || 'meta_i')
+const placeholder = computed(() => t('aiChat.placeholder'))
+
+const shortcutDisplayKeys = computed(() => {
+  const shortcut = focusInputShortcut.value
+  const parts = shortcut.split('_')
+  return parts.map(part => part === 'meta' ? 'meta' : part.toUpperCase())
+})
 
 function handleSubmit() {
   if (!input.value.trim()) return
@@ -24,8 +34,8 @@ function handleSubmit() {
   }, 200)
 }
 
-defineShortcuts({
-  meta_i: {
+const shortcuts = computed(() => ({
+  [focusInputShortcut.value]: {
     usingInput: true,
     handler: () => {
       if (!isDocsRoute.value || !isFloatingInputEnabled.value) return
@@ -38,7 +48,9 @@ defineShortcuts({
       inputRef.value?.inputRef?.blur()
     },
   },
-})
+}))
+
+defineShortcuts(shortcuts)
 </script>
 
 <template>
@@ -57,7 +69,7 @@ defineShortcuts({
         <UInput
           ref="inputRef"
           v-model="input"
-          placeholder="Ask a question..."
+          :placeholder="placeholder"
           size="lg"
           :ui="{
             root: 'w-72 py-0.5 focus-within:w-96 transition-all duration-300 ease-out',
@@ -69,8 +81,11 @@ defineShortcuts({
           <template #trailing>
             <div class="flex items-center gap-2">
               <div class="hidden sm:flex items-center gap-1">
-                <UKbd value="meta" />
-                <UKbd value="I" />
+                <UKbd
+                  v-for="key in shortcutDisplayKeys"
+                  :key="key"
+                  :value="key"
+                />
               </div>
 
               <UButton
