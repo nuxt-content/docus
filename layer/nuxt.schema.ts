@@ -233,6 +233,13 @@ export default defineNuxtSchema({
           icon: 'i-lucide-text',
           default: 'Ask a question...',
         }),
+        explainWithAi: field({
+          type: 'boolean',
+          title: 'Explain with AI',
+          description: 'Show the "Explain with AI" button in the documentation sidebar.',
+          icon: 'i-lucide-brain',
+          default: true,
+        }),
         faqQuestions: field({
           type: 'array',
           title: 'FAQ Questions',

@@ -48,6 +48,11 @@ declare module 'nuxt/schema' {
       title?: string
       placeholder?: string
       /**
+       * Show the "Explain with AI" button in the documentation sidebar.
+       * @default true
+       */
+      explainWithAi?: boolean
+      /**
        * FAQ questions to display in the chat slideover.
        * Can be a simple array of strings, an array of categories, or a locale-based object.
        * @example Simple format: ['How to install?', 'How to configure?']

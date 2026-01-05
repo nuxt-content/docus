@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { AnimatePresence, motion } from 'motion-v'
 
+const route = useRoute()
 const { open, isOpen } = useAIChat()
 const input = ref('')
 const isVisible = ref(true)
 const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
+
+const isDocsRoute = computed(() => route.meta.layout === 'docs')
 
 function handleSubmit() {
   if (!input.value.trim()) return
@@ -23,6 +26,7 @@ defineShortcuts({
   meta_i: {
     usingInput: true,
     handler: () => {
+      if (!isDocsRoute.value) return
       inputRef.value?.inputRef?.focus()
     },
   },
@@ -38,7 +42,7 @@ defineShortcuts({
 <template>
   <AnimatePresence>
     <motion.div
-      v-if="isVisible && !isOpen"
+      v-if="isDocsRoute && isVisible && !isOpen"
       key="floating-input"
       :initial="{ y: 20, opacity: 0 }"
       :animate="{ y: 0, opacity: 1 }"
