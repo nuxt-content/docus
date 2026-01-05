@@ -1,0 +1,25 @@
+{
+	"common": {
+		"or": "atau",
+		"error": {
+			"title": "Halaman tidak ditemukan",
+			"description": "Kami minta maaf, halaman ini tidak dapat ditemukan."
+		},
+		"copied": "Berhasil disalin ke papan klip"
+	},
+	"docs": {
+		"copy": {
+			"page": "Salin halaman",
+			"link": "Salin halaman Markdown",
+			"view": "Lihat sebagai Markdown",
+			"gpt": "Buka di ChatGPT",
+			"claude": "Buka di Claude",
+			"mcp_url": "Salin URL Server MCP",
+			"mcp_add": "Tambah Server MCP"
+		},
+		"links": "Komunitas",
+		"toc": "Pada halaman ini",
+		"report": "Laporkan masalah",
+		"edit": "Ubah halaman ini"
+	}
+}
