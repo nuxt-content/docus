@@ -48,6 +48,11 @@ declare module 'nuxt/schema' {
       title?: string
       placeholder?: string
       /**
+       * Show the floating input at the bottom of documentation pages.
+       * @default true
+       */
+      floatingInput?: boolean
+      /**
        * Show the "Explain with AI" button in the documentation sidebar.
        * @default true
        */

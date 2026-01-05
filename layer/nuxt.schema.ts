@@ -233,6 +233,13 @@ export default defineNuxtSchema({
           icon: 'i-lucide-text',
           default: 'Ask a question...',
         }),
+        floatingInput: field({
+          type: 'boolean',
+          title: 'Floating Input',
+          description: 'Show the floating input at the bottom of documentation pages.',
+          icon: 'i-lucide-message-circle',
+          default: true,
+        }),
         explainWithAi: field({
           type: 'boolean',
           title: 'Explain with AI',

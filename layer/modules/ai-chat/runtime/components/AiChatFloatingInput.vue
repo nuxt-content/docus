@@ -2,12 +2,14 @@
 import { AnimatePresence, motion } from 'motion-v'
 
 const route = useRoute()
+const appConfig = useAppConfig()
 const { open, isOpen } = useAIChat()
 const input = ref('')
 const isVisible = ref(true)
 const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
 
 const isDocsRoute = computed(() => route.meta.layout === 'docs')
+const isFloatingInputEnabled = computed(() => appConfig.aiChat?.floatingInput !== false)
 
 function handleSubmit() {
   if (!input.value.trim()) return
@@ -26,7 +28,7 @@ defineShortcuts({
   meta_i: {
     usingInput: true,
     handler: () => {
-      if (!isDocsRoute.value) return
+      if (!isDocsRoute.value || !isFloatingInputEnabled.value) return
       inputRef.value?.inputRef?.focus()
     },
   },
@@ -42,7 +44,7 @@ defineShortcuts({
 <template>
   <AnimatePresence>
     <motion.div
-      v-if="isDocsRoute && isVisible && !isOpen"
+      v-if="isFloatingInputEnabled && isDocsRoute && isVisible && !isOpen"
       key="floating-input"
       :initial="{ y: 20, opacity: 0 }"
       :animate="{ y: 0, opacity: 1 }"
@@ -59,7 +61,7 @@ defineShortcuts({
           size="lg"
           :ui="{
             root: 'w-72 py-0.5 focus-within:w-96 transition-all duration-300 ease-out',
-            base: 'bg-default/80 backdrop-blur-xl shadow-lg rounded-xl',
+            base: 'bg-default shadow-lg rounded-xl',
             trailing: 'pe-2',
           }"
           @keydown.enter.exact.prevent="handleSubmit"

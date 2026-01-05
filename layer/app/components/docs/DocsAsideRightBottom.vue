@@ -24,13 +24,18 @@ const showExplainWithAi = computed(() => {
       :links="appConfig.toc?.bottom?.links"
     />
 
+    <USeparator
+      v-if="appConfig.toc?.bottom?.links?.length && showExplainWithAi"
+      type="dashed"
+    />
+
     <UButton
       v-if="showExplainWithAi"
       icon="i-lucide-brain"
       label="Explain with AI"
       size="sm"
       variant="link"
-      class="p-0"
+      class="p-0 text-sm"
       color="neutral"
       @click="open(`Explain the page ${pageUrl}`, true)"
     />
