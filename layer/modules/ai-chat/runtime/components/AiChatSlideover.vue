@@ -76,12 +76,15 @@ const showThinking = computed(() =>
 function getToolLabel(toolName: string, args: any) {
   const path = args?.path || ''
 
-  const labels: Record<string, string> = {
-    'list-pages': t('aiChat.toolListPages'),
-    'get-page': t('aiChat.toolReadPage').replace('{path}', path || 'page'),
+  if (toolName === 'list-pages') {
+    return t('aiChat.toolListPages')
   }
 
-  return labels[toolName] || toolName
+  if (toolName === 'get-page') {
+    return `${t('aiChat.toolReadPage')} ${path || '...'}`
+  }
+
+  return toolName
 }
 
 function handleSubmit(event?: Event) {
@@ -206,8 +209,8 @@ onMounted(() => {
               <template v-else-if="part.type === 'data-tool-calls'">
                 <AiChatToolCall
                   v-for="tool in (part as any).data.tools"
-                  :key="tool.toolCallId"
-                  :text="getToolLabel(tool.toolName, tool.input)"
+                  :key="`${tool.toolCallId}-${JSON.stringify(tool.args)}`"
+                  :text="getToolLabel(tool.toolName, tool.args)"
                   :is-loading="false"
                 />
               </template>
@@ -218,7 +221,7 @@ onMounted(() => {
 
       <div
         v-else
-        class="flex-1 overflow-y-auto px-4 py-4"
+        class="flex-1 overflow-y-auto p-4"
       >
         <div
           v-if="!props.faqQuestions?.length"
@@ -269,38 +272,34 @@ onMounted(() => {
     </template>
 
     <template #footer>
-      <div class="border-t border-muted/50 p-3 w-full">
-        <div class="relative flex items-end gap-2 rounded-xl bg-elevated/70 pr-2 pb-2">
-          <UTextarea
-            v-model="input"
-            :rows="1"
-            autoresize
-            variant="none"
-            :placeholder="displayPlaceholder"
-            class="flex-1 text-sm bg-transparent resize-none"
-            :ui="{
-              base: 'bg-transparent! ring-0! shadow-none!',
-            }"
-            @keydown.enter.exact.prevent="handleSubmit"
-          />
-          <UButton
-            icon="i-lucide-arrow-up"
-            color="primary"
-            size="xs"
-            :disabled="!input.trim() || chat.status === 'streaming'"
-            :loading="chat.status === 'streaming'"
-            class="shrink-0 rounded-lg"
-            @click="handleSubmit"
-          />
-        </div>
-        <div class="flex justify-between items-center mt-2 px-1 text-xs text-dimmed">
-          <span>{{ t('aiChat.chatCleared') }}</span>
-          <div class="flex items-center gap-1">
-            <span>{{ t('aiChat.lineBreak') }}</span>
-            <UKbd value="shift" />
-            <UKbd value="enter" />
-          </div>
-        </div>
+      <div class="p-3 w-full">
+        <UChatPrompt
+          v-model="input"
+          :rows="2"
+          class="text-sm"
+          :placeholder="displayPlaceholder"
+          :ui="{
+            body: '*:p-0! *:rounded-none!',
+          }"
+          @submit="handleSubmit"
+        >
+          <template #footer>
+            <div class="flex items-center divide-x divide-muted/50">
+              <span class="text-xs text-muted pr-2">{{ t('aiChat.chatCleared') }}</span>
+              <div class="flex items-center gap-1 text-xs text-muted pl-2">
+                <span>{{ t('aiChat.lineBreak') }}</span>
+                <UKbd value="shift" />
+                <UKbd value="enter" />
+              </div>
+            </div>
+            <UChatPromptSubmit
+              size="xs"
+              :status="chat.status"
+              @stop="chat.stop()"
+              @reload="chat.regenerate()"
+            />
+          </template>
+        </UChatPrompt>
       </div>
     </template>
   </USlideover>

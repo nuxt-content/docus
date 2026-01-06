@@ -1,4 +1,4 @@
-import { tool, stepCountIs, generateText } from 'ai'
+import { tool, stepCountIs, streamText } from 'ai'
 import { z } from 'zod'
 
 function getSubAgentSystemPrompt(siteName: string) {
@@ -30,24 +30,31 @@ export function createDocumentationAgentTool(mcpTools: Record<string, any>, mode
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const writer = (executionOptions as any)?.experimental_context?.writer
 
-      const result = await generateText({
+      const result = streamText({
         model: model,
         tools: mcpTools,
         system: getSubAgentSystemPrompt(siteName),
         stopWhen: stepCountIs(5),
         onStepFinish: ({ toolCalls }) => {
+          if (toolCalls.length === 0) return
+
           writer?.write({
             id: toolCalls[0]?.toolCallId,
             type: 'data-tool-calls',
             data: {
-              tools: toolCalls.map(toolCall => ({ toolName: toolCall.toolName, toolCallId: toolCall.toolCallId, input: toolCall.input })),
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              tools: toolCalls.map((toolCall: any) => ({
+                toolName: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                args: toolCall.args || toolCall.input || {},
+              })),
             },
           })
         },
         prompt: query,
       })
 
-      return result.text
+      return await result.text
     },
   })
 }

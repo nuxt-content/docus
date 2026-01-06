@@ -35,6 +35,6 @@
     "lineBreak": "Retour à la ligne",
     "explainWithAi": "Expliquer avec l'IA",
     "toolListPages": "Pages de documentation listées",
-    "toolReadPage": "Lecture de {path}"
+    "toolReadPage": "Lecture de"
   }
 }

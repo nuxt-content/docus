@@ -39,7 +39,7 @@ function getMainAgentSystemPrompt(siteName: string) {
 export default defineEventHandler(async (event) => {
   const { messages } = await readBody(event)
   const config = useRuntimeConfig()
-  const siteConfig = useSiteConfig(event)
+  const siteConfig = getSiteConfig(event)
 
   const siteName = siteConfig.name || 'Documentation'
 
