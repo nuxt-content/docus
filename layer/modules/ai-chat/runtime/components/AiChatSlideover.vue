@@ -1,21 +1,16 @@
 <script setup lang="ts">
 import type { DefineComponent } from 'vue'
 import type { UIMessage } from 'ai'
-import type { FaqCategory } from '~/types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
 import AiChatPreStream from './AiChatPreStream.vue'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
-const props = defineProps<{
-  faqQuestions?: FaqCategory[]
-}>()
-
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent,
 }
 
-const { isOpen, messages, pendingMessage, clearPending } = useAIChat()
+const { isOpen, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
 const config = useRuntimeConfig()
 const appConfig = useAppConfig()
 const toast = useToast()
@@ -224,7 +219,7 @@ onMounted(() => {
         class="flex-1 overflow-y-auto p-4"
       >
         <div
-          v-if="!props.faqQuestions?.length"
+          v-if="!faqQuestions?.length"
           class="flex flex-col items-center justify-center h-full text-center py-12"
         >
           <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -248,7 +243,7 @@ onMounted(() => {
 
           <div class="flex flex-col gap-5">
             <div
-              v-for="category in props.faqQuestions"
+              v-for="category in faqQuestions"
               :key="category.category"
               class="flex flex-col gap-1.5"
             >

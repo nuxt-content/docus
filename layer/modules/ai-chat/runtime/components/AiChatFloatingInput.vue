@@ -72,7 +72,7 @@ defineShortcuts(shortcuts)
           :placeholder="placeholder"
           size="lg"
           :ui="{
-            root: 'w-72 focus-within:w-96 transition-all duration-300 ease-out hover:scale-105',
+            root: 'w-72 focus-within:w-96 transition-all duration-300 ease-out hover:scale-105 focus-within:scale-105',
             base: 'bg-default shadow-lg rounded-xl',
             trailing: 'pe-2',
           }"

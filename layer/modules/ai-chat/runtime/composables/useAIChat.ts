@@ -1,12 +1,52 @@
 import type { UIMessage } from 'ai'
+import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
+
+function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
+  if (!questions || (Array.isArray(questions) && questions.length === 0)) {
+    return []
+  }
+
+  // Check if first item is a string (simple format) or object (category format)
+  if (typeof questions[0] === 'string') {
+    return [{
+      category: 'Questions',
+      items: questions as string[],
+    }]
+  }
+
+  return questions as FaqCategory[]
+}
 
 export function useAIChat() {
   const config = useRuntimeConfig()
+  const appConfig = useAppConfig()
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 
   const isOpen = useState('ai-chat-open', () => false)
   const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
   const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
+
+  const faqQuestions = computed<FaqCategory[]>(() => {
+    const aiChatConfig = appConfig.aiChat
+    const faqConfig = aiChatConfig?.faqQuestions
+    if (!faqConfig) return []
+
+    // Check if it's a localized object (has locale keys like 'en', 'fr')
+    if (!Array.isArray(faqConfig)) {
+      const localizedConfig = faqConfig as LocalizedFaqQuestions
+      const currentLocale = appConfig.docus?.locale || 'en'
+      const defaultLocale = config.public.i18n?.defaultLocale || 'en'
+
+      // Try current locale, then default locale, then first available
+      const questions = localizedConfig[currentLocale]
+        || localizedConfig[defaultLocale]
+        || Object.values(localizedConfig)[0]
+
+      return normalizeFaqQuestions(questions || [])
+    }
+
+    return normalizeFaqQuestions(faqConfig)
+  })
 
   function open(initialMessage?: string, clearPrevious = false) {
     if (clearPrevious) {
@@ -40,6 +80,7 @@ export function useAIChat() {
     isOpen,
     messages,
     pendingMessage,
+    faqQuestions,
     open,
     clearPending,
     close,

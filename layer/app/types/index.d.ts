@@ -1,10 +1,7 @@
-export interface FaqCategory {
-  category: string
-  items: string[]
-}
+import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
 
-export type FaqQuestions = string[] | FaqCategory[]
-export type LocalizedFaqQuestions = Record<string, FaqQuestions>
+// Re-export FAQ types from the AI chat module
+export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
 
 declare module 'nuxt/schema' {
   interface AppConfig {
@@ -91,3 +88,5 @@ declare module 'nuxt/schema' {
     }
   }
 }
+
+export {}
