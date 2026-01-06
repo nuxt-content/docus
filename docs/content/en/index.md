@@ -156,16 +156,16 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::div{.bg-elevated.rounded-lg.p-3.overflow-x-auto}
       ```ts [app.config.ts]
       export default defineAppConfig({
-        ui: {
-          colors: {
-            primary: 'green',
-            secondary: 'sky',
-          },
-        },
-        socials: {
-          x: 'https://x.com/nuxt_js',
-          nuxt: 'https://nuxt.com'
-        }
+      ui: {
+      colors: {
+      primary: 'green',
+      secondary: 'sky',
+      },
+      },
+      socials: {
+      x: 'https://x.com/nuxt_js',
+      nuxt: 'https://nuxt.com'
+      }
       })
       ```
       :::::
@@ -225,11 +225,11 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     target: _blank
     ---
       :::::browser-frame
-      :video{.rounded-md controls loop playsinline src="https://res.cloudinary.com/nuxt/video/upload/v1747230893/studio/wzt9zfmdvk7hgmdx3cnt.mp4"}
+      :video{.rounded-md controls loop playsinline src="https://res.cloudinary.com/nuxt/video/upload/v1767647099/studio/studio-demo_eiofld.mp4"}
       :::::
 
     #title
-    Collaborate on [Nuxt Studio]{.text-primary}
+    Edit your content in production with [[Nuxt Studio](https://nuxt.studio)]{.text-primary}
 
     #description
     Write and manage your content visually, with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.

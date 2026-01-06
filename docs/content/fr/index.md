@@ -81,7 +81,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Propulsé par [Nuxt UI]{.text-primary}
+    Stylisé par [Nuxt UI]{.text-primary}
 
     #description
     Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
@@ -141,7 +141,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Markdown amélioré par [Nuxt Content]{.text-primary}
+    Markdown amélioré par [Nuxt Content](https://content.nuxt.com)
 
     #description
     La seule chose dont vous devez vous soucier est d'écrire votre contenu. Rédigez vos pages en Markdown et intégrer des composants Nuxt UI ou des composants Vue personnalisés. La structure, le routing et le rendu sont gérés pour vous.
@@ -156,16 +156,16 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::div{.bg-elevated.rounded-lg.p-3.overflow-x-auto}
       ```ts [app.config.ts]
       export default defineAppConfig({
-        ui: {
-          colors: {
-            primary: 'green',
-            secondary: 'sky',
-          },
-        },
-        socials: {
-          x: 'https://x.com/nuxt_js',
-          nuxt: 'https://nuxt.com'
-        }
+      ui: {
+      colors: {
+      primary: 'green',
+      secondary: 'sky',
+      },
+      },
+      socials: {
+      x: 'https://x.com/nuxt_js',
+      nuxt: 'https://nuxt.com'
+      }
       })
       ```
       :::::
@@ -186,7 +186,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     :color-mode-switch
 
     #title
-    [Nuxt Color]{.text-primary}
+    [Nuxt Color](https://color-mode.nuxtjs.org) intégration
 
     #description
     Light et dark mode intégré, aucune configuration nécessaire.
@@ -225,11 +225,11 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     target: _blank
     ---
       :::::browser-frame
-      :video{.rounded-md controls loop playsinline src="https://res.cloudinary.com/nuxt/video/upload/v1747230893/studio/wzt9zfmdvk7hgmdx3cnt.mp4"}
+      :video{.rounded-md controls loop playsinline src="https://res.cloudinary.com/nuxt/video/upload/v1767647099/studio/studio-demo_eiofld.mp4"}
       :::::
 
     #title
-    Collaborez sur [Nuxt Studio]{.text-primary}
+    Edition en production avec [Nuxt Studio](https://nuxt.studio)
 
     #description
     Rédigez et gérez votre contenu visuellement, sans aucune connaissance de Markdown requise. Laissez vos collègues non techniques collaborer sur la documentation et intégrer des composants Vue sans compétences en code.
