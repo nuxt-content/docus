@@ -59,7 +59,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
 
     const components = [
       'AiChat',
-      'AiChatSlideover',
+      'AiChatPanel',
       'AiChatToolCall',
       'AiChatFloatingInput',
       'AiTextShimmer',

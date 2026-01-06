@@ -77,7 +77,7 @@ provide('navigation', navigation)
       />
       <template v-if="isAiChatEnabled">
         <LazyAiChatFloatingInput />
-        <LazyAiChatSlideover />
+        <LazyAiChatPanel />
       </template>
     </ClientOnly>
   </UApp>

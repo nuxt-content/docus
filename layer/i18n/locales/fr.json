@@ -27,6 +27,8 @@
     "askAnything": "Demandez n'importe quoi...",
     "clearChat": "Effacer le chat",
     "close": "Fermer",
+    "expand": "Agrandir",
+    "collapse": "Réduire",
     "thinking": "Réflexion...",
     "askMeAnything": "Posez-moi une question",
     "askMeAnythingDescription": "Je peux vous aider à naviguer dans la documentation, expliquer des concepts et répondre à vos questions.",
