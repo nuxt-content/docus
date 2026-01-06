@@ -1,6 +1,5 @@
 import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
 
-// Re-export FAQ types from the AI chat module
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
 
 declare module 'nuxt/schema' {
