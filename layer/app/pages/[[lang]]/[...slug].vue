@@ -12,6 +12,7 @@ const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const { isOpen: isAiChatOpen } = useAIChat()
 
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
@@ -69,7 +70,10 @@ const editLink = computed(() => {
 </script>
 
 <template>
-  <UPage v-if="page">
+  <UPage
+    v-if="page"
+    :key="`page-${isAiChatOpen}`"
+  >
     <UPageHeader
       :title="page.title"
       :description="page.description"
@@ -128,7 +132,7 @@ const editLink = computed(() => {
     </UPageBody>
 
     <template
-      v-if="page?.body?.toc?.links?.length"
+      v-if="page?.body?.toc?.links?.length && !isAiChatOpen"
       #right
     >
       <UContentToc

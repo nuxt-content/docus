@@ -10,41 +10,12 @@ const components = {
   pre: AiChatPreStream as unknown as DefineComponent,
 }
 
-const { isOpen, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
+const { isOpen, isExpanded, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
 const config = useRuntimeConfig()
 const toast = useToast()
 const { t } = useDocusI18n()
 
 const input = ref('')
-
-const PANEL_WIDTH_COMPACT = 360
-const PANEL_WIDTH_EXPANDED = 520
-const isExpanded = ref(false)
-const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
-
-function toggleExpanded() {
-  isExpanded.value = !isExpanded.value
-}
-
-useHead({
-  style: [
-    {
-      innerHTML: 'body { transition: padding-right 0.3s ease-out; }',
-    },
-  ],
-})
-
-watch([isOpen, panelWidth], ([open, width]) => {
-  if (import.meta.client) {
-    document.body.style.paddingRight = open ? `${width}px` : ''
-  }
-}, { immediate: true })
-
-onUnmounted(() => {
-  if (import.meta.client) {
-    document.body.style.paddingRight = ''
-  }
-})
 
 const displayTitle = computed(() => t('aiChat.title'))
 const displayPlaceholder = computed(() => t('aiChat.placeholder'))
@@ -158,12 +129,14 @@ onMounted(() => {
 
 <template>
   <aside
-    class="fixed right-0 top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[transform,width] duration-300 ease-out"
-    :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
-    :style="{ width: `${panelWidth}px` }"
+    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
+    :style="{
+      width: `${panelWidth}px`,
+      right: isOpen ? '0' : `-${panelWidth}px`,
+    }"
   >
     <div
-      class="flex h-full flex-col transition-[width] duration-300 ease-out"
+      class="flex h-full flex-col transition-[width] duration-200 ease-linear"
       :style="{ width: `${panelWidth}px` }"
     >
       <div class="flex h-16 shrink-0 items-center justify-between px-4">
