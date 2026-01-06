@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 
   aiChat: {
     apiPath: '/api/ai-chat',
-    mcpPath: '/mcp',
+    mcpServer: '/mcp',
     model: 'moonshotai/kimi-k2-turbo',
   }
 })
@@ -38,14 +38,10 @@ export default defineNuxtConfig({
 4. Set up your API key as an environment variable:
 
 ```bash
-# Using AI SDK Gateway
 AI_GATEWAY_API_KEY=your-gateway-key
-
-# Or using OpenAI directly
-OPENAI_API_KEY=your-openai-key
 ```
 
-> **Note:** The module will only be enabled if one of these API keys is detected. If no key is found, the module is disabled and a message is logged to the console.
+> **Note:** The module will only be enabled if `AI_GATEWAY_API_KEY` is detected. If no key is found, the module is disabled and a message is logged to the console.
 
 ## Usage
 
@@ -58,26 +54,43 @@ Add the components to your app:
     <AiChat tooltip-text="Ask AI a question" />
 
     <!-- Chat slideover (place once in your app/layout) -->
-    <AiChatSlideover
-      title="Ask AI"
-      placeholder="Ask a question..."
-      :faq-questions="faqQuestions"
-    />
+    <AiChatSlideover />
   </div>
 </template>
+```
 
-<script setup>
-const faqQuestions = [
-  {
-    category: 'Getting Started',
-    items: ['How do I install?', 'How do I configure?'],
+### FAQ Questions
+
+Configure FAQ questions in your `app.config.ts`:
+
+```ts
+export default defineAppConfig({
+  aiChat: {
+    faqQuestions: [
+      {
+        category: 'Getting Started',
+        items: ['How do I install?', 'How do I configure?'],
+      },
+      {
+        category: 'Advanced',
+        items: ['How do I customize?'],
+      },
+    ],
   },
-  {
-    category: 'Advanced',
-    items: ['How do I customize?'],
+})
+```
+
+You can also use localized FAQ questions:
+
+```ts
+export default defineAppConfig({
+  aiChat: {
+    faqQuestions: {
+      en: ['How do I install?', 'How do I configure?'],
+      fr: ['Comment installer ?', 'Comment configurer ?'],
+    },
   },
-]
-</script>
+})
 ```
 
 ### Floating Input
@@ -97,7 +110,7 @@ Use `AiChatFloatingInput` for a floating input at the bottom of the page.
     </Teleport>
 
     <!-- Chat slideover (required to display responses) -->
-    <AiChatSlideover title="Ask AI" />
+    <AiChatSlideover />
   </div>
 </template>
 ```
@@ -135,7 +148,7 @@ clearMessages()
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `apiPath` | `string` | `/api/ai-chat` | API endpoint path for the chat |
-| `mcpPath` | `string` | `/mcp` | MCP server path to connect to |
+| `mcpServer` | `string` | `/mcp` | MCP server path to connect to |
 | `model` | `string` | `moonshotai/kimi-k2-turbo` | AI model identifier for AI SDK Gateway |
 
 ## Components
@@ -150,22 +163,7 @@ Button to toggle the chat slideover.
 
 ### `<AiChatSlideover>`
 
-Main chat interface displayed as a slideover panel.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | `Ask AI` | Title displayed in the header |
-| `placeholder` | `string` | `Ask a question...` | Input placeholder text |
-| `faqQuestions` | `FaqCategory[]` | `undefined` | FAQ categories to display when chat is empty |
-
-#### FaqCategory Type
-
-```ts
-interface FaqCategory {
-  category: string
-  items: string[]
-}
-```
+Main chat interface displayed as a slideover panel. Configuration is done via `app.config.ts` (see FAQ Questions section above).
 
 ### `<AiChatFloatingInput>`
 
@@ -196,6 +194,7 @@ const {
   isOpen,         // Ref<boolean> - Whether the chat is open
   messages,       // Ref<UIMessage[]> - Chat messages
   pendingMessage, // Ref<string | undefined> - Pending message to send
+  faqQuestions,   // ComputedRef<FaqCategory[]> - FAQ questions from config
   open,           // (message?: string, clearPrevious?: boolean) => void
   close,          // () => void
   toggle,         // () => void
@@ -212,10 +211,8 @@ Composable for syntax highlighting code blocks with Shiki.
 
 - Nuxt 4.x
 - Nuxt UI 3.x (for `USlideover`, `UButton`, `UTextarea`, `UChatMessages`, etc.)
-- An MCP server running (path configurable via `mcpPath`)
-- One of the following API keys:
-  - `AI_GATEWAY_API_KEY` - AI SDK Gateway key
-  - `OPENAI_API_KEY` - OpenAI API key
+- An MCP server running (path configurable via `mcpServer`)
+- `AI_GATEWAY_API_KEY` environment variable
 
 ## Customization
 
@@ -227,17 +224,3 @@ To customize the AI's behavior, edit the system prompt in:
 ### Styling
 
 The components use Nuxt UI and Tailwind CSS design tokens. Customize the appearance by modifying the component files or overriding the UI props.
-
-## Dependencies
-
-```json
-{
-  "@ai-sdk/mcp": "^0.0.8",
-  "@ai-sdk/vue": "3.0.0",
-  "@ai-sdk/gateway": "^1.0.0",
-  "ai": "6.0.0",
-  "motion-v": "^1.7.4",
-  "shiki": "^3.0.0",
-  "shiki-stream": "^0.1.2"
-}
-```

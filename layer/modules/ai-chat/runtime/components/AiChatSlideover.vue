@@ -28,7 +28,15 @@ const chat = new Chat({
     api: config.public.aiChat.apiPath,
   }),
   onError: (error: Error) => {
-    const { message } = typeof error.message === 'string' && error.message[0] === '{' ? JSON.parse(error.message) : error
+    const message = (() => {
+      try {
+        const parsed = JSON.parse(error.message)
+        return parsed?.message || error.message
+      }
+      catch {
+        return error.message
+      }
+    })()
 
     toast.add({
       description: message,
