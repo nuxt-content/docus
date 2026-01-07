@@ -47,12 +47,26 @@ export default defineAppConfig({
   },
   toc: {
     bottom: {
-      links: [{
-        icon: 'i-lucide-book-open',
-        label: 'Nuxt UI docs',
-        to: 'https://ui.nuxt.com/getting-started/installation/nuxt',
-        target: '_blank',
-      }],
+      links: [
+        {
+          icon: 'i-lucide-book-open',
+          label: 'Nuxt UI docs',
+          to: 'https://ui.nuxt.com/getting-started/installation/nuxt',
+          target: '_blank',
+        },
+        {
+          icon: 'i-lucide-book-open',
+          label: 'Nuxt Content docs',
+          to: 'https://content.nuxt.com/docs/getting-started/installation/',
+          target: '_blank',
+        },
+        {
+          icon: 'i-lucide-book-open',
+          label: 'Nuxt Studio docs',
+          to: 'https://nuxt.studio/introduction',
+          target: '_blank',
+        },
+      ],
     },
   },
   ui: {
