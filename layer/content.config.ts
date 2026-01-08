@@ -19,11 +19,13 @@ const createDocsSchema = () => z.object({
 let collections: Record<string, DefinedCollection>
 
 if (locales && Array.isArray(locales)) {
+  const isEnabledLandingPage = options.docus?.enableLandingPage
+
   collections = {}
   for (const locale of locales) {
     const code = typeof locale === 'string' ? locale : locale.code
 
-    collections[`landing_${code}`] = defineCollection({
+    if (isEnabledLandingPage) collections[`landing_${code}`] = defineCollection({
       type: 'page',
       source: {
         cwd,
@@ -37,7 +39,7 @@ if (locales && Array.isArray(locales)) {
         cwd,
         include: `${code}/**/*`,
         prefix: `/${code}`,
-        exclude: [`${code}/index.md`],
+        exclude: isEnabledLandingPage ? [`${code}/index.md`] : undefined,
       },
       schema: createDocsSchema(),
     })
@@ -45,19 +47,21 @@ if (locales && Array.isArray(locales)) {
 }
 else {
   collections = {
-    landing: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: 'index.md',
-      },
-    }),
+    landing: isEnabledLandingPage
+      ? defineCollection({
+          type: 'page',
+          source: {
+            cwd,
+            include: 'index.md',
+          },
+        })
+      : undefined,
     docs: defineCollection({
       type: 'page',
       source: {
         cwd,
         include: '**',
-        exclude: ['index.md'],
+        exclude: isEnabledLandingPage ? ['index.md'] : undefined,
       },
       schema: createDocsSchema(),
     }),

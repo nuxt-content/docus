@@ -5,9 +5,17 @@ import { join } from 'node:path'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
-export default defineNuxtModule({
+export interface Config {
+  enableLandingPage?: boolean
+}
+
+export default defineNuxtModule<Config>({
   meta: {
     name: 'config',
+    configKey: 'docus',
+  },
+  defaults: {
+    enableLandingPage: true,
   },
   async setup(_options, nuxt) {
     const dir = nuxt.options.rootDir
@@ -114,3 +122,12 @@ export default defineNuxtModule({
     }
   },
 })
+
+declare module 'nuxt/schema' {
+  interface NuxtConfig {
+    docus?: Partial<Config>
+  }
+  interface NuxtOptions {
+    docus?: Config
+  }
+}
