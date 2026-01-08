@@ -6,6 +6,7 @@ import { joinURL } from 'ufo'
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
+const isEnabledLandingPage = options.docus?.enableLandingPage
 
 const createDocsSchema = () => z.object({
   links: z.array(z.object({
@@ -19,8 +20,6 @@ const createDocsSchema = () => z.object({
 let collections: Record<string, DefinedCollection>
 
 if (locales && Array.isArray(locales)) {
-  const isEnabledLandingPage = options.docus?.enableLandingPage
-
   collections = {}
   for (const locale of locales) {
     const code = typeof locale === 'string' ? locale : locale.code
