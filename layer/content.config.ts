@@ -21,7 +21,7 @@ let collections: Record<string, DefinedCollection>
 if (locales && Array.isArray(locales)) {
   collections = {}
   for (const locale of locales) {
-    const code = typeof locale === 'string' ? locale : locale.code
+    const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
 
     collections[`landing_${code}`] = defineCollection({
       type: 'page',
