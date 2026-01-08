@@ -72,7 +72,7 @@ defineShortcuts(shortcuts)
           :placeholder="placeholder"
           size="lg"
           :ui="{
-            root: 'w-72 focus-within:w-96 transition-all duration-300 ease-out hover:scale-105 focus-within:scale-105',
+            root: 'group w-72 focus-within:w-96 transition-all duration-300 ease-out hover:scale-105 focus-within:scale-105',
             base: 'bg-default shadow-lg rounded-xl',
             trailing: 'pe-2',
           }"
@@ -80,7 +80,7 @@ defineShortcuts(shortcuts)
         >
           <template #trailing>
             <div class="flex items-center gap-2">
-              <div class="hidden sm:flex items-center gap-1">
+              <div class="hidden sm:flex group-focus-within:hidden items-center gap-1">
                 <UKbd
                   v-for="key in shortcutDisplayKeys"
                   :key="key"

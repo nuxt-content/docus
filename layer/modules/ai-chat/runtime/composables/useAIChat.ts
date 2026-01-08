@@ -1,4 +1,5 @@
 import type { UIMessage } from 'ai'
+import { useMediaQuery } from '@vueuse/core'
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
@@ -6,7 +7,6 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
     return []
   }
 
-  // Check if first item is a string (simple format) or object (category format)
   if (typeof questions[0] === 'string') {
     return [{
       category: 'Questions',
@@ -30,7 +30,9 @@ export function useAIChat() {
   const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
   const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
 
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
+  const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
 
   const faqQuestions = computed<FaqCategory[]>(() => {
     const aiChatConfig = appConfig.aiChat
@@ -89,7 +91,9 @@ export function useAIChat() {
     isEnabled,
     isOpen,
     isExpanded,
+    isMobile,
     panelWidth,
+    shouldPushContent,
     messages,
     pendingMessage,
     faqQuestions,

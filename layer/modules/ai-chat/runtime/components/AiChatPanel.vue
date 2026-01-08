@@ -3,6 +3,7 @@ import type { DefineComponent } from 'vue'
 import type { UIMessage } from 'ai'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
+import { createReusableTemplate } from '@vueuse/core'
 import AiChatPreStream from './AiChatPreStream.vue'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
@@ -10,11 +11,12 @@ const components = {
   pre: AiChatPreStream as unknown as DefineComponent,
 }
 
-const { isOpen, isExpanded, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
+const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpandButton?: boolean }>()
+
+const { isOpen, isExpanded, isMobile, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
 const config = useRuntimeConfig()
 const toast = useToast()
 const { t } = useDocusI18n()
-
 const input = ref('')
 
 const displayTitle = computed(() => t('aiChat.title'))
@@ -128,21 +130,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <aside
-    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
-    :style="{
-      width: `${panelWidth}px`,
-      right: isOpen ? '0' : `-${panelWidth}px`,
-    }"
-  >
-    <div
-      class="flex h-full flex-col transition-[width] duration-200 ease-linear"
-      :style="{ width: `${panelWidth}px` }"
-    >
-      <div class="flex h-16 shrink-0 items-center justify-between px-4">
+  <DefineChatContent v-slot="{ showExpandButton = true }">
+    <div class="flex h-full flex-col">
+      <div class="flex h-16 shrink-0 items-center justify-between border-b border-muted/50 px-4">
         <span class="font-medium text-highlighted">{{ displayTitle }}</span>
         <div class="flex items-center gap-1">
-          <UTooltip :text="isExpanded ? t('aiChat.collapse') : t('aiChat.expand')">
+          <UTooltip
+            v-if="showExpandButton"
+            :text="isExpanded ? t('aiChat.collapse') : t('aiChat.expand')"
+          >
             <UButton
               :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
               color="neutral"
@@ -284,7 +280,7 @@ onMounted(() => {
           @submit="handleSubmit"
         >
           <template #footer>
-            <div class="flex items-center divide-x divide-muted/50">
+            <div class="hidden items-center divide-x divide-muted/50 sm:flex">
               <span class="pr-2 text-xs text-muted">{{ t('aiChat.chatCleared') }}</span>
               <div class="flex items-center gap-1 pl-2 text-xs text-muted">
                 <span>{{ t('aiChat.lineBreak') }}</span>
@@ -293,6 +289,7 @@ onMounted(() => {
               </div>
             </div>
             <UChatPromptSubmit
+              class="ml-auto"
               size="xs"
               :status="chat.status"
               @stop="chat.stop()"
@@ -302,5 +299,34 @@ onMounted(() => {
         </UChatPrompt>
       </div>
     </div>
+  </DefineChatContent>
+
+  <aside
+    v-if="!isMobile"
+    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
+    :style="{
+      width: `${panelWidth}px`,
+      right: isOpen ? '0' : `-${panelWidth}px`,
+    }"
+  >
+    <div
+      class="h-full transition-[width] duration-200 ease-linear"
+      :style="{ width: `${panelWidth}px` }"
+    >
+      <ReuseChatContent :show-expand-button="true" />
+    </div>
   </aside>
+
+  <USlideover
+    v-else
+    v-model:open="isOpen"
+    side="right"
+    :ui="{
+      content: 'ring-0 bg-default',
+    }"
+  >
+    <template #content>
+      <ReuseChatContent :show-expand-button="false" />
+    </template>
+  </USlideover>
 </template>
