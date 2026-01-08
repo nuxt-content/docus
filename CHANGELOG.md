@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.4.2](https://github.com/nuxt-content/docus/compare/v5.4.1...v5.4.2) (2026-01-07)
+
+### Features
+
+* **i18n:** add Chinese (zh-CN) locale ([#1244](https://github.com/nuxt-content/docus/issues/1244)) ([3f7d034](https://github.com/nuxt-content/docus/commit/3f7d0343ac4724884539c1c76ff1ea2299c7ca98))
+* **i18n:** add Indonesian (id) support ([#1239](https://github.com/nuxt-content/docus/issues/1239)) ([c95e612](https://github.com/nuxt-content/docus/commit/c95e61276e0b6887ea624810f67ee73e8cc427ba))
+* **i18n:** add pt-BR locale ([#1231](https://github.com/nuxt-content/docus/issues/1231)) ([0eb5bba](https://github.com/nuxt-content/docus/commit/0eb5bba6a1724d0e2c012d814ede6310b53d896c))
+* **i18n:** add Sinhala (si) locale ([#1237](https://github.com/nuxt-content/docus/issues/1237)) ([610ec82](https://github.com/nuxt-content/docus/commit/610ec821b59ef7616b3f6bda15e98749ecb342af))
+* **i18n:** add Turkish (tr) locale ([#1236](https://github.com/nuxt-content/docus/issues/1236)) ([25dc07b](https://github.com/nuxt-content/docus/commit/25dc07b168d395771da439fae584d86309cfc79f))
+
 ## [5.4.1](https://github.com/nuxt-content/docus/compare/v5.4.0...v5.4.1) (2025-12-19)
 
 ### Bug Fixes

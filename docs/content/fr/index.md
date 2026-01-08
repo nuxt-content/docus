@@ -56,7 +56,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     :floating-nuxt
 
     #title
-    Construit avec [Nuxt]{.text-primary}
+    Construit avec [Nuxt](https://nuxt.com)
 
     #description
     Optimisé par votre meta framework Vue préféré. Docus vous donne tout ce dont vous avez besoin pour créer des sites rapides, performants et optimisés pour le SEO.
@@ -81,7 +81,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Stylisé par [Nuxt UI]{.text-primary}
+    Stylisé par [Nuxt UI](https://ui.nuxt.com)
 
     #description
     Sexy, minimaliste et personnalisable. Docus intègre Nuxt UI pour vous offrir la meilleure expérience pour écrire une documentation sans boilerplate, concentrez-vous simplement sur votre contenu.
@@ -171,7 +171,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Personnalisation avec [Nuxt App Config]{.text-primary}
+    Personnalisation avec [Nuxt App Config](https://nuxt.com/docs/4.x/getting-started/configuration#app-configuration)
 
     #description
     Mettez à jour les couleurs, les liens sociaux, les logos ou même le style de vos composants globalement via le `app.config.ts`, sans modification directe du code.
@@ -254,7 +254,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Optimisation [Nuxt Image]{.text-primary}
+    Optimisation [Nuxt Image](https://image.nuxt.com)
 
     #description
     Docus convertit automatiquement les images Markdown pour utiliser `<NuxtImg>`.
@@ -304,7 +304,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
       :::::
 
     #title
-    Prêt pour l' [IA]{.text-primary} avec MCP natif
+    Prêt pour l' [IA avec MCP natif]{.text-primary}
 
     #description
     Serveur Model Context Protocol intégré qui connecte votre documentation aux outils IA comme Cursor, VS Code et Claude. Génération automatique des fichiers `llms.txt` et `llms-full.txt` pour une intégration LLM transparente.

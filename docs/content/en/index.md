@@ -56,7 +56,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     :floating-nuxt
 
     #title
-    Built with [Nuxt]{.text-primary}
+    Built with [Nuxt](https://nuxt.com)
 
     #description
     Optimized by the most famous Vue framework. Docus gives you everything you need to build fast, performant, and SEO-friendly websites.
@@ -81,7 +81,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::
 
     #title
-    Powered by [Nuxt UI]{.text-primary}
+    Powered by [Nuxt UI](https://ui.nuxt.com)
 
     #description
     Beautiful out of the box, minimal by design but highly customizable. Docus leverages Nuxt UI to give you the best docs writing experience with zero boilerplate, just focus on your content.
@@ -141,7 +141,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::
 
     #title
-    Enhanced Markdown syntax by [Nuxt Content]{.text-primary}
+    Enhanced Markdown syntax by [Nuxt Content](https://content.nuxt.com)
 
     #description
     The only thing you need to take care about is writing your content. Write your pages in Markdown and extend with MDC syntax to embed Nuxt UI or custom Vue components. Structure, routing, and rendering are handled for you.
@@ -171,7 +171,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::
 
     #title
-    Customize with [Nuxt App Config]{.text-primary}
+    Customize with [Nuxt App Config](https://nuxt.com/docs/4.x/getting-started/configuration#app-configuration)
 
     #description
     Update colors, social links, header logos and component styles globally using the `app.config.ts`, no direct code modifications required.
@@ -186,7 +186,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     :color-mode-switch
 
     #title
-    [Nuxt Color]{.text-primary} mode
+    [Nuxt Color](https://color-mode.nuxtjs.org/) mode
 
     #description
     Built-in dark mode provided, no configuration required.
@@ -229,7 +229,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::
 
     #title
-    Edit your content in production with [[Nuxt Studio](https://nuxt.studio)]{.text-primary}
+    Edit your content in production with [Nuxt Studio](https://nuxt.studio)
 
     #description
     Write and manage your content visually, with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.
@@ -254,7 +254,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
       :::::
 
     #title
-    [Nuxt Image]{.text-primary} optimization
+    [Nuxt Image](https://image.nuxt.com) optimization
 
     #description
     Docus automatically converts Markdown images to use `<NuxtImg>` .

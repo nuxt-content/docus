@@ -102,10 +102,10 @@ Shipped with many features
   to: https://content.nuxt.com/studio
   ---
   #title
-  Collaborate on [Nuxt Studio]{.text-primary}
+  Edit in production with [Nuxt Studio]{.text-primary}
   
   #description
-  Write and manage your content visually, with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.
+  Edit your content in production with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.
   :::
 
   :::u-page-feature
