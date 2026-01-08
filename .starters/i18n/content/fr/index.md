@@ -100,10 +100,10 @@ Livré avec de nombreuses fonctionnalités
   to: https://content.nuxt.com/studio
   ---
   #title
-  Collaborez sur [Nuxt Studio]{.text-primary}
+  Éditez en production avec [Nuxt Studio]{.text-primary}
   
   #description
-  Rédigez et gérez votre contenu visuellement, sans aucune connaissance de Markdown requise. Laissez vos collègues non techniques collaborer sur la documentation et intégrer des composants Vue sans compétences en code.
+  Éditez votre contenu en production avec zéro connaissance de Markdown requise. Laissez vos collègues non techniques collaborer sur la documentation et intégrer des composants Vue sans compétences en code.
   :::
 
   :::u-page-feature
