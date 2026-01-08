@@ -128,6 +128,6 @@ declare module 'nuxt/schema' {
     docus?: Partial<Config>
   }
   interface NuxtOptions {
-    docus?: Config
+    docus: Config
   }
 }
