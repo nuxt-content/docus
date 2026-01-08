@@ -5,4 +5,3 @@ export interface FaqCategory {
 
 export type FaqQuestions = string[] | FaqCategory[]
 export type LocalizedFaqQuestions = Record<string, FaqQuestions>
-
