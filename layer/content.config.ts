@@ -46,15 +46,6 @@ if (locales && Array.isArray(locales)) {
 }
 else {
   collections = {
-    landing: isEnabledLandingPage
-      ? defineCollection({
-          type: 'page',
-          source: {
-            cwd,
-            include: 'index.md',
-          },
-        })
-      : undefined,
     docs: defineCollection({
       type: 'page',
       source: {
@@ -64,6 +55,15 @@ else {
       },
       schema: createDocsSchema(),
     }),
+  }
+  if (isEnabledLandingPage) {
+    collections.landing = defineCollection({
+      type: 'page',
+      source: {
+        cwd,
+        include: 'index.md',
+      },
+    })
   }
 }
 
