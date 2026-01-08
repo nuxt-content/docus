@@ -75,7 +75,7 @@ export default defineNuxtConfig({
 
       nitroConfig.prerender = nitroConfig.prerender || {}
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
-      nitroConfig.prerender.routes.push(...(routes || []))
+      nitroConfig.prerender.routes.push(...routes)
     },
   },
   icon: {
