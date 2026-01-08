@@ -1,4 +1,4 @@
-import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
   /**
@@ -19,6 +19,8 @@ export interface AiChatModuleOptions {
    */
   model?: string
 }
+
+const log = logger.withTag('docus:ai-assistant')
 
 export default defineNuxtModule<AiChatModuleOptions>({
   meta: {
@@ -47,16 +49,6 @@ export default defineNuxtModule<AiChatModuleOptions>({
       },
     ])
 
-    if (!hasApiKey) {
-      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY found')
-      return
-    }
-
-    nuxt.options.runtimeConfig.aiChat = {
-      mcpServer: options.mcpServer!,
-      model: options.model!,
-    }
-
     const components = [
       'AiChat',
       'AiChatPanel',
@@ -68,9 +60,21 @@ export default defineNuxtModule<AiChatModuleOptions>({
     components.forEach(name =>
       addComponent({
         name,
-        filePath: resolve(`./runtime/components/${name}.vue`),
+        filePath: hasApiKey
+          ? resolve(`./runtime/components/${name}.vue`)
+          : resolve('./runtime/components/AiChatDisabled.vue'),
       }),
     )
+
+    if (!hasApiKey) {
+      log.warn('Module disabled: no AI_GATEWAY_API_KEY found')
+      return
+    }
+
+    nuxt.options.runtimeConfig.aiChat = {
+      mcpServer: options.mcpServer!,
+      model: options.model!,
+    }
 
     addImports([
       {
