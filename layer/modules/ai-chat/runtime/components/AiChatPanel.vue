@@ -271,22 +271,25 @@ onMounted(() => {
         <UChatPrompt
           v-model="input"
           :rows="2"
-          class="text-sm"
           :placeholder="displayPlaceholder"
+          maxlength="1000"
           :ui="{
             root: 'shadow-none!',
-            body: '*:p-0! *:rounded-none!',
+            body: '*:p-0! *:rounded-none! *:text-sm!',
           }"
           @submit="handleSubmit"
         >
           <template #footer>
-            <div class="hidden items-center divide-x divide-muted/50 sm:flex">
-              <span class="pr-2 text-xs text-muted">{{ t('aiChat.chatCleared') }}</span>
-              <div class="flex items-center gap-1 pl-2 text-xs text-muted">
-                <span>{{ t('aiChat.lineBreak') }}</span>
-                <UKbd value="shift" />
-                <UKbd value="enter" />
-              </div>
+            <div class="flex items-center gap-1 text-xs text-muted">
+              <span>{{ t('aiChat.lineBreak') }}</span>
+              <UKbd
+                size="sm"
+                value="shift"
+              />
+              <UKbd
+                size="sm"
+                value="enter"
+              />
             </div>
             <UChatPromptSubmit
               class="ml-auto"
@@ -297,6 +300,12 @@ onMounted(() => {
             />
           </template>
         </UChatPrompt>
+        <div class="mt-1 flex text-xs text-dimmed items-center justify-between">
+          <span>{{ t('aiChat.chatCleared') }}</span>
+          <span>
+            {{ input.length }}/1000
+          </span>
+        </div>
       </div>
     </div>
   </DefineChatContent>

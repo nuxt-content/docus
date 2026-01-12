@@ -71,6 +71,7 @@ defineShortcuts(shortcuts)
           v-model="input"
           :placeholder="placeholder"
           size="lg"
+          maxlength="1000"
           :ui="{
             root: 'group w-72 focus-within:w-96 transition-all duration-300 ease-out hover:scale-105 focus-within:scale-105',
             base: 'bg-default shadow-lg rounded-xl',
