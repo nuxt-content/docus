@@ -28,6 +28,11 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  llms: {
+    contentRawMD: {
+      excludeCollections: ['landing'],
+    }
+  }
   content: {
     build: {
       markdown: {

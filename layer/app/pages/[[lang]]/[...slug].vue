@@ -28,9 +28,6 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-// Add the page path to the prerender list
-addPrerenderPath(`/raw${route.path}.md`)
-
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
