@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     contentRawMD: {
       excludeCollections: ['landing'],
     }
-  }
+  },
   content: {
     build: {
       markdown: {
