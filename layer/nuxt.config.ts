@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
   llms: {
     contentRawMD: {
-      excludeCollections: ['landing'],
+      excludeCollections: ['landing', 'landing_en', 'landing_fr'],
     }
   },
   content: {
