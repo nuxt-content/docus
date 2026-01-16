@@ -28,11 +28,6 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
-  llms: {
-    contentRawMD: {
-      excludeCollections: ['landing', 'landing_en', 'landing_fr'],
-    }
-  },
   content: {
     build: {
       markdown: {
@@ -85,5 +80,10 @@ export default defineNuxtConfig({
   },
   icon: {
     provider: 'iconify',
+  },
+  llms: {
+    contentRawMD: {
+      excludeCollections: ['landing', 'landing_en', 'landing_fr'],
+    },
   },
 })
