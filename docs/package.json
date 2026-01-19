@@ -9,13 +9,13 @@
   "dependencies": {
     "@nuxt/ui": "^4.3.0",
     "@nuxtjs/i18n": "^10.2.1",
-    "@nuxtjs/mdc": "^0.19.2",
+    "@nuxtjs/mdc": "^0.20.0",
     "@nuxtjs/plausible": "^2.0.1",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
     "docus": "workspace:*",
     "nuxt": "4.2.2",
-    "nuxt-studio": "1.0.0-beta.3",
+    "nuxt-studio": "1.1.0",
     "tailwindcss": "^4.1.18",
     "unist-util-visit": "^5.0.0"
   }

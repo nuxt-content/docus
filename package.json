@@ -27,9 +27,9 @@
     "@release-it/conventional-changelog": "^10.0.4",
     "eslint": "^9.39.2",
     "nuxt": "4.2.2",
-    "release-it": "^19.2.2",
+    "release-it": "^19.2.3",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.2"
   },
-  "packageManager": "pnpm@10.27.0"
+  "packageManager": "pnpm@10.28.1"
 }
