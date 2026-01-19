@@ -81,9 +81,4 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify',
   },
-  llms: {
-    contentRawMarkdown: {
-      excludeCollections: ['landing', 'landing_en', 'landing_fr'],
-    },
-  },
 })
