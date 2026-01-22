@@ -17,9 +17,9 @@ const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 const collectionName = computed(() => isEnabled.value ? `docs_${safeLocaleCode(locale.value)}` : 'docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
-  useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsCollectionItem>),
+  useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path.toLowerCase()).first() as Promise<DocsCollectionItem>),
   useAsyncData(`${kebabCase(route.path)}-surround`, () => {
-    return queryCollectionItemSurroundings(collectionName.value as keyof Collections, route.path, {
+    return queryCollectionItemSurroundings(collectionName.value as keyof Collections, route.path.toLowerCase(), {
       fields: ['description'],
     })
   }),

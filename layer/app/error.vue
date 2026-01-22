@@ -51,7 +51,7 @@ const { data: navigation } = await useAsyncData(`navigation_${collectionName.val
   transform: (data: ContentNavigationItem[]) => {
     const rootResult = data.find(item => item.path === '/docs')?.children || data || []
 
-    return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
+    return rootResult.find(item => item.path === `/${locale.value.toLowerCase()}`)?.children || rootResult
   },
   watch: [locale],
 })
