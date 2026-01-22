@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
-import { safeLocaleCode } from '~/utils/locale'
+import { safeLocaleCode } from '../../utils/locale'
 
 const route = useRoute()
 const { locale, isEnabled } = useDocusI18n()

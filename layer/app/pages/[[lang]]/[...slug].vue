@@ -3,7 +3,7 @@ import { kebabCase } from 'scule'
 import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
 
-import { safeLocaleCode } from '~/utils/locale'
+import { safeLocaleCode } from '../../../utils/locale'
 
 definePageMeta({
   layout: 'docs',

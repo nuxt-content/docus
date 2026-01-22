@@ -1,5 +1,5 @@
 import type { LocaleObject } from '@nuxtjs/i18n'
-import { safeLocaleCode } from './locale'
+import { safeLocaleCode } from '../../utils/locale'
 
 type ConfigWithLocales = {
   i18n?: { locales?: Array<string | LocaleObject> }
