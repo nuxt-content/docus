@@ -3,6 +3,8 @@ import { kebabCase } from 'scule'
 import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
 
+import { safeLocaleCode } from '~/utils/locale'
+
 definePageMeta({
   layout: 'docs',
 })
@@ -12,7 +14,7 @@ const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = computed(() => isEnabled.value ? `docs_${safeLocaleCode(locale.value)}` : 'docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
   useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsCollectionItem>),
