@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.4.4](https://github.com/nuxt-content/docus/compare/v5.4.2...v5.4.4) (2026-01-19)
+
+### Features
+
+* **llms:** better support  by using `/raw/**.md` links inside `llms.txt`  ([#1247](https://github.com/nuxt-content/docus/issues/1247)) ([0a7f25e](https://github.com/nuxt-content/docus/commit/0a7f25e6bd44ec69cf80f16c9b58c727b933bb43))
+
+### Bug Fixes
+
+* **i18n:** collection name standardization ([#1246](https://github.com/nuxt-content/docus/issues/1246)) ([39105fe](https://github.com/nuxt-content/docus/commit/39105fe1f4f5d9e2b854e8f5cc0b4bf010ab56cd))
+
 ## [5.4.2](https://github.com/nuxt-content/docus/compare/v5.4.1...v5.4.2) (2026-01-07)
 
 ### Features

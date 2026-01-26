@@ -2,7 +2,6 @@
 import { kebabCase } from 'scule'
 import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
-import { addPrerenderPath } from '../../utils/prerender'
 
 definePageMeta({
   layout: 'docs',
@@ -28,9 +27,6 @@ const [{ data: page }, { data: surround }] = await Promise.all([
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
-
-// Add the page path to the prerender list
-addPrerenderPath(`/raw${route.path}.md`)
 
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
