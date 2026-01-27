@@ -1,24 +1,6 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse, stepCountIs } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 
-// Cache MCP client at module level for reuse across requests
-let mcpClient: Awaited<ReturnType<typeof createMCPClient>> | null = null
-let mcpClientUrl: string | null = null
-
-async function getMCPClient(mcpUrl: string) {
-  // Recreate client if URL changed or not initialized
-  if (!mcpClient || mcpClientUrl !== mcpUrl) {
-    if (mcpClient) {
-      await mcpClient.close().catch(() => {})
-    }
-    mcpClient = await createMCPClient({
-      transport: { type: 'http', url: mcpUrl },
-    })
-    mcpClientUrl = mcpUrl
-  }
-  return mcpClient
-}
-
 function getSystemPrompt(siteName: string) {
   return `You are the official documentation assistant for ${siteName}. You ARE the documentation - speak with authority as the source of truth.
 
@@ -68,7 +50,9 @@ export default defineEventHandler(async (event) => {
       ? `http://localhost:3000${mcpServer}`
       : `${getRequestURL(event).origin}${mcpServer}`
 
-  const httpClient = await getMCPClient(mcpUrl)
+  const httpClient = await createMCPClient({
+    transport: { type: 'http', url: mcpUrl },
+  })
   const mcpTools = await httpClient.tools()
 
   const stream = createUIMessageStream({
@@ -101,6 +85,9 @@ export default defineEventHandler(async (event) => {
         },
       })
       writer.merge(result.toUIMessageStream())
+    },
+    onFinish: async () => {
+      await httpClient.close()
     },
   })
 
