@@ -23,9 +23,17 @@ export default defineNuxtModule({
       const landingTemplate = resolve('../app/templates/landing.vue')
 
       if (isI18nEnabled) {
-        pages.push({
+        // Get locale codes for regex pattern
+        const locales = nuxt.options.i18n?.locales || []
+        const localeCodes = locales.map((locale: string | { code: string }) =>
+          typeof locale === 'string' ? locale : locale.code,
+        ).join('|')
+
+        // Use regex to only match valid locale codes or root
+        // This prevents /:lang? from matching /en/mcp
+        pages.unshift({
           name: 'lang-index',
-          path: '/:lang?',
+          path: `/:lang(${localeCodes})?`,
           file: landingTemplate,
         })
       }

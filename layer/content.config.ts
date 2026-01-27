@@ -3,6 +3,8 @@ import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { joinURL } from 'ufo'
 
+import { safeLocaleCode } from './utils/locale'
+
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
@@ -21,9 +23,10 @@ let collections: Record<string, DefinedCollection>
 if (locales && Array.isArray(locales)) {
   collections = {}
   for (const locale of locales) {
-    const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
+    const code = (typeof locale === 'string' ? locale : locale.code)
+    const safeCode = safeLocaleCode(code)
 
-    collections[`landing_${code}`] = defineCollection({
+    collections[`landing_${safeCode}`] = defineCollection({
       type: 'page',
       source: {
         cwd,
@@ -31,7 +34,7 @@ if (locales && Array.isArray(locales)) {
       },
     })
 
-    collections[`docs_${code}`] = defineCollection({
+    collections[`docs_${safeCode}`] = defineCollection({
       type: 'page',
       source: {
         cwd,

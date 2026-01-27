@@ -36,8 +36,8 @@ OUTPUT: Returns a structured list with:
 
     try {
       const allPages = await Promise.all(
-        collections.map(async (collectionName) => {
-          const pages = await queryCollection(event, collectionName as keyof Collections)
+        collections.map(async ({ collection, locale: localeCode }) => {
+          const pages = await queryCollection(event, collection as keyof Collections)
             .select('title', 'path', 'description')
             .all()
 
@@ -45,7 +45,7 @@ OUTPUT: Returns a structured list with:
             title: page.title,
             path: page.path,
             description: page.description,
-            locale: collectionName.replace('docs_', ''),
+            locale: localeCode,
             url: `${siteUrl}${page.path}`,
           }))
         }),

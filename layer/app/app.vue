@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import { safeLocaleCode } from '../utils/locale'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
@@ -9,7 +10,7 @@ const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
 const dir = computed(() => nuxtUiLocale.value.dir)
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = computed(() => isEnabled.value ? `docs_${safeLocaleCode(locale.value)}` : 'docs')
 
 useHead({
   meta: [
@@ -47,7 +48,7 @@ const { data: navigation } = await useAsyncData(() => `navigation_${collectionNa
   transform: (data: ContentNavigationItem[]) => {
     const rootResult = data.find(item => item.path === '/docs')?.children || data || []
 
-    return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
+    return rootResult.find(item => item.path === `/${locale.value.toLowerCase()}`)?.children || rootResult
   },
   watch: [locale],
 })

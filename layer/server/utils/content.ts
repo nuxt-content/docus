@@ -1,4 +1,5 @@
 import type { LocaleObject } from '@nuxtjs/i18n'
+import { safeLocaleCode } from '../../utils/locale'
 
 type ConfigWithLocales = {
   i18n?: { locales?: Array<string | LocaleObject> }
@@ -15,23 +16,23 @@ export function getAvailableLocales(config: ConfigWithLocales): string[] {
     : []
 }
 
-export function getCollectionsToQuery(locale: string | undefined, availableLocales: string[]): string[] {
+export function getCollectionsToQuery(locale: string | undefined, availableLocales: string[]): Array<{ collection: string, locale?: string }> {
   if (locale && availableLocales.includes(locale)) {
-    return [`docs_${locale}`]
+    return [{ collection: `docs_${safeLocaleCode(locale)}`, locale }]
   }
 
   return availableLocales.length > 0
-    ? availableLocales.map(l => `docs_${l}`)
-    : ['docs']
+    ? availableLocales.map(l => ({ collection: `docs_${safeLocaleCode(l)}`, locale: l }))
+    : [{ collection: 'docs' }]
 }
 
-export function getCollectionFromPath(path: string, availableLocales: string[]): string {
+export function getCollectionFromPath(path: string, availableLocales: string[]): { collection: string, locale?: string } {
   const pathSegments = path.split('/').filter(Boolean)
   const firstSegment = pathSegments[0]
 
   if (firstSegment && availableLocales.includes(firstSegment)) {
-    return `docs_${firstSegment}`
+    return { collection: `docs_${safeLocaleCode(firstSegment)}`, locale: firstSegment }
   }
 
-  return 'docs'
+  return { collection: 'docs' }
 }
