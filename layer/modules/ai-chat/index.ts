@@ -15,7 +15,7 @@ export interface AiChatModuleOptions {
   mcpServer?: string
   /**
    * AI model to use via AI SDK Gateway
-   * @default 'moonshotai/kimi-k2-turbo'
+   * @default 'google/gemini-3-flash'
    */
   model?: string
 }
@@ -30,7 +30,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
   defaults: {
     apiPath: '/api/ai-chat',
     mcpServer: '/mcp',
-    model: 'moonshotai/kimi-k2-turbo',
+    model: 'google/gemini-3-flash',
   },
   setup(options, nuxt) {
     const hasApiKey = !!process.env.AI_GATEWAY_API_KEY

@@ -1,8 +1,25 @@
-import { streamText, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
+import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse, stepCountIs } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
-import { createDocumentationAgentTool } from '../utils/docs_agent'
 
-function getMainAgentSystemPrompt(siteName: string) {
+// Cache MCP client at module level for reuse across requests
+let mcpClient: Awaited<ReturnType<typeof createMCPClient>> | null = null
+let mcpClientUrl: string | null = null
+
+async function getMCPClient(mcpUrl: string) {
+  // Recreate client if URL changed or not initialized
+  if (!mcpClient || mcpClientUrl !== mcpUrl) {
+    if (mcpClient) {
+      await mcpClient.close().catch(() => {})
+    }
+    mcpClient = await createMCPClient({
+      transport: { type: 'http', url: mcpUrl },
+    })
+    mcpClientUrl = mcpUrl
+  }
+  return mcpClient
+}
+
+function getSystemPrompt(siteName: string) {
   return `You are the official documentation assistant for ${siteName}. You ARE the documentation - speak with authority as the source of truth.
 
 **Your identity:**
@@ -12,13 +29,13 @@ function getMainAgentSystemPrompt(siteName: string) {
 - Never say "according to the documentation" - YOU are the docs
 
 **Tool usage (CRITICAL):**
-- You have ONE tool: searchDocumentation
-- Use it for EVERY question - pass the user's question as the query
-- The tool will search the documentation and return relevant information
-- Use the returned information to formulate your response
+- You have tools to browse documentation: list-pages and get-page
+- Use list-pages first to discover available pages
+- Use get-page to read specific pages and find the answer
+- Always search the documentation before answering
 
 **Guidelines:**
-- If the tool can't find something, say "I don't have documentation on that yet"
+- If you can't find something, say "I don't have documentation on that yet"
 - Be concise, helpful, and direct
 - Guide users like a friendly expert would
 
@@ -51,37 +68,41 @@ export default defineEventHandler(async (event) => {
       ? `http://localhost:3000${mcpServer}`
       : `${getRequestURL(event).origin}${mcpServer}`
 
-  const httpClient = await createMCPClient({
-    transport: {
-      type: 'http',
-      url: mcpUrl,
-    },
-  })
+  const httpClient = await getMCPClient(mcpUrl)
   const mcpTools = await httpClient.tools()
-
-  const searchDocumentation = createDocumentationAgentTool(mcpTools, config.aiChat.model, siteName)
 
   const stream = createUIMessageStream({
     execute: async ({ writer }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
         model: config.aiChat.model,
-        maxOutputTokens: 10000,
-        system: getMainAgentSystemPrompt(siteName),
-        messages: modelMessages,
+        maxOutputTokens: 4000,
+        maxRetries: 2,
         stopWhen: stepCountIs(5),
-        tools: {
-          searchDocumentation,
-        },
-        experimental_context: {
-          writer,
+        system: getSystemPrompt(siteName),
+        messages: modelMessages,
+        tools: mcpTools,
+        onStepFinish: ({ toolCalls }) => {
+          if (toolCalls.length === 0) return
+          writer.write({
+            id: toolCalls[0]?.toolCallId,
+            type: 'data-tool-calls',
+            data: {
+              tools: toolCalls.map((tc) => {
+                const args = 'args' in tc ? tc.args : 'input' in tc ? tc.input : {}
+                return {
+                  toolName: tc.toolName,
+                  toolCallId: tc.toolCallId,
+                  args,
+                }
+              }),
+            },
+          })
         },
       })
       writer.merge(result.toUIMessageStream())
     },
-    onFinish: async () => {
-      await httpClient.close()
-    },
   })
+
   return createUIMessageStreamResponse({ stream })
 })
