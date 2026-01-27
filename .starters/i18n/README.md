@@ -98,6 +98,16 @@ This starter comes pre-configured with:
 
 For detailed documentation on customizing your Docus project, visit the [Docus Documentation](https://docus.dev)
 
+### 🤖 AI Assistant Skill
+
+Get started quickly with Docus by adding specialized knowledge to your AI assistant (Cursor, Claude, etc.):
+
+```bash
+npx skills add nuxt-content/docus
+```
+
+This skill helps you create documentation faster by providing your AI assistant with best practices, MDC component usage, ready-to-use templates, writing guidelines, and configuration tips for Docus. Perfect for quickly scaffolding new documentation projects.
+
 ## 🚀 Deployment
 
 Build for production:

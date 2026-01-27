@@ -59,6 +59,22 @@ Add the Docus MCP server to help you write your documentation faster with LLMs:
 [![Install MCP in Cursor](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink)
 [![Install MCP in VS Code](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?ide=vscode&url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink?ide=vscode)
 
+## 🎯 Docus Skill for AI Assistants
+
+Get started quickly and enhance your AI assistant (Cursor, Claude, etc.) with specialized knowledge about creating documentation with Docus:
+
+```bash
+npx skills add nuxt-content/docus
+```
+
+This skill helps you create documentation faster by providing your AI assistant with:
+- 📝 Best practices for writing documentation with Docus
+- 🎨 MDC component usage and ready-to-use templates
+- 📚 Writing guidelines and content structure patterns
+- 🔧 Configuration and customization tips
+
+Perfect for quickly scaffolding new documentation projects or improving existing ones.
+
 ## 📁 Project Structure
 
 ### Generated project
