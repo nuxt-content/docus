@@ -20,6 +20,8 @@ export default defineNuxtModule({
     })
 
     extendPages((pages) => {
+      if (!nuxt.options.docus?.enableLandingPage) return
+
       const landingTemplate = resolve('../app/templates/landing.vue')
 
       if (isI18nEnabled) {

@@ -6,6 +6,7 @@ import { joinURL } from 'ufo'
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
+const isEnabledLandingPage = options.docus?.enableLandingPage
 
 const createDocsSchema = () => z.object({
   links: z.array(z.object({
@@ -23,7 +24,7 @@ if (locales && Array.isArray(locales)) {
   for (const locale of locales) {
     const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
 
-    collections[`landing_${code}`] = defineCollection({
+    if (isEnabledLandingPage) collections[`landing_${code}`] = defineCollection({
       type: 'page',
       source: {
         cwd,
@@ -37,7 +38,7 @@ if (locales && Array.isArray(locales)) {
         cwd,
         include: `${code}/**/*`,
         prefix: `/${code}`,
-        exclude: [`${code}/index.md`],
+        exclude: isEnabledLandingPage ? [`${code}/index.md`] : undefined,
       },
       schema: createDocsSchema(),
     })
@@ -45,22 +46,24 @@ if (locales && Array.isArray(locales)) {
 }
 else {
   collections = {
-    landing: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: 'index.md',
-      },
-    }),
     docs: defineCollection({
       type: 'page',
       source: {
         cwd,
         include: '**',
-        exclude: ['index.md'],
+        exclude: isEnabledLandingPage ? ['index.md'] : undefined,
       },
       schema: createDocsSchema(),
     }),
+  }
+  if (isEnabledLandingPage) {
+    collections.landing = defineCollection({
+      type: 'page',
+      source: {
+        cwd,
+        include: 'index.md',
+      },
+    })
   }
 }
 
