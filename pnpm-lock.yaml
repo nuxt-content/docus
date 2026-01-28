@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@nuxtjs/mdc':
-    hash: ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7
-    path: patches/@nuxtjs__mdc.patch
-
 importers:
 
   .:
@@ -88,7 +83,7 @@ importers:
         version: 10.2.1(@vue/compiler-dom@3.5.25)(db0@0.3.4(better-sqlite3@12.5.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.53.5)(vue@3.5.25(typescript@5.9.3))
       '@nuxtjs/mdc':
         specifier: ^0.20.0
-        version: 0.20.0(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)
+        version: 0.20.0(magicast@0.5.1)
       '@nuxtjs/plausible':
         specifier: ^2.0.1
         version: 2.0.1(magicast@0.5.1)
@@ -154,7 +149,7 @@ importers:
         version: 0.6.2(hono@4.11.1)(magicast@0.5.1)(zod@4.3.5)
       '@nuxtjs/mdc':
         specifier: ^0.20.0
-        version: 0.20.0(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)
+        version: 0.20.0(magicast@0.5.1)
       '@nuxtjs/robots':
         specifier: ^5.6.7
         version: 5.6.7(h3@1.15.4)(magicast@0.5.1)(vue@3.5.25(typescript@5.9.3))(zod@4.3.5)
@@ -8927,7 +8922,7 @@ snapshots:
   '@nuxt/content@3.11.0(better-sqlite3@12.5.0)(magicast@0.5.1)':
     dependencies:
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
-      '@nuxtjs/mdc': 0.20.0(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)
+      '@nuxtjs/mdc': 0.20.0(magicast@0.5.1)
       '@shikijs/langs': 3.21.0
       '@sqlite.org/sqlite-wasm': 3.50.4-build1
       '@standard-schema/spec': 1.1.0
@@ -9612,7 +9607,7 @@ snapshots:
       - magicast
       - supports-color
 
-  '@nuxtjs/mdc@0.19.2(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)':
+  '@nuxtjs/mdc@0.19.2(magicast@0.5.1)':
     dependencies:
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
       '@shikijs/core': 3.21.0
@@ -9661,7 +9656,7 @@ snapshots:
       - magicast
       - supports-color
 
-  '@nuxtjs/mdc@0.20.0(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)':
+  '@nuxtjs/mdc@0.20.0(magicast@0.5.1)':
     dependencies:
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
       '@shikijs/core': 3.21.0
@@ -14308,7 +14303,7 @@ snapshots:
   nuxt-studio@1.1.1(db0@0.3.4(better-sqlite3@12.5.0))(ioredis@5.8.2)(magicast@0.5.1)(vue@3.5.25(typescript@5.9.3)):
     dependencies:
       '@iconify-json/lucide': 1.2.86
-      '@nuxtjs/mdc': 0.19.2(patch_hash=ec7f6923caa8068d488a3bf29b8bfb99c9776f0d2cbb00a1c682eb342f00b2b7)(magicast@0.5.1)
+      '@nuxtjs/mdc': 0.19.2(magicast@0.5.1)
       '@vueuse/core': 14.1.0(vue@3.5.25(typescript@5.9.3))
       defu: 6.1.4
       destr: 2.0.5
