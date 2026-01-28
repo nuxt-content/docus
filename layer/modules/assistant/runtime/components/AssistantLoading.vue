@@ -76,7 +76,7 @@ function scrambleText(from: string, to: string) {
 let textInterval: ReturnType<typeof setInterval> | null = null
 
 watch(targetText, (newText, oldText) => {
-  if (newText !== oldText) {
+  if (newText !== oldText && newText && oldText) {
     scrambleText(oldText, newText)
   }
 })
