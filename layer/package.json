@@ -52,8 +52,7 @@
     "@ai-sdk/gateway": "^3.0.5",
     "ai": "6.0.6",
     "shiki": "^3.21.0",
-    "shiki-stream": "^0.1.4",
-    "shiki-transformer-color-highlight": "^1.0.0"
+    "shiki-stream": "^0.1.4"
   },
   "peerDependencies": {
     "better-sqlite3": "12.x",

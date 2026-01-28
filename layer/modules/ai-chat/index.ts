@@ -3,7 +3,7 @@ import { addComponent, addImports, addServerHandler, createResolver, defineNuxtM
 export interface AiChatModuleOptions {
   /**
    * API endpoint path for the chat
-   * @default '/api/ai-chat'
+   * @default '/__docus__/ai-chat'
    */
   apiPath?: string
   /**
@@ -28,7 +28,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     configKey: 'aiChat',
   },
   defaults: {
-    apiPath: '/api/ai-chat',
+    apiPath: '/__docus__/ai-chat',
     mcpServer: '/mcp',
     model: 'google/gemini-3-flash',
   },
