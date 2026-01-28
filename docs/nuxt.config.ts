@@ -29,6 +29,11 @@ export default defineNuxtConfig({
     name: 'Docus documentation',
     browserRedirect: '/en/ai/mcp',
   },
+  mdc: {
+    highlight: {
+      shikiEngine: 'javascript',
+    }
+  },
   studio: {
     route: '/admin',
     repository: {

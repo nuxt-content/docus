@@ -5,6 +5,7 @@ import * as nuxtUiLocales from '@nuxt/ui/locale'
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
+const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
@@ -47,7 +48,7 @@ const { data: navigation } = await useAsyncData(() => `navigation_${collectionNa
   transform: (data: ContentNavigationItem[]) => {
     const rootResult = data.find(item => item.path === '/docs')?.children || data || []
 
-    return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
+    return rootResult.find((item: ContentNavigationItem) => item.path === `/${locale.value}`)?.children || rootResult
   },
   watch: [locale],
 })
@@ -63,17 +64,26 @@ provide('navigation', navigation)
   <UApp :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
-    <AppHeader v-if="$route.meta.header !== false" />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-    <AppFooter v-if="$route.meta.footer !== false" />
+    <div
+      class="transition-[margin-right] duration-200 ease-linear will-change-[margin-right]"
+      :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
+    >
+      <AppHeader v-if="$route.meta.header !== false" />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <AppFooter v-if="$route.meta.footer !== false" />
+    </div>
 
     <ClientOnly>
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
       />
+      <template v-if="isAssistantEnabled">
+        <LazyAssistantFloatingInput />
+        <LazyAssistantPanel />
+      </template>
     </ClientOnly>
   </UApp>
 </template>

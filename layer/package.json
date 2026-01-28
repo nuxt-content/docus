@@ -46,7 +46,13 @@
     "tailwindcss": "^4.1.18",
     "ufo": "^1.6.3",
     "zod": "^4.3.5",
-    "zod-to-json-schema": "^3.25.1"
+    "zod-to-json-schema": "^3.25.1",
+    "@ai-sdk/mcp": "^1.0.2",
+    "@ai-sdk/vue": "3.0.6",
+    "@ai-sdk/gateway": "^3.0.5",
+    "ai": "6.0.6",
+    "shiki": "^3.21.0",
+    "shiki-stream": "^0.1.4"
   },
   "peerDependencies": {
     "better-sqlite3": "12.x",

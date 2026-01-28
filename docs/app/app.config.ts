@@ -7,6 +7,44 @@ export default defineAppConfig({
   github: {
     rootDir: 'docs',
   },
+  assistant: {
+    faqQuestions: {
+      en: [
+        { category: 'Getting Started', items: [
+          'How do I install Docus?',
+          'What is the project structure?',
+          'How do I deploy my documentation?',
+        ] },
+        { category: 'Customization', items: [
+          'How do I customize the theme?',
+          'How do I add custom components?',
+          'How do I configure internationalization?',
+        ] },
+        { category: 'AI Features', items: [
+          'How do I enable the assistant?',
+          'What is the MCP server?',
+          'How do I generate llms.txt files?',
+        ] },
+      ],
+      fr: [
+        { category: 'Démarrage', items: [
+          'Comment installer Docus ?',
+          'Quelle est la structure du projet ?',
+          'Comment déployer ma documentation ?',
+        ] },
+        { category: 'Personnalisation', items: [
+          'Comment personnaliser le thème ?',
+          'Comment ajouter des composants personnalisés ?',
+          'Comment configurer l\'internationalisation ?',
+        ] },
+        { category: 'Fonctionnalités IA', items: [
+          'Comment activer l\'assistant ?',
+          'Qu\'est-ce que le serveur MCP ?',
+          'Comment générer les fichiers llms.txt ?',
+        ] },
+      ],
+    },
+  },
   toc: {
     bottom: {
       links: [
