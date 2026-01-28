@@ -78,12 +78,12 @@ export default defineNuxtModule<AssistantModuleOptions>({
       model: options.model!,
     }
 
-    addImports([
-      {
-        name: 'useHighlighter',
-        from: resolve('./runtime/composables/useHighlighter'),
-      },
-    ])
+    // addImports([
+    //   {
+    //     name: 'useHighlighter',
+    //     from: resolve('./runtime/composables/useHighlighter'),
+    //   },
+    // ])
 
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
