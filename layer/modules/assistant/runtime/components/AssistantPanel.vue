@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { DefineComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import type { UIMessage } from 'ai'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
 import { createReusableTemplate } from '@vueuse/core'
-import AssistantPreStream from './AssistantPreStream.vue'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const components = {
-  pre: AssistantPreStream as unknown as DefineComponent,
+  pre: defineAsyncComponent(() => import('./AssistantPreStream.vue'))
 }
 
 const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpandButton?: boolean }>()
