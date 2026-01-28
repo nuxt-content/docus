@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ShikiCachedRenderer } from 'shiki-stream/vue'
 import { useColorMode } from '#imports'
-import { useHighlighter } from '../composables/useHighlighter'
+// import { useHighlighter } from '../composables/useHighlighter'
 
 const colorMode = useColorMode()
-const highlighter = await useHighlighter()
+// const highlighter = await useHighlighter()
 const props = defineProps<{
   code: string
   language: string
@@ -35,12 +35,13 @@ const key = computed(() => {
 
 <template>
   <ProsePre v-bind="props">
-    <ShikiCachedRenderer
+    PRE
+    <!-- <ShikiCachedRenderer
       :key="key"
       :highlighter="highlighter"
       :code="trimmedCode"
       :lang="lang"
       :theme="colorMode.value === 'dark' ? 'material-theme-palenight' : 'material-theme-lighter'"
-    />
+    /> -->
   </ProsePre>
 </template>
