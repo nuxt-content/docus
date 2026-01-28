@@ -21,7 +21,7 @@ export default defineAppConfig({
           'How do I configure internationalization?',
         ] },
         { category: 'AI Features', items: [
-          'How do I enable the AI assistant?',
+          'How do I enable the assistant?',
           'What is the MCP server?',
           'How do I generate llms.txt files?',
         ] },
@@ -38,7 +38,7 @@ export default defineAppConfig({
           'Comment configurer l\'internationalisation ?',
         ] },
         { category: 'Fonctionnalités IA', items: [
-          'Comment activer l\'assistant IA ?',
+          'Comment activer l\'assistant ?',
           'Qu\'est-ce que le serveur MCP ?',
           'Comment générer les fichiers llms.txt ?',
         ] },

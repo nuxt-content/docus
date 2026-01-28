@@ -37,6 +37,13 @@
     "lineBreak": "Line break",
     "explainWithAi": "Explain with AI",
     "toolListPages": "Listed documentation pages",
-    "toolReadPage": "Read"
+    "toolReadPage": "Read",
+    "loading": {
+      "searching": "Searching the documentation",
+      "reading": "Reading through the docs",
+      "analyzing": "Analyzing the content",
+      "finding": "Finding the best answer",
+      "finished": "Sources used"
+    }
   }
 }

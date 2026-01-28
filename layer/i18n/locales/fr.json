@@ -37,6 +37,13 @@
     "lineBreak": "Retour à la ligne",
     "explainWithAi": "Expliquer avec l'IA",
     "toolListPages": "Pages de documentation listées",
-    "toolReadPage": "Lecture de"
+    "toolReadPage": "Lecture de",
+    "loading": {
+      "searching": "Recherche dans la documentation",
+      "reading": "Lecture des documents",
+      "analyzing": "Analyse du contenu",
+      "finding": "Recherche de la meilleure réponse",
+      "finished": "Sources utilisées"
+    }
   }
 }

@@ -317,10 +317,10 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
     :ai-chat-demo
 
     #title
-    [Assistant IA]{.text-primary} intégré
+    [Assistant]{.text-primary} intégré
 
     #description
-    Permettez à vos visiteurs de poser des questions sur votre documentation en langage naturel. L'IA recherche votre contenu et fournit des réponses précises avec les sources citées.
+    Permettez à vos visiteurs de poser des questions sur votre documentation en langage naturel. L'assistant recherche votre contenu et fournit des réponses précises avec les sources citées.
     ::::
 
     ::::u-page-card

@@ -72,22 +72,17 @@ const lastMessage = computed(() => chat.messages.at(-1))
 const showThinking = computed(() =>
   chat.status === 'streaming'
   && lastMessage.value?.role === 'assistant'
-  && lastMessage.value?.parts?.length === 0,
+  && !lastMessage.value?.parts?.some(p => p.type === 'text'),
 )
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getToolLabel(toolName: string, args: any) {
-  const path = args?.path || ''
-
-  if (toolName === 'list-pages') {
-    return t('assistant.toolListPages')
-  }
-
-  if (toolName === 'get-page') {
-    return `${t('assistant.toolReadPage')} ${path || '...'}`
-  }
-
-  return toolName
+function getMessageToolCalls(message: any) {
+  if (!message?.parts) return []
+  return message.parts
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((p: any) => p.type === 'data-tool-calls')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .flatMap((p: any) => p.data?.tools || [])
 }
 
 function handleSubmit(event?: Event) {
@@ -186,9 +181,11 @@ onMounted(() => {
         >
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
-              <div v-if="showThinking && message.role === 'assistant'">
-                <AssistantTextShimmer :text="t('assistant.thinking')" />
-              </div>
+              <AssistantLoading
+                v-if="message.role === 'assistant' && getMessageToolCalls(message).length > 0"
+                :tool-calls="getMessageToolCalls(message)"
+                :is-loading="showThinking"
+              />
               <template
                 v-for="(part, index) in message.parts"
                 :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
@@ -201,15 +198,6 @@ onMounted(() => {
                   :parser-options="{ highlight: false }"
                   class="*:first:mt-0 *:last:mb-0"
                 />
-
-                <template v-else-if="part.type === 'data-tool-calls'">
-                  <AssistantToolCall
-                    v-for="tool in (part as any).data.tools"
-                    :key="`${tool.toolCallId}-${JSON.stringify(tool.args)}`"
-                    :text="getToolLabel(tool.toolName, tool.args)"
-                    :is-loading="false"
-                  />
-                </template>
               </template>
             </div>
           </template>

@@ -317,10 +317,10 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     :ai-chat-demo
 
     #title
-    Built-in [AI Assistant]{.text-primary}
+    Built-in [Assistant]{.text-primary}
 
     #description
-    Let visitors ask questions about your documentation in natural language. The AI searches your content and provides accurate answers with source citations.
+    Let visitors ask questions about your documentation in natural language. The assistant searches your content and provides accurate answers with source citations.
     ::::
 
     ::::u-page-card
