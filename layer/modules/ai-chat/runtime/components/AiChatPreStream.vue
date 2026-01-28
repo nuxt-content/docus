@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ShikiCachedRenderer } from 'shiki-stream/vue'
+import { useColorMode } from '#imports'
 import { useHighlighter } from '../composables/useHighlighter'
 
 const colorMode = useColorMode()
