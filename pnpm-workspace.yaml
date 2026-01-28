@@ -15,3 +15,6 @@ onlyBuiltDependencies:
   - '@vercel/speed-insights'
   - better-sqlite3
   - sharp
+
+patchedDependencies:
+  '@nuxtjs/mdc': patches/@nuxtjs__mdc.patch
