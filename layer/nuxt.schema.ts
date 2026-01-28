@@ -214,9 +214,9 @@ export default defineNuxtSchema({
         }),
       },
     }),
-    aiChat: group({
-      title: 'AI Chat',
-      description: 'AI Chat configuration.',
+    assistant: group({
+      title: 'Assistant',
+      description: 'Assistant configuration.',
       icon: 'i-lucide-sparkles',
       fields: {
         floatingInput: field({

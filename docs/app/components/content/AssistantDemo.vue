@@ -5,7 +5,7 @@ import { motion } from 'motion-v'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
-const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
+const isEnabled = computed(() => config.public.assistant?.enabled ?? false)
 
 const input = ref('')
 
@@ -28,7 +28,7 @@ const chat = isEnabled.value
   ? new Chat({
       messages: [],
       transport: new DefaultChatTransport({
-        api: config.public.aiChat.apiPath,
+        api: config.public.assistant.apiPath,
       }),
       onError: (error: Error) => {
         console.error('AI Chat error:', error)
@@ -48,8 +48,8 @@ function getToolLabel(toolName: string, args: any) {
   const path = args?.path || ''
 
   const labels: Record<string, string> = {
-    'list-pages': t('aiChat.toolListPages'),
-    'get-page': t('aiChat.toolReadPage').replace('{path}', path || 'page'),
+    'list-pages': t('assistant.toolListPages'),
+    'get-page': t('assistant.toolReadPage').replace('{path}', path || 'page'),
   }
 
   return labels[toolName] || toolName
@@ -98,7 +98,7 @@ function resetChat() {
             />
           </div>
           <p class="text-sm text-muted mb-4">
-            {{ t('aiChat.tryAsking') }}
+            {{ t('assistant.tryAsking') }}
           </p>
           <div class="flex flex-wrap gap-2 justify-center">
             <motion.button
@@ -127,7 +127,7 @@ function resetChat() {
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
               <div v-if="showThinking && message.role === 'assistant'">
-                <AiTextShimmer :text="t('aiChat.thinking')" />
+                <AssistantTextShimmer :text="t('assistant.thinking')" />
               </div>
               <template
                 v-for="(part, index) in message.parts"
@@ -142,7 +142,7 @@ function resetChat() {
                 />
 
                 <template v-else-if="part.type === 'data-tool-calls'">
-                  <AiChatToolCall
+                  <AssistantToolCall
                     v-for="tool in (part as any).data.tools"
                     :key="tool.toolCallId"
                     :text="getToolLabel(tool.toolName, tool.input)"
@@ -164,7 +164,7 @@ function resetChat() {
         <UInput
           v-model="input"
           :disabled="!isEnabled"
-          :placeholder="t('aiChat.askAnything')"
+          :placeholder="t('assistant.askAnything')"
           size="sm"
           class="flex-1"
           :ui="{

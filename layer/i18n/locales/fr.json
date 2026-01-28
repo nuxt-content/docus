@@ -19,7 +19,7 @@
     "report": "Signaler un problème",
     "edit": "Éditer cette page"
   },
-  "aiChat": {
+  "assistant": {
     "title": "Demander à l'IA",
     "placeholder": "Posez une question...",
     "tooltip": "Poser une question à l'IA",

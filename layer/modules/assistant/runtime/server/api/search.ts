@@ -1,5 +1,21 @@
-import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse, stepCountIs } from 'ai'
+import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
+
+const MAX_STEPS = 10
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function stopWhenResponseComplete({ steps }: { steps: any[] }): boolean {
+  const lastStep = steps.at(-1)
+  if (!lastStep) return false
+
+  // Primary condition: stop when model gives a text response without tool calls
+  const hasText = Boolean(lastStep.text && lastStep.text.trim().length > 0)
+  const hasNoToolCalls = !lastStep.toolCalls || lastStep.toolCalls.length === 0
+
+  if (hasText && hasNoToolCalls) return true
+
+  return steps.length >= MAX_STEPS
+}
 
 function getSystemPrompt(siteName: string) {
   return `You are the official documentation assistant for ${siteName}. You ARE the documentation - speak with authority as the source of truth.
@@ -11,10 +27,9 @@ function getSystemPrompt(siteName: string) {
 - Never say "according to the documentation" - YOU are the docs
 
 **Tool usage (CRITICAL):**
-- You have tools to browse documentation: list-pages and get-page
-- Use list-pages first to discover available pages
-- Use get-page to read specific pages and find the answer
-- Always search the documentation before answering
+- You have tools: list-pages (discover pages) and get-page (read a page)
+- If a page title clearly matches the question, read it directly without listing first
+- ALWAYS respond with text after using tools - never end with just tool calls
 
 **Guidelines:**
 - If you can't find something, say "I don't have documentation on that yet"
@@ -42,7 +57,7 @@ export default defineEventHandler(async (event) => {
 
   const siteName = siteConfig.name || 'Documentation'
 
-  const mcpServer = config.aiChat.mcpServer
+  const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const mcpUrl = isExternalUrl
     ? mcpServer
@@ -59,10 +74,10 @@ export default defineEventHandler(async (event) => {
     execute: async ({ writer }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
-        model: config.aiChat.model,
+        model: config.assistant.model,
         maxOutputTokens: 4000,
         maxRetries: 2,
-        stopWhen: stepCountIs(5),
+        stopWhen: stopWhenResponseComplete,
         system: getSystemPrompt(siteName),
         messages: modelMessages,
         tools: mcpTools,

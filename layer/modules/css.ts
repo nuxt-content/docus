@@ -14,7 +14,7 @@ export default defineNuxtModule({
     const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
     const layerDir = resolver.resolve('../app')
-    const aiChatDir = resolver.resolve('../modules/ai-chat')
+    const assistantDir = resolver.resolve('../modules/assistant')
 
     const cssTemplate = addTemplate({
       filename: 'docus.css',
@@ -25,7 +25,7 @@ export default defineNuxtModule({
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
 @source "../../app.config.ts";
-@source "${aiChatDir.replace(/\\/g, '/')}/**/*";`
+@source "${assistantDir.replace(/\\/g, '/')}/**/*";`
       },
     })
 

@@ -1,9 +1,9 @@
 import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 
-export interface AiChatModuleOptions {
+export interface AssistantModuleOptions {
   /**
-   * API endpoint path for the chat
-   * @default '/__docus__/ai-chat'
+   * API endpoint path for the assistant
+   * @default '/__docus__/assistant'
    */
   apiPath?: string
   /**
@@ -20,15 +20,15 @@ export interface AiChatModuleOptions {
   model?: string
 }
 
-const log = logger.withTag('docus:ai-assistant')
+const log = logger.withTag('docus:assistant')
 
-export default defineNuxtModule<AiChatModuleOptions>({
+export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
-    name: 'ai-chat',
-    configKey: 'aiChat',
+    name: 'assistant',
+    configKey: 'assistant',
   },
   defaults: {
-    apiPath: '/__docus__/ai-chat',
+    apiPath: '/__docus__/assistant',
     mcpServer: '/mcp',
     model: 'google/gemini-3-flash',
   },
@@ -37,24 +37,24 @@ export default defineNuxtModule<AiChatModuleOptions>({
 
     const { resolve } = createResolver(import.meta.url)
 
-    nuxt.options.runtimeConfig.public.aiChat = {
+    nuxt.options.runtimeConfig.public.assistant = {
       enabled: hasApiKey,
       apiPath: options.apiPath!,
     }
 
     addImports([
       {
-        name: 'useAIChat',
-        from: resolve('./runtime/composables/useAIChat'),
+        name: 'useAssistant',
+        from: resolve('./runtime/composables/useAssistant'),
       },
     ])
 
     const components = [
-      'AiChat',
-      'AiChatPanel',
-      'AiChatToolCall',
-      'AiChatFloatingInput',
-      'AiTextShimmer',
+      'AssistantChat',
+      'AssistantPanel',
+      'AssistantToolCall',
+      'AssistantFloatingInput',
+      'AssistantTextShimmer',
     ]
 
     components.forEach(name =>
@@ -62,7 +62,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
         name,
         filePath: hasApiKey
           ? resolve(`./runtime/components/${name}.vue`)
-          : resolve('./runtime/components/AiChatDisabled.vue'),
+          : resolve('./runtime/components/AssistantChatDisabled.vue'),
       }),
     )
 
@@ -71,7 +71,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
       return
     }
 
-    nuxt.options.runtimeConfig.aiChat = {
+    nuxt.options.runtimeConfig.assistant = {
       mcpServer: options.mcpServer!,
       model: options.model!,
     }
@@ -93,13 +93,13 @@ export default defineNuxtModule<AiChatModuleOptions>({
 
 declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
-    aiChat: {
+    assistant: {
       enabled: boolean
       apiPath: string
     }
   }
   interface RuntimeConfig {
-    aiChat: {
+    assistant: {
       mcpServer: string
       model: string
     }

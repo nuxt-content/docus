@@ -4,13 +4,13 @@ const route = useRoute()
 const pageUrl = route.path
 const appConfig = useAppConfig()
 const { t } = useDocusI18n()
-const { isEnabled, open } = useAIChat()
+const { isEnabled, open } = useAssistant()
 
 const showExplainWithAi = computed(() => {
-  return isEnabled.value && appConfig.aiChat?.explainWithAi !== false
+  return isEnabled.value && appConfig.assistant?.explainWithAi !== false
 })
 
-const explainIcon = computed(() => appConfig.aiChat?.icons?.explain || 'i-lucide-brain')
+const explainIcon = computed(() => appConfig.assistant?.icons?.explain || 'i-lucide-brain')
 </script>
 
 <template>
@@ -34,7 +34,7 @@ const explainIcon = computed(() => appConfig.aiChat?.icons?.explain || 'i-lucide
     <UButton
       v-if="showExplainWithAi"
       :icon="explainIcon"
-      :label="t('aiChat.explainWithAi')"
+      :label="t('assistant.explainWithAi')"
       size="sm"
       variant="link"
       class="p-0 text-sm"

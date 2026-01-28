@@ -5,7 +5,7 @@ import * as nuxtUiLocales from '@nuxt/ui/locale'
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
-const { isEnabled: isAiChatEnabled, panelWidth: aiChatPanelWidth, shouldPushContent } = useAIChat()
+const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
@@ -66,7 +66,7 @@ provide('navigation', navigation)
 
     <div
       class="transition-[margin-right] duration-200 ease-linear will-change-[margin-right]"
-      :style="{ marginRight: shouldPushContent ? `${aiChatPanelWidth}px` : '0' }"
+      :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />
       <NuxtLayout>
@@ -80,9 +80,9 @@ provide('navigation', navigation)
         :files="files"
         :navigation="navigation"
       />
-      <template v-if="isAiChatEnabled">
-        <LazyAiChatFloatingInput />
-        <LazyAiChatPanel />
+      <template v-if="isAssistantEnabled">
+        <LazyAssistantFloatingInput />
+        <LazyAssistantPanel />
       </template>
     </ClientOnly>
   </UApp>

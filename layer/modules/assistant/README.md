@@ -1,4 +1,4 @@
-# AI Chat Module
+# Assistant Module
 
 A Nuxt module that provides an AI-powered chat interface using MCP (Model Context Protocol) tools.
 
@@ -14,7 +14,7 @@ A Nuxt module that provides an AI-powered chat interface using MCP (Model Contex
 
 ## Installation
 
-1. Copy the `modules/ai-chat` folder to your Nuxt project
+1. Copy the `modules/assistant` folder to your Nuxt project
 2. Install the required dependencies:
 
 ```bash
@@ -25,12 +25,12 @@ pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai motion-v shiki shiki-stream
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['./modules/ai-chat'],
+  modules: ['./modules/assistant'],
 
-  aiChat: {
-    apiPath: '/api/ai-chat',
+  assistant: {
+    apiPath: '/__docus__/assistant',
     mcpServer: '/mcp',
-    model: 'moonshotai/kimi-k2-turbo',
+    model: 'google/gemini-3-flash',
   }
 })
 ```
@@ -51,10 +51,10 @@ Add the components to your app:
 <template>
   <div>
     <!-- Button to open the chat -->
-    <AiChat tooltip-text="Ask AI a question" />
+    <AssistantChat />
 
-    <!-- Chat slideover (place once in your app/layout) -->
-    <AiChatSlideover />
+    <!-- Chat panel (place once in your app/layout) -->
+    <AssistantPanel />
   </div>
 </template>
 ```
@@ -65,7 +65,7 @@ Configure FAQ questions in your `app.config.ts`:
 
 ```ts
 export default defineAppConfig({
-  aiChat: {
+  assistant: {
     faqQuestions: [
       {
         category: 'Getting Started',
@@ -84,7 +84,7 @@ You can also use localized FAQ questions:
 
 ```ts
 export default defineAppConfig({
-  aiChat: {
+  assistant: {
     faqQuestions: {
       en: ['How do I install?', 'How do I configure?'],
       fr: ['Comment installer ?', 'Comment configurer ?'],
@@ -95,7 +95,7 @@ export default defineAppConfig({
 
 ### Floating Input
 
-Use `AiChatFloatingInput` for a floating input at the bottom of the page.
+Use `AssistantFloatingInput` for a floating input at the bottom of the page.
 
 **Recommended:** Use `Teleport` to render the floating input at the body level, ensuring it stays fixed at the bottom regardless of your component hierarchy:
 
@@ -105,12 +105,12 @@ Use `AiChatFloatingInput` for a floating input at the bottom of the page.
     <!-- Teleport to body for proper fixed positioning -->
     <Teleport to="body">
       <ClientOnly>
-        <LazyAiChatFloatingInput />
+        <LazyAssistantFloatingInput />
       </ClientOnly>
     </Teleport>
 
-    <!-- Chat slideover (required to display responses) -->
-    <AiChatSlideover />
+    <!-- Chat panel (required to display responses) -->
+    <AssistantPanel />
   </div>
 </template>
 ```
@@ -123,11 +123,11 @@ The floating input:
 
 ### Programmatic Control
 
-Use the `useAIChat` composable to control the chat:
+Use the `useAssistant` composable to control the chat:
 
 ```vue
 <script setup>
-const { open, close, toggle, isOpen, messages, clearMessages } = useAIChat()
+const { open, close, toggle, isOpen, messages, clearMessages } = useAssistant()
 
 // Open chat with an initial message
 open('How do I install the module?')
@@ -147,25 +147,32 @@ clearMessages()
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `apiPath` | `string` | `/api/ai-chat` | API endpoint path for the chat |
-| `mcpServer` | `string` | `/mcp` | MCP server path to connect to |
-| `model` | `string` | `moonshotai/kimi-k2-turbo` | AI model identifier for AI SDK Gateway |
+| `apiPath` | `string` | `/__docus__/assistant` | API endpoint path for the chat |
+| `mcpServer` | `string` | `/mcp` | MCP server path or full URL (e.g., `https://docs.example.com/mcp` for external servers) |
+| `model` | `string` | `google/gemini-3-flash` | AI model identifier for AI SDK Gateway |
 
 ## Components
 
-### `<AiChat>`
+### `<AssistantChat>`
 
-Button to toggle the chat slideover.
+Button to toggle the chat panel. The tooltip text is automatically translated using i18n (`assistant.tooltip`).
+
+### `<AssistantPanel>`
+
+Main chat interface displayed as a side panel. Configuration is done via `app.config.ts` (see FAQ Questions section above).
+
+### `<AssistantTextShimmer>`
+
+Animated text component with shimmer effect, used for loading states.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `tooltipText` | `string` | `Ask AI a question` | Tooltip text on hover |
+| `text` | `string` | Required | Text to display with shimmer effect |
+| `as` | `string` | `p` | HTML tag to render |
+| `duration` | `number` | `2` | Animation duration in seconds |
+| `spread` | `number` | `2` | Shimmer spread multiplier |
 
-### `<AiChatSlideover>`
-
-Main chat interface displayed as a slideover panel. Configuration is done via `app.config.ts` (see FAQ Questions section above).
-
-### `<AiChatFloatingInput>`
+### `<AssistantFloatingInput>`
 
 Floating input field positioned at the bottom of the viewport. No props required.
 
@@ -174,7 +181,7 @@ Floating input field positioned at the bottom of the viewport. No props required
 - `Escape` - Blur the input
 - `Enter` - Submit the question
 
-### `<AiChatToolCall>`
+### `<AssistantToolCall>`
 
 Displays MCP tool invocations in the chat.
 
@@ -185,7 +192,7 @@ Displays MCP tool invocations in the chat.
 
 ## Composables
 
-### `useAIChat`
+### `useAssistant`
 
 Main composable for controlling the chat state.
 
@@ -200,7 +207,7 @@ const {
   toggle,         // () => void
   clearMessages,  // () => void
   clearPending,   // () => void
-} = useAIChat()
+} = useAssistant()
 ```
 
 ### `useHighlighter`

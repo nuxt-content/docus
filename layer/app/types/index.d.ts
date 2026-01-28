@@ -1,6 +1,6 @@
-import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
+import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
-export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
+export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
 declare module 'nuxt/schema' {
   interface AppConfig {
@@ -40,7 +40,7 @@ declare module 'nuxt/schema' {
       branch: string
       rootDir?: string
     } | false
-    aiChat?: {
+    assistant?: {
       /**
        * Show the floating input at the bottom of documentation pages.
        * @default true
@@ -74,7 +74,7 @@ declare module 'nuxt/schema' {
        */
       icons?: {
         /**
-         * Icon for the AI chat trigger button and slideover header.
+         * Icon for the assistant trigger button and slideover header.
          * @default 'i-lucide-sparkles'
          */
         trigger?: string

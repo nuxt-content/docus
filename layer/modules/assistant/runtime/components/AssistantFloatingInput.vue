@@ -4,16 +4,16 @@ import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const route = useRoute()
 const appConfig = useAppConfig()
-const { open, isOpen } = useAIChat()
+const { open, isOpen } = useAssistant()
 const { t } = useDocusI18n()
 const input = ref('')
 const isVisible = ref(true)
 const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
 
 const isDocsRoute = computed(() => route.meta.layout === 'docs')
-const isFloatingInputEnabled = computed(() => appConfig.aiChat?.floatingInput !== false)
-const focusInputShortcut = computed(() => appConfig.aiChat?.shortcuts?.focusInput || 'meta_i')
-const placeholder = computed(() => t('aiChat.placeholder'))
+const isFloatingInputEnabled = computed(() => appConfig.assistant?.floatingInput !== false)
+const focusInputShortcut = computed(() => appConfig.assistant?.shortcuts?.focusInput || 'meta_i')
+const placeholder = computed(() => t('assistant.placeholder'))
 
 const shortcutDisplayKeys = computed(() => {
   const shortcut = focusInputShortcut.value

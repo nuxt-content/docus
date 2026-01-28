@@ -4,28 +4,28 @@ import type { UIMessage } from 'ai'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
 import { createReusableTemplate } from '@vueuse/core'
-import AiChatPreStream from './AiChatPreStream.vue'
+import AssistantPreStream from './AssistantPreStream.vue'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const components = {
-  pre: AiChatPreStream as unknown as DefineComponent,
+  pre: AssistantPreStream as unknown as DefineComponent,
 }
 
 const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpandButton?: boolean }>()
 
-const { isOpen, isExpanded, isMobile, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
+const { isOpen, isExpanded, isMobile, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAssistant()
 const config = useRuntimeConfig()
 const toast = useToast()
 const { t } = useDocusI18n()
 const input = ref('')
 
-const displayTitle = computed(() => t('aiChat.title'))
-const displayPlaceholder = computed(() => t('aiChat.placeholder'))
+const displayTitle = computed(() => t('assistant.title'))
+const displayPlaceholder = computed(() => t('assistant.placeholder'))
 
 const chat = new Chat({
   messages: messages.value,
   transport: new DefaultChatTransport({
-    api: config.public.aiChat.apiPath,
+    api: config.public.assistant.apiPath,
   }),
   onError: (error: Error) => {
     const message = (() => {
@@ -80,11 +80,11 @@ function getToolLabel(toolName: string, args: any) {
   const path = args?.path || ''
 
   if (toolName === 'list-pages') {
-    return t('aiChat.toolListPages')
+    return t('assistant.toolListPages')
   }
 
   if (toolName === 'get-page') {
-    return `${t('aiChat.toolReadPage')} ${path || '...'}`
+    return `${t('assistant.toolReadPage')} ${path || '...'}`
   }
 
   return toolName
@@ -137,7 +137,7 @@ onMounted(() => {
         <div class="flex items-center gap-1">
           <UTooltip
             v-if="showExpandButton"
-            :text="isExpanded ? t('aiChat.collapse') : t('aiChat.expand')"
+            :text="isExpanded ? t('assistant.collapse') : t('assistant.expand')"
           >
             <UButton
               :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
@@ -150,7 +150,7 @@ onMounted(() => {
           </UTooltip>
           <UTooltip
             v-if="chat.messages.length > 0"
-            :text="t('aiChat.clearChat')"
+            :text="t('assistant.clearChat')"
           >
             <UButton
               icon="i-lucide-trash-2"
@@ -161,7 +161,7 @@ onMounted(() => {
               @click="resetChat"
             />
           </UTooltip>
-          <UTooltip :text="t('aiChat.close')">
+          <UTooltip :text="t('assistant.close')">
             <UButton
               icon="i-lucide-x"
               color="neutral"
@@ -187,7 +187,7 @@ onMounted(() => {
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
               <div v-if="showThinking && message.role === 'assistant'">
-                <AiTextShimmer :text="t('aiChat.thinking')" />
+                <AssistantTextShimmer :text="t('assistant.thinking')" />
               </div>
               <template
                 v-for="(part, index) in message.parts"
@@ -203,7 +203,7 @@ onMounted(() => {
                 />
 
                 <template v-else-if="part.type === 'data-tool-calls'">
-                  <AiChatToolCall
+                  <AssistantToolCall
                     v-for="tool in (part as any).data.tools"
                     :key="`${tool.toolCallId}-${JSON.stringify(tool.args)}`"
                     :text="getToolLabel(tool.toolName, tool.args)"
@@ -230,16 +230,16 @@ onMounted(() => {
               />
             </div>
             <h3 class="mb-2 text-base font-medium text-highlighted">
-              {{ t('aiChat.askMeAnything') }}
+              {{ t('assistant.askMeAnything') }}
             </h3>
             <p class="max-w-xs text-sm text-muted">
-              {{ t('aiChat.askMeAnythingDescription') }}
+              {{ t('assistant.askMeAnythingDescription') }}
             </p>
           </div>
 
           <template v-else>
             <p class="mb-4 text-sm font-medium text-muted">
-              {{ t('aiChat.faq') }}
+              {{ t('assistant.faq') }}
             </p>
 
             <div class="flex flex-col gap-5">
@@ -281,7 +281,7 @@ onMounted(() => {
         >
           <template #footer>
             <div class="flex items-center gap-1 text-xs text-muted">
-              <span>{{ t('aiChat.lineBreak') }}</span>
+              <span>{{ t('assistant.lineBreak') }}</span>
               <UKbd
                 size="sm"
                 value="shift"
@@ -301,7 +301,7 @@ onMounted(() => {
           </template>
         </UChatPrompt>
         <div class="mt-1 flex text-xs text-dimmed items-center justify-between">
-          <span>{{ t('aiChat.chatCleared') }}</span>
+          <span>{{ t('assistant.chatCleared') }}</span>
           <span>
             {{ input.length }}/1000
           </span>

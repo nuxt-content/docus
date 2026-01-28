@@ -20,23 +20,23 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
 const PANEL_WIDTH_COMPACT = 360
 const PANEL_WIDTH_EXPANDED = 520
 
-export function useAIChat() {
+export function useAssistant() {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
-  const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
+  const isEnabled = computed(() => config.public.assistant?.enabled ?? false)
 
-  const isOpen = useState('ai-chat-open', () => false)
-  const isExpanded = useState('ai-chat-expanded', () => false)
-  const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
-  const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
+  const isOpen = useState('assistant-open', () => false)
+  const isExpanded = useState('assistant-expanded', () => false)
+  const messages = useState<UIMessage[]>('assistant-messages', () => [])
+  const pendingMessage = useState<string | undefined>('assistant-pending', () => undefined)
 
   const isMobile = useMediaQuery('(max-width: 767px)')
   const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
   const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
 
   const faqQuestions = computed<FaqCategory[]>(() => {
-    const aiChatConfig = appConfig.aiChat
-    const faqConfig = aiChatConfig?.faqQuestions
+    const assistantConfig = appConfig.assistant
+    const faqConfig = assistantConfig?.faqQuestions
     if (!faqConfig) return []
 
     // Check if it's a localized object (has locale keys like 'en', 'fr')
