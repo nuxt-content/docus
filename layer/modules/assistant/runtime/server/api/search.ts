@@ -1,4 +1,5 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
+import type { UIMessageStreamWriter, ToolCallPart } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 
 const MAX_STEPS = 10
@@ -71,7 +72,7 @@ export default defineEventHandler(async (event) => {
   const mcpTools = await httpClient.tools()
 
   const stream = createUIMessageStream({
-    execute: async ({ writer }) => {
+    execute: async ({ writer }: { writer: UIMessageStreamWriter }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
         model: config.assistant.model,
@@ -81,13 +82,13 @@ export default defineEventHandler(async (event) => {
         system: getSystemPrompt(siteName),
         messages: modelMessages,
         tools: mcpTools,
-        onStepFinish: ({ toolCalls }) => {
+        onStepFinish: ({ toolCalls }: { toolCalls: ToolCallPart[] }) => {
           if (toolCalls.length === 0) return
           writer.write({
             id: toolCalls[0]?.toolCallId,
             type: 'data-tool-calls',
             data: {
-              tools: toolCalls.map((tc) => {
+              tools: toolCalls.map((tc: ToolCallPart) => {
                 const args = 'args' in tc ? tc.args : 'input' in tc ? tc.input : {}
                 return {
                   toolName: tc.toolName,

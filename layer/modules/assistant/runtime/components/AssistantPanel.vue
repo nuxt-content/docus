@@ -6,7 +6,8 @@ import { DefaultChatTransport } from 'ai'
 import { createReusableTemplate } from '@vueuse/core'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
-const components = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const components: Record<string, any> = {
   pre: defineAsyncComponent(() => import('./AssistantPreStream.vue')),
 }
 
@@ -71,7 +72,7 @@ const lastMessage = computed(() => chat.messages.at(-1))
 const showThinking = computed(() =>
   chat.status === 'streaming'
   && lastMessage.value?.role === 'assistant'
-  && !lastMessage.value?.parts?.some(p => p.type === 'text'),
+  && !lastMessage.value?.parts?.some((p: { type: string }) => p.type === 'text'),
 )
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -190,7 +191,7 @@ onMounted(() => {
                 :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
               >
                 <MDCCached
-                  v-if="part.type === 'text'"
+                  v-if="part.type === 'text' && part.text"
                   :value="part.text"
                   :cache-key="`${message.id}-${index}`"
                   :components="components"
