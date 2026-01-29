@@ -24,12 +24,12 @@ export default defineEventHandler(async (event) => {
       const pages = await queryCollection(event, collection as 'docs').all()
 
       for (const page of pages) {
-        const meta = page as Record<string, unknown>
+        const meta = page as unknown as Record<string, unknown>
         // Skip pages with sitemap: false in frontmatter
         if (meta.sitemap === false) continue
 
         urls.push({
-          loc: page.path || '/',
+          loc: (page.path as string) || '/',
         })
       }
     }
