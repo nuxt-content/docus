@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   site: {
     name: 'Docus',
   },
+  mdc: {
+    highlight: {
+      shikiEngine: 'javascript',
+    },
+  },
   compatibilityDate: '2025-07-18',
   i18n: {
     defaultLocale: 'en',
@@ -28,11 +33,6 @@ export default defineNuxtConfig({
   mcp: {
     name: 'Docus documentation',
     browserRedirect: '/en/ai/mcp',
-  },
-  mdc: {
-    highlight: {
-      shikiEngine: 'javascript',
-    }
   },
   studio: {
     route: '/admin',

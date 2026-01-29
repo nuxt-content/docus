@@ -7,7 +7,7 @@ import { createReusableTemplate } from '@vueuse/core'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const components = {
-  pre: defineAsyncComponent(() => import('./AssistantPreStream.vue'))
+  pre: defineAsyncComponent(() => import('./AssistantPreStream.vue')),
 }
 
 const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpandButton?: boolean }>()
