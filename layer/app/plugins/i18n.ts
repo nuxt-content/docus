@@ -1,6 +1,12 @@
 import en from '../../i18n/locales/en.json'
 import type { RouteLocationNormalized } from 'vue-router'
 
+const locales = import.meta.glob('../../i18n/locales/*.json', { import: 'default' })
+
+function loadLocale(name: string) {
+  return locales[`../../i18n/locales/${name}.json`]?.()
+}
+
 export default defineNuxtPlugin(async () => {
   const nuxtApp = useNuxtApp()
 
@@ -8,21 +14,10 @@ export default defineNuxtPlugin(async () => {
 
   // If i18n is not enabled, fetch and provide the configured locale in app config
   if (!i18nConfig) {
-    let locale = 'en'
-    let resolvedMessages: Record<string, unknown> = en
-
-    const appConfig = useAppConfig()
-    const configuredLocale = appConfig.docus.locale
-    if (configuredLocale !== 'en') {
-      const localeMessages = await import(`../../i18n/locales/${configuredLocale}.json`)
-      if (!localeMessages) {
-        console.warn(`[Docus] Missing locale file for "${configuredLocale}". Falling back to "en".`)
-      }
-      else {
-        locale = configuredLocale
-        resolvedMessages = localeMessages
-      }
-    }
+    const locale = useAppConfig().docus?.locale || 'en'
+    const resolvedMessages = locale !== 'en'
+      ? (await loadLocale(locale) || en)
+      : en
 
     nuxtApp.provide('locale', locale)
     nuxtApp.provide('localeMessages', resolvedMessages)
