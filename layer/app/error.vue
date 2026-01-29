@@ -2,6 +2,7 @@
 import type { NuxtError } from '#app'
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import { safeLocaleCode } from '../utils/locale'
 
 const props = defineProps<{
   error: NuxtError
@@ -44,13 +45,13 @@ if (isEnabled.value) {
   })
 }
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = computed(() => isEnabled.value ? `docs_${safeLocaleCode(locale.value)}` : 'docs')
 
 const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
   transform: (data: ContentNavigationItem[]) => {
     const rootResult = data.find(item => item.path === '/docs')?.children || data || []
 
-    return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
+    return rootResult.find(item => item.path === `/${locale.value.toLowerCase()}`)?.children || rootResult
   },
   watch: [locale],
 })

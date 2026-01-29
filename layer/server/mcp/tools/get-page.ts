@@ -27,9 +27,9 @@ WORKFLOW: This tool returns the complete page content including title, descripti
     const siteUrl = import.meta.dev ? 'http://localhost:3000' : inferSiteURL()
 
     const availableLocales = getAvailableLocales(config)
-    const collectionName = config.i18n?.locales
+    const { collection: collectionName } = config.i18n?.locales
       ? getCollectionFromPath(path, availableLocales)
-      : 'docs'
+      : { collection: 'docs' }
 
     try {
       const page = await queryCollection(event, collectionName as keyof Collections)
