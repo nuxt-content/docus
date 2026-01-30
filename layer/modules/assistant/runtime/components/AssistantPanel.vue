@@ -127,7 +127,7 @@ onMounted(() => {
 <template>
   <DefineChatContent v-slot="{ showExpandButton = true }">
     <div class="flex h-full flex-col">
-      <div class="flex h-16 shrink-0 items-center justify-between border-b border-muted/50 px-4">
+      <div class="flex h-16 shrink-0 items-center justify-between border-b border-default px-4">
         <span class="font-medium text-highlighted">{{ displayTitle }}</span>
         <div class="flex items-center gap-1">
           <UTooltip
@@ -300,7 +300,7 @@ onMounted(() => {
 
   <aside
     v-if="!isMobile"
-    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
+    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-default bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
     :style="{
       width: `${panelWidth}px`,
       right: isOpen ? '0' : `-${panelWidth}px`,
