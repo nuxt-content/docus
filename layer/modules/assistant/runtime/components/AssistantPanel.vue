@@ -182,9 +182,9 @@ onMounted(() => {
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
               <AssistantLoading
-                v-if="message.role === 'assistant' && getMessageToolCalls(message).length > 0"
+                v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
                 :tool-calls="getMessageToolCalls(message)"
-                :is-loading="showThinking"
+                :is-loading="showThinking && message.id === lastMessage?.id"
               />
               <template
                 v-for="(part, index) in message.parts"

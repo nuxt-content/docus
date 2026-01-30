@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
-import { motion } from 'motion-v'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
@@ -40,19 +39,17 @@ const lastMessage = computed(() => chat?.messages.at(-1))
 const showThinking = computed(() =>
   chat?.status === 'streaming'
   && lastMessage.value?.role === 'assistant'
-  && lastMessage.value?.parts?.length === 0,
+  && !lastMessage.value?.parts?.some((p: { type: string }) => p.type === 'text'),
 )
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getToolLabel(toolName: string, args: any) {
-  const path = args?.path || ''
-
-  const labels: Record<string, string> = {
-    'list-pages': t('assistant.toolListPages'),
-    'get-page': t('assistant.toolReadPage').replace('{path}', path || 'page'),
-  }
-
-  return labels[toolName] || toolName
+function getMessageToolCalls(message: any) {
+  if (!message?.parts) return []
+  return message.parts
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((p: any) => p.type === 'data-tool-calls')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .flatMap((p: any) => p.data?.tools || [])
 }
 
 function handleSubmit(event?: Event) {
@@ -85,11 +82,11 @@ function resetChat() {
 
 <template>
   <div class="flex flex-col w-full h-96 rounded-lg overflow-hidden">
-    <div class="flex-1 overflow-y-auto px-4 py-4">
+    <div class="flex-1 overflow-y-auto">
       <template v-if="isEnabled && chat">
         <div
           v-if="chat.messages.length === 0"
-          class="h-full flex flex-col items-center justify-center"
+          class="h-full flex flex-col items-center justify-center p-4"
         >
           <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
             <UIcon
@@ -101,17 +98,14 @@ function resetChat() {
             {{ t('assistant.tryAsking') }}
           </p>
           <div class="flex flex-wrap gap-2 justify-center">
-            <motion.button
-              v-for="(question, index) in suggestedQuestions"
+            <button
+              v-for="question in suggestedQuestions"
               :key="question"
-              :initial="{ opacity: 0, y: 10 }"
-              :animate="{ opacity: 1, y: 0 }"
-              :transition="{ delay: index * 0.1, duration: 0.3 }"
               class="px-3 py-1.5 text-xs text-muted bg-elevated hover:bg-accented rounded-full transition-colors cursor-pointer"
               @click="askQuestion(question)"
             >
               {{ question }}
-            </motion.button>
+            </button>
           </div>
         </div>
 
@@ -122,38 +116,47 @@ function resetChat() {
           compact
           :status="chat.status"
           :user="{ ui: { content: 'text-sm' } }"
-          class="flex-1"
+          :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
+          class="px-4 py-4"
         >
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
-              <div v-if="showThinking && message.role === 'assistant'">
-                <AssistantTextShimmer :text="t('assistant.thinking')" />
-              </div>
+              <AssistantLoading
+                v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
+                :tool-calls="getMessageToolCalls(message)"
+                :is-loading="showThinking && message.id === lastMessage?.id"
+              />
               <template
                 v-for="(part, index) in message.parts"
                 :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
               >
                 <MDCCached
-                  v-if="part.type === 'text'"
+                  v-if="part.type === 'text' && part.text"
                   :value="part.text"
                   :cache-key="`demo-${message.id}-${index}`"
                   :parser-options="{ highlight: false }"
                   class="*:first:mt-0 *:last:mb-0"
                 />
-
-                <template v-else-if="part.type === 'data-tool-calls'">
-                  <AssistantToolCall
-                    v-for="tool in (part as any).data.tools"
-                    :key="tool.toolCallId"
-                    :text="getToolLabel(tool.toolName, tool.input)"
-                    :is-loading="false"
-                  />
-                </template>
               </template>
             </div>
           </template>
         </UChatMessages>
       </template>
+
+      <div
+        v-else
+        class="h-full flex flex-col items-center justify-center p-4 text-center"
+      >
+        <div class="size-10 rounded-full bg-muted/10 flex items-center justify-center mb-3">
+          <UIcon
+            name="i-lucide-sparkles"
+            class="size-5 text-muted"
+          />
+        </div>
+        <p class="text-sm text-muted">
+          Assistant not configured
+        </p>
+      </div>
     </div>
 
     <div class="p-3">

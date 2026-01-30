@@ -161,17 +161,6 @@ Button to toggle the chat panel. The tooltip text is automatically translated us
 
 Main chat interface displayed as a side panel. Configuration is done via `app.config.ts` (see FAQ Questions section above).
 
-### `<AssistantTextShimmer>`
-
-Animated text component with shimmer effect, used for loading states.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `text` | `string` | Required | Text to display with shimmer effect |
-| `as` | `string` | `p` | HTML tag to render |
-| `duration` | `number` | `2` | Animation duration in seconds |
-| `spread` | `number` | `2` | Shimmer spread multiplier |
-
 ### `<AssistantFloatingInput>`
 
 Floating input field positioned at the bottom of the viewport. No props required.
@@ -180,15 +169,6 @@ Floating input field positioned at the bottom of the viewport. No props required
 - `⌘I` / `Ctrl+I` - Focus the input
 - `Escape` - Blur the input
 - `Enter` - Submit the question
-
-### `<AssistantToolCall>`
-
-Displays MCP tool invocations in the chat.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `text` | `string` | Required | Label text for the tool call |
-| `isLoading` | `boolean` | `false` | Shows loading spinner when true |
 
 ## Composables
 

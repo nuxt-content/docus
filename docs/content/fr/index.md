@@ -312,9 +312,9 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
 
     ::::u-page-card
     ---
-    class: col-span-2 lg:col-span-2
+    class: col-span-2
     ---
-    :ai-chat-demo
+    :assistant-demo
 
     #title
     [Assistant]{.text-primary} intégré
