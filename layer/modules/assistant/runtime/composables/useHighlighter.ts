@@ -1,17 +1,28 @@
-import { createHighlighter } from 'shiki'
-import type { HighlighterGeneric } from 'shiki'
-import { createJavaScriptRegexEngine } from 'shiki/engine-javascript.mjs'
+import { createHighlighterCore } from '@shikijs/core'
+import type { HighlighterCore } from '@shikijs/core'
+import { createJavaScriptRegexEngine } from '@shikijs/engine-javascript'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let highlighter: HighlighterGeneric<any, any> | null = null
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let promise: Promise<HighlighterGeneric<any, any>> | null = null
+let highlighter: HighlighterCore | null = null
+let promise: Promise<HighlighterCore> | null = null
 
 export const useHighlighter = async () => {
   if (!promise) {
-    promise = createHighlighter({
-      langs: ['vue', 'js', 'ts', 'css', 'html', 'json', 'yaml', 'markdown', 'bash'],
-      themes: ['material-theme-palenight', 'material-theme-lighter'],
+    promise = createHighlighterCore({
+      langs: [
+        import('@shikijs/langs/vue'),
+        import('@shikijs/langs/javascript'),
+        import('@shikijs/langs/typescript'),
+        import('@shikijs/langs/css'),
+        import('@shikijs/langs/html'),
+        import('@shikijs/langs/json'),
+        import('@shikijs/langs/yaml'),
+        import('@shikijs/langs/markdown'),
+        import('@shikijs/langs/bash'),
+      ],
+      themes: [
+        import('@shikijs/themes/material-theme-palenight'),
+        import('@shikijs/themes/material-theme-lighter'),
+      ],
       engine: createJavaScriptRegexEngine(),
     })
   }
