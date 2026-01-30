@@ -22,6 +22,9 @@
     "README.md"
   ],
   "dependencies": {
+    "@ai-sdk/gateway": "^3.0.28",
+    "@ai-sdk/mcp": "^1.0.14",
+    "@ai-sdk/vue": "3.0.61",
     "@iconify-json/lucide": "^1.2.86",
     "@iconify-json/simple-icons": "^1.2.67",
     "@iconify-json/vscode-icons": "^1.2.40",
@@ -34,6 +37,7 @@
     "@nuxtjs/mdc": "^0.20.0",
     "@nuxtjs/robots": "^5.6.7",
     "@vueuse/core": "^14.1.0",
+    "ai": "6.0.61",
     "defu": "^6.1.4",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
@@ -43,19 +47,18 @@
     "nuxt-og-image": "^5.1.13",
     "pkg-types": "^2.3.0",
     "scule": "^1.3.0",
+    "shiki": "^3.21.0",
+    "shiki-stream": "^0.1.4",
     "tailwindcss": "^4.1.18",
     "ufo": "^1.6.3",
     "zod": "^4.3.5",
-    "zod-to-json-schema": "^3.25.1",
-    "@ai-sdk/mcp": "^1.0.14",
-    "@ai-sdk/vue": "3.0.61",
-    "@ai-sdk/gateway": "^3.0.28",
-    "ai": "6.0.61",
-    "shiki": "^3.21.0",
-    "shiki-stream": "^0.1.4"
+    "zod-to-json-schema": "^3.25.1"
   },
   "peerDependencies": {
     "better-sqlite3": "12.x",
     "nuxt": "4.x"
+  },
+  "devDependencies": {
+    "vite-plugin-wasm": "^3.5.0"
   }
 }

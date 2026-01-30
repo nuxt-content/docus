@@ -1,4 +1,5 @@
 import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
+import wasm from 'vite-plugin-wasm'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -58,6 +59,9 @@ export default defineNuxtConfig({
       // Don't generate observability routes for now
       vercel: '2025-07-14',
     },
+  },
+  vite: {
+    plugins: [wasm()],
   },
   hooks: {
     'nitro:config'(nitroConfig) {
