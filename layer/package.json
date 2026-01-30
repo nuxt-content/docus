@@ -57,8 +57,5 @@
   "peerDependencies": {
     "better-sqlite3": "12.x",
     "nuxt": "4.x"
-  },
-  "devDependencies": {
-    "vite-plugin-wasm": "^3.5.0"
   }
 }
