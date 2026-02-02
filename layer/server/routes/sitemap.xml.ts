@@ -1,9 +1,10 @@
 import { queryCollection } from '@nuxt/content/server'
 import { getAvailableLocales, getCollectionsToQuery } from '../utils/content'
+import { inferSiteURL } from '../../utils/meta'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  const siteUrl = (config.public.siteUrl as string) || (config.public.llms as Record<string, unknown>)?.domain as string || ''
+  const siteUrl = inferSiteURL() || ''
 
   const availableLocales = getAvailableLocales(config.public as Record<string, unknown>)
   const collections = getCollectionsToQuery(undefined, availableLocales)
