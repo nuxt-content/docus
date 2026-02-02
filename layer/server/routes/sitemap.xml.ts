@@ -3,7 +3,7 @@ import { getAvailableLocales, getCollectionsToQuery } from '../utils/content'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  const siteUrl = (config.public.siteUrl as string) || ''
+  const siteUrl = (config.public.siteUrl as string) || (config.public.llms as Record<string, unknown>)?.domain as string || ''
 
   const availableLocales = getAvailableLocales(config.public as Record<string, unknown>)
   const collections = getCollectionsToQuery(undefined, availableLocales)
@@ -25,11 +25,16 @@ export default defineEventHandler(async (event) => {
 
       for (const page of pages) {
         const meta = page as unknown as Record<string, unknown>
+        const pagePath = (page.path as string) || '/'
+
         // Skip pages with sitemap: false in frontmatter
         if (meta.sitemap === false) continue
 
+        // Skip .navigation files (used for navigation configuration)
+        if (pagePath.endsWith('.navigation') || pagePath.includes('/.navigation')) continue
+
         urls.push({
-          loc: (page.path as string) || '/',
+          loc: pagePath,
         })
       }
     }
