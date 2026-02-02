@@ -15,18 +15,21 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'nuxt-llms',
     () => {
-      // Update @nuxt/content optimizeDeps options
+      // Update optimizeDeps and resolve options for layers dependencies
       extendViteConfig((config) => {
         config.optimizeDeps ||= {}
         config.optimizeDeps.include ||= []
-        config.optimizeDeps.include.push(
-          '@nuxt/content > slugify',
-          // Fix @vercel/oidc ESM export issue (transitive dep of @ai-sdk/gateway)
-          '@vercel/oidc',
-        )
+        config.optimizeDeps.include.push('@nuxt/content > slugify')
         config.optimizeDeps.include = config.optimizeDeps.include
           .map(id => id.replace(/^@nuxt\/content > /, 'docus > @nuxt/content > '))
-          .map(id => id.replace(/^@vercel\/oidc$/, 'docus > @vercel/oidc'))
+
+        // Fix @vercel/oidc ESM export issue: force Node version instead of browser
+        // This is needed because ai -> @ai-sdk/gateway -> @vercel/oidc uses conditional exports
+        // that resolve to index-browser.js which has CJS/ESM interop issues
+        config.resolve ||= {}
+        config.resolve.alias ||= {}
+        const aliases = config.resolve.alias as Record<string, string>
+        aliases['@vercel/oidc'] = '@vercel/oidc/dist/index.js'
       })
     },
   ],
