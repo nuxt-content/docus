@@ -56,6 +56,35 @@ export default defineNuxtModule({
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
+
+          // Add routes for doc pages: /{locale}/{path} → /raw/{path}.md
+          routes.push(
+            {
+              src: `^/(${localePattern})/(.+)$`,
+              dest: '/raw/$2.md',
+              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
+            },
+            {
+              src: `^/(${localePattern})/(.+)$`,
+              dest: '/raw/$2.md',
+              has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
+            },
+          )
+        }
+        else {
+          // Non-i18n: Add routes for doc pages: /{path} → /raw/{path}.md
+          routes.push(
+            {
+              src: '^/(.+)$',
+              dest: '/raw/$1.md',
+              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
+            },
+            {
+              src: '^/(.+)$',
+              dest: '/raw/$1.md',
+              has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
+            },
+          )
         }
 
         vcConfig.routes.unshift(...routes)
