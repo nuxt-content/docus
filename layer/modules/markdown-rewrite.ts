@@ -42,7 +42,6 @@ export default defineNuxtModule({
             has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
           },
         ]
-        console.log('[Docus] Added root path redirects to /llms.txt')
 
         // Check if i18n is enabled
         const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
@@ -71,16 +70,11 @@ export default defineNuxtModule({
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
-          console.log(`[Docus] Added locale homepage redirects for: ${localeCodes.join(', ')}`)
         }
 
         // Parse llms.txt to get all documentation pages
         const urlRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
         const matches = [...llmsTxt.matchAll(urlRegex)]
-        console.log(`[Docus] Found ${matches.length} URLs in llms.txt`)
-
-        let processedCount = 0
-        const sampleRoutes = []
 
         for (const match of matches) {
           const url = match[2]
@@ -107,7 +101,7 @@ export default defineNuxtModule({
             }
 
             // Add redirect routes: page URL → raw markdown URL
-            const newRoutes = [
+            const docsRoutes = [
               {
                 src: `^${pagePath}$`,
                 dest: rawPath,
@@ -119,32 +113,17 @@ export default defineNuxtModule({
                 has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
               },
             ]
-            routes.push(...newRoutes)
-            processedCount++
-
-            // Collect first 3 routes as samples
-            if (sampleRoutes.length < 3) {
-              sampleRoutes.push({ pagePath, rawPath })
-            }
+            routes.push(...docsRoutes)
           }
           catch {
             // Skip invalid URLs
           }
         }
 
-        console.log(`[Docus] Generated ${processedCount} page redirects (${processedCount * 2} routes total)`)
-        if (sampleRoutes.length > 0) {
-          console.log('[Docus] Sample routes:')
-          sampleRoutes.forEach(({ pagePath, rawPath }) => {
-            console.log(`  ${pagePath} → ${rawPath}`)
-          })
-        }
-
-        console.log(`[Docus] Adding ${routes.length} total routes to Vercel config`)
         vcConfig.routes.unshift(...routes)
 
         await writeFile(vcJSON, JSON.stringify(vcConfig, null, 2), 'utf8')
-        console.log(`[Docus] Successfully wrote ${routes.length} routes to ${vcJSON}`)
+        console.log(`[Docus] Successfully wrote ${routes.length} routes to ${vcJSON} (serve markdown content to AI agents)`)
       })
     })
   },
