@@ -43,16 +43,16 @@ export default defineNuxtModule({
           // Create a regex pattern for all locales (e.g., "en|fr|es")
           const localePattern = localeCodes.join('|')
 
-          // Add routes for each locale: /{locale} → /{locale}/llms.txt
+          // Add routes for each locale: /{locale} → /llms.txt
           routes.push(
             {
               src: `^/(${localePattern})$`,
-              dest: '/$1/llms.txt',
+              dest: '/llms.txt',
               has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
             },
             {
               src: `^/(${localePattern})$`,
-              dest: '/$1/llms.txt',
+              dest: '/llms.txt',
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
