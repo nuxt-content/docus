@@ -16,7 +16,7 @@ export default defineNuxtModule({
         const vcJSON = resolve(nitro.options.output.dir, 'config.json')
         const vcConfig = JSON.parse(await readFile(vcJSON, 'utf8'))
 
-        // Always redirect / to /llms.txt
+        // Always redirect / to /llms.txt and doc pages to /raw
         const routes = [
           {
             src: '^/$',
@@ -28,9 +28,19 @@ export default defineNuxtModule({
             dest: '/llms.txt',
             has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
           },
+          {
+            src: '^/(.+)$',
+            dest: '/raw/$1.md',
+            has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
+          },
+          {
+            src: '^/(.+)$',
+            dest: '/raw/$1.md',
+            has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
+          },
         ]
 
-        // Check if i18n is enabled and add locale-specific routes
+        // Check if i18n is enabled and add locale-specific routes for homepage
         const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
 
         if (isI18nEnabled) {
@@ -43,7 +53,7 @@ export default defineNuxtModule({
           // Create a regex pattern for all locales (e.g., "en|fr|es")
           const localePattern = localeCodes.join('|')
 
-          // Add routes for each locale: /{locale} → /llms.txt
+          // Add routes for each locale homepage: /{locale} → /llms.txt
           routes.push(
             {
               src: `^/(${localePattern})$`,
@@ -53,35 +63,6 @@ export default defineNuxtModule({
             {
               src: `^/(${localePattern})$`,
               dest: '/llms.txt',
-              has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
-            },
-          )
-
-          // Add routes for doc pages: /{locale}/{path} → /raw/{locale}/{path}.md
-          routes.push(
-            {
-              src: `^/(${localePattern})/(.+)$`,
-              dest: '/raw/$1/$2.md',
-              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-            },
-            {
-              src: `^/(${localePattern})/(.+)$`,
-              dest: '/raw/$1/$2.md',
-              has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
-            },
-          )
-        }
-        else {
-          // Non-i18n: Add routes for doc pages: /{path} → /raw/{path}.md
-          routes.push(
-            {
-              src: '^/(.+)$',
-              dest: '/raw/$1.md',
-              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-            },
-            {
-              src: '^/(.+)$',
-              dest: '/raw/$1.md',
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
