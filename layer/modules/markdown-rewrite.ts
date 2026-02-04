@@ -34,7 +34,7 @@ export default defineNuxtModule({
           {
             src: '^/$',
             dest: '/llms.txt',
-            has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+            has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
           },
           {
             src: '^/$',
@@ -63,7 +63,7 @@ export default defineNuxtModule({
             {
               src: `^/(${localePattern})$`,
               dest: '/llms.txt',
-              has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
             },
             {
               src: `^/(${localePattern})$`,
@@ -110,12 +110,12 @@ export default defineNuxtModule({
             const newRoutes = [
               {
                 src: `^${pagePath}$`,
-                dest: '/llms.txt',
-                has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+                dest: rawPath,
+                has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
               },
               {
                 src: `^${pagePath}$`,
-                dest: '/llms.txt',
+                dest: rawPath,
                 has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
               },
             ]
@@ -142,6 +142,8 @@ export default defineNuxtModule({
 
         console.log(`[Docus] Adding ${routes.length} total routes to Vercel config`)
         vcConfig.routes.unshift(...routes)
+
+        console.log('[Docus] vcJSON', JSON.stringify(vcConfig, null, 2))
 
         await writeFile(vcJSON, JSON.stringify(vcConfig, null, 2), 'utf8')
         console.log(`[Docus] Successfully wrote ${routes.length} routes to ${vcJSON}`)
