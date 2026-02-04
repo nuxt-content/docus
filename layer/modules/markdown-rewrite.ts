@@ -57,16 +57,16 @@ export default defineNuxtModule({
             },
           )
 
-          // Add routes for doc pages: /{locale}/{path} → /raw/{path}.md
+          // Add routes for doc pages: /{locale}/{path} → /raw/{locale}/{path}.md
           routes.push(
             {
               src: `^/(${localePattern})/(.+)$`,
-              dest: '/raw/$2.md',
+              dest: '/raw/$1/$2.md',
               has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
             },
             {
               src: `^/(${localePattern})/(.+)$`,
-              dest: '/raw/$2.md',
+              dest: '/raw/$1/$2.md',
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
