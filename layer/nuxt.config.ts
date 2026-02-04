@@ -93,4 +93,13 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify',
   },
+  robots: {
+    groups: [
+      {
+        userAgent: '*',
+        allow: '/',
+      },
+    ],
+    sitemap: '/sitemap.xml',
+  },
 })

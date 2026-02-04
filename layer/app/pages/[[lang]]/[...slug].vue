@@ -31,14 +31,16 @@ if (!page.value) {
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
-})
-
 const headline = ref(findPageHeadline(navigation?.value, page.value?.path))
+const breadcrumbs = computed(() => findPageBreadcrumbs(navigation?.value, page.value?.path || ''))
+
+useSeo({
+  title,
+  description,
+  type: 'article',
+  modifiedAt: page.value.modifiedAt,
+  breadcrumbs,
+})
 watch(() => navigation?.value, () => {
   headline.value = findPageHeadline(navigation?.value, page.value?.path) || headline.value
 })

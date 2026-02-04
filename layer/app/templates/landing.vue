@@ -15,20 +15,14 @@ if (!page.value) {
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
-useSeoMeta({
+useSeo({
   title,
   description,
-  ogTitle: title,
-  ogDescription: description,
+  type: 'website',
+  ogImage: page.value?.seo?.ogImage,
 })
 
-if (page.value?.seo?.ogImage) {
-  useSeoMeta({
-    ogImage: page.value.seo.ogImage,
-    twitterImage: page.value.seo.ogImage,
-  })
-}
-else {
+if (!page.value?.seo?.ogImage) {
   defineOgImageComponent('Landing', {
     title,
     description,
