@@ -170,119 +170,20 @@ Sections:
 
 ### For Docus/Nuxt Content Projects (Type A)
 
-Scan all `.md` files and validate technical correctness using [references/technical-checks.md](references/technical-checks.md).
+Perform full technical validation using [references/technical-checks.md](references/technical-checks.md):
 
-### Frontmatter Validation
+**Validate:**
+1. **Frontmatter structure** - Required: `title`, `description`. Optional: `navigation`, `seo`, `links`
+2. **MDC component syntax** - All Nuxt UI components MUST have `u-` prefix (`::u-page-hero`, `:::u-button`)
+3. **Code block labels** - Config files need file path labels (` ```ts [nuxt.config.ts] `)
+4. **File naming** - Numbered directories/files, kebab-case, `.navigation.yml` in each section
 
-For each markdown file, extract and validate frontmatter:
+**Common Critical Errors:**
+- Missing `u-` prefix: `::page-hero` → should be `::u-page-hero`
+- Missing required frontmatter: `title`, `description`
+- Invalid `.navigation.yml` structure
 
-**Required fields** (Critical if missing):
-- `title` - String, max 100 chars (60 recommended for SEO)
-- `description` - String, max 200 chars (160 recommended for SEO)
-
-**Optional but recommended** (Important if suboptimal):
-- `navigation.icon` - Format: `i-{collection}-{name}` (e.g., `i-lucide-rocket`)
-- `navigation.title` - Custom sidebar label
-- `seo.title` - SEO-optimized title (50-60 chars optimal)
-- `seo.description` - SEO-optimized description (120-160 chars optimal)
-- `links` - Array of related page links
-
-**Validation checks:**
-- [ ] Required fields present
-- [ ] Field types correct (string, object, array)
-- [ ] Icon format valid (starts with `i-`)
-- [ ] Links array structure correct (objects with `label`, `to`, optional `icon`, `target`)
-- [ ] No YAML syntax errors
-
-**Critical errors:**
-- Missing `title` or `description`
-- Invalid YAML syntax
-- Malformed `links` array
-
-**Important warnings:**
-- Description too short (<70 chars) or too long (>160 chars)
-- Missing `seo` metadata
-- Icon doesn't start with `i-`
-
-### MDC Component Syntax
-
-Scan file content for MDC components and validate:
-
-**Critical check: u- prefix**
-
-ALL Nuxt UI components MUST use `u-` prefix:
-
-| Component Type | Incorrect | Correct |
-|----------------|-----------|---------|
-| Page Hero | `::page-hero` | `::u-page-hero` |
-| Page Section | `::page-section` | `::u-page-section` |
-| Page Grid | `::page-grid` | `::u-page-grid` |
-| Page Card | `::page-card` | `::u-page-card` |
-| Page Feature | `::page-feature` | `::u-page-feature` |
-| Button | `::button` or `:::button` | `:::u-button` |
-| Badge | `::badge` | `::u-badge` |
-| Color Mode Image | `:color-mode-image` | `:u-color-mode-image` |
-
-**Scan pattern:**
-- Search for `::page-` → flag as missing `u-` prefix
-- Search for `::button`, `::badge` → flag as missing `u-` prefix
-- Search for `:color-mode-image` → flag as missing `u-` prefix
-
-**Valid without u- prefix** (Nuxt Content components):
-- `::code-group`, `::steps`, `::note`, `::tip`, `::warning`, `::caution`
-
-**Nesting validation:**
-- Ensure consistent nesting (:: at level 1, ::: at level 2, :::: at level 3)
-- Flag inconsistent jumps (:: to :::: without :::)
-
-### Code Block Validation
-
-Check all code blocks for file path labels:
-
-**Pattern:** ` ```language [file-path] `
-
-**Files requiring labels** (Important if missing):
-- TypeScript/JavaScript: `.ts`, `.js`, `.mjs`
-- Vue: `.vue`
-- Configuration: `.json`, `.yaml`, `.yml`
-- Config files: `nuxt.config.ts`, `app.config.ts`, etc.
-
-**Examples:**
-
-✅ Good:
-````markdown
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({})
-```
-````
-
-❌ Missing label:
-````markdown
-```ts
-export default defineNuxtConfig({})
-```
-````
-
-**Language tags:**
-- Flag code blocks without language tags (` ``` ` instead of ` ```ts `)
-
-### File Naming Conventions
-
-Validate file and directory naming:
-
-**Directory naming:**
-- [ ] Numbered directories: `1.getting-started/`, `2.guide/`, etc.
-- [ ] Kebab-case names (lowercase with hyphens)
-- [ ] No gaps in numbering (1, 2, 3, not 1, 2, 4)
-
-**File naming:**
-- [ ] Numbered files: `1.introduction.md`, `2.installation.md`
-- [ ] Kebab-case names
-- [ ] `.md` extension
-
-**Navigation files:**
-- [ ] Each section has `.navigation.yml`
-- [ ] File name exactly `.navigation.yml` (not `navigation.yml`)
+See [references/technical-checks.md](references/technical-checks.md) for complete validation rules, examples, and error patterns.
 
 ### For Generic Markdown Projects (Type B)
 
@@ -316,148 +217,47 @@ Validate file and directory naming:
 
 **This step applies to ALL project types** (both Docus and generic Markdown).
 
-Evaluate content quality across four dimensions using reference files.
-
-Evaluate content quality across four dimensions using reference files.
+Evaluate content quality across four dimensions. Refer to reference files for detailed checklists.
 
 ### Clarity Review
 
-Apply guidelines from [references/clarity-checks.md](references/clarity-checks.md):
-
-**Voice and Tone:**
-- [ ] Active voice (not passive)
-- [ ] Present tense (not future)
-- [ ] Second person ("you can")
-- [ ] Direct and actionable
-
-**Sentence Structure:**
-- [ ] Target 15-20 words per sentence
-- [ ] Flag sentences over 25 words
-- [ ] Avoid wordy phrases ("in order to" → "to")
-
-**Paragraph Structure:**
-- [ ] 2-5 sentences per paragraph
-- [ ] One main idea per paragraph
-- [ ] 200-400 words between headings
-
-**Action-Based Headings** (for Guide sections):
-- [ ] H2/H3 use action verbs (Add, Configure, Create, Set up, Handle, Deploy)
-- [ ] Not static nouns ("Configuration" → "Configure your app")
-- [ ] Exception: Getting Started titles remain nouns ("Introduction", "Installation")
-
-**Terminology:**
-- [ ] Technical terms defined on first use
-- [ ] Consistent terminology (not alternating "config"/"configuration")
-- [ ] Product names capitalized consistently
-
-**Code Examples:**
-- [ ] Complete and copy-pasteable
-- [ ] File path labels present
-- [ ] Realistic variable names (not foo/bar)
-- [ ] Comments explain non-obvious logic
-- [ ] Multi-package manager support (use `::code-group`)
+Use [references/clarity-checks.md](references/clarity-checks.md) to check:
+- **Voice & Tone:** Active voice, present tense, second person
+- **Sentence Structure:** 15-20 words target, avoid wordy phrases
+- **Paragraph Structure:** 2-5 sentences, 200-400 words between headings
+- **Action-Based Headings:** Page titles (H1) and headings (H2/H3) use action verbs for guides (Nuxt pattern)
+  - Examples: "Create Your First Module", "Configure your app", "Build a Plugin"
+  - Exceptions: Getting Started (nouns), API (function names), Concepts (descriptive)
+- **Terminology:** Consistent naming, technical terms defined
+- **Code Examples:** Complete, copy-pasteable, realistic, with file labels
 
 ### SEO Review
 
-Apply guidelines from [references/seo-checks.md](references/seo-checks.md):
-
-**Page Titles:**
-- [ ] Length: 50-60 characters (max 70)
-- [ ] Contains primary keyword
-- [ ] Unique across all pages
-- [ ] Matches or relates to H1
-
-**Meta Descriptions:**
-- [ ] Length: 120-160 characters
-- [ ] Includes keywords naturally
-- [ ] Compelling and action-oriented
-- [ ] Unique per page
-
-**Heading Structure:**
-- [ ] Single H1 per page (Critical)
-- [ ] Heading hierarchy: H1 → H2 → H3 (no skipped levels)
-- [ ] Descriptive headings (not "Overview", "Details")
-- [ ] H2/H3 include relevant keywords
-
-**URL Structure:**
-- [ ] Lowercase, hyphen-separated (kebab-case)
-- [ ] Descriptive and stable
-- [ ] Follows numbered directory pattern
-- [ ] Matches content hierarchy
-
-**Internal Linking:**
-- [ ] Links to related pages
-- [ ] Descriptive anchor text (not "click here")
-- [ ] Includes "Next steps" or related sections
-- [ ] Important links in frontmatter `links` array
-
-**Content Length:**
-- [ ] Landing pages: 300+ words
-- [ ] Guide pages: 400+ words
-- [ ] Sections: 200-400 words between headings
-- [ ] Flag pages under 100 words (too thin)
-- [ ] Flag sections over 1000 words without breaks (poor scannability)
-
-**Image Optimization:**
-- [ ] Alt text present and descriptive
-- [ ] Color mode images have both light/dark variants
-- [ ] Image file names are descriptive
+Use [references/seo-checks.md](references/seo-checks.md) to check:
+- **Titles:** 50-60 chars, keywords, unique
+- **Descriptions:** 120-160 chars, compelling, unique
+- **Headings:** Single H1, logical hierarchy (H1→H2→H3), descriptive
+- **URLs:** Kebab-case, descriptive, stable
+- **Links:** Descriptive anchors, "Next steps" sections
+- **Content Length:** 300+ words for landing, 400+ for guides, 200-400 per section
+- **Images:** Alt text, color mode variants
 
 ### Structure Review
 
-Apply guidelines from [references/structure-checks.md](references/structure-checks.md):
+Use [references/structure-checks.md](references/structure-checks.md) to check:
+- **Hierarchy:** Max 3 levels, logical progression
+- **Organization:** 2-15 pages per section, `.navigation.yml` present, appropriate icons
+- **Flow:** Logical progression, "Next Steps" links, no orphaned pages
+- **Landing Page:** Hero, features, quick start
+- **Consistency:** Similar structure across pages
 
-**Content Hierarchy:**
-- [ ] Maximum 3 levels (folders + headings)
-- [ ] Logical section progression (Getting Started → Guide → API → Advanced)
-- [ ] Standard section types present
+### i18n Review (if multi-language)
 
-**Section Organization:**
-- [ ] Each section has 2-15 pages (flag 1 page or 20+ pages)
-- [ ] `.navigation.yml` in all sections
-- [ ] Icons follow recommendations (Getting Started: rocket, Guide: book-open, API: code)
-
-**Content Flow:**
-- [ ] Logical information progression
-- [ ] Pages include "Next Steps" or related links
-- [ ] Cross-references to related pages
-- [ ] No orphaned pages (all reachable from navigation)
-
-**Landing Page:**
-- [ ] `index.md` exists at root of each locale
-- [ ] Contains hero section, features, quick start, links to sections
-
-**Consistency:**
-- [ ] Similar page structure across documentation
-- [ ] Consistent heading style
-- [ ] Consistent code example format
-- [ ] Consistent terminology usage
-
-### i18n Review (Multi-language only)
-
-If multi-language detected, apply guidelines from [references/i18n-checks.md](references/i18n-checks.md):
-
-**Parallel Structure:**
-- [ ] All locales have same directory structure
-- [ ] All locales have matching file structure
-- [ ] Same page count per section across locales
-
-**Translation Completeness:**
-- [ ] Content length similar across translations (±30%)
-- [ ] Same number of major headings (H2) across translations
-- [ ] Same sections and subsections
-- [ ] Same code examples (with translated comments)
-
-**Navigation Consistency:**
-- [ ] `.navigation.yml` in all sections for all locales
-- [ ] Same icons across locales
-- [ ] Titles translated appropriately
-
-**Locale-Specific:**
-- [ ] No English text in non-English locales (except code/technical terms)
-- [ ] Internal links point to correct locale
-- [ ] Code comments translated
-- [ ] Consistent terminology within each locale
+Use [references/i18n-checks.md](references/i18n-checks.md) to check:
+- **Parallel Structure:** Same directories, files, page counts across locales
+- **Translation Completeness:** Similar content length (±30%), same headings
+- **Navigation:** Same icons, translated titles
+- **Locale-Specific:** No mixed languages, correct internal links, translated comments
 
 ---
 
@@ -657,75 +457,12 @@ Welcome
 
 ---
 
-## Best Practices Quick Reference
+## Quick Reference
 
-### Common Critical Issues
+**Most Common Issues:**
+- Missing `u-` prefix on Nuxt UI components (`::page-hero` → `::u-page-hero`)
+- SEO descriptions too short (need 120-160 chars)
+- Passive voice in instructions ("can be done" → "do it")
+- Generic headings ("Configuration" → "Configure your app")
 
-| Issue | Detection | Fix |
-|-------|-----------|-----|
-| Missing u- prefix | `::page-hero` | `::u-page-hero` |
-| Missing title | No `title:` in frontmatter | Add `title: Page Title` |
-| Missing description | No `description:` in frontmatter | Add `description: ...` |
-| Invalid YAML | Parse error in frontmatter | Fix YAML syntax |
-| Missing .navigation.yml | Section directory without file | Create `.navigation.yml` |
-
-### Common Important Issues
-
-| Issue | Detection | Recommendation |
-|-------|-----------|----------------|
-| Long title | >70 characters | Shorten to 50-60 chars |
-| Short description | <70 characters | Expand to 120-160 chars |
-| Multiple H1s | Multiple `#` headings | Use single H1, rest H2/H3 |
-| Passive voice | "can be done", "is handled" | Use active: "do", "handles" |
-| Static headings | "Configuration" in guide | Use action: "Configure your app" |
-| Missing code labels | ` ```ts ` without `[file]` | Add `[filename.ts]` |
-| Generic headings | "Overview", "Details" | Use descriptive headings |
-
-### Component Reference
-
-**Require u- prefix:**
-- `::u-page-hero`, `::u-page-section`, `::u-page-grid`, `::u-page-card`
-- `:::u-button`, `::u-badge`
-- `:u-color-mode-image`
-
-**No u- prefix (Nuxt Content):**
-- `::code-group`, `::steps`
-- `::note`, `::tip`, `::warning`, `::caution`
-
-### Icon Recommendations
-
-| Section | Icon |
-|---------|------|
-| Getting Started | `i-lucide-rocket` |
-| Guide / Concepts | `i-lucide-book-open` |
-| API / Reference | `i-lucide-code` |
-| Advanced | `i-lucide-settings` |
-| AI / Assistant | `i-lucide-sparkles` |
-
----
-
-## Example Review Session
-
-```
-User: "review my docs"
-Assistant: I'll analyze your documentation for quality, clarity, SEO, and technical correctness.
-
-[Executes Step 1: Detect Project Type]
-Detected: Docus/Nuxt Content project (docus dependency found)
-
-[Executes Step 2: Analyze Structure]
-Found: 15 pages across 3 sections (en/), single language
-
-[Executes Step 3: Technical Validation]
-Detected 3 Critical issues (missing u- prefixes)
-
-[Executes Step 4: Content Quality Review]
-Identified 8 Important issues (SEO metadata, passive voice)
-
-[Executes Step 5: Generate Report]
-
-Here's your comprehensive documentation review report:
-[Full report with categorized issues and actionable recommendations]
-
-Would you like me to fix any of these issues?
-```
+**See reference files for complete checklists and examples.**

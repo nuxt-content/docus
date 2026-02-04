@@ -34,32 +34,71 @@ Examples:
 
 ## Action-Based Headings
 
-### When to Use
-Use action verbs in H2/H3 headings for:
-- Guide sections (`2.guide/`, `2.concepts/`)
-- Tutorial content
-- How-to documentation
-- Recipe pages
+### Best Practice: Follow the Nuxt Pattern
 
-### Do NOT Use Action Verbs For
-- Page titles (file names remain nouns)
-- Getting Started section titles ("Introduction", "Installation")
-- API reference pages (use function/component names)
+Modern documentation (like [Nuxt](https://nuxt.com/docs)) uses **action verbs throughout** for guide and tutorial pages. This makes documentation scannable and task-oriented.
+
+### When to Use Action Verbs
+
+**Page Titles (H1)** - Use action verbs for:
+- Guide pages: "Create Your First Module", "Build a Custom Plugin"
+- Tutorial pages: "Deploy Your Application", "Set Up Authentication"
+- How-to pages: "Add Dark Mode", "Configure Environment Variables"
+- Recipe pages: "Implement Real-time Updates"
+
+**Headings (H2/H3)** - Use imperative verbs for:
+- All steps within guides and tutorials
+- Sequential actions
+- Configuration sections
+- Implementation details
+
+### When to Use Nouns (Exceptions)
+
+- **File names:** Always remain nouns/kebab-case (`1.introduction.md`, `2.installation.md`)
+- **Getting Started titles:** "Introduction", "Installation", "Quick Start" (orientation pages)
+- **API reference pages:** Use function/component names ("useSession", "Button", "defineNuxtConfig")
+- **Concept pages:** Can use nouns when explaining theory ("Architecture", "Core Concepts", "Best Practices")
 
 ### Action Verb Examples
 
 | Category | Verbs |
 |----------|-------|
-| Primary | Add, Configure, Create, Set up, Enable, Connect, Handle, Customize, Deploy, Use |
-| Secondary | Build, Implement, Integrate, Install, Define, Write, Run, Test, Debug, Update |
+| Primary | Create, Build, Use, Develop, Run, Publish, Add, Configure, Set up, Enable, Connect |
+| Secondary | Handle, Customize, Deploy, Implement, Integrate, Install, Define, Write, Test, Debug, Update |
 
-| Static (Avoid) | Action-Based (Use) |
-|----------------|-------------------|
+### Real-World Examples (Nuxt Pattern)
+
+**Page Title (H1):**
+```markdown
+# Create Your First Module
+```
+
+**Section Headings (H2):**
+```markdown
+## Create a Module
+## Use the Starter Template
+## Develop Your Module
+```
+
+**Subsection Headings (H3):**
+```markdown
+### Run Tests
+### Build Your Module
+### Publish to npm
+```
+
+### Bad vs Good Examples
+
+| Static/Noun (Avoid) | Action-Based (Use) |
+|---------------------|-------------------|
 | Configuration | Configure your app |
+| Module Creation | Create a new module |
 | Database setup | Connect a database |
 | Route protection | Protect your routes |
 | Session management | Handle user sessions |
 | Error handling | Handle errors gracefully |
+| Testing | Run your tests |
+| Deployment | Deploy to production |
 
 ## Terminology Consistency
 
