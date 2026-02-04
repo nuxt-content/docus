@@ -13,7 +13,6 @@ export default defineNuxtModule({
       }
 
       nitro.hooks.hook('compiled', async () => {
-        console.log('[Docus] Starting markdown redirect route generation')
         const vcJSON = resolve(nitro.options.output.dir, 'config.json')
         const vcConfig = JSON.parse(await readFile(vcJSON, 'utf8'))
 
@@ -22,7 +21,6 @@ export default defineNuxtModule({
         const llmsTxtPath = resolve(nitro.options.output.publicDir, 'llms.txt')
         try {
           llmsTxt = await readFile(llmsTxtPath, 'utf-8')
-          console.log('[Docus] Found llms.txt at:', llmsTxtPath)
         }
         catch {
           console.warn('[Docus] llms.txt not found, skipping markdown redirect routes')
