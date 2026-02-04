@@ -1,4 +1,10 @@
 import type { RouteLocationNormalized } from 'vue-router'
+import { consola } from 'consola'
+
+const log = consola.withTag('Docus')
+
+// Lazy import functions for locale files (bundled but not eagerly loaded)
+const localeFiles = import.meta.glob<{ default: Record<string, unknown> }>('../../i18n/locales/*.json')
 
 export default defineNuxtPlugin(async () => {
   const nuxtApp = useNuxtApp()
@@ -13,15 +19,26 @@ export default defineNuxtPlugin(async () => {
     let locale = configuredLocale
     let resolvedMessages: Record<string, unknown>
 
-    try {
-      const localeMessages = await import(`../../i18n/locales/${configuredLocale}.json`)
-      resolvedMessages = localeMessages.default || localeMessages
+    // Try to load the requested locale file
+    const localeKey = `../../i18n/locales/${configuredLocale}.json`
+    const localeLoader = localeFiles[localeKey]
+
+    if (localeLoader) {
+      const localeModule = await localeLoader()
+      resolvedMessages = localeModule.default
     }
-    catch {
-      console.warn(`[Docus] Missing locale file for "${configuredLocale}". Falling back to "en".`)
+    else {
+      log.warn(`Missing locale file for "${configuredLocale}". Falling back to "en".`)
       locale = 'en'
-      const fallback = await import('../../i18n/locales/en.json')
-      resolvedMessages = fallback.default || fallback
+      const fallbackKey = '../../i18n/locales/en.json'
+      const fallbackLoader = localeFiles[fallbackKey]
+      if (fallbackLoader) {
+        const fallbackModule = await fallbackLoader()
+        resolvedMessages = fallbackModule.default
+      }
+      else {
+        resolvedMessages = {} as Record<string, unknown>
+      }
     }
 
     nuxtApp.provide('locale', locale)
