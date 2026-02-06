@@ -73,6 +73,9 @@ provide('navigation', navigation)
         <NuxtPage />
       </NuxtLayout>
       <AppFooter v-if="$route.meta.footer !== false" />
+      <ClientOnly v-if="isAssistantEnabled">
+        <LazyAssistantFloatingInput />
+      </ClientOnly>
     </div>
 
     <ClientOnly>
@@ -81,7 +84,6 @@ provide('navigation', navigation)
         :navigation="navigation"
       />
       <template v-if="isAssistantEnabled">
-        <LazyAssistantFloatingInput />
         <LazyAssistantPanel />
       </template>
     </ClientOnly>
