@@ -62,14 +62,14 @@ defineShortcuts(shortcuts)
       :animate="{ y: 0, opacity: 1 }"
       :exit="{ y: 100, opacity: 0 }"
       :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="fixed left-1/2 z-30 -translate-x-1/2 w-full max-w-96 px-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))]"
+      class="fixed inset-x-0 z-10 px-4 sm:px-80 bottom-[max(1.5rem,env(safe-area-inset-bottom))]"
       style="will-change: transform"
     >
       <form
-        class="w-full"
+        class="flex w-full justify-center"
         @submit.prevent="handleSubmit"
       >
-        <div class="w-full">
+        <div class="w-full max-w-96">
           <UInput
             ref="inputRef"
             v-model="input"
