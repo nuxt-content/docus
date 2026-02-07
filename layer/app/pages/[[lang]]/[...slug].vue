@@ -99,9 +99,8 @@ addPrerenderPath(`/raw${route.path}.md`)
         :value="page"
       />
 
-      <USeparator>
+      <USeparator v-if="github">
         <div
-          v-if="github"
           class="flex items-center gap-2 text-sm text-muted"
         >
           <UButton
