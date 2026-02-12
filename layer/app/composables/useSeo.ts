@@ -1,10 +1,6 @@
 import type { MaybeRefOrGetter } from 'vue'
+import type { BreadcrumbItem } from '../utils/navigation'
 import { joinURL, withoutTrailingSlash } from 'ufo'
-
-export interface BreadcrumbItem {
-  title: string
-  path: string
-}
 
 export interface UseSeoOptions {
   /**

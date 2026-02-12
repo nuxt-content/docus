@@ -19,7 +19,7 @@ useSeo({
   title,
   description,
   type: 'website',
-  ogImage: page.value?.seo?.ogImage,
+  ogImage: page.value?.seo?.ogImage as string | undefined,
 })
 
 if (!page.value?.seo?.ogImage) {

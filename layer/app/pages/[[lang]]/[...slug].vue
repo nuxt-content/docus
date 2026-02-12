@@ -38,7 +38,7 @@ useSeo({
   title,
   description,
   type: 'article',
-  modifiedAt: page.value.modifiedAt,
+  modifiedAt: (page.value as unknown as Record<string, unknown>).modifiedAt as string | undefined,
   breadcrumbs,
 })
 watch(() => navigation?.value, () => {
