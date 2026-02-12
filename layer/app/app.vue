@@ -81,8 +81,8 @@ provide('navigation', navigation)
         :navigation="navigation"
       />
       <template v-if="isAssistantEnabled">
-        <LazyAssistantFloatingInput />
         <LazyAssistantPanel />
+        <LazyAssistantFloatingInput />
       </template>
     </ClientOnly>
   </UApp>

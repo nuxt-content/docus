@@ -22,15 +22,15 @@
     "clean": "rm -rf .nuxt .output node_modules cli/node_modules docs/.nuxt docs/.data docs/node_modules layer/node_modules layer/.data analyze cli/dist docs/.nuxt docs/.output layer/.nuxt pnpm-lock.yaml .pnpm-store"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.13.0",
-    "@nuxt/eslint-config": "^1.13.0",
+    "@nuxt/eslint": "^1.15.1",
+    "@nuxt/eslint-config": "^1.15.1",
     "@release-it/bumper": "^7.0.5",
-    "@release-it/conventional-changelog": "^10.0.4",
-    "eslint": "^9.39.2",
-    "nuxt": "4.3.0",
+    "@release-it/conventional-changelog": "^10.0.5",
+    "eslint": "^10.0.0",
+    "nuxt": "4.3.1",
     "release-it": "^19.2.4",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.4"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.29.2"
 }

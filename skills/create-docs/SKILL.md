@@ -339,7 +339,7 @@ Create `app/assets/css/main.css`:
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
+@theme {
   /* Custom font */
   --font-sans: 'Inter', sans-serif;
 

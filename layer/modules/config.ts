@@ -16,7 +16,7 @@ export default defineNuxtModule({
     const url = inferSiteURL()
     const meta = await getPackageJsonMetadata(dir)
     const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
-    const siteName = nuxt.options?.site?.name || meta.name || gitInfo?.name || ''
+    const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
 
     nuxt.options.llms = defu(nuxt.options.llms, {
       domain: url,

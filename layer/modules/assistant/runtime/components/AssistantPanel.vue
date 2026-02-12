@@ -263,7 +263,7 @@ onMounted(() => {
           maxlength="1000"
           :ui="{
             root: 'shadow-none!',
-            body: '*:p-0! *:rounded-none! *:text-sm!',
+            body: '*:p-0! *:rounded-none! *:text-base!',
           }"
           @submit="handleSubmit"
         >
