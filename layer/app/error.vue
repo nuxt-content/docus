@@ -7,6 +7,7 @@ const props = defineProps<{
   error: NuxtError
 }>()
 
+const { basePath } = useDocusConfig()
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
@@ -48,7 +49,7 @@ const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` :
 
 const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
   transform: (data: ContentNavigationItem[]) => {
-    const rootResult = data.find(item => item.path === '/docs')?.children || data || []
+    const rootResult = data.find(item => item.path === basePath)?.children || data || []
 
     return rootResult.find(item => item.path === `/${locale.value}`)?.children || rootResult
   },

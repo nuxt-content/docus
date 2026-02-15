@@ -4,6 +4,10 @@
   "version": "5.5.1",
   "type": "module",
   "main": "./nuxt.config.ts",
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./collections": "./collections.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-content/docus.git"
@@ -12,6 +16,7 @@
   "license": "MIT",
   "files": [
     "app",
+    "collections.ts",
     "i18n",
     "content.config.ts",
     "modules",

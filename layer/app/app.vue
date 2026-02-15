@@ -2,6 +2,7 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 
+const { basePath } = useDocusConfig()
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
@@ -46,7 +47,7 @@ if (isEnabled.value) {
 
 const { data: navigation } = await useAsyncData(() => `navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
   transform: (data: ContentNavigationItem[]) => {
-    const rootResult = data.find(item => item.path === '/docs')?.children || data || []
+    const rootResult = data.find(item => item.path === basePath)?.children || data || []
 
     return rootResult.find((item: ContentNavigationItem) => item.path === `/${locale.value}`)?.children || rootResult
   },

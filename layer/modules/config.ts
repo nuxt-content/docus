@@ -10,8 +10,26 @@ const log = logger.withTag('Docus')
 export default defineNuxtModule({
   meta: {
     name: 'config',
+    configKey: 'docus',
   },
-  async setup(_options, nuxt) {
+  defaults: {
+    basePath: '/',
+    landing: undefined as boolean | undefined,
+  },
+  async setup(options, nuxt) {
+    // Resolve embedded mode config
+    const basePath = options.basePath || '/'
+    const isEmbedded = basePath !== '/'
+    const landing = options.landing ?? !isEmbedded
+
+    // Store resolved config for other modules to read at build-time
+    nuxt.options.docus = { basePath, isEmbedded, landing }
+
+    // Expose to runtime
+    nuxt.options.runtimeConfig.public.docus = defu(nuxt.options.runtimeConfig.public.docus, {
+      basePath,
+      isEmbedded,
+    })
     const dir = nuxt.options.rootDir
     const url = inferSiteURL()
     const meta = await getPackageJsonMetadata(dir)
@@ -87,9 +105,9 @@ export default defineNuxtModule({
       }
 
       // Expose filtered locales
-      nuxt.options.runtimeConfig.public.docus = {
+      nuxt.options.runtimeConfig.public.docus = defu(nuxt.options.runtimeConfig.public.docus, {
         filteredLocales,
-      }
+      })
 
       nuxt.hook('i18n:registerModule', (register) => {
         const langDir = resolve('../i18n/locales')

@@ -4,6 +4,7 @@ import { useDocusI18n } from '../../composables/useDocusI18n'
 const appConfig = useAppConfig()
 const site = useSiteConfig()
 
+const { basePath, isEmbedded } = useDocusConfig()
 const { isEnabled: isAssistantEnabled } = useAssistant()
 const { localePath, isEnabled, locales } = useDocusI18n()
 
@@ -22,7 +23,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 <template>
   <UHeader
     :ui="{ center: 'flex-1' }"
-    :to="localePath('/')"
+    :to="isEmbedded ? basePath : localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
     <AppHeaderCenter />
