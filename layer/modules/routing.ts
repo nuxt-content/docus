@@ -48,8 +48,9 @@ export default defineNuxtModule({
 
     // In embedded mode, prefix Docus pages with basePath
     if (isEmbedded) {
+      const docusPagesDir = resolve('../app/pages')
       nuxt.hook('pages:extend', (pages) => {
-        const docusPageIdx = pages.findIndex(p => p.file?.includes('layer/app/pages'))
+        const docusPageIdx = pages.findIndex(p => p.file?.startsWith(docusPagesDir))
         if (docusPageIdx !== -1) {
           const page = pages[docusPageIdx]!
           pages.splice(docusPageIdx, 1)
