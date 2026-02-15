@@ -2,7 +2,7 @@ import type { LocaleObject } from '@nuxtjs/i18n'
 
 type ConfigWithLocales = {
   i18n?: { locales?: Array<string | LocaleObject> }
-  docus?: { filteredLocales?: LocaleObject<string>[] }
+  docus?: Record<string, unknown> & { filteredLocales?: LocaleObject<string>[] }
 }
 
 export function getAvailableLocales(config: ConfigWithLocales): string[] {

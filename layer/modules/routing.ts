@@ -9,9 +9,9 @@ export default defineNuxtModule({
     const { resolve } = createResolver(import.meta.url)
 
     const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
-    const docusConfig = nuxt.options.docus as { basePath?: string, isEmbedded?: boolean, landing?: boolean } | undefined
+    const docusConfig = nuxt.options.docus as { basePath?: string, landing?: boolean } | undefined
     const basePath = docusConfig?.basePath || '/'
-    const isEmbedded = docusConfig?.isEmbedded || false
+    const isEmbedded = basePath !== '/'
     const landing = docusConfig?.landing ?? !isEmbedded
 
     // Ensure useDocusI18n is available in the app

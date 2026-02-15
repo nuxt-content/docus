@@ -19,16 +19,14 @@ export default defineNuxtModule({
   async setup(options, nuxt) {
     // Resolve embedded mode config
     const basePath = options.basePath || '/'
-    const isEmbedded = basePath !== '/'
-    const landing = options.landing ?? !isEmbedded
+    const landing = options.landing ?? (basePath === '/')
 
     // Store resolved config for other modules to read at build-time
-    nuxt.options.docus = { basePath, isEmbedded, landing }
+    nuxt.options.docus = { basePath, landing }
 
     // Expose to runtime
     nuxt.options.runtimeConfig.public.docus = defu(nuxt.options.runtimeConfig.public.docus, {
       basePath,
-      isEmbedded,
     })
     const dir = nuxt.options.rootDir
     const url = inferSiteURL()

@@ -22,7 +22,7 @@ export const useDocusI18n = () => {
   }
 
   const { locale, t } = useI18n()
-  const filteredLocales = (config.docus as { filteredLocales: LocaleObject<string>[] })?.filteredLocales || []
+  const filteredLocales = ((config.docus as Record<string, unknown>)?.filteredLocales as LocaleObject<string>[]) || []
 
   return {
     isEnabled,

@@ -85,7 +85,7 @@ addPrerenderPath(`/raw${route.path}.md`)
     >
       <template #links>
         <UButton
-          v-for="(link, index) in (page as DocsCollectionItem).links"
+          v-for="(link, index) in (page as unknown as Record<string, unknown>).links as any[]"
           :key="index"
           size="sm"
           v-bind="link"

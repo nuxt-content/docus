@@ -1,7 +1,8 @@
 export function useDocusConfig() {
-  const config = useRuntimeConfig().public.docus as { basePath?: string, isEmbedded?: boolean } | undefined
+  const config = useRuntimeConfig().public.docus as Record<string, unknown> | undefined
+  const basePath = (config?.basePath as string) || '/'
   return {
-    basePath: config?.basePath || '/',
-    isEmbedded: config?.isEmbedded || false,
+    basePath,
+    isEmbedded: basePath !== '/',
   }
 }
