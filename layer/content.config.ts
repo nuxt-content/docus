@@ -2,13 +2,14 @@ import type { DefinedCollection } from '@nuxt/content'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { joinURL } from 'ufo'
-import { landingPageExists } from './utils/landing'
+import { landingPageExists, docsFolderExists } from './utils/pages'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
 
 const hasLandingPage = landingPageExists(options.rootDir)
+const hasDocsFolder = docsFolderExists(options.rootDir)
 
 const createDocsSchema = () => z.object({
   links: z.array(z.object({
@@ -54,7 +55,8 @@ else {
       type: 'page',
       source: {
         cwd,
-        include: '**',
+        include: hasDocsFolder ? 'docs/**' : '**',
+        prefix: hasDocsFolder ? '/docs' : undefined,
         exclude: ['index.md'],
       },
       schema: createDocsSchema(),

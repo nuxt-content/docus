@@ -4,14 +4,10 @@
       Custom Landing Page
     </h1>
     <UButton
-      to="/getting-started/introduction"
+      to="/docs/getting-started/introduction"
       label="Navigate to docs"
     >
       Introduction
     </UButton>
   </div>
 </template>
-
-<script setup lang="ts">
-console.log('index.vue loaded')
-</script>

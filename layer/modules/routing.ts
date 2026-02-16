@@ -1,5 +1,5 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
-import { landingPageExists } from '../utils/landing'
+import { landingPageExists } from '../utils/pages'
 
 export default defineNuxtModule({
   meta: {
