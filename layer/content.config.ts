@@ -8,8 +8,8 @@ const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
 
 const docusConfig = options.docus as { basePath?: string, landing?: boolean } | undefined
-const basePath = docusConfig?.basePath || '/'
-const landing = docusConfig?.landing ?? (basePath === '/')
+// const basePath = docusConfig?.basePath
+const landing = docusConfig?.landing
 
 let collections: Record<string, DefinedCollection>
 

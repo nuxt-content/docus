@@ -12,9 +12,16 @@ export default defineNuxtModule({
     name: 'config',
     configKey: 'docus',
   },
+  // Landing linear + docs ({ basePath: '/', landing: 'docs' })
+  // Landing + docs (docus actuel) ({ basePath: '/', landing: true })
+  // Landing + /docs (blog version) ({ basePath: '/docs', landing: true })
+  // Pas de landing + / (docs à la racine) ({ basePath: '/', landing: false })
+  // Pas de landing + /docs (embedded mode) ({ basePath: '/docs', landing: false })
+
+  // landing: false // layout \\ boolean (false: no landing / true: layout classic / 'docs': layout docs )
   defaults: {
     basePath: '/',
-    landing: undefined as boolean | undefined,
+    landing: true,
   },
   async setup(options, nuxt) {
     // Resolve embedded mode config

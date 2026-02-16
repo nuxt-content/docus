@@ -1,5 +1,4 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
-import { joinURL } from 'ufo'
 
 export default defineNuxtModule({
   meta: {
@@ -10,9 +9,9 @@ export default defineNuxtModule({
 
     const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
     const docusConfig = nuxt.options.docus as { basePath?: string, landing?: boolean } | undefined
-    const basePath = docusConfig?.basePath || '/'
-    const isEmbedded = basePath !== '/'
-    const landing = docusConfig?.landing ?? !isEmbedded
+    // const basePath = docusConfig?.basePath || '/'
+    // const isEmbedded = basePath !== '/docs'
+    const landing = docusConfig?.landing
 
     // Ensure useDocusI18n is available in the app
     nuxt.hook('imports:extend', (imports) => {
@@ -34,6 +33,7 @@ export default defineNuxtModule({
             name: 'lang-index',
             path: '/:lang?',
             file: landingTemplate,
+            meta: { layout: landing === true ? 'default' : landing },
           })
         }
         else {
@@ -41,24 +41,7 @@ export default defineNuxtModule({
             name: 'index',
             path: '/',
             file: landingTemplate,
-          })
-        }
-      })
-    }
-
-    // In embedded mode, prefix Docus pages with basePath
-    if (isEmbedded) {
-      const docusPagesDir = resolve('../app/pages')
-      nuxt.hook('pages:extend', (pages) => {
-        const docusPageIdx = pages.findIndex(p => p.file?.startsWith(docusPagesDir))
-        if (docusPageIdx !== -1) {
-          const page = pages[docusPageIdx]!
-          pages.splice(docusPageIdx, 1)
-          pages.push({
-            ...page,
-            path: joinURL(basePath, page.path),
-            name: `docus-${page.name || 'slug'}`,
-            meta: { ...page.meta, layout: 'docus' },
+            meta: { layout: landing === true ? 'default' : landing },
           })
         }
       })
