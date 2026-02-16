@@ -1,1 +1,2 @@
+# Enable i18n types in layer folder
 modules[]=@nuxtjs/i18n

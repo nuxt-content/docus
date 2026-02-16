@@ -2,10 +2,13 @@ import type { DefinedCollection } from '@nuxt/content'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { joinURL } from 'ufo'
+import { landingPageExists } from './utils/landing'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 const locales = options.i18n?.locales
+
+const hasLandingPage = landingPageExists(options.rootDir)
 
 const createDocsSchema = () => z.object({
   links: z.array(z.object({
@@ -23,13 +26,15 @@ if (locales && Array.isArray(locales)) {
   for (const locale of locales) {
     const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
 
-    collections[`landing_${code}`] = defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: `${code}/index.md`,
-      },
-    })
+    if (!hasLandingPage) {
+      collections[`landing_${code}`] = defineCollection({
+        type: 'page',
+        source: {
+          cwd,
+          include: `${code}/index.md`,
+        },
+      })
+    }
 
     collections[`docs_${code}`] = defineCollection({
       type: 'page',
@@ -45,13 +50,6 @@ if (locales && Array.isArray(locales)) {
 }
 else {
   collections = {
-    landing: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: 'index.md',
-      },
-    }),
     docs: defineCollection({
       type: 'page',
       source: {
@@ -61,6 +59,17 @@ else {
       },
       schema: createDocsSchema(),
     }),
+  }
+
+  // Only define landing collection if user doesn't have their own index.vue
+  if (!hasLandingPage) {
+    collections.landing = defineCollection({
+      type: 'page',
+      source: {
+        cwd,
+        include: 'index.md',
+      },
+    })
   }
 }
 

@@ -1,0 +1,12 @@
+{
+  "name": "playground",
+  "scripts": {
+    "dev": "nuxt dev --extends docus",
+    "build": "nuxt build --extends docus"
+  },
+  "dependencies": {
+    "docus": "latest",
+    "better-sqlite3": "^12.5.0",
+    "nuxt": "^4.3.1"
+  }
+}
