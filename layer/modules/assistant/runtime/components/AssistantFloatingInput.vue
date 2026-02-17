@@ -18,7 +18,7 @@ const placeholder = computed(() => t('assistant.placeholder'))
 const shortcutDisplayKeys = computed(() => {
   const shortcut = focusInputShortcut.value
   const parts = shortcut.split('_')
-  return parts.map(part => part === 'meta' ? 'meta' : part.toUpperCase())
+  return parts.map((part: string) => part === 'meta' ? 'meta' : part.toUpperCase())
 })
 
 function handleSubmit() {
@@ -62,14 +62,14 @@ defineShortcuts(shortcuts)
       :animate="{ y: 0, opacity: 1 }"
       :exit="{ y: 100, opacity: 0 }"
       :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="fixed inset-x-0 z-10 px-4 sm:px-80 bottom-[max(1.5rem,env(safe-area-inset-bottom))]"
+      class="pointer-events-none fixed inset-x-0 z-10 bottom-[max(1.5rem,env(safe-area-inset-bottom))] px-4 sm:px-80"
       style="will-change: transform"
     >
       <form
-        class="flex w-full justify-center"
+        class="pointer-events-none flex w-full justify-center"
         @submit.prevent="handleSubmit"
       >
-        <div class="w-full max-w-96">
+        <div class="pointer-events-auto w-full max-w-96">
           <UInput
             ref="inputRef"
             v-model="input"
