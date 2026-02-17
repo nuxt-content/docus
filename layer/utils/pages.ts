@@ -14,7 +14,9 @@ export function landingPageExists(rootDir: string): boolean {
  * Checks if a docs folder exists in the content directory.
  * When true, docs should be prefixed with /docs and only include files from the docs folder.
  */
-export function docsFolderExists(rootDir: string): boolean {
-  const docsPath = joinURL(rootDir, 'content', 'docs')
+export function docsFolderExists(rootDir: string, locale?: string): boolean {
+  const docsPath = locale
+    ? joinURL(rootDir, 'content', locale, 'docs')
+    : joinURL(rootDir, 'content', 'docs')
   return existsSync(docsPath)
 }

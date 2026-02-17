@@ -6,6 +6,24 @@ export const flattenNavigation = (items?: ContentNavigationItem[]): ContentNavig
     : [item],
 ) || []
 
+/**
+ * Transform navigation data by stripping locale and docs levels
+ */
+export function transformNavigation(
+  data: ContentNavigationItem[],
+  locale?: string,
+): ContentNavigationItem[] {
+  if (locale) {
+    // i18n: first strip locale level, then check for docs level
+    const localeResult = data.find(item => item.path === `/${locale}`)?.children || data
+    return localeResult.find(item => item.path === `/${locale}/docs`)?.children || localeResult
+  }
+  else {
+    // non-i18n: strip docs level if exists
+    return data.find(item => item.path === '/docs')?.children || data
+  }
+}
+
 export interface BreadcrumbItem {
   title: string
   path: string

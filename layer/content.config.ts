@@ -26,6 +26,7 @@ if (locales && Array.isArray(locales)) {
   collections = {}
   for (const locale of locales) {
     const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
+    const hasLocaleDocs = docsFolderExists(options.rootDir, code)
 
     if (!hasLandingPage) {
       collections[`landing_${code}`] = defineCollection({
@@ -41,8 +42,8 @@ if (locales && Array.isArray(locales)) {
       type: 'page',
       source: {
         cwd,
-        include: `${code}/**/*`,
-        prefix: `/${code}`,
+        include: hasLocaleDocs ? `${code}/docs/**` : `${code}/**/*`,
+        prefix: hasLocaleDocs ? `/${code}/docs` : `/${code}`,
         exclude: [`${code}/index.md`],
       },
       schema: createDocsSchema(),

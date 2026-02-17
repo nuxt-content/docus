@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import { transformNavigation } from './utils/navigation'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
@@ -45,11 +46,7 @@ if (isEnabled.value) {
 }
 
 const { data: navigation } = await useAsyncData(() => `navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data: ContentNavigationItem[]) => {
-    const rootResult = data.find(item => item.path === '/docs')?.children || data || []
-
-    return rootResult.find((item: ContentNavigationItem) => item.path === `/${locale.value}`)?.children || rootResult
-  },
+  transform: (data: ContentNavigationItem[]) => transformNavigation(data, locale.value),
   watch: [locale],
 })
 const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value as keyof PageCollections), {
