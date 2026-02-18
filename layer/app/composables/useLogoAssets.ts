@@ -163,7 +163,6 @@ export const useLogoAssets = () => {
     if (hasWordmark.value) {
       downloadGroup.push({ label: 'Download wordmark', icon: 'i-lucide-download', onSelect: downloadWordmark })
     }
-    downloadGroup.push({ label: 'Download favicon', icon: 'i-lucide-download', onSelect: downloadFavicon })
 
     const items: ContextMenuItem[][] = [copyGroup, downloadGroup]
 
