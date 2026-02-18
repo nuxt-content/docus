@@ -161,6 +161,13 @@ export default defineNuxtSchema({
                 }),
               },
             }),
+            class: field({
+              type: 'string',
+              title: 'Class',
+              description: 'Additional CSS classes to apply to the logo image.',
+              icon: 'i-lucide-paintbrush',
+              default: '',
+            }),
             display: field({
               type: 'string',
               title: 'Display',
