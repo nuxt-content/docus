@@ -1,4 +1,17 @@
 export default defineAppConfig({
+  header: {
+    title: 'Docus',
+    logo: {
+      light: '/logo/logo-dark.svg',
+      dark: '/logo/logo-light.svg',
+      alt: 'Docus Logo',
+      wordmark: {
+        light: '/logo/wordmark-dark.svg',
+        dark: '/logo/wordmark-light.svg',
+      },
+      favicon: '/favicon.svg',
+    },
+  },
   socials: {
     x: 'https://x.com/nuxt_js',
     discord: 'https://discord.com/invite/ps2h6QT',

@@ -18,6 +18,12 @@ declare module 'nuxt/schema' {
         light: string
         dark: string
         alt: string
+        wordmark?: {
+          light?: string
+          dark?: string
+        }
+        favicon?: string
+        brandAssetsUrl?: string
       }
     }
     socials: Record<string, string>
