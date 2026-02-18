@@ -18,6 +18,7 @@ declare module 'nuxt/schema' {
         light: string
         dark: string
         alt: string
+        display?: 'logo' | 'wordmark'
         wordmark?: {
           light?: string
           dark?: string

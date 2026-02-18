@@ -161,6 +161,13 @@ export default defineNuxtSchema({
                 }),
               },
             }),
+            display: field({
+              type: 'string',
+              title: 'Display',
+              description: 'Which logo variant to show in the header: "logo" for the icon or "wordmark" for the full wordmark.',
+              icon: 'i-lucide-layout',
+              default: 'logo',
+            }),
             favicon: field({
               type: 'media',
               title: 'Favicon',

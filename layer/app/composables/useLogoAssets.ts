@@ -1,12 +1,19 @@
 import type { ContextMenuItem } from '@nuxt/ui'
 
+function isSvgUrl(url: string): boolean {
+  return url.toLowerCase().endsWith('.svg')
+}
+
+function getExtension(url: string): string {
+  const match = url.match(/\.([a-z0-9]+)(?:\?|$)/i)
+  return match?.[1] ? `.${match[1].toLowerCase()}` : '.png'
+}
+
 function normalizeSvg(svg: string, name: string): string {
   let result = svg.replace(/fill="(black|white|#[0-9a-fA-F]{3,8}|rgba?\([^)]+\))"/g, 'fill="currentColor"')
 
-  // Inject id for Figma layer naming
   if (name) {
     result = result.replace(/<svg\b/, `<svg id="${name}"`)
-    // Inject <title> right after <svg ...> for accessibility and Figma
     result = result.replace(/(<svg[^>]*>)/, `$1<title>${name}</title>`)
   }
 
@@ -47,12 +54,23 @@ function triggerDownload(blob: Blob, filename: string) {
   URL.revokeObjectURL(url)
 }
 
+function triggerLinkDownload(url: string, filename: string) {
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 export const useLogoAssets = () => {
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const toast = useToast()
 
   const hasLogo = computed(() => !!(appConfig.header?.logo?.light || appConfig.header?.logo?.dark))
+
+  const displayMode = computed(() => appConfig.header?.logo?.display || 'logo')
 
   const currentLogoUrl = computed(() => {
     const logo = appConfig.header?.logo
@@ -71,6 +89,24 @@ export const useLogoAssets = () => {
     if (!wm) return ''
     if (colorMode.value === 'dark') return wm.dark || wm.light || ''
     return wm.light || wm.dark || ''
+  })
+
+  const headerLightUrl = computed(() => {
+    const logo = appConfig.header?.logo
+    if (!logo) return ''
+    if (displayMode.value === 'wordmark' && hasWordmark.value) {
+      return logo.wordmark?.light || logo.wordmark?.dark || logo.light || logo.dark || ''
+    }
+    return logo.light || logo.dark || ''
+  })
+
+  const headerDarkUrl = computed(() => {
+    const logo = appConfig.header?.logo
+    if (!logo) return ''
+    if (displayMode.value === 'wordmark' && hasWordmark.value) {
+      return logo.wordmark?.dark || logo.wordmark?.light || logo.dark || logo.light || ''
+    }
+    return logo.dark || logo.light || ''
   })
 
   const faviconUrl = computed(() => appConfig.header?.logo?.favicon || '/favicon.ico')
@@ -94,7 +130,11 @@ export const useLogoAssets = () => {
     return name ? `${name} Wordmark` : 'Wordmark'
   })
 
+  const logoIsSvg = computed(() => isSvgUrl(currentLogoUrl.value))
+  const wordmarkIsSvg = computed(() => isSvgUrl(currentWordmarkUrl.value))
+
   async function copyLogo() {
+    if (!logoIsSvg.value) return
     const svg = await fetchSvgContent(currentLogoUrl.value, logoName.value)
     if (!svg) {
       toast.add({ title: 'Failed to copy logo', icon: 'i-lucide-circle-x', color: 'error' })
@@ -108,6 +148,7 @@ export const useLogoAssets = () => {
   }
 
   async function copyWordmark() {
+    if (!wordmarkIsSvg.value) return
     const svg = await fetchSvgContent(currentWordmarkUrl.value, wordmarkName.value)
     if (!svg) {
       toast.add({ title: 'Failed to copy wordmark', icon: 'i-lucide-circle-x', color: 'error' })
@@ -121,28 +162,29 @@ export const useLogoAssets = () => {
   }
 
   async function downloadLogo() {
-    const svg = await fetchSvgContent(currentLogoUrl.value, logoName.value)
-    if (!svg) return
-    triggerDownload(new Blob([svg], { type: 'image/svg+xml' }), `${prefix.value}-logo.svg`)
+    const url = currentLogoUrl.value
+    if (logoIsSvg.value) {
+      const svg = await fetchSvgContent(url, logoName.value)
+      if (!svg) return
+      triggerDownload(new Blob([svg], { type: 'image/svg+xml' }), `${prefix.value}-logo.svg`)
+    }
+    else {
+      triggerLinkDownload(url, `${prefix.value}-logo${getExtension(url)}`)
+    }
     toast.add({ title: 'Logo downloaded', icon: 'i-lucide-download', color: 'success' })
   }
 
   async function downloadWordmark() {
-    const svg = await fetchSvgContent(currentWordmarkUrl.value, wordmarkName.value)
-    if (!svg) return
-    triggerDownload(new Blob([svg], { type: 'image/svg+xml' }), `${prefix.value}-wordmark.svg`)
+    const url = currentWordmarkUrl.value
+    if (wordmarkIsSvg.value) {
+      const svg = await fetchSvgContent(url, wordmarkName.value)
+      if (!svg) return
+      triggerDownload(new Blob([svg], { type: 'image/svg+xml' }), `${prefix.value}-wordmark.svg`)
+    }
+    else {
+      triggerLinkDownload(url, `${prefix.value}-wordmark${getExtension(url)}`)
+    }
     toast.add({ title: 'Wordmark downloaded', icon: 'i-lucide-download', color: 'success' })
-  }
-
-  function downloadFavicon() {
-    const url = faviconUrl.value
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `${prefix.value}-favicon${url.includes('.svg') ? '.svg' : '.ico'}`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    toast.add({ title: 'Favicon downloaded', icon: 'i-lucide-download', color: 'success' })
   }
 
   const brandAssetsUrl = computed(() => appConfig.header?.logo?.brandAssetsUrl || '')
@@ -150,10 +192,11 @@ export const useLogoAssets = () => {
   const contextMenuItems = computed(() => {
     if (!hasLogo.value) return []
 
-    const copyGroup: ContextMenuItem[] = [
-      { label: 'Copy logo', icon: 'i-lucide-copy', onSelect: copyLogo },
-    ]
-    if (hasWordmark.value) {
+    const copyGroup: ContextMenuItem[] = []
+    if (logoIsSvg.value) {
+      copyGroup.push({ label: 'Copy logo', icon: 'i-lucide-copy', onSelect: copyLogo })
+    }
+    if (hasWordmark.value && wordmarkIsSvg.value) {
       copyGroup.push({ label: 'Copy wordmark', icon: 'i-lucide-copy', onSelect: copyWordmark })
     }
 
@@ -164,7 +207,9 @@ export const useLogoAssets = () => {
       downloadGroup.push({ label: 'Download wordmark', icon: 'i-lucide-download', onSelect: downloadWordmark })
     }
 
-    const items: ContextMenuItem[][] = [copyGroup, downloadGroup]
+    const items: ContextMenuItem[][] = []
+    if (copyGroup.length) items.push(copyGroup)
+    items.push(downloadGroup)
 
     if (brandAssetsUrl.value) {
       items.push([{
@@ -181,7 +226,10 @@ export const useLogoAssets = () => {
 
   return {
     hasLogo,
+    displayMode,
     currentLogoUrl,
+    headerLightUrl,
+    headerDarkUrl,
     hasWordmark,
     currentWordmarkUrl,
     faviconUrl,
@@ -191,7 +239,6 @@ export const useLogoAssets = () => {
     downloadLogo,
     copyWordmark,
     downloadWordmark,
-    downloadFavicon,
     copyTextToClipboard,
     fetchSvgContent,
   }
