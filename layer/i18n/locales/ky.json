@@ -18,5 +18,18 @@
     "toc": "Бул барактта",
     "report": "Көйгөй туурасында кабарлоо",
     "edit": "Бул баракты түзөтүү"
+  },
+  "logo": {
+    "copyLogo": "Логотипти көчүрүү",
+    "copyWordmark": "Сөз белгисин көчүрүү",
+    "downloadLogo": "Логотипти жүктөө",
+    "downloadWordmark": "Сөз белгисин жүктөө",
+    "brandAssets": "Бренд материалдары",
+    "logoCopied": "Логотип көчүрүлдү",
+    "wordmarkCopied": "Сөз белгиси көчүрүлдү",
+    "logoDownloaded": "Логотип жүктөлдү",
+    "wordmarkDownloaded": "Сөз белгиси жүктөлдү",
+    "copyLogoFailed": "Логотипти көчүрүү ишке ашкан жок",
+    "copyWordmarkFailed": "Сөз белгисин көчүрүү ишке ашкан жок"
   }
 }

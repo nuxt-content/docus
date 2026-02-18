@@ -18,5 +18,18 @@
     "toc": "Na této stránce",
     "report": "Nahlásit problém",
     "edit": "Upravit tuto stránku"
+  },
+  "logo": {
+    "copyLogo": "Kopírovat logo",
+    "copyWordmark": "Kopírovat wordmark",
+    "downloadLogo": "Stáhnout logo",
+    "downloadWordmark": "Stáhnout wordmark",
+    "brandAssets": "Materiály značky",
+    "logoCopied": "Logo zkopírováno",
+    "wordmarkCopied": "Wordmark zkopírován",
+    "logoDownloaded": "Logo staženo",
+    "wordmarkDownloaded": "Wordmark stažen",
+    "copyLogoFailed": "Kopírování loga selhalo",
+    "copyWordmarkFailed": "Kopírování wordmarku selhalo"
   }
 }

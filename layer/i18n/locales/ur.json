@@ -18,5 +18,18 @@
     "toc": "اس صفحے پر",
     "report": "مسئلہ کی اطلاع دیں",
     "edit": "اس صفحے کو ترمیم کریں"
+  },
+  "logo": {
+    "copyLogo": "لوگو کاپی کریں",
+    "copyWordmark": "ورڈ مارک کاپی کریں",
+    "downloadLogo": "لوگو ڈاؤن لوڈ کریں",
+    "downloadWordmark": "ورڈ مارک ڈاؤن لوڈ کریں",
+    "brandAssets": "برانڈ اثاثے",
+    "logoCopied": "لوگو کاپی ہو گیا",
+    "wordmarkCopied": "ورڈ مارک کاپی ہو گیا",
+    "logoDownloaded": "لوگو ڈاؤن لوڈ ہو گیا",
+    "wordmarkDownloaded": "ورڈ مارک ڈاؤن لوڈ ہو گیا",
+    "copyLogoFailed": "لوگو کاپی نہیں ہو سکا",
+    "copyWordmarkFailed": "ورڈ مارک کاپی نہیں ہو سکا"
   }
 }

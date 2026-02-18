@@ -18,5 +18,18 @@
     "toc": "Осы бетте",
     "report": "Мәселе туралы хабарлау",
     "edit": "Осы бетті өңдеу"
+  },
+  "logo": {
+    "copyLogo": "Логотипті көшіру",
+    "copyWordmark": "Сөз белгісін көшіру",
+    "downloadLogo": "Логотипті жүктеу",
+    "downloadWordmark": "Сөз белгісін жүктеу",
+    "brandAssets": "Бренд материалдары",
+    "logoCopied": "Логотип көшірілді",
+    "wordmarkCopied": "Сөз белгісі көшірілді",
+    "logoDownloaded": "Логотип жүктелді",
+    "wordmarkDownloaded": "Сөз белгісі жүктелді",
+    "copyLogoFailed": "Логотипті көшіру сәтсіз",
+    "copyWordmarkFailed": "Сөз белгісін көшіру сәтсіз"
   }
 }

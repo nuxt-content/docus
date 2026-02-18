@@ -18,5 +18,18 @@
     "toc": "このページの内容",
     "report": "問題を報告",
     "edit": "このページを編集"
+  },
+  "logo": {
+    "copyLogo": "ロゴをコピー",
+    "copyWordmark": "ワードマークをコピー",
+    "downloadLogo": "ロゴをダウンロード",
+    "downloadWordmark": "ワードマークをダウンロード",
+    "brandAssets": "ブランドアセット",
+    "logoCopied": "ロゴをコピーしました",
+    "wordmarkCopied": "ワードマークをコピーしました",
+    "logoDownloaded": "ロゴをダウンロードしました",
+    "wordmarkDownloaded": "ワードマークをダウンロードしました",
+    "copyLogoFailed": "ロゴのコピーに失敗しました",
+    "copyWordmarkFailed": "ワードマークのコピーに失敗しました"
   }
 }

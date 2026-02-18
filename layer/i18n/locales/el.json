@@ -18,5 +18,18 @@
     "toc": "Σε αυτή τη σελίδα",
     "report": "Αναφορά προβλήματος",
     "edit": "Επεξεργασία αυτής της σελίδας"
+  },
+  "logo": {
+    "copyLogo": "Αντιγραφή λογοτύπου",
+    "copyWordmark": "Αντιγραφή wordmark",
+    "downloadLogo": "Λήψη λογοτύπου",
+    "downloadWordmark": "Λήψη wordmark",
+    "brandAssets": "Υλικά επωνυμίας",
+    "logoCopied": "Το λογότυπο αντιγράφηκε",
+    "wordmarkCopied": "Το wordmark αντιγράφηκε",
+    "logoDownloaded": "Το λογότυπο κατέβηκε",
+    "wordmarkDownloaded": "Το wordmark κατέβηκε",
+    "copyLogoFailed": "Αποτυχία αντιγραφής λογοτύπου",
+    "copyWordmarkFailed": "Αποτυχία αντιγραφής wordmark"
   }
 }

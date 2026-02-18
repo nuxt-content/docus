@@ -18,5 +18,18 @@
     "toc": "Op dëser Säit",
     "report": "Problem mellen",
     "edit": "Dës Säit änneren"
+  },
+  "logo": {
+    "copyLogo": "Logo kopéieren",
+    "copyWordmark": "Wortmark kopéieren",
+    "downloadLogo": "Logo eroflueden",
+    "downloadWordmark": "Wortmark eroflueden",
+    "brandAssets": "Marken-Materialien",
+    "logoCopied": "Logo kopéiert",
+    "wordmarkCopied": "Wortmark kopéiert",
+    "logoDownloaded": "Logo erofgelueden",
+    "wordmarkDownloaded": "Wortmark erofgelueden",
+    "copyLogoFailed": "Logo konnt net kopéiert ginn",
+    "copyWordmarkFailed": "Wortmark konnt net kopéiert ginn"
   }
 }

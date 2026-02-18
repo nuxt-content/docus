@@ -18,5 +18,18 @@
     "toc": "මෙම පිටුවේ",
     "report": "ගැටලුවක් වාර්තා කරන්න",
     "edit": "මෙම පිටුව සංස්කරණය කරන්න"
+  },
+  "logo": {
+    "copyLogo": "ලාංඡනය පිටපත් කරන්න",
+    "copyWordmark": "වචන ලකුණ පිටපත් කරන්න",
+    "downloadLogo": "ලාංඡනය බාගන්න",
+    "downloadWordmark": "වචන ලකුණ බාගන්න",
+    "brandAssets": "වෙළඳ නාම සම්පත්",
+    "logoCopied": "ලාංඡනය පිටපත් කරන ලදී",
+    "wordmarkCopied": "වචන ලකුණ පිටපත් කරන ලදී",
+    "logoDownloaded": "ලාංඡනය බාගත කරන ලදී",
+    "wordmarkDownloaded": "වචන ලකුණ බාගත කරන ලදී",
+    "copyLogoFailed": "ලාංඡනය පිටපත් කිරීමට අසමත් විය",
+    "copyWordmarkFailed": "වචන ලකුණ පිටපත් කිරීමට අසමත් විය"
   }
 }

@@ -18,5 +18,18 @@
     "toc": "Trên trang này",
     "report": "Báo cáo sự cố",
     "edit": "Chỉnh sửa trang này"
+  },
+  "logo": {
+    "copyLogo": "Sao chép logo",
+    "copyWordmark": "Sao chép wordmark",
+    "downloadLogo": "Tải logo",
+    "downloadWordmark": "Tải wordmark",
+    "brandAssets": "Tài nguyên thương hiệu",
+    "logoCopied": "Đã sao chép logo",
+    "wordmarkCopied": "Đã sao chép wordmark",
+    "logoDownloaded": "Đã tải logo",
+    "wordmarkDownloaded": "Đã tải wordmark",
+    "copyLogoFailed": "Không thể sao chép logo",
+    "copyWordmarkFailed": "Không thể sao chép wordmark"
   }
 }

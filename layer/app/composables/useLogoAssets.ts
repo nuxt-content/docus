@@ -67,6 +67,7 @@ export const useLogoAssets = () => {
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const toast = useToast()
+  const { t } = useDocusI18n()
 
   const hasLogo = computed(() => !!(appConfig.header?.logo?.light || appConfig.header?.logo?.dark))
 
@@ -137,13 +138,13 @@ export const useLogoAssets = () => {
     if (!logoIsSvg.value) return
     const svg = await fetchSvgContent(currentLogoUrl.value, logoName.value)
     if (!svg) {
-      toast.add({ title: 'Failed to copy logo', icon: 'i-lucide-circle-x', color: 'error' })
+      toast.add({ title: t('logo.copyLogoFailed'), icon: 'i-lucide-circle-x', color: 'error' })
       return
     }
     const ok = await copyTextToClipboard(svg)
     toast.add(ok
-      ? { title: 'Logo copied', icon: 'i-lucide-circle-check', color: 'success' }
-      : { title: 'Failed to copy logo', icon: 'i-lucide-circle-x', color: 'error' },
+      ? { title: t('logo.logoCopied'), icon: 'i-lucide-circle-check', color: 'success' }
+      : { title: t('logo.copyLogoFailed'), icon: 'i-lucide-circle-x', color: 'error' },
     )
   }
 
@@ -151,13 +152,13 @@ export const useLogoAssets = () => {
     if (!wordmarkIsSvg.value) return
     const svg = await fetchSvgContent(currentWordmarkUrl.value, wordmarkName.value)
     if (!svg) {
-      toast.add({ title: 'Failed to copy wordmark', icon: 'i-lucide-circle-x', color: 'error' })
+      toast.add({ title: t('logo.copyWordmarkFailed'), icon: 'i-lucide-circle-x', color: 'error' })
       return
     }
     const ok = await copyTextToClipboard(svg)
     toast.add(ok
-      ? { title: 'Wordmark copied', icon: 'i-lucide-circle-check', color: 'success' }
-      : { title: 'Failed to copy wordmark', icon: 'i-lucide-circle-x', color: 'error' },
+      ? { title: t('logo.wordmarkCopied'), icon: 'i-lucide-circle-check', color: 'success' }
+      : { title: t('logo.copyWordmarkFailed'), icon: 'i-lucide-circle-x', color: 'error' },
     )
   }
 
@@ -171,7 +172,7 @@ export const useLogoAssets = () => {
     else {
       triggerLinkDownload(url, `${prefix.value}-logo${getExtension(url)}`)
     }
-    toast.add({ title: 'Logo downloaded', icon: 'i-lucide-download', color: 'success' })
+    toast.add({ title: t('logo.logoDownloaded'), icon: 'i-lucide-download', color: 'success' })
   }
 
   async function downloadWordmark() {
@@ -184,7 +185,7 @@ export const useLogoAssets = () => {
     else {
       triggerLinkDownload(url, `${prefix.value}-wordmark${getExtension(url)}`)
     }
-    toast.add({ title: 'Wordmark downloaded', icon: 'i-lucide-download', color: 'success' })
+    toast.add({ title: t('logo.wordmarkDownloaded'), icon: 'i-lucide-download', color: 'success' })
   }
 
   const brandAssetsUrl = computed(() => appConfig.header?.logo?.brandAssetsUrl || '')
@@ -194,17 +195,17 @@ export const useLogoAssets = () => {
 
     const copyGroup: ContextMenuItem[] = []
     if (logoIsSvg.value) {
-      copyGroup.push({ label: 'Copy logo', icon: 'i-lucide-copy', onSelect: copyLogo })
+      copyGroup.push({ label: t('logo.copyLogo'), icon: 'i-lucide-copy', onSelect: copyLogo })
     }
     if (hasWordmark.value && wordmarkIsSvg.value) {
-      copyGroup.push({ label: 'Copy wordmark', icon: 'i-lucide-copy', onSelect: copyWordmark })
+      copyGroup.push({ label: t('logo.copyWordmark'), icon: 'i-lucide-copy', onSelect: copyWordmark })
     }
 
     const downloadGroup: ContextMenuItem[] = [
-      { label: 'Download logo', icon: 'i-lucide-download', onSelect: downloadLogo },
+      { label: t('logo.downloadLogo'), icon: 'i-lucide-download', onSelect: downloadLogo },
     ]
     if (hasWordmark.value) {
-      downloadGroup.push({ label: 'Download wordmark', icon: 'i-lucide-download', onSelect: downloadWordmark })
+      downloadGroup.push({ label: t('logo.downloadWordmark'), icon: 'i-lucide-download', onSelect: downloadWordmark })
     }
 
     const items: ContextMenuItem[][] = []
@@ -213,7 +214,7 @@ export const useLogoAssets = () => {
 
     if (brandAssetsUrl.value) {
       items.push([{
-        label: 'Brand assets',
+        label: t('logo.brandAssets'),
         icon: 'i-lucide-palette',
         onSelect() {
           window.open(brandAssetsUrl.value, '_blank')

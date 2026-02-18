@@ -18,5 +18,18 @@
     "toc": "Auf dieser Seite",
     "report": "Problem melden",
     "edit": "Diese Seite bearbeiten"
+  },
+  "logo": {
+    "copyLogo": "Logo kopieren",
+    "copyWordmark": "Wortmarke kopieren",
+    "downloadLogo": "Logo herunterladen",
+    "downloadWordmark": "Wortmarke herunterladen",
+    "brandAssets": "Markenmaterialien",
+    "logoCopied": "Logo kopiert",
+    "wordmarkCopied": "Wortmarke kopiert",
+    "logoDownloaded": "Logo heruntergeladen",
+    "wordmarkDownloaded": "Wortmarke heruntergeladen",
+    "copyLogoFailed": "Logo konnte nicht kopiert werden",
+    "copyWordmarkFailed": "Wortmarke konnte nicht kopiert werden"
   }
 }

@@ -18,5 +18,18 @@
     "toc": "På denne siden",
     "report": "Rapporter et problem",
     "edit": "Rediger denne siden"
+  },
+  "logo": {
+    "copyLogo": "Kopier logo",
+    "copyWordmark": "Kopier wordmark",
+    "downloadLogo": "Last ned logo",
+    "downloadWordmark": "Last ned wordmark",
+    "brandAssets": "Merkevareressurser",
+    "logoCopied": "Logo kopiert",
+    "wordmarkCopied": "Wordmark kopiert",
+    "logoDownloaded": "Logo lastet ned",
+    "wordmarkDownloaded": "Wordmark lastet ned",
+    "copyLogoFailed": "Kunne ikke kopiere logo",
+    "copyWordmarkFailed": "Kunne ikke kopiere wordmark"
   }
 }

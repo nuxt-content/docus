@@ -18,5 +18,18 @@
     "toc": "Dalam halaman ini",
     "report": "Laporkan masalah",
     "edit": "Edit halaman ini"
+  },
+  "logo": {
+    "copyLogo": "Salin logo",
+    "copyWordmark": "Salin wordmark",
+    "downloadLogo": "Muat turun logo",
+    "downloadWordmark": "Muat turun wordmark",
+    "brandAssets": "Aset jenama",
+    "logoCopied": "Logo disalin",
+    "wordmarkCopied": "Wordmark disalin",
+    "logoDownloaded": "Logo dimuat turun",
+    "wordmarkDownloaded": "Wordmark dimuat turun",
+    "copyLogoFailed": "Gagal menyalin logo",
+    "copyWordmarkFailed": "Gagal menyalin wordmark"
   }
 }

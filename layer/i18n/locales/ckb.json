@@ -14,5 +14,18 @@
     "toc": "لەم پەڕەدا",
     "report": "ڕاپۆرتکردنی کێشە",
     "edit": "دەستکاریکردنی ئەم پەڕەیە"
+  },
+  "logo": {
+    "copyLogo": "کۆپیکردنی لۆگۆ",
+    "copyWordmark": "کۆپیکردنی وشەنیشان",
+    "downloadLogo": "داگرتنی لۆگۆ",
+    "downloadWordmark": "داگرتنی وشەنیشان",
+    "brandAssets": "سامانەکانی براند",
+    "logoCopied": "لۆگۆ کۆپی کرا",
+    "wordmarkCopied": "وشەنیشان کۆپی کرا",
+    "logoDownloaded": "لۆگۆ دابەزێنرا",
+    "wordmarkDownloaded": "وشەنیشان دابەزێنرا",
+    "copyLogoFailed": "کۆپیکردنی لۆگۆ سەرکەوتوو نەبوو",
+    "copyWordmarkFailed": "کۆپیکردنی وشەنیشان سەرکەوتوو نەبوو"
   }
 }

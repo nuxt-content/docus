@@ -18,5 +18,18 @@
     "toc": "Sellel lehel",
     "report": "Teata probleemist",
     "edit": "Muuda seda lehekülge"
+  },
+  "logo": {
+    "copyLogo": "Kopeeri logo",
+    "copyWordmark": "Kopeeri sõnamärk",
+    "downloadLogo": "Laadi logo alla",
+    "downloadWordmark": "Laadi sõnamärk alla",
+    "brandAssets": "Brändimaterjalid",
+    "logoCopied": "Logo kopeeritud",
+    "wordmarkCopied": "Sõnamärk kopeeritud",
+    "logoDownloaded": "Logo allalaaditud",
+    "wordmarkDownloaded": "Sõnamärk allalaaditud",
+    "copyLogoFailed": "Logo kopeerimine ebaõnnestus",
+    "copyWordmarkFailed": "Sõnamärgi kopeerimine ebaõnnestus"
   }
 }

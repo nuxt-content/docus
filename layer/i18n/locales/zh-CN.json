@@ -18,5 +18,18 @@
     "toc": "在此页面上",
     "report": "提交问题报告",
     "edit": "编辑此页面"
+  },
+  "logo": {
+    "copyLogo": "复制图标",
+    "copyWordmark": "复制文字标识",
+    "downloadLogo": "下载图标",
+    "downloadWordmark": "下载文字标识",
+    "brandAssets": "品牌资源",
+    "logoCopied": "图标已复制",
+    "wordmarkCopied": "文字标识已复制",
+    "logoDownloaded": "图标已下载",
+    "wordmarkDownloaded": "文字标识已下载",
+    "copyLogoFailed": "复制图标失败",
+    "copyWordmarkFailed": "复制文字标识失败"
   }
 }

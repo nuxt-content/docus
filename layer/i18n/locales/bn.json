@@ -18,5 +18,18 @@
     "toc": "এই পেজে",
     "report": "সমস্যা রিপোর্ট করুন",
     "edit": "এই পেজ সম্পাদনা করুন"
+  },
+  "logo": {
+    "copyLogo": "লোগো কপি করুন",
+    "copyWordmark": "ওয়ার্ডমার্ক কপি করুন",
+    "downloadLogo": "লোগো ডাউনলোড করুন",
+    "downloadWordmark": "ওয়ার্ডমার্ক ডাউনলোড করুন",
+    "brandAssets": "ব্র্যান্ড অ্যাসেট",
+    "logoCopied": "লোগো কপি হয়েছে",
+    "wordmarkCopied": "ওয়ার্ডমার্ক কপি হয়েছে",
+    "logoDownloaded": "লোগো ডাউনলোড হয়েছে",
+    "wordmarkDownloaded": "ওয়ার্ডমার্ক ডাউনলোড হয়েছে",
+    "copyLogoFailed": "লোগো কপি করা যায়নি",
+    "copyWordmarkFailed": "ওয়ার্ডমার্ক কপি করা যায়নি"
   }
 }

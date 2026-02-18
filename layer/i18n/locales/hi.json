@@ -18,5 +18,18 @@
     "toc": "इस पृष्ठ पर",
     "report": "समस्या की रिपोर्ट करें",
     "edit": "इस पृष्ठ को संपादित करें"
+  },
+  "logo": {
+    "copyLogo": "लोगो कॉपी करें",
+    "copyWordmark": "वर्डमार्क कॉपी करें",
+    "downloadLogo": "लोगो डाउनलोड करें",
+    "downloadWordmark": "वर्डमार्क डाउनलोड करें",
+    "brandAssets": "ब्रांड एसेट्स",
+    "logoCopied": "लोगो कॉपी हो गया",
+    "wordmarkCopied": "वर्डमार्क कॉपी हो गया",
+    "logoDownloaded": "लोगो डाउनलोड हो गया",
+    "wordmarkDownloaded": "वर्डमार्क डाउनलोड हो गया",
+    "copyLogoFailed": "लोगो कॉपी नहीं हो सका",
+    "copyWordmarkFailed": "वर्डमार्क कॉपी नहीं हो सका"
   }
 }

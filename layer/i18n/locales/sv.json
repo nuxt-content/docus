@@ -18,5 +18,18 @@
     "toc": "På denna sida",
     "report": "Rapportera ett problem",
     "edit": "Redigera denna sida"
+  },
+  "logo": {
+    "copyLogo": "Kopiera logotyp",
+    "copyWordmark": "Kopiera ordmärke",
+    "downloadLogo": "Ladda ner logotyp",
+    "downloadWordmark": "Ladda ner ordmärke",
+    "brandAssets": "Varumärkesmaterial",
+    "logoCopied": "Logotyp kopierad",
+    "wordmarkCopied": "Ordmärke kopierat",
+    "logoDownloaded": "Logotyp nedladdad",
+    "wordmarkDownloaded": "Ordmärke nedladdat",
+    "copyLogoFailed": "Kunde inte kopiera logotyp",
+    "copyWordmarkFailed": "Kunde inte kopiera ordmärke"
   }
 }

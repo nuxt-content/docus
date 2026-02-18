@@ -18,5 +18,18 @@
     "toc": "En aquesta pàgina",
     "report": "Informar d'un problema",
     "edit": "Editar aquesta pàgina"
+  },
+  "logo": {
+    "copyLogo": "Copiar el logotip",
+    "copyWordmark": "Copiar el wordmark",
+    "downloadLogo": "Descarregar el logotip",
+    "downloadWordmark": "Descarregar el wordmark",
+    "brandAssets": "Recursos de marca",
+    "logoCopied": "Logotip copiat",
+    "wordmarkCopied": "Wordmark copiat",
+    "logoDownloaded": "Logotip descarregat",
+    "wordmarkDownloaded": "Wordmark descarregat",
+    "copyLogoFailed": "No s'ha pogut copiar el logotip",
+    "copyWordmarkFailed": "No s'ha pogut copiar el wordmark"
   }
 }

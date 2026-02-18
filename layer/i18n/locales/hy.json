@@ -18,5 +18,18 @@
     "toc": "Այս էջում",
     "report": "Հաղորդել խնդրի մասին",
     "edit": "Խմբագրել այս էջը"
+  },
+  "logo": {
+    "copyLogo": "Copy logo",
+    "copyWordmark": "Copy wordmark",
+    "downloadLogo": "Download logo",
+    "downloadWordmark": "Download wordmark",
+    "brandAssets": "Brand assets",
+    "logoCopied": "Logo copied",
+    "wordmarkCopied": "Wordmark copied",
+    "logoDownloaded": "Logo downloaded",
+    "wordmarkDownloaded": "Wordmark downloaded",
+    "copyLogoFailed": "Failed to copy logo",
+    "copyWordmarkFailed": "Failed to copy wordmark"
   }
 }

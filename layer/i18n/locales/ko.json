@@ -18,5 +18,18 @@
     "toc": "이 페이지에서",
     "report": "문제 신고",
     "edit": "이 페이지 편집"
+  },
+  "logo": {
+    "copyLogo": "로고 복사",
+    "copyWordmark": "워드마크 복사",
+    "downloadLogo": "로고 다운로드",
+    "downloadWordmark": "워드마크 다운로드",
+    "brandAssets": "브랜드 에셋",
+    "logoCopied": "로고가 복사되었습니다",
+    "wordmarkCopied": "워드마크가 복사되었습니다",
+    "logoDownloaded": "로고가 다운로드되었습니다",
+    "wordmarkDownloaded": "워드마크가 다운로드되었습니다",
+    "copyLogoFailed": "로고 복사 실패",
+    "copyWordmarkFailed": "워드마크 복사 실패"
   }
 }

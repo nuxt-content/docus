@@ -18,5 +18,18 @@
     "toc": "Na tej strani",
     "report": "Prijavi težavo",
     "edit": "Uredi to stran"
+  },
+  "logo": {
+    "copyLogo": "Kopiraj logotip",
+    "copyWordmark": "Kopiraj besedno znamko",
+    "downloadLogo": "Prenesi logotip",
+    "downloadWordmark": "Prenesi besedno znamko",
+    "brandAssets": "Materiali blagovne znamke",
+    "logoCopied": "Logotip kopiran",
+    "wordmarkCopied": "Besedna znamka kopirana",
+    "logoDownloaded": "Logotip prenesen",
+    "wordmarkDownloaded": "Besedna znamka prenesena",
+    "copyLogoFailed": "Kopiranje logotipa ni uspelo",
+    "copyWordmarkFailed": "Kopiranje besedne znamke ni uspelo"
   }
 }
