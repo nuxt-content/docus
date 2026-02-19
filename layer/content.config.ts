@@ -57,7 +57,7 @@ else {
       source: {
         cwd,
         include: hasDocsFolder ? 'docs/**' : '**',
-        prefix: hasDocsFolder ? '/docs' : undefined,
+        prefix: hasDocsFolder ? '/docs' : '/',
         exclude: ['index.md'],
       },
       schema: createDocsSchema(),
