@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@ai-sdk/vue": "3.0.69",
-    "@nuxt/ui": "^4.4.0",
+    "@nuxt/ui": "https://pkg.pr.new/@nuxt/ui@411c751",
     "@nuxtjs/i18n": "^10.2.1",
     "@nuxtjs/mdc": "^0.20.0",
     "@nuxtjs/plausible": "^2.0.1",
