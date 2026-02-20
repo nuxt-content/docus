@@ -11,7 +11,7 @@ const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const { shouldPushContent: shouldHideToc } = useAssistant()
+const { isOpen: shouldHideToc } = useAssistant()
 
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
