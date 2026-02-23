@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useRequestURL, useAppConfig } from '#imports'
-
 const props = withDefaults(defineProps<{ title?: string, description?: string }>(), {
   title: 'title',
   description: 'description',
@@ -17,7 +15,8 @@ const description = (props.description || '').slice(0, 200)
 async function fetchLogoSvg(path?: string): Promise<string> {
   if (!path) return ''
   try {
-    const url = path.startsWith('http') ? path : `${useRequestURL().origin}${path}`
+    const { url: siteUrl } = useSiteConfig()
+    const url = path.startsWith('http') ? path : `${siteUrl}${path}`
     const svg = await $fetch<string>(url, { responseType: 'text' })
     return svg.replace('<svg', '<svg width="100%" height="100%"')
   }
