@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useRequestURL, useAppConfig } from '#imports'
+
 const props = withDefaults(defineProps<{ title?: string, description?: string }>(), {
   title: 'title',
   description: 'description',
