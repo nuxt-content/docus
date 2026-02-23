@@ -41,7 +41,6 @@
     "defu": "^6.1.4",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
-    "minimark": "^1.0.0",
     "motion-v": "^1.10.3",
     "nuxt-llms": "^0.2.0",
     "nuxt-og-image": "^5.1.13",
