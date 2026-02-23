@@ -15,6 +15,8 @@ const description = (props.description || '').slice(0, 200)
 async function fetchLogoSvg(path?: string): Promise<string> {
   if (!path) return ''
   try {
+    // eslint-disable-next-line
+    // @ts-ignore
     const { url: siteUrl } = useSiteConfig()
     const url = path.startsWith('http') ? path : `${siteUrl}${path}`
     const svg = await $fetch<string>(url, { responseType: 'text' })
