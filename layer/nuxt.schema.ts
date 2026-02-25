@@ -266,7 +266,7 @@ export default defineNuxtSchema({
     assistant: group({
       title: 'Assistant',
       description: 'Assistant configuration.',
-      icon: 'i-lucide-sparkles',
+      icon: 'i-custom-ai',
       fields: {
         floatingInput: field({
           type: 'boolean',
