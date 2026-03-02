@@ -117,7 +117,8 @@ Modern documentation (like [Nuxt](https://nuxt.com/docs)) uses **action verbs th
 
 ### Quality Checklist
 - [ ] Complete and copy-pasteable (not fragments)
-- [ ] File path labels present (` ```ts [nuxt.config.ts] `)
+- [ ] File name labels on all code blocks representing files (e.g., ` ```vue [App.vue] `, ` ```ts [server.ts] `, ` ```tsx [App.tsx] `)
+- [ ] Code language matches the project's stack (e.g., TypeScript if the project uses it)
 - [ ] Comments explain non-obvious logic
 - [ ] Realistic variable names (not foo/bar)
 - [ ] Working code (no placeholder values like `YOUR_API_KEY`)
@@ -125,7 +126,7 @@ Modern documentation (like [Nuxt](https://nuxt.com/docs)) uses **action verbs th
 
 ### Multi-Package Manager Support
 
-Always use `::code-group` for install commands:
+Always use `::code-group` for install commands covering **all package managers the project/ecosystem supports**:
 
 ```markdown
 ::code-group
@@ -146,6 +147,36 @@ bun add package-name
 ```
 ::
 ```
+
+Check the project's README, lock files, or existing docs to determine which package managers to include. Ensure none are missing — a common oversight is omitting newer ones.
+
+### Showing Rendered Output
+
+Use `::code-preview` to show the rendered result alongside the source code for visual features (markdown syntax, tables, lists, etc.):
+
+```markdown
+::code-preview
+- Task 1
+- [x] Task 2 (completed)
+
+#code
+\```mdc
+- Task 1
+- [x] Task 2 (completed)
+\```
+::
+```
+
+### Code Groups Best Practices
+
+**Use `::code-group` for:**
+- Package manager install variants (pnpm/npm/yarn/bun)
+- Framework variants (Vue / React side by side)
+- Code + Output pairs
+- Syntax + AST pairs
+
+**Do NOT use `::code-group` to mix unrelated steps:**
+- A terminal install command with a config file edit — these are sequential actions, not equivalent alternatives. Keep them as separate blocks with transition text between them.
 
 ## Common Clarity Issues
 

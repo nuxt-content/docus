@@ -220,25 +220,59 @@ Your description text
 
 #### File Path Labels
 
-**All code blocks for configuration/source files should include file path labels:**
+**ALL code blocks should include file name labels**, not just config files. This applies to every code example that represents a file:
 
 ✅ Good:
 ````markdown
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  // config
-})
+```vue [App.vue]
+<script setup lang="ts">
+import { ref } from 'vue'
+</script>
+```
+````
+
+````markdown
+```typescript [parse.ts]
+import { parse } from 'comark'
+```
+````
+
+````markdown
+```tsx [App.tsx]
+export default function App() {}
 ```
 ````
 
 ❌ Missing label:
 ````markdown
-```ts
-export default defineNuxtConfig({
-  // config
-})
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+</script>
 ```
 ````
+
+**Label naming conventions:**
+- Vue components: `[App.vue]`, `[components/Alert.vue]`, `[pages/index.vue]`
+- TypeScript files: `[parse.ts]`, `[config.ts]`, `[server.ts]`
+- React components: `[App.tsx]`, `[components/Card.tsx]`
+- Config files: `[nuxt.config.ts]`, `[app.config.ts]`
+- CSS files: `[styles.css]`, `[app/assets/css/main.css]`
+- Terminal commands: `[Terminal]`
+
+**Exceptions** (no label needed):
+- Type definitions / interfaces
+- MDC syntax examples (` ```mdc `)
+- Inline snippets that don't represent a file
+
+#### Code Language Consistency
+
+Code examples should match the project's language stack. Check the project's `tsconfig.json`, `package.json`, or existing code to determine the default language.
+
+**For TypeScript projects**, all code examples should use TypeScript. Common mismatches to flag:
+- Vue `<script setup>` missing `lang="ts"` → should be `<script setup lang="ts">`
+- `.js` file extensions in examples when the project uses `.ts`
+- Missing type annotations in function signatures when the project uses strict TypeScript
 
 #### Language Tags
 
@@ -249,7 +283,7 @@ Always specify language for syntax highlighting:
 
 #### Code Groups
 
-Use `::code-group` for multi-variant examples (package managers, languages, etc.):
+Use `::code-group` for multi-variant examples (package managers, frameworks, etc.):
 
 ````markdown
 ::code-group
@@ -260,8 +294,87 @@ pnpm add docus
 ```bash [npm]
 npm install docus
 ```
+
+```bash [yarn]
+yarn add docus
+```
+
+```bash [bun]
+bun add docus
+```
 ::
 ````
+
+**Ensure all package managers the project/ecosystem supports are represented.** Check the project's README, `package.json` scripts, or lock files to determine which ones to include. Common omissions: forgetting newer package managers (e.g., bun) or removing one by mistake.
+
+#### Code Groups: What NOT to Group
+
+**Do NOT group a terminal command with a config file** — these are separate steps:
+
+❌ Bad (mixing install + config in one group):
+````markdown
+::code-group
+```bash [Terminal]
+npm install my-package
+```
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['my-package']
+})
+```
+::
+````
+
+✅ Good (separate blocks with transition text):
+````markdown
+```bash [Terminal]
+npm install my-package
+```
+
+Add the module to your `nuxt.config.ts`:
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['my-package']
+})
+```
+````
+
+**When to use `::code-group`:**
+- Package manager variants (pnpm/npm/yarn/bun)
+- Framework variants (Vue/React)
+- Code + Output pairs (`[Code]` / `[Output]`)
+- Syntax + AST pairs (`[Syntax]` / `[AST]`)
+
+#### Code Preview
+
+Use `::code-preview` to show rendered output alongside source code. This is ideal for documenting visual features like markdown syntax, code block metadata, component rendering:
+
+````markdown
+::code-preview
+| Header 1 | Header 2 |
+| -------- | -------- |
+| Cell 1   | Cell 2   |
+
+#code
+```mdc
+| Header 1 | Header 2 |
+| -------- | -------- |
+| Cell 1   | Cell 2   |
+```
+::
+````
+
+**When to use `::code-preview`:**
+- Markdown syntax examples (headings, lists, tables, blockquotes, task lists, emojis)
+- Code block features (filename labels, line highlighting)
+- Any feature where seeing the rendered result adds clarity
+
+**When NOT to use `::code-preview`:**
+- API/TypeScript code examples (no visual preview)
+- Component examples with unregistered custom components
+
 
 ## File and Directory Naming
 
@@ -399,6 +512,7 @@ For each page, verify:
 - [ ] `navigation.icon` starts with `i-` if present
 - [ ] `links` array has correct object structure
 - [ ] No invalid YAML syntax
+- [ ] Use `navigation: false` for pages that should exist (e.g. index redirects) but not appear in sidebar
 
 ### MDC Components
 - [ ] All Nuxt UI components use `u-` prefix
@@ -406,11 +520,16 @@ For each page, verify:
 - [ ] Component names are valid
 - [ ] Attributes use correct syntax `{key="value"}`
 - [ ] Slot names match component docs
+- [ ] `::code-preview` used for visually renderable examples (markdown syntax, tables, lists, etc.)
 
 ### Code Blocks
 - [ ] Language tags specified (ts, js, vue, bash, etc.)
-- [ ] File paths included for config/source files
-- [ ] Use `::code-group` for multi-variant examples
+- [ ] File name labels on all code blocks representing files (not just config files)
+- [ ] Code language matches the project's stack (e.g., `lang="ts"` on Vue `<script setup>` for TypeScript projects)
+- [ ] Use `::code-group` for multi-variant examples (package managers, frameworks, etc.)
+- [ ] Package manager `::code-group` covers all supported package managers (check against the project/ecosystem)
+- [ ] Only group equivalent alternatives — don't mix unrelated steps (e.g., install + config) in a `::code-group`
+- [ ] `::code-preview` used where rendered preview adds clarity
 
 ### File Structure
 - [ ] Directory follows numbered pattern (`1.section/`)

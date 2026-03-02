@@ -175,13 +175,19 @@ Perform full technical validation using [references/technical-checks.md](referen
 **Validate:**
 1. **Frontmatter structure** - Required: `title`, `description`. Optional: `navigation`, `seo`, `links`
 2. **MDC component syntax** - All Nuxt UI components MUST have `u-` prefix (`::u-page-hero`, `:::u-button`)
-3. **Code block labels** - Config files need file path labels (` ```ts [nuxt.config.ts] `)
-4. **File naming** - Numbered directories/files, kebab-case, `.navigation.yml` in each section
+3. **Code block labels** - All code blocks representing files need descriptive labels (` ```vue [App.vue] `, ` ```ts [config.ts] `)
+4. **Code language consistency** - Code examples should match the project's language stack (e.g., TypeScript if the project uses TypeScript, `lang="ts"` on Vue `<script setup>`)
+5. **Package manager coverage** - `::code-group` install blocks must cover all package managers the project/ecosystem supports
+6. **Code preview** - Use `::code-preview` for visually renderable examples (tables, lists, rendered markdown, etc.)
+7. **Code group scope** - Only group equivalent alternatives (e.g., package managers, framework variants) — don't mix unrelated steps (e.g., install command + config file)
+8. **File naming** - Numbered directories/files, kebab-case, `.navigation.yml` in each section
+9. **Hidden pages** - Use `navigation: false` for pages that should exist as routes but not appear in sidebar
 
 **Common Critical Errors:**
 - Missing `u-` prefix: `::page-hero` → should be `::u-page-hero`
 - Missing required frontmatter: `title`, `description`
 - Invalid `.navigation.yml` structure
+- Missing section `index.md` causing 404 on section root URL
 
 See [references/technical-checks.md](references/technical-checks.md) for complete validation rules, examples, and error patterns.
 
@@ -464,5 +470,11 @@ Welcome
 - SEO descriptions too short (need 120-160 chars)
 - Passive voice in instructions ("can be done" → "do it")
 - Generic headings ("Configuration" → "Configure your app")
+- Code blocks missing file name labels (every block representing a file should have one)
+- Code language not matching the project's stack (e.g., missing `lang="ts"` on Vue `<script setup>` in a TypeScript project)
+- Incomplete package manager coverage in `::code-group` install blocks (check against the ecosystem/project)
+- Unrelated steps grouped in `::code-group` (e.g., install command + config file) — keep as separate blocks
+- Missing `::code-preview` where rendered preview would add clarity (tables, lists, etc.)
+- Section landing page missing → 404 on section root URL (add `index.md` with `navigation: false` if needed)
 
 **See reference files for complete checklists and examples.**

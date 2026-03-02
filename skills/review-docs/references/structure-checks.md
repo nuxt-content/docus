@@ -241,9 +241,19 @@ links:
 
 ### Missing Landing Page
 - Section without index.md
-- Direct jump to numbered pages
+- Direct jump to numbered pages (causes 404 on the section root URL)
 
-**Fix:** Add index.md with section overview
+**Fix:** Add `index.md` with section overview. If the page should not appear in the sidebar navigation, use `navigation: false` in frontmatter:
+
+```yaml
+---
+title: Section Name
+description: Overview of this section
+navigation: false
+---
+```
+
+This pattern is useful for section landing pages that serve as entry points (e.g. via redirect or direct URL) but shouldn't clutter the sidebar.
 
 ### Inconsistent Numbering
 - Gaps in numbering (1, 2, 4, 5 - where's 3?)

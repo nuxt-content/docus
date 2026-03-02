@@ -125,6 +125,7 @@
 | Category | Critical | Important | Nice-to-Have | Total |
 |----------|----------|-----------|--------------|-------|
 | Technical (MDC/Frontmatter) | X | X | X | X |
+| Code Blocks (labels/lang/groups) | X | X | X | X |
 | SEO | X | X | X | X |
 | Clarity | X | X | X | X |
 | Structure | X | X | X | X |
