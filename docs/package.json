@@ -7,7 +7,7 @@
     "dev": "nuxt dev"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.5.0",
+    "@nuxt/ui": "https://pkg.pr.new/@nuxt/ui@6038",
     "@nuxtjs/i18n": "^10.2.3",
     "@nuxtjs/plausible": "^2.0.1",
     "@vercel/analytics": "^1.6.1",

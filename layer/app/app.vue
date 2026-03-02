@@ -62,7 +62,7 @@ provide('navigation', navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div class="flex flex-1">
-      <div class="flex flex-col">
+      <div class="flex flex-1 flex-col">
         <AppHeader v-if="$route.meta.header !== false" />
         <NuxtLayout>
           <NuxtPage />

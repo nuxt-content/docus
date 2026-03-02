@@ -127,8 +127,10 @@ onMounted(() => {
     side="right"
     collapsible="offcanvas"
     close
+    close-icon="i-lucide-chevron-right"
     :title="displayTitle"
     :style="{ '--sidebar-width': isExpanded ? '520px' : '360px' }"
+    :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
     <template #actions>
       <UTooltip :text="isExpanded ? t('assistant.collapse') : t('assistant.expand')">
@@ -136,8 +138,6 @@ onMounted(() => {
           :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
           color="neutral"
           variant="ghost"
-          size="sm"
-          class="text-muted hover:text-highlighted"
           @click="toggleExpanded"
         />
       </UTooltip>
@@ -149,8 +149,6 @@ onMounted(() => {
           icon="i-lucide-trash-2"
           color="neutral"
           variant="ghost"
-          size="sm"
-          class="text-muted hover:text-highlighted"
           @click="resetChat"
         />
       </UTooltip>
@@ -161,31 +159,31 @@ onMounted(() => {
         v-if="chat.messages.length > 0"
         :messages="chat.messages"
         compact
+        should-auto-scroll
         :status="chat.status"
-        :user="{ ui: { content: 'text-sm' } }"
-        :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
+        class="px-0"
+        :user="{ ui: { container: 'max-w-full' } }"
+        :assistant="{ ui: { content: 'flex flex-col gap-2' } }"
       >
         <template #content="{ message }">
-          <div class="flex flex-col gap-2">
-            <AssistantLoading
-              v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
-              :tool-calls="getMessageToolCalls(message)"
-              :is-loading="showThinking && message.id === lastMessage?.id"
+          <AssistantLoading
+            v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
+            :tool-calls="getMessageToolCalls(message)"
+            :is-loading="showThinking && message.id === lastMessage?.id"
+          />
+          <template
+            v-for="(part, index) in message.parts"
+            :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
+          >
+            <MDCCached
+              v-if="part.type === 'text' && part.text"
+              :value="part.text"
+              :cache-key="`${message.id}-${index}`"
+              :components="components"
+              :parser-options="{ highlight: false }"
+              class="*:first:mt-0! *:last:mb-0!"
             />
-            <template
-              v-for="(part, index) in message.parts"
-              :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
-            >
-              <MDCCached
-                v-if="part.type === 'text' && part.text"
-                :value="part.text"
-                :cache-key="`${message.id}-${index}`"
-                :components="components"
-                :parser-options="{ highlight: false }"
-                class="*:first:mt-0 *:last:mb-0"
-              />
-            </template>
-          </div>
+          </template>
         </template>
       </UChatMessages>
 
@@ -241,46 +239,33 @@ onMounted(() => {
     </template>
 
     <template #footer>
-      <div class="w-full">
-        <UChatPrompt
-          v-model="input"
-          :rows="2"
-          :placeholder="displayPlaceholder"
-          maxlength="1000"
-          :ui="{
-            root: 'shadow-none!',
-            body: '*:p-0! *:rounded-none! *:text-base!',
-          }"
-          @submit="handleSubmit"
-        >
-          <template #footer>
-            <div class="flex items-center gap-1 text-xs text-muted">
-              <span>{{ t('assistant.lineBreak') }}</span>
-              <UKbd
-                size="sm"
-                value="shift"
-              />
-              <UKbd
-                size="sm"
-                value="enter"
-              />
-            </div>
-            <UChatPromptSubmit
-              class="ml-auto"
-              size="xs"
-              :status="chat.status"
-              @stop="chat.stop()"
-              @reload="chat.regenerate()"
-            />
-          </template>
-        </UChatPrompt>
-        <div class="mt-1 flex text-xs text-dimmed items-center justify-between">
-          <span>{{ t('assistant.chatCleared') }}</span>
-          <span>
-            {{ input.length }}/1000
-          </span>
-        </div>
-      </div>
+      <UChatPrompt
+        v-model="input"
+        :rows="2"
+        :placeholder="displayPlaceholder"
+        maxlength="1000"
+        variant="naked"
+        autofocus
+        :ui="{ base: 'px-0' }"
+        class="px-4"
+        @submit="handleSubmit"
+      >
+        <template #footer>
+          <p class="text-xs text-muted flex items-center gap-1">
+            <span>{{ t('assistant.lineBreak') }}</span>
+            <UKbd size="sm" value="shift" />
+            <UKbd size="sm" value="enter" />
+            <span class="text-dimmed ml-auto">{{ input.length }}/1000</span>
+          </p>
+
+          <UChatPromptSubmit
+            size="sm"
+            :status="chat.status"
+            @stop="chat.stop()"
+            @reload="chat.regenerate()"
+          />
+        </template>
+      </UChatPrompt>
     </template>
   </USidebar>
 </template>
