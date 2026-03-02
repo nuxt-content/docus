@@ -1,3 +1,4 @@
+import { join } from 'node:path'
 import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
@@ -8,6 +9,15 @@ export default defineNuxtConfig({
     resolve('./modules/routing'),
     resolve('./modules/markdown-rewrite'),
     resolve('./modules/css'),
+    () => {
+      const nuxt = useNuxt()
+      nuxt.options.icon ||= {}
+      nuxt.options.icon.customCollections ||= []
+      nuxt.options.icon.customCollections.push({
+        prefix: 'custom',
+        dir: join(nuxt.options.srcDir, 'assets/icons'),
+      })
+    },
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -94,6 +104,16 @@ export default defineNuxtConfig({
     },
   },
   icon: {
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: resolve('./app/assets/icons'),
+      },
+    ],
+    clientBundle: {
+      scan: true,
+      includeCustomCollections: true,
+    },
     provider: 'iconify',
   },
   robots: {

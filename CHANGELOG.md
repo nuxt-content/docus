@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.7.0](https://github.com/nuxt-content/docus/compare/v5.6.1...v5.7.0) (2026-02-27)
+
+### Features
+
+* **customization:** native support for custom icons ([#1288](https://github.com/nuxt-content/docus/issues/1288)) ([77e3677](https://github.com/nuxt-content/docus/commit/77e367759ee5023dc5b1a0afe5a80c976b5ce7a2))
+
+### Bug Fixes
+
+* **layer:** improve og image generation ([#1286](https://github.com/nuxt-content/docus/issues/1286)) ([c952adc](https://github.com/nuxt-content/docus/commit/c952adc58a655ef042f9e4e12f9b7dcd0af80de1))
+
 ## [5.6.1](https://github.com/nuxt-content/docus/compare/v5.6.0...v5.6.1) (2026-02-19)
 
 ### Features

@@ -1,19 +1,37 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
-
-const props = withDefaults(defineProps<{ title?: string, description?: string, headline?: string }>(), {
+const props = withDefaults(defineProps<{ title?: string, description?: string }>(), {
   title: 'title',
   description: 'description',
 })
 
-const title = computed(() => (props.title || '').slice(0, 60))
-const description = computed(() => (props.description || '').slice(0, 200))
+const appConfig = useAppConfig()
+const logoPath = appConfig.header?.logo?.dark || appConfig.header?.logo?.light
+
+const logoSvg = await fetchLogoSvg(logoPath)
+
+const title = (props.title || '').slice(0, 60)
+const description = (props.description || '').slice(0, 200)
+
+async function fetchLogoSvg(path?: string): Promise<string> {
+  if (!path) return ''
+  try {
+    // eslint-disable-next-line
+    // @ts-ignore
+    const { url: siteUrl } = useSiteConfig()
+    const url = path.startsWith('http') ? path : `${siteUrl}${path}`
+    const svg = await $fetch<string>(url, { responseType: 'text' })
+    return svg.replace('<svg', '<svg width="100%" height="100%"')
+  }
+  catch {
+    return ''
+  }
+}
 </script>
 
 <template>
   <div class="w-full h-full flex items-center justify-center bg-neutral-900">
     <svg
-      class="absolute right-0 top-0 opacity-50 "
+      class="absolute right-0 top-0 opacity-50"
       width="629"
       height="593"
       viewBox="0 0 629 593"
@@ -54,19 +72,24 @@ const description = computed(() => (props.description || '').slice(0, 200))
       </defs>
     </svg>
 
-    <div class="flex flex-col justify-center p-8">
-      <div class="flex justify-center mb-8">
-        <AppHeaderLogo white />
-      </div>
+    <div
+      class="flex flex-col items-center justify-center p-8"
+    >
+      <div
+        v-if="logoSvg"
+        class="flex items-center justify-center mb-10 max-w-[900px]"
+        style="width: 72px; height: 72px;"
+        v-html="logoSvg"
+      />
       <h1
         v-if="title"
-        class="flex justify-center m-0 text-5xl font-semibold mb-4 text-white"
+        class="m-0 text-5xl font-semibold mb-4 text-white text-center"
       >
-        <span>{{ title }}</span>
+        {{ title }}
       </h1>
       <p
         v-if="description"
-        class="text-center text-2xl text-neutral-300 leading-tight"
+        class="text-center text-2xl text-neutral-300 leading-tight max-w-[800px]"
       >
         {{ description }}
       </p>
