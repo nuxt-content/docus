@@ -25,7 +25,7 @@ const displayPlaceholder = computed(() => t('assistant.placeholder'))
 const chat = new Chat({
   messages: messages.value,
   transport: new DefaultChatTransport({
-    api: config.public.assistant.apiPath,
+    api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.assistant.apiPath,
   }),
   onError: (error: Error) => {
     const message = (() => {
