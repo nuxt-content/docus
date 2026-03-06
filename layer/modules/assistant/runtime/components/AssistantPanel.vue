@@ -127,10 +127,9 @@ onMounted(() => {
     side="right"
     collapsible="offcanvas"
     close
-    close-icon="i-lucide-chevron-right"
     :title="displayTitle"
-    :style="{ '--sidebar-width': isExpanded ? '520px' : '360px' }"
-    :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
+    :style="{ '--sidebar-width': isExpanded ? '32rem' : '22rem' }"
+    :ui="{ footer: 'p-0' }"
   >
     <template #actions>
       <UTooltip :text="isExpanded ? t('assistant.collapse') : t('assistant.expand')">
@@ -154,14 +153,14 @@ onMounted(() => {
       </UTooltip>
     </template>
 
-    <template #body>
+    <template #default>
       <UChatMessages
         v-if="chat.messages.length > 0"
         :messages="chat.messages"
         compact
         should-auto-scroll
         :status="chat.status"
-        class="px-0"
+        class="px-0 gap-2"
         :user="{ ui: { container: 'max-w-full' } }"
         :assistant="{ ui: { content: 'flex flex-col gap-2' } }"
       >
@@ -187,9 +186,7 @@ onMounted(() => {
         </template>
       </UChatMessages>
 
-      <div
-        v-else
-      >
+      <div v-else>
         <div
           v-if="!faqQuestions?.length"
           class="flex h-full flex-col items-center justify-center py-12 text-center"
@@ -253,8 +250,14 @@ onMounted(() => {
         <template #footer>
           <p class="text-xs text-muted flex items-center gap-1">
             <span>{{ t('assistant.lineBreak') }}</span>
-            <UKbd size="sm" value="shift" />
-            <UKbd size="sm" value="enter" />
+            <UKbd
+              size="sm"
+              value="shift"
+            />
+            <UKbd
+              size="sm"
+              value="enter"
+            />
             <span class="text-dimmed ml-auto">{{ input.length }}/1000</span>
           </p>
 
