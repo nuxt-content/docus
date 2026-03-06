@@ -60,11 +60,12 @@ export default defineEventHandler(async (event) => {
 
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
+  const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
   const mcpUrl = isExternalUrl
     ? mcpServer
     : import.meta.dev
-      ? `http://localhost:3000${mcpServer}`
-      : `${getRequestURL(event).origin}${mcpServer}`
+      ? `http://localhost:3000${baseURL}${mcpServer}`
+      : `${getRequestURL(event).origin}${baseURL}${mcpServer}`
 
   const httpClient = await createMCPClient({
     transport: { type: 'http', url: mcpUrl },
