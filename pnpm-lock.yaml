@@ -12,10 +12,10 @@ importers:
   .:
     devDependencies:
       '@nuxt/eslint':
-        specifier: ^1.15.2
+        specifier: ^1.15.1
         version: 1.15.2(@typescript-eslint/utils@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(@vue/compiler-sfc@3.5.29)(eslint@10.0.2(jiti@2.6.1))(magicast@0.5.2)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       '@nuxt/eslint-config':
-        specifier: ^1.15.2
+        specifier: ^1.15.1
         version: 1.15.2(@typescript-eslint/utils@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(@vue/compiler-sfc@3.5.29)(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3)
       '@release-it/bumper':
         specifier: ^7.0.5
@@ -24,7 +24,7 @@ importers:
         specifier: ^10.0.5
         version: 10.0.5(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@19.2.4(@types/node@25.3.5)(magicast@0.5.2))
       eslint:
-        specifier: ^10.0.2
+        specifier: ^10.0.0
         version: 10.0.2(jiti@2.6.1)
       nuxt:
         specifier: 4.3.1
@@ -36,7 +36,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vue-tsc:
-        specifier: ^3.2.5
+        specifier: ^3.2.4
         version: 3.2.5(typescript@5.9.3)
 
   cli:
@@ -67,7 +67,7 @@ importers:
         version: 2.5.0
     devDependencies:
       '@types/node':
-        specifier: ^25.3.5
+        specifier: ^25.2.3
         version: 25.3.5
       tsup:
         specifier: ^8.5.1
@@ -109,22 +109,22 @@ importers:
   layer:
     dependencies:
       '@ai-sdk/gateway':
-        specifier: ^3.0.66
+        specifier: ^3.0.46
         version: 3.0.66(zod@4.3.6)
       '@ai-sdk/mcp':
-        specifier: ^1.0.25
+        specifier: ^1.0.21
         version: 1.0.25(zod@4.3.6)
       '@ai-sdk/vue':
         specifier: 3.0.86
         version: 3.0.86(vue@3.5.29(typescript@5.9.3))(zod@4.3.6)
       '@iconify-json/lucide':
-        specifier: ^1.2.95
+        specifier: ^1.2.91
         version: 1.2.95
       '@iconify-json/simple-icons':
-        specifier: ^1.2.72
+        specifier: ^1.2.71
         version: 1.2.72
       '@iconify-json/vscode-icons':
-        specifier: ^1.2.44
+        specifier: ^1.2.43
         version: 1.2.44
       '@nuxt/content':
         specifier: ^3.12.0
@@ -145,22 +145,22 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(magicast@0.5.2)(zod@4.3.6)
       '@nuxtjs/mdc':
-        specifier: ^0.20.2
+        specifier: ^0.20.1
         version: 0.20.2(magicast@0.5.2)
       '@nuxtjs/robots':
-        specifier: ^5.7.1
+        specifier: ^5.7.0
         version: 5.7.1(magicast@0.5.2)(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.29(typescript@5.9.3))(zod@4.3.6)
       '@shikijs/core':
-        specifier: ^3.23.0
+        specifier: ^3.22.0
         version: 3.23.0
       '@shikijs/engine-javascript':
-        specifier: ^3.23.0
+        specifier: ^3.22.0
         version: 3.23.0
       '@shikijs/langs':
-        specifier: ^3.23.0
+        specifier: ^3.22.0
         version: 3.23.0
       '@shikijs/themes':
-        specifier: ^3.23.0
+        specifier: ^3.22.0
         version: 3.23.0
       '@vueuse/core':
         specifier: ^14.2.1
@@ -202,7 +202,7 @@ importers:
         specifier: ^0.1.4
         version: 0.1.4(vue@3.5.29(typescript@5.9.3))
       tailwindcss:
-        specifier: ^4.2.1
+        specifier: ^4.1.18
         version: 4.2.1
       ufo:
         specifier: ^1.6.3
