@@ -43,14 +43,13 @@ export default defineNuxtModule({
           },
         ]
 
-        // Check if i18n is enabled
-        const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
+        const i18nOptions = nuxt.options.i18n
+        const isI18nEnabled = !!(i18nOptions && i18nOptions.locales)
         let localeCodes: string[] = []
 
-        if (isI18nEnabled) {
-          // Get locale codes
-          const locales = nuxt.options.i18n.locales || []
-          localeCodes = locales.map((locale) => {
+        if (isI18nEnabled && i18nOptions.locales) {
+          const locales = i18nOptions.locales
+          localeCodes = locales.map((locale: string | { code: string }) => {
             return typeof locale === 'string' ? locale : locale.code
           })
 
