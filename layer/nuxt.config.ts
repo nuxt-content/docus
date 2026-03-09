@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/routing'),
     resolve('./modules/markdown-rewrite'),
+    resolve('./modules/skills'),
     resolve('./modules/css'),
     () => {
       const nuxt = useNuxt()
