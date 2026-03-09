@@ -72,6 +72,7 @@ function parseFrontmatter(content: string): { name?: string, description?: strin
 function validateSkillName(name: string, dirName: string): boolean {
   if (name.length > MAX_NAME_LENGTH) {
     log.warn(`Skill "${name}" exceeds ${MAX_NAME_LENGTH} character limit`)
+    return false
   }
   if (!SKILL_NAME_REGEX.test(name) || name.includes('--')) {
     log.warn(`Skill name "${name}" does not match the Agent Skills naming spec`)
@@ -79,6 +80,7 @@ function validateSkillName(name: string, dirName: string): boolean {
   }
   if (name !== dirName) {
     log.warn(`Skill name "${name}" does not match directory name "${dirName}"`)
+    return false
   }
   return true
 }
@@ -122,7 +124,7 @@ async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
     if (!validateSkillName(name, entry.name)) continue
 
     const allFiles = await listFilesRecursively(skillDir)
-    const files = allFiles.filter(f => !f.startsWith('.'))
+    const files = allFiles.filter(f => !f.split('/').some(s => s.startsWith('.')))
     const sortedFiles = ['SKILL.md', ...files.filter(f => f !== 'SKILL.md')]
 
     catalog.push({

@@ -29,6 +29,12 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Bad Request' })
   }
 
+  const { skills } = useRuntimeConfig(event)
+  const skillName = filePath.split('/')[0]
+  if (!skills.catalog.some((s: { name: string }) => s.name === skillName)) {
+    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
+  }
+
   const storage = useStorage('assets:skills')
   const content = await storage.getItemRaw<string>(filePath)
 
