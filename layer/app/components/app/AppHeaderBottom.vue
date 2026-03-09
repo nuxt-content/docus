@@ -12,5 +12,7 @@ const { sections } = useSubNavigation()
       highlight
       class="-mx-2.5 -mb-px"
     />
+
+    <AppHeaderBottomRight />
   </UContainer>
 </template>
