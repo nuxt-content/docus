@@ -63,7 +63,7 @@ provide('navigation', navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div
-      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': appConfig.header?.subNavigation && $route.meta.layout === 'docs' }]"
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': (appConfig.header as any)?.subNavigation && $route.meta.layout === 'docs' }]"
       :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />
