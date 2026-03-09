@@ -10,7 +10,7 @@ interface SkillEntry {
   files: string[]
 }
 
-const SKILL_NAME_REGEX = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/
+const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
 
 const log = logger.withTag('Docus')

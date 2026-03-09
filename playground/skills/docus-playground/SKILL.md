@@ -1,37 +1,21 @@
 ---
 name: docus-playground
-description: Build and customize documentation sites with Docus. Use when creating docs pages, configuring navigation, theming, or setting up a Docus project.
+description: Sample skill for testing the Docus agent skills discovery feature. Use to verify that /.well-known/skills/ routes work correctly.
 metadata:
   author: docus
   version: "1.0"
 ---
 
-# Docus Playground
+# Docus Playground Skill
 
-## Overview
+This is a sample skill used to test the agent skills discovery feature in the Docus playground.
 
-Docus is a documentation theme built on Nuxt Content. It provides a complete documentation experience with search, dark mode, and AI assistant support.
+## Verify Discovery
 
-## Getting Started
+Check these endpoints:
 
-Create a new Docus project:
+- `GET /.well-known/skills/index.json` -- should list this skill
+- `GET /.well-known/skills/docus-playground/SKILL.md` -- should return this file
+- `GET /.well-known/skills/docus-playground/references/example.md` -- should return the reference file
 
-```bash
-npx create-docus@latest my-docs
-```
-
-## Configuration
-
-Configure your site in `nuxt.config.ts`:
-
-```typescript
-export default defineNuxtConfig({
-  extends: ['docus'],
-})
-```
-
-## Writing Content
-
-Place your documentation files in the `content/docs/` directory as Markdown files. Docus supports MDC syntax for rich content.
-
-For more details, see [references/configuration.md](references/configuration.md).
+For more details, see [references/example.md](references/example.md).
