@@ -1,19 +1,23 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 
 function getFirstPagePath(item: ContentNavigationItem): string {
-  if (item.children?.length) return getFirstPagePath(item.children[0]!)
-  return item.path
+  let current = item
+  while (current.children?.length) {
+    current = current.children[0]!
+  }
+  return current.path
 }
 
-export function useSubNavigation() {
+export function useSubNavigation(providedNavigation?: Ref<ContentNavigationItem[] | null | undefined>) {
   const route = useRoute()
   const appConfig = useAppConfig()
-  const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+  const navigation = providedNavigation ?? inject<Ref<ContentNavigationItem[]>>('navigation')
 
+  const headerConfig = appConfig.header as { subNavigation?: boolean } | undefined
   const isDocsPage = computed(() => route.meta.layout === 'docs')
 
   const hasSubHeader = computed(() => {
-    if (!(appConfig.header as { subNavigation?: boolean })?.subNavigation || !isDocsPage.value) return false
+    if (!headerConfig?.subNavigation || !isDocsPage.value) return false
     const items = navigation?.value
     if (!items || items.length < 2) return false
     return items.filter(item => item.children?.length).length >= 2

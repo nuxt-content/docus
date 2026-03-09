@@ -2,9 +2,9 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useSubNavigation } from './composables/useSubNavigation'
 
-const appConfig = useAppConfig()
-const { seo } = appConfig
+const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
@@ -56,6 +56,8 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 })
 
 provide('navigation', navigation)
+
+const { hasSubHeader } = useSubNavigation(navigation)
 </script>
 
 <template>
@@ -63,7 +65,7 @@ provide('navigation', navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div
-      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': (appConfig.header as any)?.subNavigation && $route.meta.layout === 'docs' }]"
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': hasSubHeader }]"
       :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />
@@ -89,6 +91,7 @@ provide('navigation', navigation)
 <style>
 @media (min-width: 1024px) {
   .docus-sub-header {
+    /* 64px base header + 48px sub-navigation bar */
     --ui-header-height: 112px;
   }
 }
