@@ -1,5 +1,4 @@
 import type { UIMessage } from 'ai'
-import { useMediaQuery } from '@vueuse/core'
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
@@ -17,9 +16,6 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
   return questions as FaqCategory[]
 }
 
-const PANEL_WIDTH_COMPACT = 360
-const PANEL_WIDTH_EXPANDED = 520
-
 export function useAssistant() {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
@@ -29,10 +25,6 @@ export function useAssistant() {
   const isExpanded = useState('assistant-expanded', () => false)
   const messages = useState<UIMessage[]>('assistant-messages', () => [])
   const pendingMessage = useState<string | undefined>('assistant-pending', () => undefined)
-
-  const isMobile = useMediaQuery('(max-width: 767px)')
-  const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
-  const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
 
   const faqQuestions = computed<FaqCategory[]>(() => {
     const assistantConfig = appConfig.assistant
@@ -91,9 +83,6 @@ export function useAssistant() {
     isEnabled,
     isOpen,
     isExpanded,
-    isMobile,
-    panelWidth,
-    shouldPushContent,
     messages,
     pendingMessage,
     faqQuestions,
