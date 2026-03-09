@@ -3,7 +3,8 @@ import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
 
-const { seo } = useAppConfig()
+const appConfig = useAppConfig()
+const { seo } = appConfig
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
@@ -62,7 +63,7 @@ provide('navigation', navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div
-      class="transition-[margin-right] duration-200 ease-linear will-change-[margin-right]"
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': appConfig.header?.subNavigation && $route.meta.layout === 'docs' }]"
       :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />
@@ -84,3 +85,11 @@ provide('navigation', navigation)
     </ClientOnly>
   </UApp>
 </template>
+
+<style>
+@media (min-width: 1024px) {
+  .docus-sub-header {
+    --ui-header-height: 112px;
+  }
+}
+</style>

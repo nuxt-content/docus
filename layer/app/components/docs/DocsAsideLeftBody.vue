@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const { sidebarNavigation } = useSubNavigation()
 </script>
 
 <template>
   <UContentNavigation
     highlight
-    :navigation="navigation"
+    :navigation="sidebarNavigation"
   />
 </template>

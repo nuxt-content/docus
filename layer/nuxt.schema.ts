@@ -114,6 +114,13 @@ export default defineNuxtSchema({
           icon: 'i-lucide-type',
           default: '',
         }),
+        subNavigation: field({
+          type: 'boolean',
+          title: 'Sub Navigation',
+          description: 'Show a secondary navigation bar below the header with top-level content sections as tabs. The sidebar will filter to show only the active section.',
+          icon: 'i-lucide-navigation',
+          default: false,
+        }),
         logo: group({
           title: 'Logo',
           description: 'Header logo configuration.',
