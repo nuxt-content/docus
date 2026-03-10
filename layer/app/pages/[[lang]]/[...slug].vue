@@ -28,6 +28,9 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+inject('page', page)
+inject('surround', surround)
+
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
@@ -132,18 +135,20 @@ addPrerenderPath(`/raw${route.path}.md`)
     </UPageBody>
 
     <template
-      v-if="page?.body?.toc?.links?.length && !shouldHideToc"
       #right
     >
-      <UContentToc
-        highlight
-        :title="appConfig.toc?.title || t('docs.toc')"
-        :links="page.body?.toc?.links"
-      >
-        <template #bottom>
-          <DocsAsideRightBottom />
-        </template>
-      </UContentToc>
+      <DocsAsideRight>
+        <UContentToc
+          v-if="page?.body?.toc?.links?.length && !shouldHideToc"
+          highlight
+          :title="appConfig.toc?.title || t('docs.toc')"
+          :links="page.body?.toc?.links"
+        >
+          <template #bottom>
+            <DocsAsideRightBottom />
+          </template>
+        </UContentToc>
+      </DocsAsideRight>
     </template>
   </UPage>
 </template>
