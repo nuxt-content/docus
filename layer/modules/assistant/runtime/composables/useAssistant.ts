@@ -1,5 +1,7 @@
 import type { UIMessage } from 'ai'
+import { useAppConfig, useRuntimeConfig, useState } from '#imports'
 import { useMediaQuery } from '@vueuse/core'
+import { computed } from 'vue'
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
