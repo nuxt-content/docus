@@ -1,5 +1,4 @@
 import type { ContextMenuItem } from '@nuxt/ui'
-import { useNuxtApp } from '#imports'
 
 function isSvgUrl(url: string): boolean {
   return url.toLowerCase().endsWith('.svg')
@@ -66,7 +65,7 @@ function triggerLinkDownload(url: string, filename: string) {
 
 export const useLogoAssets = () => {
   const appConfig = useAppConfig()
-  const colorMode = useNuxtApp().$colorMode
+  const colorMode = useColorMode() as { value: string, forced?: boolean }
   const toast = useToast()
   const { t } = useDocusI18n()
 

@@ -1,10 +1,22 @@
-import { useI18n, useLocalePath, useNuxtApp, useRuntimeConfig, useSwitchLocalePath } from '#imports'
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 import type { LocaleObject } from '@nuxtjs/i18n'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
+
+type DocusNuxtApp = ReturnType<typeof useNuxtApp> & {
+  $i18n?: {
+    locale: Ref<string>
+    t: (key: string) => string
+  }
+  $locale?: string
+  $localeMessages?: Record<string, unknown>
+  $localePath?: (path: string) => string
+  $switchLocalePath?: (locale?: string) => string
+}
 
 export const useDocusI18n = () => {
   const config = useRuntimeConfig().public
-  const nuxtApp = useNuxtApp()
+  const nuxtApp = useNuxtApp() as DocusNuxtApp
   const isEnabled = ref(!!config.i18n)
 
   if (!isEnabled.value) {
@@ -24,15 +36,16 @@ export const useDocusI18n = () => {
     }
   }
 
-  const { locale, t } = useI18n()
-  const filteredLocales: LocaleObject<string>[] = config.docus?.filteredLocales || []
+  const locale = nuxtApp.$i18n?.locale || ref('en')
+  const t = nuxtApp.$i18n?.t || ((key: string) => key)
+  const filteredLocales = (config.docus as { filteredLocales: LocaleObject<string>[] })?.filteredLocales || []
 
   return {
     isEnabled,
     locale,
     locales: filteredLocales,
     t,
-    localePath: useLocalePath(),
-    switchLocalePath: useSwitchLocalePath(),
+    localePath: nuxtApp.$localePath || ((path: string) => path),
+    switchLocalePath: nuxtApp.$switchLocalePath || (() => ''),
   }
 }
