@@ -1,3 +1,4 @@
+import type { LocaleObject } from '@nuxtjs/i18n'
 import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
@@ -93,6 +94,19 @@ declare module 'nuxt/schema' {
         explain?: string
       }
     }
+  }
+
+  interface PublicRuntimeConfig {
+    docus?: {
+      filteredLocales?: LocaleObject<string>[]
+    }
+  }
+}
+
+declare module '#app' {
+  interface NuxtApp {
+    $locale?: string
+    $localeMessages?: Record<string, unknown>
   }
 }
 

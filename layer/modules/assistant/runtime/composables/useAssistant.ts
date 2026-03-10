@@ -25,10 +25,7 @@ const PANEL_WIDTH_EXPANDED = 520
 export function useAssistant() {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
-  const assistantRuntimeConfig = config.public.assistant as { enabled?: boolean } | undefined
-  const assistantConfig = appConfig.assistant as { faqQuestions?: FaqQuestions | LocalizedFaqQuestions } | undefined
-  const docusRuntimeConfig = appConfig.docus as { locale?: string } | undefined
-  const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
+  const isEnabled = computed(() => config.public.assistant?.enabled ?? false)
 
   const isOpen = useState('assistant-open', () => false)
   const isExpanded = useState('assistant-expanded', () => false)
@@ -40,13 +37,13 @@ export function useAssistant() {
   const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
 
   const faqQuestions = computed<FaqCategory[]>(() => {
-    const faqConfig = assistantConfig?.faqQuestions
+    const faqConfig = appConfig.assistant?.faqQuestions
     if (!faqConfig) return []
 
     // Check if it's a localized object (has locale keys like 'en', 'fr')
     if (!Array.isArray(faqConfig)) {
       const localizedConfig = faqConfig as LocalizedFaqQuestions
-      const currentLocale = docusRuntimeConfig?.locale || 'en'
+      const currentLocale = appConfig.docus?.locale || 'en'
       const defaultLocale = config.public.i18n?.defaultLocale || 'en'
 
       // Try current locale, then default locale, then first available

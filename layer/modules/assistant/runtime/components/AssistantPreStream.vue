@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ShikiCachedRenderer } from 'shiki-stream/vue'
-import { useColorMode } from '#imports'
+import { useNuxtApp } from '#imports'
 import { useHighlighter } from '../composables/useHighlighter'
 
-const colorMode = useColorMode() as { value: string, forced?: boolean }
+const colorMode = useNuxtApp().$colorMode
 const highlighter = await useHighlighter()
 const props = defineProps<{
   code: string
