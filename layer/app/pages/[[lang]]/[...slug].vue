@@ -134,9 +134,7 @@ addPrerenderPath(`/raw${route.path}.md`)
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template
-      #right
-    >
+    <template #right>
       <DocsAsideRight>
         <UContentToc
           v-if="page?.body?.toc?.links?.length && !shouldHideToc"
