@@ -3,6 +3,8 @@ import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
+type DocusI18nOptions = { locales?: Array<string | { code: string }> }
+
 export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
@@ -87,14 +89,14 @@ export default defineNuxtConfig({
     'nitro:config'(nitroConfig) {
       const nuxt = useNuxt()
 
-      const i18nOptions = nuxt.options.i18n
+      const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
 
       const routes: string[] = []
       if (!i18nOptions) {
         routes.push('/')
       }
       else {
-        routes.push(...(i18nOptions.locales?.map(locale => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
+        routes.push(...(i18nOptions.locales?.map((locale: string | { code: string }) => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
       }
 
       nitroConfig.prerender = nitroConfig.prerender || {}
