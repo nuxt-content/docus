@@ -28,8 +28,8 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-inject('page', page)
-inject('surround', surround)
+provide('page', page)
+provide('surround', surround)
 
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
