@@ -24,7 +24,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   handler: async ({ path }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : inferSiteURL()
+    const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
     const availableLocales = getAvailableLocales(config)
     const collectionName = config.i18n?.locales
