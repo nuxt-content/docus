@@ -23,18 +23,18 @@
     "clean": "rm -rf .nuxt .output node_modules cli/node_modules docs/.nuxt docs/.data docs/node_modules layer/node_modules layer/.data analyze cli/dist docs/.nuxt docs/.output layer/.nuxt playground/.nuxt playground/.output playground/node_modules playground/.data pnpm-lock.yaml .pnpm-store"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.15.1",
-    "@nuxt/eslint-config": "^1.15.1",
+    "@nuxt/eslint": "^1.15.2",
+    "@nuxt/eslint-config": "^1.15.2",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.5",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.3",
     "nuxt": "4.3.1",
     "release-it": "^19.2.4",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.4"
+    "vue-tsc": "^3.2.5"
   },
   "resolutions": {
     "unimport": "5.6.0"
   },
-  "packageManager": "pnpm@10.29.3"
+  "packageManager": "pnpm@10.32.1"
 }
