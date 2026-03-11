@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useSubNavigation } from '~/composables/useSubNavigation'
+
 const { sections } = useSubNavigation()
 </script>
 
