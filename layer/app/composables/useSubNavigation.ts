@@ -38,7 +38,6 @@ export function useSubNavigation(providedNavigation?: Ref<ContentNavigationItem[
         label: item.title,
         icon: item.icon as string | undefined,
         to: getFirstPagePath(item),
-        active: route.path === item.path || route.path.startsWith(item.path + '/'),
       }))
   })
 
