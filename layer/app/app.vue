@@ -57,7 +57,7 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 
 provide('navigation', navigation)
 
-const { hasSubHeader } = useSubNavigation(navigation)
+const { subNavigationMode } = useSubNavigation(navigation)
 </script>
 
 <template>
@@ -65,7 +65,7 @@ const { hasSubHeader } = useSubNavigation(navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div
-      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': hasSubHeader }]"
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': subNavigationMode === 'header' }]"
       :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />

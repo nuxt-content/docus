@@ -13,43 +13,41 @@ export function useSubNavigation(providedNavigation?: Ref<ContentNavigationItem[
   const appConfig = useAppConfig()
   const navigation = providedNavigation ?? inject<Ref<ContentNavigationItem[]>>('navigation')
 
-  const headerConfig = appConfig.header as { subNavigation?: boolean } | undefined
   const isDocsPage = computed(() => route.meta.layout === 'docs')
 
-  const hasSubHeader = computed(() => {
-    if (!headerConfig?.subNavigation || !isDocsPage.value) return false
-    const items = navigation?.value
-    if (!items || items.length < 2) return false
-    return items.filter(item => item.children?.length).length >= 2
+  const subNavigationMode = computed(() => {
+    if (!isDocsPage.value) return undefined
+    return (appConfig.navigation as { sub?: 'header' | 'aside' } | undefined)?.sub
   })
 
   const currentSection = computed(() => {
-    if (!hasSubHeader.value || !navigation?.value) return undefined
+    if (!subNavigationMode.value || !navigation?.value) return undefined
     return navigation.value.find(item =>
       route.path === item.path || route.path.startsWith(item.path + '/'),
     )
   })
 
   const sections = computed(() => {
-    if (!hasSubHeader.value || !navigation?.value) return []
+    if (!subNavigationMode.value || !navigation?.value) return []
     return navigation.value
       .filter(item => item.children?.length)
       .map(item => ({
         label: item.title,
         icon: item.icon as string | undefined,
         to: getFirstPagePath(item),
+        active: route.path === item.path || route.path.startsWith(item.path + '/'),
       }))
   })
 
   const sidebarNavigation = computed(() => {
-    if (hasSubHeader.value && currentSection.value) {
+    if (subNavigationMode.value && currentSection.value) {
       return currentSection.value.children || []
     }
     return navigation?.value || []
   })
 
   return {
-    hasSubHeader,
+    subNavigationMode,
     sections,
     currentSection,
     sidebarNavigation,

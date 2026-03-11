@@ -114,13 +114,6 @@ export default defineNuxtSchema({
           icon: 'i-lucide-type',
           default: '',
         }),
-        subNavigation: field({
-          type: 'boolean',
-          title: 'Sub Navigation',
-          description: 'Show a secondary navigation bar below the header with top-level content sections as tabs. The sidebar will filter to show only the active section.',
-          icon: 'i-lucide-navigation',
-          default: false,
-        }),
         logo: group({
           title: 'Logo',
           description: 'Header logo configuration.',
@@ -197,6 +190,20 @@ export default defineNuxtSchema({
               default: '',
             }),
           },
+        }),
+      },
+    }),
+    navigation: group({
+      title: 'Navigation',
+      description: 'Navigation configuration.',
+      icon: 'i-lucide-navigation',
+      fields: {
+        sub: field({
+          type: 'string',
+          title: 'Sub Navigation',
+          description: 'Enable sub-navigation for multi-section docs. Use "header" for a secondary tab bar below the header, or "aside" for section anchors at the top of the sidebar.',
+          icon: 'i-lucide-layout-panel-left',
+          default: '',
         }),
       },
     }),
