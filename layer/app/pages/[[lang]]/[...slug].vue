@@ -133,7 +133,7 @@ addPrerenderPath(`/raw${route.path}.md`)
 
     <template #right>
       <DocsAsideRight
-        :links="page?.body?.toc?.links || []"
+        :page="page"
       />
     </template>
   </UPage>

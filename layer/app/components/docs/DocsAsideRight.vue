@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useSubNavigation } from '~/composables/useSubNavigation'
-import type { ContentTocLink } from '@nuxt/ui'
+import type { DocsCollectionItem } from '@nuxt/content'
 
-defineProps<{
-  links?: ContentTocLink[]
+const props = defineProps<{
+  page?: DocsCollectionItem | null
 }>()
+
+const links = computed(() => props.page?.body?.toc?.links || [])
 
 const { shouldPushContent: shouldHideToc } = useAssistant()
 const { subNavigationMode } = useSubNavigation()
@@ -15,7 +17,7 @@ const { t } = useDocusI18n()
 <template>
   <div>
     <UContentToc
-      v-if="links?.length && !shouldHideToc"
+      v-if="links.length && !shouldHideToc"
       highlight
       :title="appConfig.toc?.title || t('docs.toc')"
       :links="links"
@@ -26,6 +28,6 @@ const { t } = useDocusI18n()
       </template>
     </UContentToc>
 
-    <DocsAsideMobileBar :links="links || []" />
+    <DocsAsideMobileBar :links="links" />
   </div>
 </template>
