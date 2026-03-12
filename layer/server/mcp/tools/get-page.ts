@@ -41,9 +41,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
         return errorResult('Page not found')
       }
 
-      const content = await $fetch<string>(`/raw${path}.md`, {
-        baseURL: siteUrl,
-      })
+      const content = await event.$fetch<string>(`/raw${path}.md`)
 
       return jsonResult({
         title: page.title,
