@@ -3,7 +3,7 @@ import { ShikiCachedRenderer } from 'shiki-stream/vue'
 import { useColorMode } from '#imports'
 import { useHighlighter } from '../composables/useHighlighter'
 
-const colorMode = useColorMode()
+const colorMode = useColorMode() as { value: string, forced?: boolean }
 const highlighter = await useHighlighter()
 const props = defineProps<{
   code: string

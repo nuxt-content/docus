@@ -1,5 +1,26 @@
 # Changelog
 
+## [5.8.1](https://github.com/nuxt-content/docus/compare/v5.8.0...v5.8.1) (2026-03-14)
+
+### Bug Fixes
+
+* **import:** relative path ([#1307](https://github.com/nuxt-content/docus/issues/1307)) ([99e5b5f](https://github.com/nuxt-content/docus/commit/99e5b5f2dba0e13be14b623d98ed0c0f0d760b6e))
+
+## [5.8.0](https://github.com/nuxt-content/docus/compare/v5.7.0...v5.8.0) (2026-03-12)
+
+### Features
+
+* **nav:** add opt-in sub-navigation ([#1298](https://github.com/nuxt-content/docus/issues/1298)) ([ba9a38b](https://github.com/nuxt-content/docus/commit/ba9a38b87d13386415bb0e67b9ce73fa7bf4bca9))
+* **skills:** add `/review-docs` ([#1265](https://github.com/nuxt-content/docus/issues/1265)) ([43743b1](https://github.com/nuxt-content/docus/commit/43743b165ad3860deeee629fd4632b9ef80d8558))
+
+### Bug Fixes
+
+* **assistant:** use `baseURL` for api call ([#1295](https://github.com/nuxt-content/docus/issues/1295)) ([561c629](https://github.com/nuxt-content/docus/commit/561c6290cff3fe4cfbb9be2211b9778cba25d180))
+* **i18n:** use click mode for language selection ([#1305](https://github.com/nuxt-content/docus/issues/1305)) ([a9a2fff](https://github.com/nuxt-content/docus/commit/a9a2fff754f47fe2d1f80531cf467e681edd3812))
+* **mcp:** derive Docus MCP page URLs from request origin ([#1302](https://github.com/nuxt-content/docus/issues/1302)) ([6043beb](https://github.com/nuxt-content/docus/commit/6043beb17ecd054cc9347612153d0f55d1a6894d))
+* **mcp:** use request fetch for raw page content ([#1304](https://github.com/nuxt-content/docus/issues/1304)) ([84ddc87](https://github.com/nuxt-content/docus/commit/84ddc8729e7f9a1c76ee01cf9c55dec596073afb))
+* **typescript:** support `nuxt typecheck` in apps extending docus ([#1300](https://github.com/nuxt-content/docus/issues/1300)) ([7032533](https://github.com/nuxt-content/docus/commit/7032533e9c7091e44b5221481a4309340afdd233))
+
 ## [5.7.0](https://github.com/nuxt-content/docus/compare/v5.6.1...v5.7.0) (2026-02-27)
 
 ### Features

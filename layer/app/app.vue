@@ -2,6 +2,7 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useSubNavigation } from './composables/useSubNavigation'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
@@ -55,6 +56,8 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 })
 
 provide('navigation', navigation)
+
+const { subNavigationMode } = useSubNavigation(navigation)
 </script>
 
 <template>
@@ -62,7 +65,7 @@ provide('navigation', navigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
     <div
-      class="transition-[margin-right] duration-200 ease-linear will-change-[margin-right]"
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': subNavigationMode === 'header' }]"
       :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
     >
       <AppHeader v-if="$route.meta.header !== false" />
@@ -84,3 +87,12 @@ provide('navigation', navigation)
     </ClientOnly>
   </UApp>
 </template>
+
+<style>
+@media (min-width: 1024px) {
+  .docus-sub-header {
+    /* 64px base header + 48px sub-navigation bar */
+    --ui-header-height: 112px;
+  }
+}
+</style>

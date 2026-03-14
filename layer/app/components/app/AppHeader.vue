@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useDocusI18n } from '../../composables/useDocusI18n'
+import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const appConfig = useAppConfig()
 const site = useSiteConfig()
 
 const { isEnabled: isAssistantEnabled } = useAssistant()
 const { localePath, isEnabled, locales } = useDocusI18n()
+const { subNavigationMode } = useSubNavigation()
 
 const links = computed(() => appConfig.github && appConfig.github.url
   ? [
@@ -22,6 +24,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 <template>
   <UHeader
     :ui="{ center: 'flex-1' }"
+    :class="{ 'flex flex-col': subNavigationMode === 'header' }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
@@ -82,6 +85,13 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
     <template #body>
       <AppHeaderBody />
+    </template>
+
+    <template
+      v-if="subNavigationMode === 'header'"
+      #bottom
+    >
+      <AppHeaderBottom />
     </template>
   </UHeader>
 </template>

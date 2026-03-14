@@ -4,6 +4,9 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 const log = logger.withTag('Docus')
 
+type I18nLocale = string | { code: string }
+type DocusI18nOptions = { locales?: I18nLocale[] }
+
 export default defineNuxtModule({
   meta: {
     name: 'markdown-rewrite',
@@ -43,13 +46,15 @@ export default defineNuxtModule({
           },
         ]
 
-        const i18nOptions = nuxt.options.i18n
-        const isI18nEnabled = !!(i18nOptions && i18nOptions.locales)
+        // Check if i18n is enabled
+        const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
+        const isI18nEnabled = !!i18nOptions?.locales
         let localeCodes: string[] = []
 
-        if (isI18nEnabled && i18nOptions.locales) {
-          const locales = i18nOptions.locales
-          localeCodes = locales.map((locale: string | { code: string }) => {
+        if (isI18nEnabled) {
+          // Get locale codes
+          const locales = i18nOptions?.locales || []
+          localeCodes = locales.map((locale: I18nLocale) => {
             return typeof locale === 'string' ? locale : locale.code
           })
 

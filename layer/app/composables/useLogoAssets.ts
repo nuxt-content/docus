@@ -65,7 +65,7 @@ function triggerLinkDownload(url: string, filename: string) {
 
 export const useLogoAssets = () => {
   const appConfig = useAppConfig()
-  const colorMode = useColorMode()
+  const colorMode = useColorMode() as { value: string, forced?: boolean }
   const toast = useToast()
   const { t } = useDocusI18n()
 

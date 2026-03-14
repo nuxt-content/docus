@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
+import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -30,7 +31,7 @@ OUTPUT: Returns a structured list with:
     const event = useEvent()
     const config = useRuntimeConfig(event).public
 
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin
+    const siteUrl = getRequestURL(event).origin || inferSiteURL()
     const availableLocales = getAvailableLocales(config)
     const collections = getCollectionsToQuery(locale, availableLocales)
 
