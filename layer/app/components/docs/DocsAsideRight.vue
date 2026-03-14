@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSubNavigation } from '~/composables/useSubNavigation'
+import { useSubNavigation } from '../../composables/useSubNavigation'
 import type { DocsCollectionItem } from '@nuxt/content'
 
 const props = defineProps<{

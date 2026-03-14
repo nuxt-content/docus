@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDocusI18n } from '../../composables/useDocusI18n'
-import { useSubNavigation } from '~/composables/useSubNavigation'
+import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const appConfig = useAppConfig()
 const site = useSiteConfig()
