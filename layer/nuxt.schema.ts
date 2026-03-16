@@ -282,6 +282,13 @@ export default defineNuxtSchema({
       description: 'Docus configuration.',
       icon: 'i-lucide-settings',
       fields: {
+        locale: field({
+          type: 'string',
+          title: 'Locale',
+          description: 'Default locale for single-language documentation.',
+          icon: 'i-lucide-languages',
+          default: 'en',
+        }),
         colorMode: field({
           type: 'string',
           title: 'Color Mode',
