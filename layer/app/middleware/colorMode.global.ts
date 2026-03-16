@@ -1,7 +1,8 @@
+import { useDocusColorMode } from '../composables/useDocusColorMode'
+
 export default defineNuxtRouteMiddleware((to) => {
-  const appConfig = useAppConfig()
-  const forced = appConfig.docus?.colorMode
-  if (forced === 'light' || forced === 'dark') {
+  const { forced } = useDocusColorMode()
+  if (forced) {
     to.meta.colorMode = forced
   }
 })

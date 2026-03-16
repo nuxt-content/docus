@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useDocusColorMode } from '../../composables/useDocusColorMode'
+
 const appConfig = useAppConfig()
+const { forced: forcedColorMode } = useDocusColorMode()
 
 interface FooterLink {
   'icon': string
@@ -44,5 +47,5 @@ const links = computed<FooterLink[]>(() => {
       v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
     />
   </template>
-  <UColorModeButton v-if="!appConfig.docus?.colorMode" />
+  <UColorModeButton v-if="!forcedColorMode" />
 </template>
