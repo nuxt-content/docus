@@ -44,5 +44,5 @@ const links = computed<FooterLink[]>(() => {
       v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
     />
   </template>
-  <UColorModeButton />
+  <UColorModeButton v-if="!appConfig.docus?.colorMode" />
 </template>

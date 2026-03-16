@@ -8,6 +8,7 @@ const props = defineProps<{
   error: NuxtError
 }>()
 
+const appConfig = useAppConfig()
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
@@ -70,6 +71,7 @@ provide('navigation', navigation)
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
+        :color-mode="!appConfig.docus?.colorMode"
       />
     </ClientOnly>
   </UApp>

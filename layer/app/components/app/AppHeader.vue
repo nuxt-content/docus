@@ -58,7 +58,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
       <UContentSearchButton class="lg:hidden" />
 
-      <ClientOnly>
+      <ClientOnly v-if="!appConfig.docus?.colorMode">
         <UColorModeButton />
 
         <template #fallback>
