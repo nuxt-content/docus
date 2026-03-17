@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getAvailableLocales, getCollectionFromPath } from '../../utils/content'
+import { getAvailableLocales, getAvailableVersions, getCollectionFromPath } from '../../utils/content'
 import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
@@ -27,8 +27,9 @@ WORKFLOW: This tool returns the complete page content including title, descripti
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
     const availableLocales = getAvailableLocales(config)
-    const collectionName = config.i18n?.locales
-      ? getCollectionFromPath(path, availableLocales)
+    const availableVersions = getAvailableVersions(config)
+    const collectionName = (config.i18n?.locales || availableVersions.length)
+      ? getCollectionFromPath(path, availableLocales, availableVersions)
       : 'docs'
 
     try {

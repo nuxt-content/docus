@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
+import { versionFolderExists } from '../utils/pages'
 
 const log = logger.withTag('Docus')
 
@@ -12,6 +13,26 @@ type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }
 type RegisterModuleOptions = {
   langDir: string
   locales: Array<{ code: string, name: string, file: string }>
+}
+
+export interface DocusVersionSource {
+  repository: string
+  branch?: string
+  tag?: string
+  include?: string
+}
+
+export interface DocusVersionItem {
+  label: string
+  value: string
+  tag?: string
+  source?: DocusVersionSource
+}
+
+export interface DocusVersionsConfig {
+  strategy: 'prefix' | 'state'
+  default: string
+  items: DocusVersionItem[]
 }
 
 export default defineNuxtModule({
@@ -59,6 +80,40 @@ export default defineNuxtModule({
     })
 
     /*
+    ** VERSIONS
+    */
+    const typedOptions = nuxt.options as typeof nuxt.options & { docus?: { versions?: DocusVersionsConfig } }
+    const versionsConfig = typedOptions.docus?.versions
+
+    if (versionsConfig?.items?.length) {
+      const filteredVersions = versionsConfig.items.filter((item) => {
+        if (item.source?.repository) {
+          return true
+        }
+        const exists = versionFolderExists(dir, item.value)
+        if (!exists) {
+          log.warn(`Version content folder not found: content/${item.value}/ - skipping version "${item.value}"`)
+        }
+        return exists
+      })
+
+      if (!filteredVersions.find(v => v.value === versionsConfig.default)) {
+        log.warn(`Default version "${versionsConfig.default}" not found in available versions, falling back to first available`)
+      }
+
+      nuxt.options.runtimeConfig.public.docus = defu(
+        nuxt.options.runtimeConfig.public.docus as Record<string, unknown> || {},
+        {
+          versions: {
+            strategy: versionsConfig.strategy || 'prefix',
+            default: versionsConfig.default,
+            items: filteredVersions.map(v => ({ label: v.label, value: v.value, ...(v.tag && { tag: v.tag }) })),
+          },
+        },
+      )
+    }
+
+    /*
     ** I18N
     */
     const typedNuxtOptions = nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }
@@ -97,9 +152,12 @@ export default defineNuxtModule({
       }
 
       // Expose filtered locales
-      nuxt.options.runtimeConfig.public.docus = {
-        filteredLocales,
-      }
+      nuxt.options.runtimeConfig.public.docus = defu(
+        nuxt.options.runtimeConfig.public.docus as Record<string, unknown> || {},
+        {
+          filteredLocales,
+        },
+      )
 
       const registerI18nModule = nuxt.hook as unknown as (name: string, callback: (register: (options: RegisterModuleOptions) => void) => void) => void
 

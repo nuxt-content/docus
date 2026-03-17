@@ -3,16 +3,19 @@ import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
 import { useSubNavigation } from './composables/useSubNavigation'
+import { useVersion } from './composables/useVersion'
+import { useCollectionName } from './composables/useCollectionName'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
+const { version, isVersioned } = useVersion()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
 const dir = computed(() => nuxtUiLocale.value.dir)
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = useCollectionName('docs')
 
 useHead({
   meta: [
@@ -47,12 +50,12 @@ if (isEnabled.value) {
 }
 
 const { data: navigation } = await useAsyncData(() => `navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),
-  watch: [locale],
+  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value, isVersioned.value, version.value),
+  watch: [locale, version],
 })
 const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value as keyof PageCollections), {
   server: false,
-  watch: [locale],
+  watch: [locale, version],
 })
 
 provide('navigation', navigation)

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
+import { getCollectionsToQuery, getAvailableLocales, getAvailableVersions, getDefaultVersion } from '../../utils/content'
 import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
@@ -25,15 +25,18 @@ OUTPUT: Returns a structured list with:
 - url: Full URL for reference`,
   inputSchema: {
     locale: z.string().optional().describe('The locale to filter pages by'),
+    version: z.string().optional().describe('The version to filter pages by (e.g., "v4")'),
   },
   cache: '1h',
-  handler: async ({ locale }) => {
+  handler: async ({ locale, version }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
 
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
     const availableLocales = getAvailableLocales(config)
-    const collections = getCollectionsToQuery(locale, availableLocales)
+    const availableVersions = getAvailableVersions(config)
+    const targetVersion = version || getDefaultVersion(config)
+    const collections = getCollectionsToQuery(locale, availableLocales, targetVersion, availableVersions)
 
     try {
       const allPages = await Promise.all(
@@ -46,7 +49,7 @@ OUTPUT: Returns a structured list with:
             title: page.title,
             path: page.path,
             description: page.description,
-            locale: collectionName.replace('docs_', ''),
+            collection: collectionName,
             url: `${siteUrl}${page.path}`,
           }))
         }),

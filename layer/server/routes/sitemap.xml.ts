@@ -1,5 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
-import { getAvailableLocales, getCollectionsToQuery } from '../utils/content'
+import { getAvailableLocales, getAvailableVersions, getCollectionsToQuery } from '../utils/content'
 import { inferSiteURL } from '../../utils/meta'
 
 interface SitemapUrl {
@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
   const siteUrl = inferSiteURL() || ''
 
   const availableLocales = getAvailableLocales(config.public as Record<string, unknown>)
-  const collections = getCollectionsToQuery(undefined, availableLocales)
+  const availableVersions = getAvailableVersions(config.public as Record<string, unknown>)
+  const collections = getCollectionsToQuery(undefined, availableLocales, undefined, availableVersions)
 
   if (availableLocales.length > 0) {
     for (const locale of availableLocales) {

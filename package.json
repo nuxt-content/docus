@@ -14,6 +14,7 @@
     "docs:build": "nuxt build docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer && nuxt prepare playground --extends ../layer",
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
+    "playground-versioned:dev": "cd playground-versioned && nuxt dev --extends ../layer",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck layer",
     "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck && pnpm run docs:build",
