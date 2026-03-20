@@ -23,9 +23,9 @@ useSeo({
 })
 
 if (!page.value?.seo?.ogImage) {
-  defineOgImageComponent('Landing', {
+  defineOgImage('Landing', {
     title,
-    description,
+    description: description?.replace(/,/g, ''),
   })
 }
 </script>
