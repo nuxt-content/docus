@@ -16,7 +16,7 @@ const description = props.description?.slice(0, 200)
     <!-- Radial glow top-right: tight bright core -->
     <div class="absolute top-0 right-0 w-[350px] h-[350px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.08)_35%,transparent_65%)]" />
 
-    <div class="flex flex-col">
+    <div class="flex-1 flex flex-col justify-center">
       <p
         v-if="headline"
         :class="`uppercase text-[22px] font-bold m-0 mb-5 tracking-[0.05em] text-${primaryColor}-500`"
@@ -25,7 +25,7 @@ const description = props.description?.slice(0, 200)
       </p>
       <h1
         v-if="title"
-        class="m-0 mb-6 text-[72px] font-bold text-white leading-[1.1] w-full max-w-[900px] wrap-break-word"
+        class="m-0 mb-6 text-[50px] font-bold text-white leading-[1.1] w-full max-w-[900px] wrap-break-word"
       >
         {{ title }}
       </h1>
