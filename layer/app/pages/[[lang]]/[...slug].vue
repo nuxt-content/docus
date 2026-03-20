@@ -45,8 +45,10 @@ watch(() => navigation?.value, () => {
   headline.value = findPageHeadline(navigation?.value, page.value?.path) || headline.value
 })
 
-defineOgImageComponent('Docs', {
+defineOgImage('Docs', {
   headline: headline.value,
+  title,
+  description,
 })
 
 const github = computed(() => appConfig.github ? appConfig.github : null)
