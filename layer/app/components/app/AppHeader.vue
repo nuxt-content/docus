@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { useDocusColorMode } from '../../composables/useDocusColorMode'
 import { useDocusI18n } from '../../composables/useDocusI18n'
 import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const appConfig = useAppConfig()
+const { forced: forcedColorMode } = useDocusColorMode()
 const site = useSiteConfig()
 
 const { isEnabled: isAssistantEnabled } = useAssistant()
@@ -58,7 +60,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
       <UContentSearchButton class="lg:hidden" />
 
-      <ClientOnly>
+      <ClientOnly v-if="!forcedColorMode">
         <UColorModeButton />
 
         <template #fallback>
