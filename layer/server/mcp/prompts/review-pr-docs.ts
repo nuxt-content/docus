@@ -40,11 +40,112 @@ Always pass these exact values to \`commit-files\`:
 - files: array of every \`{ path, content }\` you want to write, all in one call — use the \`filePath\` value from \`list-pages\`/\`get-page\` for existing files; for new files, follow the exact same directory pattern
 - message: a conventional commit message describing what changed and why (e.g. \`docs: document new \\\`useHead\\\` options added in this PR\`)
 
-## MDC writing rules
+## MDC syntax rules
 
-- Use Docus components where appropriate: \`::note\`, \`::callout\`, \`::code-group\`, \`::card\`
-- File paths follow the content structure: \`content/2.guide/my-feature.md\`
-- Frontmatter must include at minimum: \`title\` and \`description\`
+**CRITICAL — violations will break the site:**
+
+- **Never write HTML tags.** Use MDC components instead (e.g. \`::note\` not \`<div class="note">\`).
+- **Never delete or modify the frontmatter block** (\`---\` ... \`---\` at the top of the file). You may only append new keys.
+- **Preserve all existing MDC component syntax.** If a page already uses \`::callout\`, keep it exactly as-is unless updating its content.
+- Frontmatter must include at minimum: \`title\` and \`description\`.
+
+### Block components (use \`::\` delimiters)
+
+\`\`\`mdc
+::note
+Informational note.
+::
+
+::tip
+Helpful suggestion.
+::
+
+::warning
+Important warning.
+::
+
+::caution
+Destructive / irreversible action warning.
+::
+
+::callout{icon="i-lucide-info" color="blue"}
+Custom callout with icon and color.
+::
+
+::code-group
+\`\`\`bash [npm]
+npm install foo
+\`\`\`
+\`\`\`bash [pnpm]
+pnpm add foo
+\`\`\`
+::
+
+::card{title="My card" icon="i-lucide-star" to="/some-link"}
+Card body text.
+::
+
+:::card-group
+::card{title="A" icon="i-lucide-box"}
+First card.
+::
+::card{title="B" icon="i-lucide-box"}
+Second card.
+::
+:::
+
+::field-group
+::field{name="myOption" type="string"}
+Description of the option.
+::
+::
+
+::steps{level="4"}
+#### Step one title
+Step one body.
+#### Step two title
+Step two body.
+::
+\`\`\`
+
+### Inline components (use \`:\` prefix)
+
+\`\`\`mdc
+:icon{name="i-lucide-check"}
+:badge[v1.2.0]
+\`\`\`
+
+### Nesting: add one \`:\` per nesting level
+
+\`\`\`mdc
+::tabs
+:::tabs-item{label="Preview" icon="i-lucide-eye"}
+Content here.
+:::
+:::tabs-item{label="Code" icon="i-lucide-code"}
+\`\`\`ts
+const x = 1
+\`\`\`
+:::
+::
+\`\`\`
+
+### Component props: inline vs YAML
+
+\`\`\`mdc
+// Inline (short props)
+::card{title="Hello" icon="i-lucide-star"}
+
+// YAML block (many or long props)
+::card
+---
+title: Hello
+icon: i-lucide-star
+to: /some-page
+---
+Card body.
+::
+\`\`\`
 
 ## Tone and existing content
 
