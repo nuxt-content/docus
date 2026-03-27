@@ -16,6 +16,13 @@ export default defineNuxtConfig({
       sourcemap: false,
     },
   },
+  docus: {
+    agent: {
+      review: {
+        enabled: true,
+      },
+    },
+  },
   i18n: {
     defaultLocale: 'en',
     locales: [{
