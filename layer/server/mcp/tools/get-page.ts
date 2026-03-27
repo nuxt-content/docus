@@ -24,6 +24,10 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   handler: async ({ path }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
+    const appConfig = useAppConfig() as { github?: { rootDir?: string } }
+    const contentRepoBase = appConfig.github?.rootDir
+      ? `${appConfig.github.rootDir}/content`
+      : 'content'
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
     const availableLocales = getAvailableLocales(config)
@@ -31,11 +35,11 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       ? getCollectionFromPath(path, availableLocales)
       : 'docs'
 
-    let page: { title: string, path: string, description: string, body: { value: unknown[] | null } | null } | null
+    let page: { title: string, path: string, description: string, stem: string, extension: string, body: { value: unknown[] | null } | null } | null
     try {
       page = await queryCollection(event, collectionName as keyof Collections)
         .where('path', '=', path)
-        .select('title', 'path', 'description', 'body')
+        .select('title', 'path', 'description', 'stem', 'extension', 'body')
         .first() as typeof page
     }
     catch {
@@ -60,6 +64,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       title: page.title,
       path: page.path,
       description: page.description,
+      filePath: `${contentRepoBase}/${page.stem}.${page.extension}`,
       content,
       url: `${siteUrl}${page.path}`,
     })

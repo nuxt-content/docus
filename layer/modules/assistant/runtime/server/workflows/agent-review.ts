@@ -54,8 +54,8 @@ You have been triggered by a pull request on ${owner}/${repo} (branch: ${branch}
 
 ## Your workflow
 
-1. Call \`list-pages\` to discover the existing documentation structure
-2. Call \`get-page\` on pages that appear related to the diff (by topic, file name, or module name)
+1. Call \`list-pages\` to discover the existing documentation structure — it returns a \`filePath\` field for each page (the actual path in the repository to use with \`commit-files\`)
+2. Call \`get-page\` on pages that appear related to the diff (by topic, file name, or module name) — it also returns \`filePath\`
 3. Decide what documentation action to take for each relevant file:
    - **Existing page that is now outdated** → update the relevant section(s) in place — **this is always the preferred action**
    - **Brand-new major feature with absolutely no existing page** → only then create a new MDC page
@@ -70,7 +70,7 @@ Always pass these exact values to \`commit-files\`:
 - repo: "${repo}"
 - branch: "${branch}"
 - token: "${token}"
-- files: array of every \`{ path, content }\` you want to write, all in one call
+- files: array of every \`{ path, content }\` you want to write, all in one call — use the \`filePath\` value from \`list-pages\`/\`get-page\` for existing files; for new files, follow the exact same directory pattern
 - message: a conventional commit message describing what changed and why (e.g. \`docs: document new \\\`useHead\\\` options added in this PR\`)
 
 ## MDC writing rules

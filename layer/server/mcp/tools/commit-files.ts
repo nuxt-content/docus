@@ -34,7 +34,12 @@ export default defineMcpTool({
     files: Array<{ path: string, content: string }>
     message: string
   }) => {
-    console.log(`[commit-files] Preparing commit: ${owner}/${repo} branch=${branch} files=${files.length}`)
+    const appConfig = useAppConfig() as { github?: { rootDir?: string } }
+    const contentRepoBase = appConfig.github?.rootDir
+      ? `${appConfig.github.rootDir}/content`
+      : 'content'
+
+    console.log(`[commit-files] Preparing commit: ${owner}/${repo} branch=${branch} files=${files.length} contentRepoBase=${contentRepoBase}`)
 
     // --- Security guards ---
 
@@ -87,10 +92,10 @@ export default defineMcpTool({
         return errorResult(`Invalid file path: ${file.path}`)
       }
 
-      // Must live under content/
-      if (!file.path.startsWith('content/')) {
-        console.warn(`[commit-files] Rejected: path outside content/: "${file.path}"`)
-        return errorResult(`File path must start with "content/": ${file.path}`)
+      // Must live under the content directory
+      if (!file.path.startsWith(`${contentRepoBase}/`)) {
+        console.warn(`[commit-files] Rejected: path outside ${contentRepoBase}/: "${file.path}"`)
+        return errorResult(`File path must start with "${contentRepoBase}/": ${file.path}`)
       }
 
       // Markdown-only

@@ -30,6 +30,10 @@ OUTPUT: Returns a structured list with:
   handler: async ({ locale }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
+    const appConfig = useAppConfig() as { github?: { rootDir?: string } }
+    const contentRepoBase = appConfig.github?.rootDir
+      ? `${appConfig.github.rootDir}/content`
+      : 'content'
 
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
     const availableLocales = getAvailableLocales(config)
@@ -39,13 +43,14 @@ OUTPUT: Returns a structured list with:
       const allPages = await Promise.all(
         collections.map(async (collectionName) => {
           const pages = await queryCollection(event, collectionName as keyof Collections)
-            .select('title', 'path', 'description')
+            .select('title', 'path', 'description', 'stem', 'extension')
             .all()
 
           return pages.map(page => ({
             title: page.title,
             path: page.path,
             description: page.description,
+            filePath: `${contentRepoBase}/${page.stem}.${page.extension}`,
             locale: collectionName.replace('docs_', ''),
             url: `${siteUrl}${page.path}`,
           }))
