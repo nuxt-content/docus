@@ -1,16 +1,55 @@
+---
+title: Review Agent
+description: Automate documentation reviews on your pull requests with a built-in AI agent.
+---
+
 # Review Agent
 
-> PR documentation review agent triggered by GitHub webhooks.
+> Automate documentation reviews on your pull requests with a built-in AI agent.
 
-The Review Agent is a specialized AI assistant that helps keep your documentation accurate by reviewing pull requests. It can identify inconsistencies, suggest improvements, and even commit fixes directly to the PR branch.
+The Review Agent helps keep your documentation accurate and up to date by automatically reviewing pull requests. When a PR is opened or updated, the agent analyzes the changes and provides feedback or suggests documentation updates based on your existing content.
 
-## How It Works
+## Features
 
-The Review Agent integrates with GitHub using webhooks:
+- **Automatic Reviews**: Triggered by GitHub webhooks on every pull request.
+- **Smart Filtering**: Automatically ignores internal changes, lockfiles, and non-documentation files to focus on what matters.
+- **Multiple Modes**: Choose between receiving suggestions as comments or having the agent commit directly to your branch.
+- **Context Aware**: Uses your existing documentation (via MCP) as context to ensure consistency in tone and style.
 
-1. **Webhook Trigger** - A GitHub webhook notifies your Docus site about a new or updated pull request.
-2. **Analysis** - The Review Agent analyzes the PR diff and compares it with the existing documentation.
-3. **Action** - Based on its configuration, the agent either posts a comment with suggestions or commits documentation updates directly.
+## Quick Start
+
+### 1. Create a GitHub App
+
+To use the Review Agent, you need to create a GitHub App for your organization or account.
+
+1. Go to your GitHub **Settings** > **Developer settings** > **GitHub Apps** > **New GitHub App**.
+2. **Name**: `My Docs Agent` (or any name you prefer).
+3. **Homepage URL**: Your documentation site URL.
+4. **Webhook**: Enabled.
+   - **Webhook URL**: `https://your-docs-site.com/__docus__/webhook/github`
+   - **Webhook Secret**: Generate a random secret string and keep it safe.
+5. **Permissions**:
+   - **Repository permissions**:
+     - `Pull requests`: Read & Write
+     - `Contents`: Read & Write (required if you want the agent to commit changes)
+     - `Metadata`: Read-only (default)
+6. **Events**:
+   - Subscribe to `Pull request` events.
+
+### 2. Install the App
+
+After creating the app, click **Install App** in the sidebar and install it on the repository where your documentation is hosted.
+
+### 3. Set Environment Variables
+
+Add the following variables to your deployment environment (e.g., Vercel, Netlify):
+
+```bash [.env]
+GITHUB_APP_ID=your-app-id
+GITHUB_APP_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
+GITHUB_WEBHOOK_SECRET=your-webhook-secret
+AI_GATEWAY_API_KEY=your-vercel-ai-gateway-key
+```
 
 ## Configuration
 
@@ -21,11 +60,13 @@ export default defineNuxtConfig({
   docus: {
     agent: {
       review: {
-        // Enable the webhook handler
+        // Enable the review agent
         enabled: true,
-        // Mode: 'comment' (default) or 'commit'
+
+        // 'comment' (default) or 'commit'
         mode: 'comment',
-        // Target repository (org/repo)
+
+        // Target repository in 'org/repo' format (auto-detected if blank)
         githubRepo: 'nuxt-content/docus'
       }
     }
@@ -33,57 +74,31 @@ export default defineNuxtConfig({
 })
 ```
 
-### Options
+### Review Modes
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | `boolean` | `false` | Enable the webhook handler. |
-| `mode` | `'comment' \| 'commit'` | `'comment'` | Whether the agent posts a PR comment or commits fixes. |
-| `githubRepo` | `string` | *auto-detected* | Target GitHub repository in `org/repo` format. |
+The agent can operate in two modes:
 
-<note>
+- `comment`: The agent posts its findings and suggestions as a comment on the pull request.
+- `commit`: The agent directly commits suggested documentation changes to the pull request branch.
 
-The agent automatically detects the repository name when deployed on Vercel, Netlify, or GitHub Actions.
+### Repository Detection
 
-</note>
+By default, Docus attempts to auto-detect your GitHub repository from environment variables provided by CI providers (Vercel, Netlify, GitHub Actions) or from your local `.git/config`. If detection fails, you can explicitly set `githubRepo`.
 
-## GitHub App Setup
+## Advanced Agent Configuration
 
-The Review Agent requires a GitHub App to interact with your pull requests.
+The Review Agent shares the same base configuration as the Chat Assistant:
 
-### 1. Create a GitHub App
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  docus: {
+    agent: {
+      // AI model to use for reviews
+      model: 'google/gemini-3-flash',
 
-1. Go to your GitHub organization's **Settings** > **Developer settings** > **GitHub Apps** and click **New GitHub App**.
-2. Set the **Webhook URL** to `https://your-docs.com/__docus__/webhook/github`.
-3. Set the **Webhook secret**.
-4. Grant the following permissions:
-   - **Pull requests**: Read & write
-   - **Contents**: Read & write (required for `commit` mode)
-   - **Metadata**: Read-only
-5. Subscribe to **Pull request** events.
-
-### 2. Set Environment Variables
-
-Add the following variables to your environment:
-
-```bash [.env]
-# Required for GitHub App authentication
-GITHUB_APP_ID=your-app-id
-GITHUB_APP_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
-GITHUB_WEBHOOK_SECRET=your-webhook-secret
-
-# Required for AI model access
-AI_GATEWAY_API_KEY=your-api-key
+      // MCP server used to retrieve documentation context
+      mcpServer: '/mcp'
+    }
+  }
+})
 ```
-
-### 3. Install the App
-
-Install the GitHub App on your repository by going to **Install App** in the GitHub App settings.
-
-## Webhook Endpoint
-
-The Review Agent registers a webhook handler at the following route:
-
-`https://your-docs.com/__docus__/webhook/github`
-
-Ensure your GitHub App's webhook configuration matches this URL. If you are developing locally, you can use a service like [ngrok](https://ngrok.com/) to expose your local server to the internet.

@@ -90,7 +90,7 @@ export default defineAppConfig({
     // Show the floating input on documentation pages
     floatingInput: true,
 
-    // Show the \"Explain with AI\" button in the sidebar
+    // Show the "Explain with AI\" button in the sidebar
     explainWithAi: true,
 
     // FAQ questions to display when chat is empty
@@ -254,14 +254,14 @@ export default defineAppConfig({
 
 ### Disable the Assistant Entirely
 
-The assistant is automatically disabled when no API key is set. To explicitly disable it, you can remove the environment variable or set `enabled: false` in `nuxt.config.ts`:
-
-<code-group>
+The assistant is automatically disabled when no API key is set. To explicitly disable it, simply remove the environment variable:
 
 ```bash [.env]
 # Comment out or remove the API key
 # AI_GATEWAY_API_KEY=your-api-key
 ```
+
+You can also explicitly disable the chat assistant in your `nuxt.config.ts`:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -275,11 +275,9 @@ export default defineNuxtConfig({
 })
 ```
 
-</code-group>
-
 ## Advanced Configuration
 
-Configure advanced agent options in `nuxt.config.ts`:
+Configure advanced options in `nuxt.config.ts` under the `docus.agent` key:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -348,7 +346,7 @@ The assistant uses `google/gemini-3-flash` by default. You can change this to an
 export default defineNuxtConfig({
   docus: {
     agent: {
-      model: 'anthropic/claude-3-5-sonnet'
+      model: 'anthropic/claude-opus-4.5'
     }
   }
 })
