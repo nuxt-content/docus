@@ -105,6 +105,13 @@ export default defineNuxtConfig({
       nitroConfig.prerender.routes.push('/sitemap.xml')
     },
   },
+  docus: {
+    agent: {
+      review: {
+        enabled: true,
+      },
+    },
+  },
   icon: {
     customCollections: [
       {

@@ -25,10 +25,10 @@ const PANEL_WIDTH_EXPANDED = 520
 export function useAssistant() {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
-  const assistantRuntimeConfig = config.public.assistant as { enabled?: boolean } | undefined
+  const assistantRuntimeConfig = config.public.agent as { chatEnabled?: boolean } | undefined
   const assistantConfig = appConfig.assistant as { faqQuestions?: FaqQuestions | LocalizedFaqQuestions } | undefined
   const docusRuntimeConfig = appConfig.docus as { locale?: string } | undefined
-  const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
+  const isEnabled = computed(() => assistantRuntimeConfig?.chatEnabled ?? false)
 
   const isOpen = useState('assistant-open', () => false)
   const isExpanded = useState('assistant-expanded', () => false)

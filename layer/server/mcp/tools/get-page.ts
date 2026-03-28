@@ -24,35 +24,49 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   handler: async ({ path }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
+    const appConfig = useAppConfig() as { github?: { rootDir?: string } }
+    const contentRepoBase = appConfig.github?.rootDir
+      ? `${appConfig.github.rootDir}/content`
+      : 'content'
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
-    const availableLocales = getAvailableLocales(config)
+    const availableLocales = getAvailableLocales(config as unknown as Parameters<typeof getAvailableLocales>[0])
     const collectionName = config.i18n?.locales
       ? getCollectionFromPath(path, availableLocales)
       : 'docs'
 
+    let page: { title: string, path: string, description: string, stem: string, extension: string, body: { value: unknown[] | null } | null } | null
     try {
-      const page = await queryCollection(event, collectionName as keyof Collections)
+      page = await queryCollection(event, collectionName as keyof Collections)
         .where('path', '=', path)
-        .select('title', 'path', 'description')
-        .first()
-
-      if (!page) {
-        return errorResult('Page not found')
-      }
-
-      const content = await event.$fetch<string>(`/raw${path}.md`)
-
-      return jsonResult({
-        title: page.title,
-        path: page.path,
-        description: page.description,
-        content,
-        url: `${siteUrl}${page.path}`,
-      })
+        .select('title', 'path', 'description', 'stem', 'extension', 'body')
+        .first() as typeof page
     }
     catch {
-      return errorResult('Failed to get page')
+      return errorResult('Failed to query page')
     }
+
+    if (!page) {
+      return errorResult('Page not found')
+    }
+
+    let content: string | undefined
+    if (page.body?.value) {
+      try {
+        content = await event.$fetch<string>(`/raw${path}.md`)
+      }
+      catch {
+        // Raw fetch failed — return page metadata without content
+      }
+    }
+
+    return jsonResult({
+      title: page.title,
+      path: page.path,
+      description: page.description,
+      filePath: `${contentRepoBase}/${page.stem}.${page.extension}`,
+      content,
+      url: `${siteUrl}${page.path}`,
+    })
   },
 })

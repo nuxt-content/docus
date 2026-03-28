@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
 
   const siteName = siteConfig.name || 'Documentation'
 
-  const mcpServer = config.assistant.mcpServer
+  const mcpServer = config.agent.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
   const mcpUrl = isExternalUrl
@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
     execute: async ({ writer }: { writer: UIMessageStreamWriter }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
-        model: config.assistant.model,
+        model: config.agent.model,
         maxOutputTokens: 4000,
         maxRetries: 2,
         stopWhen: stopWhenResponseComplete,
