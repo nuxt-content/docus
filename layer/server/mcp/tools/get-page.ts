@@ -30,7 +30,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       : 'content'
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
-    const availableLocales = getAvailableLocales(config)
+    const availableLocales = getAvailableLocales(config as unknown as Parameters<typeof getAvailableLocales>[0])
     const collectionName = config.i18n?.locales
       ? getCollectionFromPath(path, availableLocales)
       : 'docs'

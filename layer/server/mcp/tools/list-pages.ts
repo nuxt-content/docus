@@ -27,7 +27,7 @@ OUTPUT: Returns a structured list with:
     locale: z.string().optional().describe('The locale to filter pages by'),
   },
   cache: '1h',
-  handler: async ({ locale }) => {
+  handler: async ({ locale }: { locale?: string }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
     const appConfig = useAppConfig() as { github?: { rootDir?: string } }
@@ -36,7 +36,7 @@ OUTPUT: Returns a structured list with:
       : 'content'
 
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
-    const availableLocales = getAvailableLocales(config)
+    const availableLocales = getAvailableLocales(config as unknown as Parameters<typeof getAvailableLocales>[0])
     const collections = getCollectionsToQuery(locale, availableLocales)
 
     try {
