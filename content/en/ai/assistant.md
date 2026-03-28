@@ -2,7 +2,7 @@
 
 > Add AI-powered chat to your docs that answers questions, cites sources, and generates code examples.
 
-## About the Assistant
+## About the Agent
 
 The assistant answers questions about your documentation through natural language queries. It is embedded directly in your documentation site, so users can find answers quickly and succeed with your product.
 
