@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-const props = defineProps<{ title?: string, description?: string, headline?: string }>()
+const { title, description, headline } = defineProps<{ title?: string, description?: string, headline?: string }>()
 
 const appConfig = useAppConfig()
 const { name: siteName } = useSiteConfig()
 const primaryColor = appConfig.ui?.colors?.primary ?? 'emerald'
-
-const title = props.title?.slice(0, 60)
-const description = props.description?.slice(0, 200)
 </script>
 
 <template>
@@ -27,18 +24,18 @@ const description = props.description?.slice(0, 200)
         v-if="title"
         class="m-0 mb-6 text-[50px] font-bold text-white leading-[1.1] w-full max-w-[900px] wrap-break-word"
       >
-        {{ title }}
+        {{ title?.slice(0, 60) }}
       </h1>
       <p
         v-if="description"
         class="m-0 text-[28px] text-neutral-400 leading-[1.4] w-full max-w-[900px] wrap-break-word"
       >
-        {{ description }}
+        {{ description?.slice(0, 200) }}
       </p>
     </div>
 
     <div class="flex">
-      <div class="text-white text-[18px] font-medium rounded-lg px-5 py-2">
+      <div class="text-white text-[18px] font-normal rounded-lg px-5 py-2">
         {{ siteName }}
       </div>
     </div>
