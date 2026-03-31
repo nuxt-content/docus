@@ -24,8 +24,8 @@ useSeo({
 
 if (!page.value?.seo?.ogImage) {
   defineOgImage('Landing', {
-    title,
-    description: description?.replace(/,/g, ''),
+    title: title?.slice(0, 60),
+    description: formatOgDescription(title, description),
   })
 }
 </script>
