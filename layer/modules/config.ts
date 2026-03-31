@@ -58,6 +58,11 @@ export default defineNuxtModule({
       branch: getGitBranch(),
     })
 
+    const forcedColorMode = (nuxt.options.appConfig.docus as Record<string, unknown>)?.colorMode as string | undefined
+    if (forcedColorMode === 'light' || forcedColorMode === 'dark') {
+      nuxt.options.colorMode = defu({ preference: forcedColorMode, fallback: forcedColorMode }, nuxt.options.colorMode || {}) as typeof nuxt.options.colorMode
+    }
+
     /*
     ** I18N
     */

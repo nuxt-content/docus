@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps<{ title?: string, description?: string }>()
+const { title, description } = defineProps<{ title?: string, description?: string }>()
 
 const appConfig = useAppConfig()
 const { name: siteName } = useSiteConfig()
@@ -7,9 +7,6 @@ const primaryColor = appConfig.ui?.colors?.primary ?? 'emerald'
 const logoPath = appConfig.header?.logo?.dark || appConfig.header?.logo?.light
 
 const logoSvg = await fetchLogoSvg(logoPath)
-
-const title = props.title?.slice(0, 60)
-const description = props.description?.slice(0, 200)
 
 async function fetchLogoSvg(path?: string): Promise<string> {
   if (!path) return ''
@@ -48,7 +45,7 @@ async function fetchLogoSvg(path?: string): Promise<string> {
         class="flex justify-center mb-6"
       >
         <h1 class="m-0 text-[50px] font-bold text-white leading-[1.1] text-center wrap-break-word">
-          {{ title }}
+          {{ title?.slice(0, 60) }}
         </h1>
       </div>
       <div
@@ -56,13 +53,13 @@ async function fetchLogoSvg(path?: string): Promise<string> {
         class="flex justify-center"
       >
         <p class="m-0 text-[28px] text-neutral-400 leading-[1.4] text-center wrap-break-word">
-          {{ description }}
+          {{ description?.slice(0, 200) }}
         </p>
       </div>
     </div>
 
     <div class="flex">
-      <div :class="`text-[18px] font-medium rounded-lg px-5 py-2 text-${primaryColor}-500`">
+      <div :class="`text-[18px] font-normal rounded-lg px-5 py-2 text-${primaryColor}-500`">
         {{ siteName }}
       </div>
     </div>

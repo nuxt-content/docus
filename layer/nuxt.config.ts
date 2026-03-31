@@ -121,6 +121,9 @@ export default defineNuxtConfig({
     },
     provider: 'iconify',
   },
+  ogImage: {
+    zeroRuntime: true,
+  },
   robots: {
     groups: [
       {

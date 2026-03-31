@@ -3,11 +3,13 @@ import type { NuxtError } from '#app'
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useDocusColorMode } from './composables/useDocusColorMode'
 
 const props = defineProps<{
   error: NuxtError
 }>()
 
+const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
@@ -70,6 +72,7 @@ provide('navigation', navigation)
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
+        :color-mode="!forcedColorMode"
       />
     </ClientOnly>
   </UApp>

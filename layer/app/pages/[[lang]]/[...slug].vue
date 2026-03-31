@@ -47,8 +47,8 @@ watch(() => navigation?.value, () => {
 
 defineOgImage('Docs', {
   headline: headline.value,
-  title,
-  description,
+  title: title?.slice(0, 60),
+  description: formatOgDescription(title, description),
 })
 
 const github = computed(() => appConfig.github ? appConfig.github : null)

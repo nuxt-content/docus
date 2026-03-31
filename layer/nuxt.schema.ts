@@ -277,6 +277,28 @@ export default defineNuxtSchema({
         }),
       },
     }),
+    docus: group({
+      title: 'Docus',
+      description: 'Docus configuration.',
+      icon: 'i-lucide-settings',
+      fields: {
+        locale: field({
+          type: 'string',
+          title: 'Locale',
+          description: 'Default locale for single-language documentation.',
+          icon: 'i-lucide-languages',
+          default: 'en',
+        }),
+        colorMode: field({
+          type: 'string',
+          title: 'Color Mode',
+          description: 'Force a specific color mode. Leave empty for system preference with toggle.',
+          icon: 'i-lucide-monitor',
+          default: '',
+          required: ['', 'light', 'dark'],
+        }),
+      },
+    }),
     assistant: group({
       title: 'Assistant',
       description: 'Assistant configuration.',
