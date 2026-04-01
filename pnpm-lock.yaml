@@ -139,8 +139,8 @@ importers:
         specifier: ^10.2.4
         version: 10.2.4(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@vue/compiler-dom@3.5.31)(db0@0.3.4(better-sqlite3@12.8.0))(eslint@10.1.0(jiti@2.6.1))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.1)(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))
       '@nuxtjs/mcp-toolkit':
-        specifier: ^0.13.1
-        version: 0.13.1(h3@1.15.10)(magicast@0.5.2)(zod@4.3.6)
+        specifier: ^0.13.2
+        version: 0.13.3(h3@1.15.10)(magicast@0.5.2)(zod@4.3.6)
       '@nuxtjs/mdc':
         specifier: ^0.21.0
         version: 0.21.0(magicast@0.5.2)
@@ -1517,12 +1517,12 @@ packages:
     resolution: {integrity: sha512-T5nN7hT/tbExant+CeXtKXs9GbjWsEWnymCHJyU3Ujxfcw1WQsZZP6tyEtFRhkwjBwy8m4mj7GtU2qUCggUkkg==}
     engines: {node: '>=20.11.1'}
 
-  '@nuxtjs/mcp-toolkit@0.13.1':
-    resolution: {integrity: sha512-eE2kxk+gb6RNVegyOpeu3rgbesvUQZDyWGTvYiusDihSaiL+vbJuclKqVO4gQcvUzCoaySvON5dohc3AroBPeA==}
+  '@nuxtjs/mcp-toolkit@0.13.3':
+    resolution: {integrity: sha512-qCU9T1HsTsneLLaZM9BWdEiktAdUT35+klAH+1mhUgQgzmBDmvNv+e3qwFwyanegE+vThICXwM+up12xG5zzTw==}
     peerDependencies:
       agents: '>=0.8.7'
       h3: '>=1.15.10'
-      secure-exec: '>=0.1.0'
+      secure-exec: '>=0.2.1'
       zod: ^4.1.13
     peerDependenciesMeta:
       agents:
@@ -9858,7 +9858,7 @@ snapshots:
       - uploadthing
       - vue
 
-  '@nuxtjs/mcp-toolkit@0.13.1(h3@1.15.10)(magicast@0.5.2)(zod@4.3.6)':
+  '@nuxtjs/mcp-toolkit@0.13.3(h3@1.15.10)(magicast@0.5.2)(zod@4.3.6)':
     dependencies:
       '@modelcontextprotocol/sdk': 1.29.0(zod@4.3.6)
       '@nuxt/kit': 4.4.2(magicast@0.5.2)
