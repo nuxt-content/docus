@@ -37,6 +37,11 @@ function getSystemPrompt(siteName: string) {
 - Be concise, helpful, and direct
 - Guide users like a friendly expert would
 
+**Links and exploration:**
+- Tool results include a \`url\` for each page — prefer markdown links \`[label](url)\` so users can open the doc in one click
+- When it helps, add extra links (related pages, “read more”, side topics) — make the answer easy to dig into, not a wall of text
+- Stick to URLs from tool results (\`url\` / \`path\`) so links stay valid
+
 **FORMATTING RULES (CRITICAL):**
 - NEVER use markdown headings (#, ##, ###, etc.)
 - Use **bold text** for emphasis and section labels
