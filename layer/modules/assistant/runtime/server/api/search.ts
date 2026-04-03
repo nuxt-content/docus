@@ -1,8 +1,84 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
+import type { H3Event } from 'h3'
+
+interface McpTransport {
+  start(): Promise<void>
+  close(): Promise<void>
+  send(message: Record<string, unknown>): Promise<void>
+  onmessage?: ((message: Record<string, unknown>) => void) | undefined
+  onerror?: ((error: Error) => void) | undefined
+  onclose?: (() => void) | undefined
+}
 
 const MAX_STEPS = 10
+
+/**
+ * MCP transport that routes through Nitro's internal localFetch (event.fetch)
+ * instead of globalThis.$fetch (event.$fetch) which uses the global fetch()
+ * and triggers CF Workers self-fetch error 1042.
+ */
+function createInternalMcpTransport(event: H3Event, mcpPath: string): McpTransport {
+  let _onmessage: ((message: Record<string, unknown>) => void) | undefined
+  let _onerror: ((error: Error) => void) | undefined
+  let _onclose: (() => void) | undefined
+
+  return {
+    async start() {},
+    async close() { _onclose?.() },
+    get onmessage() { return _onmessage },
+    set onmessage(fn) { _onmessage = fn },
+    get onerror() { return _onerror },
+    set onerror(fn) { _onerror = fn },
+    get onclose() { return _onclose },
+    set onclose(fn) { _onclose = fn },
+    async send(message: Record<string, unknown>) {
+      try {
+        // event.fetch uses useNitroApp().localFetch on CF Workers
+        // event.$fetch uses globalThis.$fetch which triggers self-fetch error
+        const response = await event.fetch(mcpPath, {
+          method: 'POST',
+          body: JSON.stringify(message),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/event-stream',
+          },
+        })
+
+        const contentType = response.headers.get('content-type') || ''
+
+        if (contentType.includes('text/event-stream') && response.body) {
+          const reader = response.body.pipeThrough(new TextDecoderStream()).getReader()
+          let buffer = ''
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+            buffer += value
+            const lines = buffer.split('\n')
+            buffer = lines.pop() || ''
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                _onmessage?.(JSON.parse(line.slice(6)))
+              }
+            }
+          }
+          if (buffer.startsWith('data: ')) {
+            _onmessage?.(JSON.parse(buffer.slice(6)))
+          }
+        }
+        else {
+          const body = await response.json()
+          const messages = Array.isArray(body) ? body : [body]
+          for (const m of messages) _onmessage?.(m as Record<string, unknown>)
+        }
+      }
+      catch (error) {
+        _onerror?.(error as Error)
+      }
+    },
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function stopWhenResponseComplete({ steps }: { steps: any[] }): boolean {
@@ -66,15 +142,14 @@ export default defineEventHandler(async (event) => {
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
-  const mcpUrl = isExternalUrl
-    ? mcpServer
-    : import.meta.dev
-      ? `http://localhost:3000${baseURL}${mcpServer}`
-      : `${getRequestURL(event).origin}${baseURL}${mcpServer}`
 
-  const httpClient = await createMCPClient({
-    transport: { type: 'http', url: mcpUrl },
-  })
+  const transport = isExternalUrl
+    ? { type: 'http' as const, url: mcpServer }
+    : import.meta.dev
+      ? { type: 'http' as const, url: `http://localhost:3000${baseURL}${mcpServer}` }
+      : createInternalMcpTransport(event, `${baseURL}${mcpServer}`)
+
+  const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()
 
   const stream = createUIMessageStream({
