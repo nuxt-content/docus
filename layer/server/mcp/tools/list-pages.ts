@@ -23,10 +23,20 @@ OUTPUT: Returns a structured list with:
 - path: Exact path for use with get-page
 - description: Brief summary of page content
 - url: Full URL for reference`,
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   inputSchema: {
     locale: z.string().optional().describe('The locale to filter pages by'),
     version: z.string().optional().describe('The version to filter pages by (e.g., "v4")'),
   },
+  inputExamples: [
+    { locale: 'en' },
+    {},
+  ],
   cache: '1h',
   handler: async ({ locale, version }) => {
     const event = useEvent()
@@ -55,10 +65,10 @@ OUTPUT: Returns a structured list with:
         }),
       )
 
-      return jsonResult(allPages.flat())
+      return allPages.flat()
     }
     catch {
-      return errorResult('Failed to list pages')
+      throw createError({ statusCode: 500, message: 'Failed to list pages' })
     }
   },
 })

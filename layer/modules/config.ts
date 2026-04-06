@@ -79,6 +79,11 @@ export default defineNuxtModule({
       branch: getGitBranch(),
     })
 
+    const forcedColorMode = (nuxt.options.appConfig.docus as Record<string, unknown>)?.colorMode as string | undefined
+    if (forcedColorMode === 'light' || forcedColorMode === 'dark') {
+      nuxt.options.colorMode = defu({ preference: forcedColorMode, fallback: forcedColorMode }, nuxt.options.colorMode || {}) as typeof nuxt.options.colorMode
+    }
+
     /*
     ** VERSIONS
     */
@@ -116,10 +121,10 @@ export default defineNuxtModule({
     /*
     ** I18N
     */
-    const typedNuxtOptions = nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }
+    const typedNuxtOptions = nuxt.options as typeof nuxt.options & { i18n?: false | DocusI18nOptions }
     const i18nOptions = typedNuxtOptions.i18n
 
-    if (i18nOptions?.locales) {
+    if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
       const { resolve } = createResolver(import.meta.url)
 
       // Filter locales to only include existing ones

@@ -2,11 +2,14 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useDocusColorMode } from './composables/useDocusColorMode'
 import { useSubNavigation } from './composables/useSubNavigation'
 import { useVersion } from './composables/useVersion'
 import { useCollectionName } from './composables/useCollectionName'
 
-const { seo } = useAppConfig()
+const appConfig = useAppConfig()
+const { seo } = appConfig
+const { forced: forcedColorMode } = useDocusColorMode()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
@@ -82,6 +85,7 @@ const { subNavigationMode } = useSubNavigation(navigation)
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
+        :color-mode="!forcedColorMode"
       />
       <template v-if="isAssistantEnabled">
         <LazyAssistantPanel />

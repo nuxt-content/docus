@@ -11,6 +11,7 @@ const props = defineProps<{
   error: NuxtError
 }>()
 
+const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 const { version, isVersioned } = useVersion()
 
@@ -74,6 +75,7 @@ provide('navigation', navigation)
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
+        :color-mode="!forcedColorMode"
       />
     </ClientOnly>
   </UApp>

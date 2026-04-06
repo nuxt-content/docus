@@ -1,8 +1,8 @@
 {
   "name": "docus-starter",
   "scripts": {
-    "dev": "nuxt dev --extends docus",
-    "build": "nuxt build --extends docus"
+    "dev": "nuxt dev",
+    "build": "nuxt build"
   },
   "dependencies": {
     "docus": "latest",

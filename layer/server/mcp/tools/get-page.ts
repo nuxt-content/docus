@@ -17,9 +17,19 @@ WHEN NOT TO USE: If you don't know the exact path and need to search/explore, us
 
 WORKFLOW: This tool returns the complete page content including title, description, and full markdown. Use this when you need to provide detailed answers or code examples from specific documentation pages.
 `,
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   inputSchema: {
     path: z.string().describe('The page path from list-pages or provided by the user (e.g., /en/getting-started/installation)'),
   },
+  inputExamples: [
+    { path: '/en/getting-started/installation' },
+    { path: '/getting-started/introduction' },
+  ],
   cache: '1h',
   handler: async ({ path }) => {
     const event = useEvent()
@@ -39,21 +49,22 @@ WORKFLOW: This tool returns the complete page content including title, descripti
         .first()
 
       if (!page) {
-        return errorResult('Page not found')
+        throw createError({ statusCode: 404, message: 'Page not found' })
       }
 
       const content = await event.$fetch<string>(`/raw${path}.md`)
 
-      return jsonResult({
+      return {
         title: page.title,
         path: page.path,
         description: page.description,
         content,
         url: `${siteUrl}${page.path}`,
-      })
+      }
     }
-    catch {
-      return errorResult('Failed to get page')
+    catch (error) {
+      if ((error as { statusCode?: number }).statusCode === 404) throw error
+      throw createError({ statusCode: 500, message: 'Failed to get page' })
     }
   },
 })

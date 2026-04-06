@@ -22,9 +22,9 @@ useSeo({
 })
 
 if (!page.value?.seo?.ogImage) {
-  defineOgImageComponent('Landing', {
-    title,
-    description,
+  defineOgImage('Landing', {
+    title: title?.slice(0, 60),
+    description: formatOgDescription(title, description),
   })
 }
 </script>
