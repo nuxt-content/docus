@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const size = 4
+const dotSize = 2
 const gap = 2
 const totalDots = size * size
 
@@ -7,6 +8,10 @@ const patterns = [
   [[0], [1], [2], [3], [7], [11], [15], [14], [13], [12], [8], [4], [5], [6], [10], [9]],
   [[0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15]],
   [[5, 6, 9, 10], [1, 4, 7, 8, 11, 14], [0, 3, 12, 15], [1, 4, 7, 8, 11, 14], [5, 6, 9, 10]],
+  [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]],
+  [[0], [3], [15], [12]],
+  [[5, 6, 9, 10], [1, 2, 4, 7, 8, 11, 13, 14], [0, 3, 12, 15]],
+  [[0], [1], [2], [3], [7], [6], [5], [4], [8], [9], [10], [11], [15], [14], [13], [12]],
   [[0], [1, 4], [2, 5, 8], [3, 6, 9, 12], [7, 10, 13], [11, 14], [15]],
 ]
 
@@ -77,7 +82,7 @@ onMounted(() => {
     const prev = displayedText.value
     currentIndex.value = (currentIndex.value + 1) % statusMessages.length
     scramble(prev, statusMessages[currentIndex.value]!)
-  }, 3000)
+  }, 3500)
 })
 
 onUnmounted(() => {
@@ -87,25 +92,25 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center gap-2 text-muted overflow-hidden">
+  <div class="flex items-center text-xs text-muted overflow-hidden">
     <div
-      class="shrink-0 grid size-4"
+      class="shrink-0 mr-2 grid"
       :style="{
         gridTemplateColumns: `repeat(${size}, 1fr)`,
         gap: `${gap}px`,
+        width: `${size * dotSize + (size - 1) * gap}px`,
+        height: `${size * dotSize + (size - 1) * gap}px`,
       }"
     >
       <span
         v-for="i in totalDots"
         :key="i"
-        class="rounded-sm bg-current transition-opacity duration-100"
+        class="rounded-[0.5px] bg-current transition-opacity duration-100"
         :class="activeDots.has(i - 1) ? 'opacity-100' : 'opacity-20'"
+        :style="{ width: `${dotSize}px`, height: `${dotSize}px` }"
       />
     </div>
 
-    <UChatShimmer
-      :text="displayedText"
-      class="text-sm font-mono"
-    />
+    <UChatShimmer :text="displayedText" class="font-mono tracking-tight" />
   </div>
 </template>

@@ -36,10 +36,9 @@ function getSystemPrompt(siteName: string) {
 - Guide users like a friendly expert would
 
 **Links and exploration:**
-- Tool results include a \`url\` for each page — use inline source-link components to reference them: \`<source-link url="/path" label="Page Title" />\`
-- When it helps, add extra source links (related pages, "read more", side topics) — make the answer easy to dig into, not a wall of text
+- Tool results include a \`url\` for each page — prefer markdown links \`[label](url)\` so users can open the doc in one click
+- When it helps, add extra links (related pages, "read more", side topics) — make the answer easy to dig into, not a wall of text
 - Stick to URLs from tool results (\`url\` / \`path\`) so links stay valid
-- ALWAYS use \`<source-link url="..." label="..." />\` for documentation page references, never plain markdown links
 
 **FORMATTING RULES (CRITICAL):**
 - NEVER use markdown headings (#, ##, ###, etc.)
