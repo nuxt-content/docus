@@ -3,11 +3,14 @@ import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
+type DocusI18nOptions = { locales?: Array<string | { code: string }> }
+
 export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
     resolve('./modules/routing'),
     resolve('./modules/markdown-rewrite'),
+    resolve('./modules/skills'),
     resolve('./modules/css'),
     () => {
       const nuxt = useNuxt()
@@ -36,9 +39,11 @@ export default defineNuxtConfig({
 
         // Fix @vercel/oidc ESM export issue (transitive dep of @ai-sdk/gateway)
         // Only needed when AI assistant is enabled.
-        if (process.env.AI_GATEWAY_API_KEY) {
+        if (process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN) {
           config.optimizeDeps.include.push('@vercel/oidc')
-          config.optimizeDeps.include.map(id => id.replace(/^@vercel\/oidc$/, 'docus > @vercel/oidc'))
+          config.optimizeDeps.include = config.optimizeDeps.include.map(id =>
+            id.replace(/^@vercel\/oidc$/, 'docus > @vercel/oidc'),
+          )
         }
       })
     },
@@ -87,14 +92,14 @@ export default defineNuxtConfig({
     'nitro:config'(nitroConfig) {
       const nuxt = useNuxt()
 
-      const i18nOptions = nuxt.options.i18n
+      const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
 
       const routes: string[] = []
       if (!i18nOptions) {
         routes.push('/')
       }
       else {
-        routes.push(...(i18nOptions.locales?.map(locale => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
+        routes.push(...(i18nOptions.locales?.map((locale: string | { code: string }) => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
       }
 
       nitroConfig.prerender = nitroConfig.prerender || {}
@@ -115,6 +120,9 @@ export default defineNuxtConfig({
       includeCustomCollections: true,
     },
     provider: 'iconify',
+  },
+  ogImage: {
+    zeroRuntime: true,
   },
   robots: {
     groups: [

@@ -33,12 +33,14 @@ export default defineNuxtModule<AssistantModuleOptions>({
     model: 'google/gemini-3-flash',
   },
   setup(options, nuxt) {
-    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
+    const hasAiGatewayAuth = !!(
+      process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
+    )
 
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.assistant = {
-      enabled: hasApiKey,
+      enabled: hasAiGatewayAuth,
       apiPath: options.apiPath!,
     }
 
@@ -60,14 +62,14 @@ export default defineNuxtModule<AssistantModuleOptions>({
     components.forEach(name =>
       addComponent({
         name,
-        filePath: hasApiKey
+        filePath: hasAiGatewayAuth
           ? resolve(`./runtime/components/${name}.vue`)
           : resolve('./runtime/components/AssistantChatDisabled.vue'),
       }),
     )
 
-    if (!hasApiKey) {
-      log.warn('AI assistant disabled: AI_GATEWAY_API_KEY not found')
+    if (!hasAiGatewayAuth) {
+      log.warn('AI assistant disabled: neither AI_GATEWAY_API_KEY nor VERCEL_OIDC_TOKEN found')
       return
     }
 

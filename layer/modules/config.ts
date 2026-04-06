@@ -7,6 +7,13 @@ import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
 const log = logger.withTag('Docus')
 
+type I18nLocale = string | { code: string, name?: string }
+type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }
+type RegisterModuleOptions = {
+  langDir: string
+  locales: Array<{ code: string, name: string, file: string }>
+}
+
 export default defineNuxtModule({
   meta: {
     name: 'config',
@@ -51,14 +58,22 @@ export default defineNuxtModule({
       branch: getGitBranch(),
     })
 
+    const forcedColorMode = (nuxt.options.appConfig.docus as Record<string, unknown>)?.colorMode as string | undefined
+    if (forcedColorMode === 'light' || forcedColorMode === 'dark') {
+      nuxt.options.colorMode = defu({ preference: forcedColorMode, fallback: forcedColorMode }, nuxt.options.colorMode || {}) as typeof nuxt.options.colorMode
+    }
+
     /*
     ** I18N
     */
-    if (nuxt.options.i18n && nuxt.options.i18n.locales) {
+    const typedNuxtOptions = nuxt.options as typeof nuxt.options & { i18n?: false | DocusI18nOptions }
+    const i18nOptions = typedNuxtOptions.i18n
+
+    if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
       const { resolve } = createResolver(import.meta.url)
 
       // Filter locales to only include existing ones
-      const filteredLocales = nuxt.options.i18n.locales.filter((locale) => {
+      const filteredLocales = i18nOptions.locales.filter((locale: I18nLocale) => {
         const localeCode = typeof locale === 'string' ? locale : locale.code
 
         // Check for JSON locale file
@@ -81,8 +96,8 @@ export default defineNuxtModule({
       })
 
       // Override strategy to prefix
-      nuxt.options.i18n = {
-        ...nuxt.options.i18n,
+      typedNuxtOptions.i18n = {
+        ...i18nOptions,
         strategy: 'prefix',
       }
 
@@ -91,10 +106,12 @@ export default defineNuxtModule({
         filteredLocales,
       }
 
-      nuxt.hook('i18n:registerModule', (register) => {
+      const registerI18nModule = nuxt.hook as unknown as (name: string, callback: (register: (options: RegisterModuleOptions) => void) => void) => void
+
+      registerI18nModule('i18n:registerModule', (register) => {
         const langDir = resolve('../i18n/locales')
 
-        const locales = filteredLocales?.map((locale) => {
+        const locales = filteredLocales.map((locale: I18nLocale) => {
           return typeof locale === 'string'
             ? {
                 code: locale,

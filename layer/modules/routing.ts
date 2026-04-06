@@ -1,6 +1,8 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
 import { landingPageExists } from '../utils/pages'
 
+type DocusI18nOptions = { locales?: Array<string | { code: string }> }
+
 export default defineNuxtModule({
   meta: {
     name: 'routing',
@@ -8,7 +10,8 @@ export default defineNuxtModule({
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
-    const isI18nEnabled = !!(nuxt.options.i18n && nuxt.options.i18n.locales)
+    const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
+    const isI18nEnabled = !!i18nOptions?.locales
 
     // Ensure useDocusI18n is available in the app
     nuxt.hook('imports:extend', (imports) => {

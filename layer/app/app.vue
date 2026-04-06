@@ -2,8 +2,12 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useDocusColorMode } from './composables/useDocusColorMode'
+import { useSubNavigation } from './composables/useSubNavigation'
 
-const { seo } = useAppConfig()
+const appConfig = useAppConfig()
+const { seo } = appConfig
+const { forced: forcedColorMode } = useDocusColorMode()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled } = useAssistant()
@@ -55,29 +59,41 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 })
 
 provide('navigation', navigation)
+
+const { subNavigationMode } = useSubNavigation(navigation)
 </script>
 
 <template>
   <UApp :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
-    <div class="flex flex-1">
-      <div class="flex flex-1 flex-col">
-        <AppHeader v-if="$route.meta.header !== false" />
-        <NuxtLayout>
-          <NuxtPage />
-        </NuxtLayout>
-        <AppFooter v-if="$route.meta.footer !== false" />
-      </div>
-      <LazyAssistantPanel v-if="isAssistantEnabled" />
+    <div
+      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': subNavigationMode === 'header' }]"
+      :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
+    >
+      <AppHeader v-if="$route.meta.header !== false" />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <AppFooter v-if="$route.meta.footer !== false" />
     </div>
 
     <ClientOnly>
       <LazyUContentSearch
         :files="files"
         :navigation="navigation"
+        :color-mode="!forcedColorMode"
       />
       <LazyAssistantFloatingInput v-if="isAssistantEnabled" />
     </ClientOnly>
   </UApp>
 </template>
+
+<style>
+@media (min-width: 1024px) {
+  .docus-sub-header {
+    /* 64px base header + 48px sub-navigation bar */
+    --ui-header-height: 112px;
+  }
+}
+</style>

@@ -27,11 +27,11 @@ export default defineEventHandler(async (event) => {
 
   for (const collection of collections) {
     try {
-      const pages = await queryCollection(event, collection as 'docs').all()
+      const pages = await (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Array<Record<string, unknown> & { path?: string }>> })(event, collection).all()
 
       for (const page of pages) {
-        const meta = page as unknown as Record<string, unknown>
-        const pagePath = (page.path as string) || '/'
+        const meta = page as Record<string, unknown>
+        const pagePath = page.path || '/'
 
         // Skip pages with sitemap: false in frontmatter
         if (meta.sitemap === false) continue

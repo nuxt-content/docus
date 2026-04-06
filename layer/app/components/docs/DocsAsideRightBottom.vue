@@ -16,7 +16,7 @@ const explainIcon = computed(() => appConfig.assistant?.icons?.explain || 'i-luc
 <template>
   <div
     v-if="appConfig.toc?.bottom?.links?.length || showExplainWithAi"
-    class="hidden lg:block space-y-6"
+    class="space-y-6"
   >
     <USeparator type="dashed" />
 

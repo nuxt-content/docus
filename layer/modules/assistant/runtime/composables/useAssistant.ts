@@ -1,4 +1,7 @@
 import type { UIMessage } from 'ai'
+import { useAppConfig, useRuntimeConfig, useState } from '#imports'
+import { useMediaQuery } from '@vueuse/core'
+import { computed } from 'vue'
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
@@ -19,7 +22,10 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
 export function useAssistant() {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
-  const isEnabled = computed(() => config.public.assistant?.enabled ?? false)
+  const assistantRuntimeConfig = config.public.assistant as { enabled?: boolean } | undefined
+  const assistantConfig = appConfig.assistant as { faqQuestions?: FaqQuestions | LocalizedFaqQuestions } | undefined
+  const docusRuntimeConfig = appConfig.docus as { locale?: string } | undefined
+  const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
 
   const isOpen = useState('assistant-open', () => false)
   const isExpanded = useState('assistant-expanded', () => false)
@@ -27,14 +33,13 @@ export function useAssistant() {
   const pendingMessage = useState<string | undefined>('assistant-pending', () => undefined)
 
   const faqQuestions = computed<FaqCategory[]>(() => {
-    const assistantConfig = appConfig.assistant
     const faqConfig = assistantConfig?.faqQuestions
     if (!faqConfig) return []
 
     // Check if it's a localized object (has locale keys like 'en', 'fr')
     if (!Array.isArray(faqConfig)) {
       const localizedConfig = faqConfig as LocalizedFaqQuestions
-      const currentLocale = appConfig.docus?.locale || 'en'
+      const currentLocale = docusRuntimeConfig?.locale || 'en'
       const defaultLocale = config.public.i18n?.defaultLocale || 'en'
 
       // Try current locale, then default locale, then first available

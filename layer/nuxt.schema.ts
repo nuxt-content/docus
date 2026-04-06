@@ -193,6 +193,20 @@ export default defineNuxtSchema({
         }),
       },
     }),
+    navigation: group({
+      title: 'Navigation',
+      description: 'Navigation configuration.',
+      icon: 'i-lucide-navigation',
+      fields: {
+        sub: field({
+          type: 'string',
+          title: 'Sub Navigation',
+          description: 'Enable sub-navigation for multi-section docs. Use "header" for a secondary tab bar below the header, or "aside" for section anchors at the top of the sidebar.',
+          icon: 'i-lucide-layout-panel-left',
+          default: '',
+        }),
+      },
+    }),
     socials: field({
       type: 'object',
       title: 'Social Networks',
@@ -260,6 +274,28 @@ export default defineNuxtSchema({
           description: 'Root directory of the GitHub repository.',
           icon: 'i-lucide-folder',
           default: '',
+        }),
+      },
+    }),
+    docus: group({
+      title: 'Docus',
+      description: 'Docus configuration.',
+      icon: 'i-lucide-settings',
+      fields: {
+        locale: field({
+          type: 'string',
+          title: 'Locale',
+          description: 'Default locale for single-language documentation.',
+          icon: 'i-lucide-languages',
+          default: 'en',
+        }),
+        colorMode: field({
+          type: 'string',
+          title: 'Color Mode',
+          description: 'Force a specific color mode. Leave empty for system preference with toggle.',
+          icon: 'i-lucide-monitor',
+          default: '',
+          required: ['', 'light', 'dark'],
         }),
       },
     }),

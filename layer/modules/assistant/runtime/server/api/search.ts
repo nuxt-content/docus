@@ -37,6 +37,11 @@ function getSystemPrompt(siteName: string) {
 - Be concise, helpful, and direct
 - Guide users like a friendly expert would
 
+**Links and exploration:**
+- Tool results include a \`url\` for each page — prefer markdown links \`[label](url)\` so users can open the doc in one click
+- When it helps, add extra links (related pages, “read more”, side topics) — make the answer easy to dig into, not a wall of text
+- Stick to URLs from tool results (\`url\` / \`path\`) so links stay valid
+
 **FORMATTING RULES (CRITICAL):**
 - NEVER use markdown headings (#, ##, ###, etc.)
 - Use **bold text** for emphasis and section labels
@@ -60,11 +65,12 @@ export default defineEventHandler(async (event) => {
 
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
+  const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
   const mcpUrl = isExternalUrl
     ? mcpServer
     : import.meta.dev
-      ? `http://localhost:3000${mcpServer}`
-      : `${getRequestURL(event).origin}${mcpServer}`
+      ? `http://localhost:3000${baseURL}${mcpServer}`
+      : `${getRequestURL(event).origin}${baseURL}${mcpServer}`
 
   const httpClient = await createMCPClient({
     transport: { type: 'http', url: mcpUrl },

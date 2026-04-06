@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
+import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -22,15 +23,25 @@ OUTPUT: Returns a structured list with:
 - path: Exact path for use with get-page
 - description: Brief summary of page content
 - url: Full URL for reference`,
-  inputSchema: {
-    locale: z.string().optional().describe('The locale to filter pages by'),
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
   },
+  inputSchema: {
+    locale: z.string().optional().describe('The locale to filter pages by (e.g., "en", "fr")'),
+  },
+  inputExamples: [
+    { locale: 'en' },
+    {},
+  ],
   cache: '1h',
   handler: async ({ locale }) => {
     const event = useEvent()
     const config = useRuntimeConfig(event).public
 
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin
+    const siteUrl = getRequestURL(event).origin || inferSiteURL()
     const availableLocales = getAvailableLocales(config)
     const collections = getCollectionsToQuery(locale, availableLocales)
 
@@ -51,10 +62,10 @@ OUTPUT: Returns a structured list with:
         }),
       )
 
-      return jsonResult(allPages.flat())
+      return allPages.flat()
     }
     catch {
-      return errorResult('Failed to list pages')
+      throw createError({ statusCode: 500, message: 'Failed to list pages' })
     }
   },
 })
