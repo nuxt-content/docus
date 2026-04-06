@@ -11,7 +11,7 @@ const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const { isOpen: shouldHideToc } = useAssistant()
+const { isOpen: isAssistantOpen } = useAssistant()
 
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
@@ -75,7 +75,10 @@ addPrerenderPath(`/raw${route.path}.md`)
 <template>
   <UPage
     v-if="page"
-    :key="`page-${shouldHideToc}`"
+    :ui="isAssistantOpen ? {
+      center: 'lg:col-span-10',
+      right: 'lg:col-span-0',
+    } : undefined"
   >
     <UPageHeader
       :title="page.title"

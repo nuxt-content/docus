@@ -22,6 +22,7 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
+    '@comark/nuxt',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',

@@ -55,8 +55,6 @@ export default defineNuxtModule<AssistantModuleOptions>({
       'AssistantChat',
       'AssistantPanel',
       'AssistantFloatingInput',
-      'AssistantLoading',
-      'AssistantMatrix',
     ]
 
     components.forEach(name =>

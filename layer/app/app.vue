@@ -67,25 +67,31 @@ const { subNavigationMode } = useSubNavigation(navigation)
   <UApp :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
-    <div
-      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': subNavigationMode === 'header' }]"
-      :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
-    >
-      <AppHeader v-if="$route.meta.header !== false" />
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-      <AppFooter v-if="$route.meta.footer !== false" />
-    </div>
+    <div class="flex">
+      <div
+        class="flex-1 min-w-0"
+        :class="{ 'docus-sub-header': subNavigationMode === 'header' }"
+      >
+        <AppHeader v-if="$route.meta.header !== false" />
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+        <AppFooter v-if="$route.meta.footer !== false" />
 
-    <ClientOnly>
-      <LazyUContentSearch
-        :files="files"
-        :navigation="navigation"
-        :color-mode="!forcedColorMode"
-      />
-      <LazyAssistantFloatingInput v-if="isAssistantEnabled" />
-    </ClientOnly>
+        <ClientOnly>
+          <LazyUContentSearch
+            :files="files"
+            :navigation="navigation"
+            :color-mode="!forcedColorMode"
+          />
+          <LazyAssistantFloatingInput v-if="isAssistantEnabled" />
+        </ClientOnly>
+      </div>
+
+      <ClientOnly v-if="isAssistantEnabled">
+        <LazyAssistantPanel />
+      </ClientOnly>
+    </div>
   </UApp>
 </template>
 

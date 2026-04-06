@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const links = computed(() => props.page?.body?.toc?.links || [])
 
-const { shouldPushContent: shouldHideToc } = useAssistant()
+const { isOpen: isAssistantOpen } = useAssistant()
 const { subNavigationMode } = useSubNavigation()
 const appConfig = useAppConfig()
 const { t } = useDocusI18n()
@@ -17,7 +17,7 @@ const { t } = useDocusI18n()
 <template>
   <div>
     <UContentToc
-      v-if="links.length && !shouldHideToc"
+      v-if="links.length && !isAssistantOpen"
       highlight
       :title="appConfig.toc?.title || t('docs.toc')"
       :links="links"

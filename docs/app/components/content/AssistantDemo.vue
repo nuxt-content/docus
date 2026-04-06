@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Chat } from '@ai-sdk/vue'
-import { DefaultChatTransport } from 'ai'
+import { DefaultChatTransport, isToolUIPart, isTextUIPart, getToolName } from 'ai'
+import { isToolStreaming } from '@nuxt/ui/utils/ai'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
@@ -35,21 +36,15 @@ const chat = isEnabled.value
     })
   : null
 
-const lastMessage = computed(() => chat?.messages.at(-1))
-const showThinking = computed(() =>
-  chat?.status === 'streaming'
-  && lastMessage.value?.role === 'assistant'
-  && !lastMessage.value?.parts?.some((p: { type: string }) => p.type === 'text'),
-)
+function getToolText(part: { state: string, input?: Record<string, string> }) {
+  const toolName = getToolName(part as Parameters<typeof getToolName>[0])
+  const verb = part.state === 'output-available' ? 'Searched' : 'Searching'
+  const readVerb = part.state === 'output-available' ? 'Read' : 'Reading'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getMessageToolCalls(message: any) {
-  if (!message?.parts) return []
-  return message.parts
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((p: any) => p.type === 'data-tool-calls')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .flatMap((p: any) => p.data?.tools || [])
+  return {
+    'list-pages': `${verb} pages`,
+    'get-page': `${readVerb} ${part.input?.path || '...'}`,
+  }[toolName] || `${verb} ${toolName}`
 }
 
 function handleSubmit(event?: Event) {
@@ -119,26 +114,30 @@ function resetChat() {
           :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
           class="px-4 py-4"
         >
+          <template #indicator>
+            <UChatTool icon="i-lucide-brain" text="Thinking..." streaming />
+          </template>
+
           <template #content="{ message }">
-            <div class="flex flex-col gap-2">
-              <AssistantLoading
-                v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
-                :tool-calls="getMessageToolCalls(message)"
-                :is-loading="showThinking && message.id === lastMessage?.id"
+            <template
+              v-for="(part, index) in message.parts"
+              :key="`${message.id}-${part.type}-${index}`"
+            >
+              <MDCCached
+                v-if="isTextUIPart(part) && part.text"
+                :value="part.text"
+                :cache-key="`demo-${message.id}-${index}`"
+                :parser-options="{ highlight: false }"
+                class="*:first:mt-0 *:last:mb-0"
               />
-              <template
-                v-for="(part, index) in message.parts"
-                :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
-              >
-                <MDCCached
-                  v-if="part.type === 'text' && part.text"
-                  :value="part.text"
-                  :cache-key="`demo-${message.id}-${index}`"
-                  :parser-options="{ highlight: false }"
-                  class="*:first:mt-0 *:last:mb-0"
-                />
-              </template>
-            </div>
+
+              <UChatTool
+                v-else-if="isToolUIPart(part)"
+                :text="getToolText(part)"
+                :icon="part.toolName === 'get-page' ? 'i-lucide-file-text' : 'i-lucide-search'"
+                :streaming="isToolStreaming(part)"
+              />
+            </template>
           </template>
         </UChatMessages>
       </template>

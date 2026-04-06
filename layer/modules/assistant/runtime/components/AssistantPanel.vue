@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
-import type { UIMessage } from 'ai'
+import type { ToolUIPart, DynamicToolUIPart } from 'ai'
+import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart, getToolName } from 'ai'
 import { Chat } from '@ai-sdk/vue'
-import { DefaultChatTransport } from 'ai'
+import { isReasoningStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
+import AssistantComark from './AssistantComark'
+import AssistantIndicator from './AssistantIndicator.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const components: Record<string, any> = {
-  pre: defineAsyncComponent(() => import('./AssistantPreStream.vue')),
-}
-
-const { isOpen, isExpanded, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAssistant()
+const { isOpen, messages, faqQuestions } = useAssistant()
 const config = useRuntimeConfig()
 const toast = useToast()
 const { t } = useDocusI18n()
@@ -19,21 +16,23 @@ const input = ref('')
 const displayTitle = computed(() => t('assistant.title'))
 const displayPlaceholder = computed(() => t('assistant.placeholder'))
 
+let _skipSync = false
+
 const chat = new Chat({
   messages: messages.value,
   transport: new DefaultChatTransport({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.assistant.apiPath,
   }),
   onError: (error: Error) => {
-    const message = (() => {
+    let message = error.message
+    if (typeof message === 'string' && message[0] === '{') {
       try {
-        const parsed = JSON.parse(error.message)
-        return parsed?.message || error.message
+        message = JSON.parse(message).message || message
       }
       catch {
-        return error.message
+        // keep original on malformed JSON
       }
-    })()
+    }
 
     toast.add({
       description: message,
@@ -43,81 +42,103 @@ const chat = new Chat({
     })
   },
   onFinish: () => {
+    _skipSync = true
     messages.value = chat.messages
+    nextTick(() => {
+      _skipSync = false
+    })
   },
 })
 
-watch(pendingMessage, (message: string | undefined) => {
-  if (message) {
-    if (messages.value.length === 0 && chat.messages.length > 0) {
-      chat.messages.length = 0
-    }
-    chat.sendMessage({
-      text: message,
-    })
-    clearPending()
+watch(messages, (newMessages) => {
+  if (_skipSync) return
+
+  chat.messages = newMessages
+  if (chat.lastMessage?.role === 'user') {
+    chat.regenerate()
   }
-}, { immediate: true })
+})
 
-watch(messages, (newMessages: UIMessage[]) => {
-  if (newMessages.length === 0 && chat.messages.length > 0) {
-    chat.messages.length = 0
-  }
-}, { deep: true })
+const canClear = computed(() => messages.value.length > 0)
 
-const lastMessage = computed(() => chat.messages.at(-1))
-const showThinking = computed(() =>
-  chat.status === 'streaming'
-  && lastMessage.value?.role === 'assistant'
-  && !lastMessage.value?.parts?.some((p: { type: string }) => p.type === 'text'),
-)
+type ToolPart = ToolUIPart | DynamicToolUIPart
+type ToolState = ToolPart['state']
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getMessageToolCalls(message: any) {
-  if (!message?.parts) return []
-  return message.parts
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((p: any) => p.type === 'data-tool-calls')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .flatMap((p: any) => p.data?.tools || [])
+function getToolMessage(state: ToolState, toolName: string, input: Record<string, string | undefined>) {
+  const searchVerb = state === 'output-available' ? 'Searched' : 'Searching'
+  const readVerb = state === 'output-available' ? 'Read' : 'Reading'
+
+  return {
+    'list-pages': `${searchVerb} pages`,
+    'get-page': `${readVerb} ${input.path || '...'}`,
+  }[toolName] || `${searchVerb} ${toolName}`
 }
 
-function handleSubmit(event?: Event) {
-  event?.preventDefault()
+function getToolText(part: ToolPart) {
+  return getToolMessage(part.state, getToolName(part), (part.input || {}) as Record<string, string | undefined>)
+}
 
-  if (!input.value.trim()) {
-    return
+function getToolIcon(part: ToolPart): string {
+  const toolName = getToolName(part)
+
+  return {
+    'get-page': 'i-lucide-file-text',
+  }[toolName] || 'i-lucide-search'
+}
+
+function getToolOutput(part: ToolPart): string | undefined {
+  if (part.state !== 'output-available' || !part.output) return undefined
+
+  const output = part.output as Record<string, unknown>
+
+  if (getToolName(part) === 'list-pages') {
+    const content = (output.content ?? output) as Array<{ text?: string }> | string
+    if (typeof content === 'string') return content
+    return content
+      ?.map(c => c.text)
+      .filter(Boolean)
+      .join('\n') || undefined
   }
 
-  chat.sendMessage({
-    text: input.value,
-  })
+  if (getToolName(part) === 'get-page') {
+    const content = (output.content ?? output) as Array<{ text?: string }> | string
+    if (typeof content === 'string') {
+      return content.length > 500 ? `${content.slice(0, 500)}…` : content
+    }
+    const text = content?.map(c => c.text).filter(Boolean).join('\n') || ''
+    return text.length > 500 ? `${text.slice(0, 500)}…` : text || undefined
+  }
 
+  return JSON.stringify(output, null, 2).slice(0, 500)
+}
+
+function onSubmit() {
+  if (!input.value.trim()) return
+
+  chat.sendMessage({ text: input.value })
   input.value = ''
 }
 
 function askQuestion(question: string) {
-  chat.sendMessage({
-    text: question,
-  })
+  input.value = question
+  onSubmit()
 }
 
-function resetChat() {
-  chat.stop()
+function clearMessages() {
+  if (chat.status === 'streaming') {
+    chat.stop()
+  }
   messages.value = []
-  chat.messages.length = 0
+  chat.messages = []
 }
 
-onMounted(() => {
-  if (pendingMessage.value) {
-    chat.sendMessage({
-      text: pendingMessage.value,
-    })
-    clearPending()
-  }
-  else if (chat.lastMessage?.role === 'user') {
-    chat.regenerate()
-  }
+defineShortcuts({
+  meta_i: {
+    handler: () => {
+      isOpen.value = !isOpen.value
+    },
+    usingInput: true,
+  },
 })
 </script>
 
@@ -125,63 +146,99 @@ onMounted(() => {
   <USidebar
     v-model:open="isOpen"
     side="right"
-    collapsible="offcanvas"
-    close
     :title="displayTitle"
-    :style="{ '--sidebar-width': isExpanded ? '32rem' : '22rem' }"
-    :ui="{ footer: 'p-0' }"
+    rail
+    :style="{ '--sidebar-width': '24rem' }"
+    :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
     <template #actions>
-      <UTooltip :text="isExpanded ? t('assistant.collapse') : t('assistant.expand')">
+      <UTooltip v-if="canClear" :text="t('assistant.clearChat')">
         <UButton
-          :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
+          icon="i-lucide-list-x"
           color="neutral"
           variant="ghost"
-          @click="toggleExpanded"
-        />
-      </UTooltip>
-      <UTooltip
-        v-if="chat.messages.length > 0"
-        :text="t('assistant.clearChat')"
-      >
-        <UButton
-          icon="i-lucide-trash-2"
-          color="neutral"
-          variant="ghost"
-          @click="resetChat"
+          @click="clearMessages"
         />
       </UTooltip>
     </template>
 
-    <template #default>
+    <template #close>
+      <UTooltip :text="t('assistant.close')" :kbds="['meta', 'i']">
+        <UButton
+          icon="i-lucide-panel-right-close"
+          color="neutral"
+          variant="ghost"
+          aria-label="Close"
+          @click="isOpen = false"
+        />
+      </UTooltip>
+    </template>
+
+    <UTheme
+      :ui="{
+        prose: {
+          p: { base: 'my-2 text-sm/6' },
+          li: { base: 'my-0.5 text-sm/6' },
+          ul: { base: 'my-2' },
+          ol: { base: 'my-2' },
+          h1: { base: 'text-xl mb-4' },
+          h2: { base: 'text-lg mt-6 mb-3' },
+          h3: { base: 'text-base mt-4 mb-2' },
+          h4: { base: 'text-sm mt-3 mb-1.5' },
+          code: { base: 'text-xs' },
+          pre: { root: 'my-2', base: 'text-xs/5' },
+          table: { root: 'my-2' },
+          hr: { base: 'my-4' },
+        },
+      }"
+    >
       <UChatMessages
-        v-if="chat.messages.length > 0"
-        :messages="chat.messages"
-        compact
+        v-if="chat.messages.length"
         should-auto-scroll
+        :messages="chat.messages"
         :status="chat.status"
+        compact
         class="px-0 gap-2"
         :user="{ ui: { container: 'max-w-full' } }"
-        :assistant="{ ui: { content: 'flex flex-col gap-2' } }"
       >
+        <template #indicator>
+          <AssistantIndicator />
+        </template>
+
         <template #content="{ message }">
-          <AssistantLoading
-            v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
-            :tool-calls="getMessageToolCalls(message)"
-            :is-loading="showThinking && message.id === lastMessage?.id"
-          />
-          <template
-            v-for="(part, index) in message.parts"
-            :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
-          >
-            <MDCCached
-              v-if="part.type === 'text' && part.text"
-              :value="part.text"
-              :cache-key="`${message.id}-${index}`"
-              :components="components"
-              :parser-options="{ highlight: false }"
-              class="*:first:mt-0! *:last:mb-0!"
-            />
+          <template v-for="(part, index) in message.parts" :key="`${message.id}-${part.type}-${index}`">
+            <UChatReasoning
+              v-if="isReasoningUIPart(part)"
+              :text="part.text"
+              :streaming="isReasoningStreaming(message, index, chat)"
+              icon="i-lucide-brain"
+            >
+              <AssistantComark
+                :markdown="part.text"
+                :streaming="isReasoningStreaming(message, index, chat)"
+              />
+            </UChatReasoning>
+
+            <template v-else-if="isTextUIPart(part) && part.text.length > 0">
+              <AssistantComark
+                v-if="message.role === 'assistant'"
+                :markdown="part.text"
+                :streaming="isReasoningStreaming(message, index, chat)"
+              />
+              <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap text-sm/6">
+                {{ part.text }}
+              </p>
+            </template>
+
+            <UChatTool
+              v-else-if="isToolUIPart(part)"
+              :text="getToolText(part)"
+              :icon="getToolIcon(part)"
+              :streaming="isToolStreaming(part)"
+              chevron="leading"
+            >
+              <pre v-if="getToolOutput(part)" class="text-xs text-dimmed whitespace-pre-wrap" v-text="getToolOutput(part)" />
+            </UChatTool>
           </template>
         </template>
       </UChatMessages>
@@ -206,64 +263,41 @@ onMounted(() => {
         </div>
 
         <template v-else>
-          <p class="mb-4 text-sm font-medium text-muted">
-            {{ t('assistant.faq') }}
-          </p>
-
-          <div class="flex flex-col gap-5">
-            <div
+          <div class="flex flex-col gap-6">
+            <UPageLinks
               v-for="category in faqQuestions"
               :key="category.category"
-              class="flex flex-col gap-1.5"
-            >
-              <h4 class="text-xs font-medium uppercase tracking-wide text-dimmed">
-                {{ category.category }}
-              </h4>
-              <div class="flex flex-col">
-                <button
-                  v-for="question in category.items"
-                  :key="question"
-                  class="py-1.5 text-left text-sm text-muted transition-colors hover:text-highlighted"
-                  @click="askQuestion(question)"
-                >
-                  {{ question }}
-                </button>
-              </div>
-            </div>
+              :title="category.category"
+              :links="category.items.map(item => ({ label: item, onClick: () => askQuestion(item) }))"
+            />
           </div>
         </template>
       </div>
-    </template>
+    </UTheme>
 
     <template #footer>
       <UChatPrompt
         v-model="input"
-        :rows="2"
+        :error="chat.error"
         :placeholder="displayPlaceholder"
-        maxlength="1000"
         variant="naked"
+        size="sm"
         autofocus
         :ui="{ base: 'px-0' }"
         class="px-4"
-        @submit="handleSubmit"
+        @submit="onSubmit"
       >
         <template #footer>
-          <p class="text-xs text-muted flex items-center gap-1">
+          <div class="flex items-center gap-1.5 text-xs text-dimmed">
             <span>{{ t('assistant.lineBreak') }}</span>
-            <UKbd
-              size="sm"
-              value="shift"
-            />
-            <UKbd
-              size="sm"
-              value="enter"
-            />
-            <span class="text-dimmed ml-auto">{{ input.length }}/1000</span>
-          </p>
+            <UKbd size="sm" value="shift" />
+            <UKbd size="sm" value="enter" />
+          </div>
 
           <UChatPromptSubmit
             size="sm"
             :status="chat.status"
+            :disabled="!input.trim()"
             @stop="chat.stop()"
             @reload="chat.regenerate()"
           />
