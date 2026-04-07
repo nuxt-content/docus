@@ -13,7 +13,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "docus": "workspace:*",
     "nuxt": "4.4.2",
-    "nuxt-studio": "^1.5.1",
+    "nuxt-studio": "https://pkg.pr.new/nuxt-studio@fd3039f",
     "tailwindcss": "^4.2.2"
   }
 }

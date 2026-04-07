@@ -97,8 +97,8 @@ importers:
         specifier: 4.4.2
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@parcel/watcher@2.5.6)(@types/node@25.5.0)(@vue/compiler-sfc@3.5.31)(better-sqlite3@12.8.0)(db0@0.3.4(better-sqlite3@12.8.0))(eslint@10.1.0(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(rollup-plugin-visualizer@7.0.1(rollup@4.60.1))(rollup@4.60.1)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.2.6(typescript@5.9.3))(yaml@2.8.3)
       nuxt-studio:
-        specifier: ^1.5.1
-        version: 1.5.1(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)(magicast@0.5.2)(vue@3.5.31(typescript@5.9.3))
+        specifier: https://pkg.pr.new/nuxt-studio@fd3039f
+        version: https://pkg.pr.new/nuxt-studio@fd3039f(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)(magicast@0.5.2)(vue@3.5.31(typescript@5.9.3))
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
@@ -225,6 +225,12 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
+  '@ai-sdk/gateway@3.0.91':
+    resolution: {integrity: sha512-J39Dh6Gyg6HjG3A7OFKnJMp3QyZ3Eex+XDiX8aFBdRwwZm3jGWaMhkCxQPH7yiQ9kRiErZwHXX/Oexx4SyGGGA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
   '@ai-sdk/mcp@1.0.30':
     resolution: {integrity: sha512-QTpRa5kmMpKGbhaOgCULxIVykBlDoAe14bynSfx7oQYxGfINapixDyrTr40TwWU71VfGLWVdEJBkfMyKeTbQtw==}
     engines: {node: '>=18'}
@@ -237,12 +243,24 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
+  '@ai-sdk/provider-utils@4.0.23':
+    resolution: {integrity: sha512-z8GlDaCmRSDlqkMF2f4/RFgWxdarvIbyuk+m6WXT1LYgsnGiXRJGTD2Z1+SDl3LqtFuRtGX1aghYvQLoHL/9pg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
   '@ai-sdk/provider@3.0.8':
     resolution: {integrity: sha512-oGMAgGoQdBXbZqNG0Ze56CHjDZ1IDYOwGYxYjO5KLSlz5HiNQ9udIXsPZ61VWaHGZ5XW/jyjmr6t2xz2jGVwbQ==}
     engines: {node: '>=18'}
 
   '@ai-sdk/vue@3.0.141':
     resolution: {integrity: sha512-Q5oyZVLvJ7XTHk9NRDJ/mNlvGZbBjB7eezROLBZ1uofaS5Mb4L0McBjFLNX2xYYBmcpKZi8ZqNkNoVmkyb2KzQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      vue: ^3.3.4
+
+  '@ai-sdk/vue@3.0.149':
+    resolution: {integrity: sha512-oRFTuZSfOmNIruDOy2CEgDTFse3Fei5nkcI/OpyCRg2KPm6ZiO2kBn6U5fLdyIVByruxl8h1V9e5hpAPb7oy0g==}
     engines: {node: '>=18'}
     peerDependencies:
       vue: ^3.3.4
@@ -1535,6 +1553,9 @@ packages:
 
   '@nuxtjs/mdc@0.21.0':
     resolution: {integrity: sha512-gLd7j/voqVlGuKJnSV44dYkfQnohpQtMWoGpmuZ5aySe/e9OZOueY0ZXvlMUXdVABEYUba/kiYTD5+n/HaiQbw==}
+
+  '@nuxtjs/mdc@0.21.1':
+    resolution: {integrity: sha512-DIeUD7IahWVUSoZExysxH9dX51Io6hcQYgGJODq0cMTGqaoDD32lRfHBJxYUmy+sUCV1+1hfa2ixspgJgEd2GA==}
 
   '@nuxtjs/robots@6.0.6':
     resolution: {integrity: sha512-cmOWk5KW1iRLKRYVau98m0om6h34g3/UoXDNHsii3W5h2qR996LLTxac1rExSvLgqNBEpfYdHRasXwgmKXpD4w==}
@@ -3730,6 +3751,12 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
+  ai@6.0.149:
+    resolution: {integrity: sha512-3asRb/m3ZGH7H4+VTuTgj8eQYJZ9IJUmV0ljLslY92mQp6Zj+NVn4SmFj0TBr2Y/wFBWC3xgn++47tSGOXxdbw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
     peerDependencies:
@@ -4392,6 +4419,9 @@ packages:
 
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
+
+  defu@6.1.7:
+    resolution: {integrity: sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ==}
 
   degenerator@5.0.1:
     resolution: {integrity: sha512-TllpMR/t0M5sqCXfj85i4XaAzxmS5tVA16dqvdkMwGmzI+dXLXnw3J+3Vdv7VKw+ThlTMboK6i9rnZ6Nntj5CQ==}
@@ -6133,8 +6163,9 @@ packages:
   nuxt-site-config@4.0.7:
     resolution: {integrity: sha512-y0XwldSX7KD4uTDX72tv9ZAjFBVHrrtO9n6YURkLNak7wco8mj74ENDkanyHXfgWVAKJlYHjth3h25JWzj33Xg==}
 
-  nuxt-studio@1.5.1:
-    resolution: {integrity: sha512-cVzJVDphybuyct04TdzqqQu3r/mHPGHGiLfyfCR89fppRJFs8p3Z2K46GFLbwlMj8k/jCTqXU9MtBoG7KnuCHQ==}
+  nuxt-studio@https://pkg.pr.new/nuxt-studio@fd3039f:
+    resolution: {integrity: sha512-hdgOkjyA0EIKpvewT1hG7GkSTLbmaIEf9D9NDjrlOHw71km3kcCJ/xvOYSU4fPhObxOAPnZx8EcUhdIizJNC8w==, tarball: https://pkg.pr.new/nuxt-studio@fd3039f}
+    version: 1.5.1
 
   nuxt@4.4.2:
     resolution: {integrity: sha512-iWVFpr/YEqVU/CenqIHMnIkvb2HE/9f+q8oxZ+pj2et+60NljGRClCgnmbvGPdmNFE0F1bEhoBCYfqbDOCim3Q==}
@@ -7584,68 +7615,6 @@ packages:
   unrs-resolver@1.11.1:
     resolution: {integrity: sha512-bSjt9pjaEBnNiGgc9rUiHGKv5l4/TGzDmYw3RhnkJGtLhbnnA/5qJj7x3dNDCRx/PJxu774LlH8lCOlB4hEfKg==}
 
-  unstorage@1.17.4:
-    resolution: {integrity: sha512-fHK0yNg38tBiJKp/Vgsq4j0JEsCmgqH58HAn707S7zGkArbZsVr/CwINoi+nh3h98BRCwKvx1K3Xg9u3VV83sw==}
-    peerDependencies:
-      '@azure/app-configuration': ^1.8.0
-      '@azure/cosmos': ^4.2.0
-      '@azure/data-tables': ^13.3.0
-      '@azure/identity': ^4.6.0
-      '@azure/keyvault-secrets': ^4.9.0
-      '@azure/storage-blob': ^12.26.0
-      '@capacitor/preferences': ^6 || ^7 || ^8
-      '@deno/kv': '>=0.9.0'
-      '@netlify/blobs': ^6.5.0 || ^7.0.0 || ^8.1.0 || ^9.0.0 || ^10.0.0
-      '@planetscale/database': ^1.19.0
-      '@upstash/redis': ^1.34.3
-      '@vercel/blob': '>=0.27.1'
-      '@vercel/functions': ^2.2.12 || ^3.0.0
-      '@vercel/kv': ^1 || ^2 || ^3
-      aws4fetch: ^1.0.20
-      db0: '>=0.2.1'
-      idb-keyval: ^6.2.1
-      ioredis: ^5.4.2
-      uploadthing: ^7.4.4
-    peerDependenciesMeta:
-      '@azure/app-configuration':
-        optional: true
-      '@azure/cosmos':
-        optional: true
-      '@azure/data-tables':
-        optional: true
-      '@azure/identity':
-        optional: true
-      '@azure/keyvault-secrets':
-        optional: true
-      '@azure/storage-blob':
-        optional: true
-      '@capacitor/preferences':
-        optional: true
-      '@deno/kv':
-        optional: true
-      '@netlify/blobs':
-        optional: true
-      '@planetscale/database':
-        optional: true
-      '@upstash/redis':
-        optional: true
-      '@vercel/blob':
-        optional: true
-      '@vercel/functions':
-        optional: true
-      '@vercel/kv':
-        optional: true
-      aws4fetch:
-        optional: true
-      db0:
-        optional: true
-      idb-keyval:
-        optional: true
-      ioredis:
-        optional: true
-      uploadthing:
-        optional: true
-
   unstorage@1.17.5:
     resolution: {integrity: sha512-0i3iqvRfx29hkNntHyQvJTpf5W9dQ9ZadSoRU8+xVlhVtT7jAX57fazYO9EHvcRCfBCyi5YRya7XCDOsbTgkPg==}
     peerDependencies:
@@ -8155,6 +8124,13 @@ snapshots:
       '@vercel/oidc': 3.1.0
       zod: 4.3.6
 
+  '@ai-sdk/gateway@3.0.91(zod@4.3.6)':
+    dependencies:
+      '@ai-sdk/provider': 3.0.8
+      '@ai-sdk/provider-utils': 4.0.23(zod@4.3.6)
+      '@vercel/oidc': 3.1.0
+      zod: 4.3.6
+
   '@ai-sdk/mcp@1.0.30(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 3.0.8
@@ -8169,6 +8145,13 @@ snapshots:
       eventsource-parser: 3.0.6
       zod: 4.3.6
 
+  '@ai-sdk/provider-utils@4.0.23(zod@4.3.6)':
+    dependencies:
+      '@ai-sdk/provider': 3.0.8
+      '@standard-schema/spec': 1.1.0
+      eventsource-parser: 3.0.6
+      zod: 4.3.6
+
   '@ai-sdk/provider@3.0.8':
     dependencies:
       json-schema: 0.4.0
@@ -8177,6 +8160,15 @@ snapshots:
     dependencies:
       '@ai-sdk/provider-utils': 4.0.21(zod@4.3.6)
       ai: 6.0.141(zod@4.3.6)
+      swrv: 1.2.0(vue@3.5.31(typescript@5.9.3))
+      vue: 3.5.31(typescript@5.9.3)
+    transitivePeerDependencies:
+      - zod
+
+  '@ai-sdk/vue@3.0.149(vue@3.5.31(typescript@5.9.3))(zod@4.3.6)':
+    dependencies:
+      '@ai-sdk/provider-utils': 4.0.23(zod@4.3.6)
+      ai: 6.0.149(zod@4.3.6)
       swrv: 1.2.0(vue@3.5.31(typescript@5.9.3))
       vue: 3.5.31(typescript@5.9.3)
     transitivePeerDependencies:
@@ -9932,6 +9924,56 @@ snapshots:
       consola: 3.4.2
       debug: 4.4.3
       defu: 6.1.4
+      destr: 2.0.5
+      detab: 3.0.2
+      github-slugger: 2.0.0
+      hast-util-format: 1.1.0
+      hast-util-to-mdast: 10.1.2
+      hast-util-to-string: 3.0.1
+      mdast-util-to-hast: 13.2.1
+      micromark-util-sanitize-uri: 2.0.1
+      parse5: 8.0.0
+      pathe: 2.0.3
+      property-information: 7.1.0
+      rehype-external-links: 3.0.0
+      rehype-minify-whitespace: 6.0.2
+      rehype-raw: 7.0.0
+      rehype-remark: 10.0.1
+      rehype-slug: 6.0.0
+      rehype-sort-attribute-values: 5.0.1
+      rehype-sort-attributes: 5.0.1
+      remark-emoji: 5.0.2
+      remark-gfm: 4.0.1
+      remark-mdc: 3.10.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      remark-stringify: 11.0.0
+      scule: 1.3.0
+      shiki: 4.0.2
+      ufo: 1.6.3
+      unified: 11.0.5
+      unist-builder: 4.0.0
+      unist-util-visit: 5.1.0
+      unwasm: 0.5.3
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - magicast
+      - supports-color
+
+  '@nuxtjs/mdc@0.21.1(magicast@0.5.2)':
+    dependencies:
+      '@nuxt/kit': 4.4.2(magicast@0.5.2)
+      '@shikijs/core': 4.0.2
+      '@shikijs/engine-javascript': 4.0.2
+      '@shikijs/langs': 4.0.2
+      '@shikijs/themes': 4.0.2
+      '@shikijs/transformers': 4.0.2
+      '@types/hast': 3.0.4
+      '@types/mdast': 4.0.4
+      '@vue/compiler-core': 3.5.31
+      consola: 3.4.2
+      debug: 4.4.3
+      defu: 6.1.7
       destr: 2.0.5
       detab: 3.0.2
       github-slugger: 2.0.0
@@ -11728,6 +11770,14 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       zod: 4.3.6
 
+  ai@6.0.149(zod@4.3.6):
+    dependencies:
+      '@ai-sdk/gateway': 3.0.91(zod@4.3.6)
+      '@ai-sdk/provider': 3.0.8
+      '@ai-sdk/provider-utils': 4.0.23(zod@4.3.6)
+      '@opentelemetry/api': 1.9.0
+      zod: 4.3.6
+
   ajv-formats@3.0.1(ajv@8.18.0):
     optionalDependencies:
       ajv: 8.18.0
@@ -12378,6 +12428,8 @@ snapshots:
   define-lazy-prop@3.0.0: {}
 
   defu@6.1.4: {}
+
+  defu@6.1.7: {}
 
   degenerator@5.0.1:
     dependencies:
@@ -14655,23 +14707,23 @@ snapshots:
       - vue
       - zod
 
-  nuxt-studio@1.5.1(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)(magicast@0.5.2)(vue@3.5.31(typescript@5.9.3)):
+  nuxt-studio@https://pkg.pr.new/nuxt-studio@fd3039f(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)(magicast@0.5.2)(vue@3.5.31(typescript@5.9.3)):
     dependencies:
-      '@ai-sdk/gateway': 3.0.83(zod@4.3.6)
-      '@ai-sdk/vue': 3.0.141(vue@3.5.31(typescript@5.9.3))(zod@4.3.6)
+      '@ai-sdk/gateway': 3.0.91(zod@4.3.6)
+      '@ai-sdk/vue': 3.0.149(vue@3.5.31(typescript@5.9.3))(zod@4.3.6)
       '@iconify-json/lucide': 1.2.101
-      '@nuxtjs/mdc': 0.20.2(magicast@0.5.2)
+      '@nuxtjs/mdc': 0.21.1(magicast@0.5.2)
       '@vueuse/core': 14.2.1(vue@3.5.31(typescript@5.9.3))
-      ai: 6.0.141(zod@4.3.6)
-      defu: 6.1.4
+      ai: 6.0.149(zod@4.3.6)
+      defu: 6.1.7
       destr: 2.0.5
       ipx: 3.1.1(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)
       js-yaml: 4.1.1
       minimatch: 10.2.5
       nuxt-component-meta: 0.17.2(magicast@0.5.2)
       remark-mdc: 3.10.0
-      shiki: 3.23.0
-      unstorage: 1.17.4(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)
+      shiki: 4.0.2
+      unstorage: 1.17.5(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1)
       zod: 4.3.6
       zod-to-json-schema: 3.25.2(zod@4.3.6)
     transitivePeerDependencies:
@@ -16870,20 +16922,6 @@ snapshots:
       '@unrs/resolver-binding-win32-arm64-msvc': 1.11.1
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
-
-  unstorage@1.17.4(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1):
-    dependencies:
-      anymatch: 3.1.3
-      chokidar: 5.0.0
-      destr: 2.0.5
-      h3: 1.15.10
-      lru-cache: 11.2.7
-      node-fetch-native: 1.6.7
-      ofetch: 1.5.1
-      ufo: 1.6.3
-    optionalDependencies:
-      db0: 0.3.4(better-sqlite3@12.8.0)
-      ioredis: 5.10.1
 
   unstorage@1.17.5(db0@0.3.4(better-sqlite3@12.8.0))(ioredis@5.10.1):
     dependencies:
