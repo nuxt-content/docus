@@ -2,6 +2,7 @@
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, isToolUIPart, isTextUIPart, getToolName } from 'ai'
 import { isToolStreaming } from '@nuxt/ui/utils/ai'
+import AssistantComark from '../../../../layer/modules/assistant/runtime/components/AssistantComark'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
@@ -36,14 +37,15 @@ const chat = isEnabled.value
     })
   : null
 
-function getToolText(part: { state: string, input?: Record<string, string> }) {
-  const toolName = getToolName(part as Parameters<typeof getToolName>[0])
+function getToolText(part: Parameters<typeof getToolName>[0]) {
+  const toolName = getToolName(part)
+  const input = (part as { input?: Record<string, string> }).input
   const verb = part.state === 'output-available' ? 'Searched' : 'Searching'
   const readVerb = part.state === 'output-available' ? 'Read' : 'Reading'
 
   return {
     'list-pages': `${verb} pages`,
-    'get-page': `${readVerb} ${part.input?.path || '...'}`,
+    'get-page': `${readVerb} ${input?.path || '...'}`,
   }[toolName] || `${verb} ${toolName}`
 }
 
@@ -85,7 +87,7 @@ function resetChat() {
         >
           <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
             <UIcon
-              name="i-lucide-sparkles"
+              name="i-custom:ai"
               class="size-5 text-primary"
             />
           </div>
@@ -115,7 +117,11 @@ function resetChat() {
           class="px-4 py-4"
         >
           <template #indicator>
-            <UChatTool icon="i-lucide-brain" text="Thinking..." streaming />
+            <UChatTool
+              icon="i-lucide-brain"
+              text="Thinking..."
+              streaming
+            />
           </template>
 
           <template #content="{ message }">
@@ -123,18 +129,15 @@ function resetChat() {
               v-for="(part, index) in message.parts"
               :key="`${message.id}-${part.type}-${index}`"
             >
-              <MDCCached
+              <AssistantComark
                 v-if="isTextUIPart(part) && part.text"
-                :value="part.text"
-                :cache-key="`demo-${message.id}-${index}`"
-                :parser-options="{ highlight: false }"
-                class="*:first:mt-0 *:last:mb-0"
+                :markdown="part.text"
               />
 
               <UChatTool
                 v-else-if="isToolUIPart(part)"
                 :text="getToolText(part)"
-                :icon="part.toolName === 'get-page' ? 'i-lucide-file-text' : 'i-lucide-search'"
+                :icon="getToolName(part) === 'get-page' ? 'i-lucide-file-text' : 'i-lucide-search'"
                 :streaming="isToolStreaming(part)"
               />
             </template>

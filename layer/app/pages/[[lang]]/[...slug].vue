@@ -9,10 +9,9 @@ definePageMeta({
 
 const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
+const { isOpen } = useAssistant()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const { isOpen: isAssistantOpen } = useAssistant()
-
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
@@ -75,7 +74,7 @@ addPrerenderPath(`/raw${route.path}.md`)
 <template>
   <UPage
     v-if="page"
-    :ui="isAssistantOpen ? {
+    :ui="isOpen ? {
       center: 'lg:col-span-10',
       right: 'lg:col-span-0',
     } : undefined"
