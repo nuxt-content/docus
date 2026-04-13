@@ -70,24 +70,27 @@ export default defineEventHandler(async (event) => {
       ? `http://localhost:3000${baseURL}${mcpServer}`
       : `${getRequestURL(event).origin}${baseURL}${mcpServer}`
 
+  const abortController = new AbortController()
+  event.node.req.on('close', () => abortController.abort())
+
   const httpClient = await createMCPClient({
     transport: { type: 'http', url: mcpUrl },
   })
   const mcpTools = await httpClient.tools()
 
+  const closeMcp = () => event.waitUntil(httpClient.close())
+
   return streamText({
     model: config.assistant.model,
     maxOutputTokens: 4000,
     maxRetries: 2,
+    abortSignal: abortController.signal,
     stopWhen: stopWhenResponseComplete,
     system: getSystemPrompt(siteName),
     messages: await convertToModelMessages(messages),
     tools: mcpTools as ToolSet,
-    onFinish: () => {
-      event.waitUntil(httpClient.close())
-    },
-    onError: () => {
-      event.waitUntil(httpClient.close())
-    },
+    onFinish: closeMcp,
+    onAbort: closeMcp,
+    onError: closeMcp,
   }).toUIMessageStreamResponse()
 })

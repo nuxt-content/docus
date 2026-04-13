@@ -49,17 +49,10 @@ function getToolText(part: Parameters<typeof getToolName>[0]) {
   }[toolName] || `${verb} ${toolName}`
 }
 
-function handleSubmit(event?: Event) {
-  event?.preventDefault()
+function handleSubmit() {
+  if (!input.value.trim() || !chat) return
 
-  if (!input.value.trim() || !chat) {
-    return
-  }
-
-  chat.sendMessage({
-    text: input.value,
-  })
-
+  chat.sendMessage({ text: input.value })
   input.value = ''
 }
 
@@ -162,41 +155,36 @@ function resetChat() {
     </div>
 
     <div class="p-3">
-      <form
-        class="flex items-center gap-2"
-        @submit.prevent="handleSubmit"
+      <UChatPrompt
+        v-model="input"
+        :disabled="!isEnabled"
+        :placeholder="t('assistant.askAnything')"
+        variant="subtle"
+        size="sm"
+        @submit="handleSubmit"
       >
-        <UInput
-          v-model="input"
-          :disabled="!isEnabled"
-          :placeholder="t('assistant.askAnything')"
-          size="sm"
-          class="flex-1"
-          :ui="{
-            base: 'bg-elevated',
-          }"
-          @keydown.enter.exact.prevent="handleSubmit"
-        />
-        <div class="flex items-center gap-1">
-          <UButton
-            v-if="chat?.messages.length"
-            icon="i-lucide-trash-2"
-            color="neutral"
-            variant="ghost"
-            size="xs"
-            :disabled="!isEnabled"
-            @click="resetChat"
-          />
-          <UButton
-            type="submit"
-            icon="i-lucide-arrow-up"
-            color="primary"
-            size="xs"
-            :disabled="!isEnabled || !input.trim() || chat?.status === 'streaming'"
-            :loading="chat?.status === 'streaming'"
-          />
-        </div>
-      </form>
+        <template #footer>
+          <div class="ml-auto flex items-center gap-2">
+            <UButton
+              v-if="chat?.messages.length"
+              icon="i-lucide-trash-2"
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              :disabled="!isEnabled"
+              @click="resetChat"
+            />
+
+            <UChatPromptSubmit
+              size="xs"
+              :status="chat?.status || 'ready'"
+              :disabled="!isEnabled || (chat?.status === 'ready' && !input.trim())"
+              @stop="chat?.stop()"
+              @reload="chat?.regenerate()"
+            />
+          </div>
+        </template>
+      </UChatPrompt>
     </div>
   </div>
 </template>

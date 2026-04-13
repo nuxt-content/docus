@@ -152,7 +152,10 @@ defineShortcuts({
     :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
     <template #actions>
-      <UTooltip v-if="canClear" :text="t('assistant.clearChat')">
+      <UTooltip
+        v-if="canClear"
+        :text="t('assistant.clearChat')"
+      >
         <UButton
           icon="i-lucide-list-x"
           color="neutral"
@@ -163,7 +166,10 @@ defineShortcuts({
     </template>
 
     <template #close>
-      <UTooltip :text="t('assistant.close')" :kbds="['meta', 'i']">
+      <UTooltip
+        :text="t('assistant.close')"
+        :kbds="['meta', 'i']"
+      >
         <UButton
           icon="i-lucide-panel-right-close"
           color="neutral"
@@ -206,7 +212,10 @@ defineShortcuts({
         </template>
 
         <template #content="{ message }">
-          <template v-for="(part, index) in message.parts" :key="`${message.id}-${part.type}-${index}`">
+          <template
+            v-for="(part, index) in message.parts"
+            :key="`${message.id}-${part.type}-${index}`"
+          >
             <UChatReasoning
               v-if="isReasoningUIPart(part)"
               :text="part.text"
@@ -225,7 +234,10 @@ defineShortcuts({
                 :markdown="part.text"
                 :streaming="isReasoningStreaming(message, index, chat)"
               />
-              <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap text-sm/6">
+              <p
+                v-else-if="message.role === 'user'"
+                class="whitespace-pre-wrap text-sm/6"
+              >
                 {{ part.text }}
               </p>
             </template>
@@ -237,7 +249,11 @@ defineShortcuts({
               :streaming="isToolStreaming(part)"
               chevron="leading"
             >
-              <pre v-if="getToolOutput(part)" class="text-xs text-dimmed whitespace-pre-wrap" v-text="getToolOutput(part)" />
+              <pre
+                v-if="getToolOutput(part)"
+                class="text-xs text-dimmed whitespace-pre-wrap"
+                v-text="getToolOutput(part)"
+              />
             </UChatTool>
           </template>
         </template>
@@ -290,14 +306,20 @@ defineShortcuts({
         <template #footer>
           <div class="flex items-center gap-1.5 text-xs text-dimmed">
             <span>{{ t('assistant.lineBreak') }}</span>
-            <UKbd size="sm" value="shift" />
-            <UKbd size="sm" value="enter" />
+            <UKbd
+              size="sm"
+              value="shift"
+            />
+            <UKbd
+              size="sm"
+              value="enter"
+            />
           </div>
 
           <UChatPromptSubmit
             size="sm"
             :status="chat.status"
-            :disabled="!input.trim()"
+            :disabled="chat.status === 'ready' && !input.trim()"
             @stop="chat.stop()"
             @reload="chat.regenerate()"
           />
