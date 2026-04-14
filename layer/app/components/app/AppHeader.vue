@@ -5,10 +5,9 @@ import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const appConfig = useAppConfig()
 const { forced: forcedColorMode } = useDocusColorMode()
-const site = useSiteConfig()
 
 const { isEnabled: isAssistantEnabled } = useAssistant()
-const { localePath, isEnabled, locales } = useDocusI18n()
+const { isEnabled, locales } = useDocusI18n()
 const { subNavigationMode } = useSubNavigation()
 
 const links = computed(() => appConfig.github && appConfig.github.url
