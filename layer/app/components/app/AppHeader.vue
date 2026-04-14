@@ -27,13 +27,11 @@ const links = computed(() => appConfig.github && appConfig.github.url
   <UHeader
     :ui="{ center: 'flex-1' }"
     :class="{ 'flex flex-col': subNavigationMode === 'header' }"
-    :to="localePath('/')"
-    :title="appConfig.header?.title || site.name"
   >
     <AppHeaderCenter />
 
-    <template #title>
-      <AppHeaderLogo class="h-6 w-auto shrink-0" />
+    <template #left>
+      <AppHeaderLeft />
     </template>
 
     <template #right>
