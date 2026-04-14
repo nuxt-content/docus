@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "වචන ලකුණ බාගත කරන ලදී",
     "copyLogoFailed": "ලාංඡනය පිටපත් කිරීමට අසමත් විය",
     "copyWordmarkFailed": "වචන ලකුණ පිටපත් කිරීමට අසමත් විය"
+  },
+  "assistant": {
+    "title": "AI අහන්න",
+    "placeholder": "ප්‍රශ්නයක් අහන්න...",
+    "tooltip": "AI ගෙන් ප්‍රශ්නයක් අසන්න",
+    "tryAsking": "ප්රශ්නයක් ඇසීමට උත්සාහ කරන්න",
+    "askAnything": "ඕන දෙයක් අහන්න...",
+    "clearChat": "කතාබස් පැහැදිලි කරන්න",
+    "close": "වසන්න",
+    "expand": "පුළුල් කරන්න",
+    "collapse": "හකුළන්න",
+    "thinking": "සිතමින්...",
+    "askMeAnything": "ඕන දෙයක් අහන්න",
+    "askMeAnythingDescription": "ලේඛන සැරිසැරීමට, සංකල්ප තේරුම් ගැනීමට සහ පිළිතුරු සෙවීමට උදවු ලබා ගන්න.",
+    "faq": "නිතර අසන පැන",
+    "chatCleared": "නැවුම් කිරීමේදී කතාබස් හිස් වේ",
+    "lineBreak": "රේඛා බිඳීම",
+    "explainWithAi": "AI සමඟ පැහැදිලි කරන්න",
+    "toolListPages": "ලැයිස්තුගත ලේඛන පිටු",
+    "toolReadPage": "කියවන්න",
+    "loading": {
+      "searching": "ලේඛන සෙවීම",
+      "reading": "ලේඛන හරහා කියවීම",
+      "analyzing": "අන්තර්ගතය විශ්ලේෂණය කිරීම",
+      "finding": "හොඳම පිළිතුර සොයා ගැනීම",
+      "finished": "භාවිතා කරන ලද මූලාශ්ර"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "文字标识已下载",
     "copyLogoFailed": "复制图标失败",
     "copyWordmarkFailed": "复制文字标识失败"
+  },
+  "assistant": {
+    "title": "询问人工智能",
+    "placeholder": "问一个问题...",
+    "tooltip": "问人工智能一个问题",
+    "tryAsking": "尝试提问",
+    "askAnything": "想问什么都可以...",
+    "clearChat": "清除聊天内容",
+    "close": "关闭",
+    "expand": "展开",
+    "collapse": "崩溃",
+    "thinking": "想着……",
+    "askMeAnything": "询问任何事情",
+    "askMeAnythingDescription": "获取浏览文档、理解概念和寻找答案的帮助。",
+    "faq": "常见问题解答",
+    "chatCleared": "刷新时聊天会被清除",
+    "lineBreak": "换行符",
+    "explainWithAi": "用AI解释",
+    "toolListPages": "列出的文档页面",
+    "toolReadPage": "阅读",
+    "loading": {
+      "searching": "搜索文档",
+      "reading": "通读文档",
+      "analyzing": "分析内容",
+      "finding": "寻找最佳答案",
+      "finished": "使用的来源"
+    }
   }
 }

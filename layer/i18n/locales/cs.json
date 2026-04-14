@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark stažen",
     "copyLogoFailed": "Kopírování loga selhalo",
     "copyWordmarkFailed": "Kopírování wordmarku selhalo"
+  },
+  "assistant": {
+    "title": "Zeptejte se AI",
+    "placeholder": "Zeptej se...",
+    "tooltip": "Zeptejte se umělé inteligence",
+    "tryAsking": "Zkus položit otázku",
+    "askAnything": "Zeptej se na cokoliv...",
+    "clearChat": "Vymazat chat",
+    "close": "Zavřít",
+    "expand": "Rozbalit",
+    "collapse": "Sbalit",
+    "thinking": "Přemýšlím...",
+    "askMeAnything": "Zeptej se na cokoliv",
+    "askMeAnythingDescription": "Získejte pomoc s orientací v dokumentaci, porozuměním konceptům a nalezením odpovědí.",
+    "faq": "Často kladené otázky",
+    "chatCleared": "Chat je vymazán při obnovení",
+    "lineBreak": "Zalomení řádku",
+    "explainWithAi": "Vysvětlete pomocí AI",
+    "toolListPages": "Uvedené stránky dokumentace",
+    "toolReadPage": "Číst",
+    "loading": {
+      "searching": "Vyhledávání v dokumentaci",
+      "reading": "Čtení dokumentů",
+      "analyzing": "Analýza obsahu",
+      "finding": "Nalezení nejlepší odpovědi",
+      "finished": "Použité zdroje"
+    }
   }
 }

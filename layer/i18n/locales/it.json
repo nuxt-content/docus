@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark scaricato",
     "copyLogoFailed": "Impossibile copiare il logo",
     "copyWordmarkFailed": "Impossibile copiare il wordmark"
+  },
+  "assistant": {
+    "title": "Chiedi all'AI",
+    "placeholder": "Fai una domanda...",
+    "tooltip": "Fai una domanda all'IA",
+    "tryAsking": "Prova a fare una domanda",
+    "askAnything": "Chiedi qualsiasi cosa...",
+    "clearChat": "Cancella chat",
+    "close": "Chiudi",
+    "expand": "Espandi",
+    "collapse": "Comprimi",
+    "thinking": "Sto pensando...",
+    "askMeAnything": "Chiedi qualsiasi cosa",
+    "askMeAnythingDescription": "Ricevi assistenza per esplorare la documentazione, comprendere i concetti e trovare risposte.",
+    "faq": "Domande frequenti",
+    "chatCleared": "La chat viene cancellata all'aggiornamento",
+    "lineBreak": "Interruzione di riga",
+    "explainWithAi": "Spiega con l'IA",
+    "toolListPages": "Pagine di documentazione elencate",
+    "toolReadPage": "Leggi",
+    "loading": {
+      "searching": "Ricerca della documentazione",
+      "reading": "Leggere i documenti",
+      "analyzing": "Analizzare il contenuto",
+      "finding": "Trovare la risposta migliore",
+      "finished": "Fonti utilizzate"
+    }
   }
 }
