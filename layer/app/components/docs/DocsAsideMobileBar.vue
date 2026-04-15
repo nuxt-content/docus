@@ -9,6 +9,9 @@ defineProps<{
 const { subNavigationMode, sidebarNavigation, currentSection } = useSubNavigation()
 const { t } = useDocusI18n()
 
+const contentNavVariants = useUIConfig('contentNavigation')
+const contentTocVariants = useUIConfig('contentToc')
+
 const menuDrawerOpen = ref(false)
 const tocDrawerOpen = ref(false)
 </script>
@@ -39,10 +42,13 @@ const tocDrawerOpen = ref(false)
       <template #body>
         <UContentNavigation
           :navigation="sidebarNavigation"
+          :highlight="contentNavVariants.highlight ?? true"
+          :highlight-color="contentNavVariants.highlightColor"
+          :variant="contentNavVariants.variant ?? 'link'"
+          :color="contentNavVariants.color"
           default-open
           trailing-icon="i-lucide-chevron-right"
           :ui="{ linkTrailingIcon: 'group-data-[state=open]:rotate-90' }"
-          highlight
         />
       </template>
     </UDrawer>
@@ -68,6 +74,10 @@ const tocDrawerOpen = ref(false)
       <template #body>
         <UContentToc
           v-if="links?.length"
+          :highlight="contentTocVariants.highlight ?? true"
+          :highlight-color="contentTocVariants.highlightColor"
+          :highlight-variant="contentTocVariants.highlightVariant"
+          :color="contentTocVariants.color"
           :links="links"
           :open="true"
           default-open

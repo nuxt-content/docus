@@ -12,13 +12,18 @@ const { shouldPushContent: shouldHideToc } = useAssistant()
 const { subNavigationMode } = useSubNavigation()
 const appConfig = useAppConfig()
 const { t } = useDocusI18n()
+
+const contentTocVariants = useUIConfig('contentToc')
 </script>
 
 <template>
   <div>
     <UContentToc
       v-if="links.length && !shouldHideToc"
-      highlight
+      :highlight="contentTocVariants.highlight ?? true"
+      :highlight-color="contentTocVariants.highlightColor"
+      :highlight-variant="contentTocVariants.highlightVariant"
+      :color="contentTocVariants.color"
       :title="appConfig.toc?.title || t('docs.toc')"
       :links="links"
       :class="{ 'hidden lg:block': subNavigationMode }"

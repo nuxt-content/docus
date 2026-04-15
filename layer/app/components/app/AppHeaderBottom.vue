@@ -2,6 +2,8 @@
 import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const { sections } = useSubNavigation()
+
+const navMenuVariants = useUIConfig('navigationMenu')
 </script>
 
 <template>
@@ -10,8 +12,10 @@ const { sections } = useSubNavigation()
   <UContainer class="hidden lg:flex items-center justify-between">
     <UNavigationMenu
       :items="sections"
-      variant="pill"
-      highlight
+      :highlight="navMenuVariants.highlight ?? true"
+      :highlight-color="navMenuVariants.highlightColor"
+      :variant="navMenuVariants.variant ?? 'pill'"
+      :color="navMenuVariants.color"
       class="-mx-2.5 -mb-px"
     />
 

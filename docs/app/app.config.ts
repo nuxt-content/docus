@@ -95,5 +95,10 @@ export default defineAppConfig({
         wrapper: 'flex-none',
       },
     },
+    contentToc: {
+      defaultVariants: {
+        highlightVariant: 'circuit',
+      },
+    },
   },
 })
