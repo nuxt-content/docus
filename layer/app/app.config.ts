@@ -15,6 +15,11 @@ export default defineAppConfig({
         itemLeadingIcon: 'size-4 mx-0.5',
       },
     },
+    contentToc: {
+      defaultVariants: {
+        highlight: true,
+      },
+    },
     contentNavigation: {
       slots: {
         linkLeadingIcon: 'size-4 mr-1',
@@ -22,6 +27,13 @@ export default defineAppConfig({
       },
       defaultVariants: {
         variant: 'link',
+        highlight: true,
+      },
+    },
+    navigationMenu: {
+      defaultVariants: {
+        variant: 'pill',
+        highlight: true,
       },
     },
     pageLinks: {
