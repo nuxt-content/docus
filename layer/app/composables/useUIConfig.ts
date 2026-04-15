@@ -1,4 +1,7 @@
-export function useUIConfig<T extends Record<string, any>>(componentName: string) {
+export function useUIConfig(componentName: string) {
   const appConfig = useAppConfig()
-  return computed(() => ((appConfig.ui as Record<string, any>)?.[componentName]?.defaultVariants || {}) as T)
+  return computed(() => {
+    const ui = appConfig.ui as Record<string, Record<string, Record<string, unknown>>>
+    return (ui?.[componentName]?.defaultVariants || {}) as Record<string, unknown>
+  })
 }
