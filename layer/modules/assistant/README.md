@@ -27,11 +27,13 @@ pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai motion-v shiki shiki-stream
 export default defineNuxtConfig({
   modules: ['./modules/assistant'],
 
-  assistant: {
-    apiPath: '/__docus__/assistant',
-    mcpServer: '/mcp',
-    model: 'google/gemini-3-flash',
-  }
+  docus: {
+    assistant: {
+      apiPath: '/__docus__/assistant',
+      mcpServer: '/mcp',
+      model: 'google/gemini-3-flash',
+    },
+  },
 })
 ```
 
