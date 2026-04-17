@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "تم تحميل العلامة النصية",
     "copyLogoFailed": "فشل نسخ الشعار",
     "copyWordmarkFailed": "فشل نسخ العلامة النصية"
+  },
+  "assistant": {
+    "title": "اسأل الذكاء الاصطناعي",
+    "placeholder": "اطرح سؤالاً...",
+    "tooltip": "اطرح سؤالاً على الذكاء الاصطناعي",
+    "tryAsking": "حاول طرح سؤال",
+    "askAnything": "اسأل أي شيء...",
+    "clearChat": "محو المحادثة",
+    "close": "إغلاق",
+    "expand": "توسيع",
+    "collapse": "طي",
+    "thinking": "التفكير...",
+    "askMeAnything": "اسأل عن أي شيء",
+    "askMeAnythingDescription": "احصل على المساعدة في التنقل بين الوثائق وفهم المفاهيم والعثور على الإجابات.",
+    "faq": "الأسئلة الشائعة",
+    "chatCleared": "تم مسح الدردشة عند التحديث",
+    "lineBreak": "فاصل الأسطر",
+    "explainWithAi": "اشرح باستخدام الذكاء الاصطناعي",
+    "toolListPages": "صفحات الوثائق المدرجة",
+    "toolReadPage": "قراءة",
+    "loading": {
+      "searching": "البحث في الوثائق",
+      "reading": "قراءة المستندات",
+      "analyzing": "تحليل المحتوى",
+      "finding": "العثور على أفضل إجابة",
+      "finished": "المصادر المستخدمة"
+    }
   }
 }

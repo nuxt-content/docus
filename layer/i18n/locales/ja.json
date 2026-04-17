@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "ワードマークをダウンロードしました",
     "copyLogoFailed": "ロゴのコピーに失敗しました",
     "copyWordmarkFailed": "ワードマークのコピーに失敗しました"
+  },
+  "assistant": {
+    "title": "AIに聞く",
+    "placeholder": "質問してください...",
+    "tooltip": "AIに質問する",
+    "tryAsking": "質問してみてください",
+    "askAnything": "何でも聞いてください...",
+    "clearChat": "チャットをクリア",
+    "close": "閉じる",
+    "expand": "展開",
+    "collapse": "折りたたむ",
+    "thinking": "考えています...",
+    "askMeAnything": "何でも聞いてみよう",
+    "askMeAnythingDescription": "ドキュメンテーションの閲覧、概念の理解、および回答の検索に関するヘルプを入手してください。",
+    "faq": "よくある質問",
+    "chatCleared": "チャットは更新時にクリアされます",
+    "lineBreak": "改行",
+    "explainWithAi": "AIで説明する",
+    "toolListPages": "一覧表示されたドキュメントページ",
+    "toolReadPage": "読む",
+    "loading": {
+      "searching": "ドキュメントを検索中",
+      "reading": "ドキュメントを読む",
+      "analyzing": "コンテンツの分析",
+      "finding": "最適な回答を見つける",
+      "finished": "使用したソース"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Ordmärke nedladdat",
     "copyLogoFailed": "Kunde inte kopiera logotyp",
     "copyWordmarkFailed": "Kunde inte kopiera ordmärke"
+  },
+  "assistant": {
+    "title": "Fråga AI",
+    "placeholder": "Ställ en fråga...",
+    "tooltip": "Ställ en fråga till AI",
+    "tryAsking": "Försök att ställa en fråga",
+    "askAnything": "Fråga vad som helst...",
+    "clearChat": "Rensa chatten",
+    "close": "Stäng",
+    "expand": "Expandera",
+    "collapse": "Kollapsa",
+    "thinking": "Funderar...",
+    "askMeAnything": "Fråga vad som helst",
+    "askMeAnythingDescription": "Få hjälp med att navigera i dokumentationen, förstå begrepp och hitta svar.",
+    "faq": "FAQ",
+    "chatCleared": "Chatten rensas vid uppdatering",
+    "lineBreak": "Radbrytning",
+    "explainWithAi": "Förklara med AI",
+    "toolListPages": "Listade dokumentationssidor",
+    "toolReadPage": "Läs",
+    "loading": {
+      "searching": "Söker i dokumentationen",
+      "reading": "Läser igenom dokumenten",
+      "analyzing": "Analysera innehållet",
+      "finding": "Att hitta det bästa svaret",
+      "finished": "Använda källor"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "वर्डमार्क डाउनलोड हो गया",
     "copyLogoFailed": "लोगो कॉपी नहीं हो सका",
     "copyWordmarkFailed": "वर्डमार्क कॉपी नहीं हो सका"
+  },
+  "assistant": {
+    "title": "AI से पूछें",
+    "placeholder": "सवाल पूछें...",
+    "tooltip": "AI से सवाल पूछें",
+    "tryAsking": "सवाल पूछने की कोशिश करें",
+    "askAnything": "कुछ भी पूछें...",
+    "clearChat": "चैट हटाएँ",
+    "close": "बंद करें",
+    "expand": "विस्तार करें",
+    "collapse": "छोटा करें",
+    "thinking": "सोच रहे हैं...",
+    "askMeAnything": "कुछ भी पूछें",
+    "askMeAnythingDescription": "डॉक्यूमेंट नेविगेट करने, अवधारणाओं को समझने और जवाब खोजने में मदद पाएँ।",
+    "faq": "अक्सर पूछे जाने वाले सवाल",
+    "chatCleared": "रीफ़्रेश करने पर चैट साफ़ हो जाती है",
+    "lineBreak": "लाइन ब्रेक",
+    "explainWithAi": "AI से समझाएँ",
+    "toolListPages": "लिस्ट किए गए डॉक्यूमेंट पेज",
+    "toolReadPage": "पढ़ें",
+    "loading": {
+      "searching": "डॉक्यूमेंट खोजना",
+      "reading": "दस्तावेज़ों के माध्यम से पढ़ना",
+      "analyzing": "कंटेंट का विश्लेषण करना",
+      "finding": "सबसे अच्छा जवाब ढूँढना",
+      "finished": "इस्तेमाल किए गए स्रोत"
+    }
   }
 }

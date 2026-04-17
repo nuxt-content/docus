@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "워드마크가 다운로드되었습니다",
     "copyLogoFailed": "로고 복사 실패",
     "copyWordmarkFailed": "워드마크 복사 실패"
+  },
+  "assistant": {
+    "title": "AI에게 물어보기",
+    "placeholder": "질문하기...",
+    "tooltip": "AI에 질문하기",
+    "tryAsking": "질문을 해보세요",
+    "askAnything": "무엇이든 물어보세요...",
+    "clearChat": "채팅 지우기",
+    "close": "닫기",
+    "expand": "펼치기",
+    "collapse": "접기",
+    "thinking": "생각 중...",
+    "askMeAnything": "무엇이든 물어보세요",
+    "askMeAnythingDescription": "문서를 탐색하고, 개념을 이해하고, 답을 찾는 데 도움을 받으세요.",
+    "faq": "자주 묻는 질문",
+    "chatCleared": "새로 고침 시 채팅이 지워집니다",
+    "lineBreak": "줄바꿈",
+    "explainWithAi": "AI로 설명",
+    "toolListPages": "나열된 문서 페이지",
+    "toolReadPage": "읽기",
+    "loading": {
+      "searching": "문서를 검색하는 중",
+      "reading": "문서 읽기",
+      "analyzing": "콘텐츠 분석",
+      "finding": "최선의 답 찾기",
+      "finished": "사용된 출처"
+    }
   }
 }

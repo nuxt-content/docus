@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "הסימן המילולי הורד",
     "copyLogoFailed": "העתקת הלוגו נכשלה",
     "copyWordmarkFailed": "העתקת הסימן המילולי נכשלה"
+  },
+  "assistant": {
+    "title": "שאל את הבינה המלאכותית",
+    "placeholder": "שאל שאלה...",
+    "tooltip": "שאל את הבינה המלאכותית שאלה",
+    "tryAsking": "נסה לשאול שאלה",
+    "askAnything": "שאל כל דבר...",
+    "clearChat": "נקה צ'אט",
+    "close": "סגירה",
+    "expand": "הרחבה",
+    "collapse": "כיווץ התצוגה",
+    "thinking": "חושב...",
+    "askMeAnything": "שאלו כל דבר",
+    "askMeAnythingDescription": "קבלת עזרה בניווט בתיעוד, הבנת מושגים ומציאת תשובות.",
+    "faq": "שאלות נפוצות",
+    "chatCleared": "הצ'אט נוקה בעת הרענון",
+    "lineBreak": "מעבר שורה",
+    "explainWithAi": "הסבר באמצעות בינה מלאכותית",
+    "toolListPages": "דפי תיעוד רשומים",
+    "toolReadPage": "קריאה",
+    "loading": {
+      "searching": "חיפוש בתיעוד",
+      "reading": "קריאה דרך המסמכים",
+      "analyzing": "ניתוח התוכן",
+      "finding": "מציאת התשובה הטובה ביותר",
+      "finished": "מקורות בשימוש"
+    }
   }
 }

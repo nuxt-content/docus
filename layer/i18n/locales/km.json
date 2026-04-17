@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "បានទាញយក wordmark",
     "copyLogoFailed": "មិនអាចចម្លងនិមិត្តសញ្ញាបានទេ",
     "copyWordmarkFailed": "មិនអាចចម្លង wordmark បានទេ"
+  },
+  "assistant": {
+    "title": "សួរ AI",
+    "placeholder": "សំណួរមួយ...",
+    "tooltip": "សួរសំណួរទៅកាន់ AI",
+    "tryAsking": "ព្យាយាមសួរសំណួរមួយ",
+    "askAnything": "សួរអ្វីក៏បាន...",
+    "clearChat": "ជម្រះការជជែកកំសាន្ត",
+    "close": "បិទ",
+    "expand": "ពង្រីក",
+    "collapse": "បង្រួម",
+    "thinking": "កំពុងគិត...",
+    "askMeAnything": "សួរអ្វីក៏បាន",
+    "askMeAnythingDescription": "ទទួលបានជំនួយក្នុងការរុករកឯកសារ ការយល់ដឹងអំពីគោលគំនិត និងការស្វែងរកចម្លើយ ។",
+    "faq": "សំណួរដែលចោទសួរញឹកញាប់",
+    "chatCleared": "បានសម្អាតការជជែកកំសាន្តនៅពេលរីហ្វ្រែស",
+    "lineBreak": "ការបំបែកបន្ទាត់",
+    "explainWithAi": "ពន្យល់ដោយ AI",
+    "toolListPages": "ទំព័រឯកសារដែលបានចុះបញ្ជី",
+    "toolReadPage": "អាន",
+    "loading": {
+      "searching": "ការស្វែងរកឯកសារ",
+      "reading": "ការ អាន តាម រយៈ ឯកសារ",
+      "analyzing": "ការវិភាគមាតិកា",
+      "finding": "ការស្វែងរកចម្លើយដែលត្រឹមត្រូវបំផុត",
+      "finished": "ប្រភពដែលបានប្រើ"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark indirildi",
     "copyLogoFailed": "Logo kopyalanamadı",
     "copyWordmarkFailed": "Wordmark kopyalanamadı"
+  },
+  "assistant": {
+    "title": "Yapay zekaya sor",
+    "placeholder": "Bir soru sorun...",
+    "tooltip": "Yapay zekaya bir soru sorun",
+    "tryAsking": "Bir soru sormayı deneyin",
+    "askAnything": "Her şeyi sor...",
+    "clearChat": "Sohbeti temizle",
+    "close": "Kapat",
+    "expand": "Genişlet",
+    "collapse": "Daralt",
+    "thinking": "Düşünüyorum...",
+    "askMeAnything": "Her şeyi sor",
+    "askMeAnythingDescription": "Belgelerde gezinme, kavramları anlama ve yanıt bulma konusunda yardım alın.",
+    "faq": "SSS",
+    "chatCleared": "Sohbet yenilendiğinde temizlenir",
+    "lineBreak": "Satır sonu",
+    "explainWithAi": "Yapay zeka ile açıklayın",
+    "toolListPages": "Listelenen dokümantasyon sayfaları",
+    "toolReadPage": "Oku",
+    "loading": {
+      "searching": "Dokümantasyonda arama",
+      "reading": "Dokümanlar okunuyor",
+      "analyzing": "İçerik analiz ediliyor",
+      "finding": "En iyi yanıt bulunuyor",
+      "finished": "Kullanılan kaynaklar"
+    }
   }
 }
