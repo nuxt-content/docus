@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark downloadet",
     "copyLogoFailed": "Kunne ikke kopiere logo",
     "copyWordmarkFailed": "Kunne ikke kopiere wordmark"
+  },
+  "assistant": {
+    "title": "Spørg AI",
+    "placeholder": "Stil et spørgsmål...",
+    "tooltip": "Stil AI et spørgsmål",
+    "tryAsking": "Prøv at stille et spørgsmål",
+    "askAnything": "Spørg om hvad som helst...",
+    "clearChat": "Ryd chat",
+    "close": "Luk",
+    "expand": "Udvid",
+    "collapse": "Skjul",
+    "thinking": "Tænker...",
+    "askMeAnything": "Spørg om hvad som helst",
+    "askMeAnythingDescription": "Få hjælp til at navigere i dokumentationen, forstå begreber og finde svar.",
+    "faq": "FAQ",
+    "chatCleared": "Chat ryddes ved opdatering",
+    "lineBreak": "Linjeskift",
+    "explainWithAi": "Forklar med AI",
+    "toolListPages": "Opførte dokumentationssider",
+    "toolReadPage": "Læs",
+    "loading": {
+      "searching": "Søgning i dokumentationen",
+      "reading": "Gennemlæsning af dokumenterne",
+      "analyzing": "Analyse af indholdet",
+      "finding": "Find det bedste svar",
+      "finished": "Anvendte kilder"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wortmark erofgelueden",
     "copyLogoFailed": "Logo konnt net kopéiert ginn",
     "copyWordmarkFailed": "Wortmark konnt net kopéiert ginn"
+  },
+  "assistant": {
+    "title": "Frot d'AI",
+    "placeholder": "Stell eng Fro...",
+    "tooltip": "Stell der AI eng Fro",
+    "tryAsking": "Probéieren eng Fro ze stellen",
+    "askAnything": "Frot iergendeppes...",
+    "clearChat": "Chat läschen",
+    "close": "Zoumaachen",
+    "expand": "Erweideren",
+    "collapse": "Zesummeklappen",
+    "thinking": "Denken...",
+    "askMeAnything": "Frot alles",
+    "askMeAnythingDescription": "Kritt Hëllef fir an der Dokumentatioun ze navigéieren, Konzepter ze verstoen an Äntwerten ze fannen.",
+    "faq": "FAQ",
+    "chatCleared": "Chat gëtt op Erfrëschung gereinegt",
+    "lineBreak": "Zeilepaus",
+    "explainWithAi": "Erklär mat AI",
+    "toolListPages": "Opgelëschte Dokumentatiounssäiten",
+    "toolReadPage": "Liesen",
+    "loading": {
+      "searching": "D'Dokumentatioun gëtt duerchsicht",
+      "reading": "D'Dokumenter ginn duerchgelies",
+      "analyzing": "Den Inhalt gëtt analyséiert",
+      "finding": "Déi bescht Äntwert gëtt fonnt",
+      "finished": "Benotzte Quellen"
+    }
   }
 }

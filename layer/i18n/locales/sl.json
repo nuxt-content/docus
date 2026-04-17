@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Besedna znamka prenesena",
     "copyLogoFailed": "Kopiranje logotipa ni uspelo",
     "copyWordmarkFailed": "Kopiranje besedne znamke ni uspelo"
+  },
+  "assistant": {
+    "title": "Vprašajte AI",
+    "placeholder": "Postavite vprašanje...",
+    "tooltip": "Zastavite vprašanje AI",
+    "tryAsking": "Poskusite postaviti vprašanje",
+    "askAnything": "Vprašajte karkoli...",
+    "clearChat": "Počisti klepet",
+    "close": "Zapri",
+    "expand": "Razširi",
+    "collapse": "Strni",
+    "thinking": "Razmišljanje...",
+    "askMeAnything": "Vprašaj karkoli",
+    "askMeAnythingDescription": "Poiščite pomoč pri krmarjenju po dokumentaciji, razumevanju konceptov in iskanju odgovorov.",
+    "faq": "Pogosta vprašanja",
+    "chatCleared": "Klepet se ob osvežitvi izbriše",
+    "lineBreak": "Prelom vrstice",
+    "explainWithAi": "Razloži z AI",
+    "toolListPages": "Navedene strani dokumentacije",
+    "toolReadPage": "Preberi",
+    "loading": {
+      "searching": "Iskanje po dokumentaciji",
+      "reading": "Prebiranje dokumentov",
+      "analyzing": "Analiza vsebine",
+      "finding": "Iskanje najboljšega odgovora",
+      "finished": "Uporabljeni viri"
+    }
   }
 }

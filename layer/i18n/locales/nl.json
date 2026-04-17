@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Woordmerk gedownload",
     "copyLogoFailed": "Logo kopiëren mislukt",
     "copyWordmarkFailed": "Woordmerk kopiëren mislukt"
+  },
+  "assistant": {
+    "title": "Vraag AI",
+    "placeholder": "Stel een vraag...",
+    "tooltip": "Stel een vraag aan AI",
+    "tryAsking": "Probeer een vraag te stellen",
+    "askAnything": "Vraag maar raak...",
+    "clearChat": "Chat wissen",
+    "close": "Sluiten",
+    "expand": "Uitvouwen",
+    "collapse": "Inklappen",
+    "thinking": "Aan het nadenken...",
+    "askMeAnything": "Vraag maar raak",
+    "askMeAnythingDescription": "Krijg hulp bij het navigeren door de documentatie, het begrijpen van concepten en het vinden van antwoorden.",
+    "faq": "Veelgestelde vragen",
+    "chatCleared": "De chat wordt gewist bij verversen",
+    "lineBreak": "Regelafbreking",
+    "explainWithAi": "Uitleggen met AI",
+    "toolListPages": "Vermelde documentatiepagina's",
+    "toolReadPage": "Lezen",
+    "loading": {
+      "searching": "De documentatie doorzoeken",
+      "reading": "De documentatie doornemen",
+      "analyzing": "De inhoud analyseren",
+      "finding": "Het beste antwoord vinden",
+      "finished": "Gebruikte bronnen"
+    }
   }
 }

@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wortmarke heruntergeladen",
     "copyLogoFailed": "Logo konnte nicht kopiert werden",
     "copyWordmarkFailed": "Wortmarke konnte nicht kopiert werden"
+  },
+  "assistant": {
+    "title": "AI fragen",
+    "placeholder": "Stellen Sie eine Frage...",
+    "tooltip": "KI eine Frage stellen",
+    "tryAsking": "Versuchen Sie, eine Frage zu stellen",
+    "askAnything": "Fragen Sie alles...",
+    "clearChat": "Chat löschen",
+    "close": "Schließen",
+    "expand": "Erweitern",
+    "collapse": "Einklappen",
+    "thinking": "Denken...",
+    "askMeAnything": "Fragen Sie alles",
+    "askMeAnythingDescription": "Erhalten Sie Hilfe beim Navigieren durch die Dokumentation, beim Verstehen von Konzepten und beim Finden von Antworten.",
+    "faq": "FAQ",
+    "chatCleared": "Chat wird beim Aktualisieren gelöscht",
+    "lineBreak": "Zeilenumbruch",
+    "explainWithAi": "Mit KI erklären",
+    "toolListPages": "Aufgelistete Dokumentationsseiten",
+    "toolReadPage": "Lesen",
+    "loading": {
+      "searching": "Durchsuchen der Dokumentation",
+      "reading": "Lesen der Dokumente",
+      "analyzing": "Analysieren des Inhalts",
+      "finding": "Die beste Antwort finden",
+      "finished": "Verwendete Quellen"
+    }
   }
 }

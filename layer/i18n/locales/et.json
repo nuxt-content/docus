@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Sõnamärk allalaaditud",
     "copyLogoFailed": "Logo kopeerimine ebaõnnestus",
     "copyWordmarkFailed": "Sõnamärgi kopeerimine ebaõnnestus"
+  },
+  "assistant": {
+    "title": "Küsi tehisintellekti",
+    "placeholder": "Esita küsimus...",
+    "tooltip": "Esita tehisintellektile küsimus",
+    "tryAsking": "Proovi esitada küsimus",
+    "askAnything": "Küsi ükskõik mida...",
+    "clearChat": "Tühjenda vestlus",
+    "close": "Sulge",
+    "expand": "Laienda",
+    "collapse": "Ahenda",
+    "thinking": "Mõtlen...",
+    "askMeAnything": "Küsi ükskõik mida",
+    "askMeAnythingDescription": "Saa abi dokumentatsioonis navigeerimisel, kontseptsioonide mõistmisel ja vastuste leidmisel.",
+    "faq": "KKK",
+    "chatCleared": "Vestlus kustutatakse värskendamisel",
+    "lineBreak": "Reavahetus",
+    "explainWithAi": "Selgita tehisintellektiga",
+    "toolListPages": "Loetletud dokumentatsiooni lehed",
+    "toolReadPage": "Loe",
+    "loading": {
+      "searching": "Dokumentatsiooni otsimine",
+      "reading": "Dokumentide lugemine",
+      "analyzing": "Sisu analüüsimine",
+      "finding": "Parima vastuse leidmine",
+      "finished": "Kasutatud allikad"
+    }
   }
 }
