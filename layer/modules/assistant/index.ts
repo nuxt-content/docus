@@ -1,4 +1,4 @@
-import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, installModule, logger } from '@nuxt/kit'
 
 export interface AssistantModuleOptions {
   /**
@@ -32,7 +32,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
     mcpServer: '/mcp',
     model: 'google/gemini-3-flash',
   },
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const hasAiGatewayAuth = !!(
       process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
     )
@@ -75,6 +75,9 @@ export default defineNuxtModule<AssistantModuleOptions>({
       mcpServer: options.mcpServer!,
       model: options.model!,
     }
+
+    // tmp fix for comark/nuxt, we'll remove it before installModule gets removed
+    await installModule('@comark/nuxt')
 
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
