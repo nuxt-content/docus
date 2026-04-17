@@ -32,5 +32,17 @@ export default defineNuxtModule({
     if (Array.isArray(nuxt.options.css)) {
       nuxt.options.css.unshift(cssTemplate.dst)
     }
+
+    // Noisy Vite warnings
+    const sourcemapWarnIgnore = ['@tailwindcss/vite:generate:build', 'nuxt:module-preload-polyfill']
+    nuxt.hook('vite:extendConfig', (config) => {
+      const logger = config.customLogger
+      if (!logger) return
+      const originalWarn = logger.warn.bind(logger)
+      logger.warn = (msg, options) => {
+        if (sourcemapWarnIgnore.some(p => msg.includes(p))) return
+        originalWarn(msg, options)
+      }
+    })
   },
 })
