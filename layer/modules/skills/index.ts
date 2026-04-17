@@ -1,7 +1,9 @@
-import { addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addPrerenderRoutes, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { defu } from 'defu'
 import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import type { NitroConfig } from 'nitropack'
 import { parse as parseYaml } from 'yaml'
 
 interface SkillEntry {
@@ -10,7 +12,7 @@ interface SkillEntry {
   files: string[]
 }
 
-interface ModuleOptions {
+export interface SkillsModuleOptions {
   dir?: string
 }
 
@@ -19,15 +21,18 @@ const MAX_NAME_LENGTH = 64
 
 const log = logger.withTag('Docus')
 
-export default defineNuxtModule<ModuleOptions>({
+const defaults: Required<SkillsModuleOptions> = {
+  dir: 'skills',
+}
+
+export default defineNuxtModule<SkillsModuleOptions>({
   meta: {
     name: 'skills',
   },
-  defaults: {
-    dir: 'skills',
-  },
-  async setup(options, nuxt) {
-    const skillsDir = join(nuxt.options.rootDir, options.dir!)
+  async setup(_inlineOptions, nuxt) {
+    const options = defu(nuxt.options.docus?.skills, defaults) as Required<SkillsModuleOptions>
+
+    const skillsDir = join(nuxt.options.rootDir, options.dir)
     if (!existsSync(skillsDir)) return
 
     const catalog = await scanSkills(skillsDir)
@@ -39,19 +44,19 @@ export default defineNuxtModule<ModuleOptions>({
 
     const { resolve } = createResolver(import.meta.url)
 
-    nuxt.hook('nitro:config', (nitroConfig) => {
+    const onNitroConfig = nuxt.hook as (name: 'nitro:config', cb: (nitroConfig: NitroConfig) => void) => void
+    onNitroConfig('nitro:config', (nitroConfig) => {
       nitroConfig.serverAssets ||= []
       nitroConfig.serverAssets.push({ baseName: 'skills', dir: skillsDir })
-
-      nitroConfig.prerender ||= {}
-      nitroConfig.prerender.routes ||= []
-      nitroConfig.prerender.routes.push('/.well-known/skills/index.json')
-      for (const skill of catalog) {
-        for (const file of skill.files) {
-          nitroConfig.prerender.routes.push(`/.well-known/skills/${skill.name}/${file}`)
-        }
-      }
     })
+
+    const prerenderRoutes = ['/.well-known/skills/index.json']
+    for (const skill of catalog) {
+      for (const file of skill.files) {
+        prerenderRoutes.push(`/.well-known/skills/${skill.name}/${file}`)
+      }
+    }
+    addPrerenderRoutes(prerenderRoutes)
 
     addServerHandler({
       route: '/.well-known/skills/index.json',
