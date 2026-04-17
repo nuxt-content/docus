@@ -1,17 +1,26 @@
 import { addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import { readdir, readFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { create as createTar } from 'tar'
 import { parse as parseYaml } from 'yaml'
+
+type SkillArtifactType = 'skill-md' | 'archive'
 
 interface SkillEntry {
   name: string
+  type: SkillArtifactType
   description: string
-  files: string[]
+  url: string
+  digest: string
 }
 
+const SCHEMA_URI = 'https://schemas.agentskills.io/discovery/0.2.0/schema.json'
 const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
+const MAX_DESCRIPTION_LENGTH = 1024
+const WELL_KNOWN_PREFIX = '/.well-known/agent-skills'
 
 const log = logger.withTag('Docus')
 
@@ -23,37 +32,36 @@ export default defineNuxtModule({
     const skillsDir = join(nuxt.options.rootDir, 'skills')
     if (!existsSync(skillsDir)) return
 
-    const catalog = await scanSkills(skillsDir)
+    const artifactsDir = join(nuxt.options.rootDir, '.data', 'docus-agent-skills')
+    const catalog = await scanSkills(skillsDir, artifactsDir)
     if (!catalog.length) return
 
     log.info(`Found ${catalog.length} agent skill${catalog.length > 1 ? 's' : ''}: ${catalog.map(s => s.name).join(', ')}`)
 
-    nuxt.options.runtimeConfig.skills = { catalog }
+    nuxt.options.runtimeConfig.skills = { schema: SCHEMA_URI, catalog }
 
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.hook('nitro:config', (nitroConfig) => {
       nitroConfig.serverAssets ||= []
-      nitroConfig.serverAssets.push({ baseName: 'skills', dir: skillsDir })
+      nitroConfig.serverAssets.push({ baseName: 'agent-skills', dir: artifactsDir })
 
       nitroConfig.prerender ||= {}
       nitroConfig.prerender.routes ||= []
-      nitroConfig.prerender.routes.push('/.well-known/skills/index.json')
+      nitroConfig.prerender.routes.push(`${WELL_KNOWN_PREFIX}/index.json`)
       for (const skill of catalog) {
-        for (const file of skill.files) {
-          nitroConfig.prerender.routes.push(`/.well-known/skills/${skill.name}/${file}`)
-        }
+        nitroConfig.prerender.routes.push(skill.url)
       }
     })
 
     addServerHandler({
-      route: '/.well-known/skills/index.json',
-      handler: resolve('./runtime/server/routes/skills-index'),
+      route: `${WELL_KNOWN_PREFIX}/index.json`,
+      handler: resolve('./runtime/server/routes/agent-skills-index'),
     })
 
     addServerHandler({
-      route: '/.well-known/skills/**',
-      handler: resolve('./runtime/server/routes/skills-files'),
+      route: `${WELL_KNOWN_PREFIX}/**`,
+      handler: resolve('./runtime/server/routes/agent-skills-artifact'),
     })
   },
 })
@@ -85,24 +93,76 @@ function validateSkillName(name: string, dirName: string): boolean {
   return true
 }
 
+function validateDescription(description: string, name: string): boolean {
+  if (description.length > MAX_DESCRIPTION_LENGTH) {
+    log.warn(`Skipping skill "${name}": description exceeds ${MAX_DESCRIPTION_LENGTH} character limit`)
+    return false
+  }
+  return true
+}
+
+function digest(content: Buffer): string {
+  return `sha256:${createHash('sha256').update(content).digest('hex')}`
+}
+
+function sortSkillFiles(files: string[]): string[] {
+  return ['SKILL.md', ...files.filter(file => file !== 'SKILL.md').sort()]
+}
+
 async function listFilesRecursively(dir: string, base: string = ''): Promise<string[]> {
   const files: string[] = []
   const entries = await readdir(dir, { withFileTypes: true })
   for (const entry of entries) {
     const relPath = base ? `${base}/${entry.name}` : entry.name
+    if (entry.name.startsWith('.')) continue
     if (entry.isDirectory()) {
       files.push(...await listFilesRecursively(join(dir, entry.name), relPath))
     }
-    else {
+    else if (entry.isFile()) {
       files.push(relPath)
+    }
+    else {
+      log.warn(`Skipping unsupported skill file "${relPath}"`)
     }
   }
   return files
 }
 
-async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
+async function createSkillArtifact(skillDir: string, outputDir: string, name: string, files: string[]): Promise<Pick<SkillEntry, 'type' | 'url' | 'digest'>> {
+  if (files.length === 1 && files[0] === 'SKILL.md') {
+    const outputPath = join(outputDir, name, 'SKILL.md')
+    await mkdir(join(outputDir, name), { recursive: true })
+    const content = await readFile(join(skillDir, 'SKILL.md'))
+    await writeFile(outputPath, content)
+
+    return {
+      type: 'skill-md',
+      url: `${WELL_KNOWN_PREFIX}/${name}/SKILL.md`,
+      digest: digest(await readFile(outputPath)),
+    }
+  }
+
+  const outputPath = join(outputDir, `${name}.tar.gz`)
+  await createTar({
+    cwd: skillDir,
+    file: outputPath,
+    gzip: true,
+    noMtime: true,
+    portable: true,
+  }, files)
+
+  return {
+    type: 'archive',
+    url: `${WELL_KNOWN_PREFIX}/${name}.tar.gz`,
+    digest: digest(await readFile(outputPath)),
+  }
+}
+
+async function scanSkills(skillsDir: string, artifactsDir: string): Promise<SkillEntry[]> {
   const catalog: SkillEntry[] = []
   const entries = await readdir(skillsDir, { withFileTypes: true })
+  await rm(artifactsDir, { recursive: true, force: true })
+  await mkdir(artifactsDir, { recursive: true })
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue
@@ -122,15 +182,18 @@ async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
 
     const name = frontmatter.name || entry.name
     if (!validateSkillName(name, entry.name)) continue
+    if (!validateDescription(frontmatter.description, name)) continue
 
     const allFiles = await listFilesRecursively(skillDir)
-    const files = allFiles.filter(f => !f.split('/').some(s => s.startsWith('.')))
-    const sortedFiles = ['SKILL.md', ...files.filter(f => f !== 'SKILL.md')]
+    const sortedFiles = sortSkillFiles(allFiles)
+    const artifact = await createSkillArtifact(skillDir, artifactsDir, name, sortedFiles)
 
     catalog.push({
       name,
+      type: artifact.type,
       description: frontmatter.description,
-      files: sortedFiles,
+      url: artifact.url,
+      digest: artifact.digest,
     })
   }
 
@@ -140,6 +203,7 @@ async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
 declare module 'nuxt/schema' {
   interface RuntimeConfig {
     skills: {
+      schema: string
       catalog: SkillEntry[]
     }
   }
