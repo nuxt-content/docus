@@ -1,9 +1,11 @@
-import { addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addPrerenderRoutes, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { defu } from 'defu'
 import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { create as createTar } from 'tar'
+import type { NitroConfig } from 'nitropack'
 import { parse as parseYaml } from 'yaml'
 
 type SkillArtifactType = 'skill-md' | 'archive'
@@ -17,6 +19,11 @@ interface SkillEntry {
 }
 
 const SCHEMA_URI = 'https://schemas.agentskills.io/discovery/0.2.0/schema.json'
+
+export interface SkillsModuleOptions {
+  dir?: string
+}
+
 const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
 const MAX_DESCRIPTION_LENGTH = 1024
@@ -24,12 +31,18 @@ const WELL_KNOWN_PREFIX = '/.well-known/agent-skills'
 
 const log = logger.withTag('Docus')
 
-export default defineNuxtModule({
+const defaults: Required<SkillsModuleOptions> = {
+  dir: 'skills',
+}
+
+export default defineNuxtModule<SkillsModuleOptions>({
   meta: {
     name: 'skills',
   },
-  async setup(_options, nuxt) {
-    const skillsDir = join(nuxt.options.rootDir, 'skills')
+  async setup(_inlineOptions, nuxt) {
+    const options = defu(nuxt.options.docus?.skills, defaults) as Required<SkillsModuleOptions>
+
+    const skillsDir = join(nuxt.options.rootDir, options.dir)
     if (!existsSync(skillsDir)) return
 
     const artifactsDir = join(nuxt.options.rootDir, '.data', 'docus-agent-skills')
@@ -42,17 +55,17 @@ export default defineNuxtModule({
 
     const { resolve } = createResolver(import.meta.url)
 
-    nuxt.hook('nitro:config', (nitroConfig) => {
+    const onNitroConfig = nuxt.hook as (name: 'nitro:config', cb: (nitroConfig: NitroConfig) => void) => void
+    onNitroConfig('nitro:config', (nitroConfig) => {
       nitroConfig.serverAssets ||= []
       nitroConfig.serverAssets.push({ baseName: 'agent-skills', dir: artifactsDir })
-
-      nitroConfig.prerender ||= {}
-      nitroConfig.prerender.routes ||= []
-      nitroConfig.prerender.routes.push(`${WELL_KNOWN_PREFIX}/index.json`)
-      for (const skill of catalog) {
-        nitroConfig.prerender.routes.push(skill.url)
-      }
     })
+
+    const prerenderRoutes = [`${WELL_KNOWN_PREFIX}/index.json`]
+    for (const skill of catalog) {
+      prerenderRoutes.push(skill.url)
+    }
+    addPrerenderRoutes(prerenderRoutes)
 
     addServerHandler({
       route: `${WELL_KNOWN_PREFIX}/index.json`,

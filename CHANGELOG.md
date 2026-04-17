@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.10.0](https://github.com/nuxt-content/docus/compare/v5.9.0...v5.10.0) (2026-04-17)
+
+### Features
+
+* **customization:** add `AppHeaderLeft` component ([#1332](https://github.com/nuxt-content/docus/issues/1332)) ([313ef59](https://github.com/nuxt-content/docus/commit/313ef59edc2e8599c81a89c55ed4574b641a340e))
+* **layer:** forward app config defaultVariants to subcomponents ([#1338](https://github.com/nuxt-content/docus/issues/1338)) ([8abf0d4](https://github.com/nuxt-content/docus/commit/8abf0d4ac30bba28f984264d24e977094052d686))
+* **skills:** make directory configurable via module options ([#1341](https://github.com/nuxt-content/docus/issues/1341)) ([764329f](https://github.com/nuxt-content/docus/commit/764329f5df6497e41818674750876549c3e6fdcc))
+
+### Bug Fixes
+
+* **.starters:** accurate folder prefix ([#1334](https://github.com/nuxt-content/docus/issues/1334)) ([ff036f9](https://github.com/nuxt-content/docus/commit/ff036f9d80cb218379113e153f0df06fcfc37ea7))
+* **build:** remove noisy vite warns ([#1344](https://github.com/nuxt-content/docus/issues/1344)) ([a95607a](https://github.com/nuxt-content/docus/commit/a95607a16c278b1fa8f5887bfcd3a50591d9a302))
+* **i18n:** add Dutch (nl) locales for assistant UI ([#1335](https://github.com/nuxt-content/docus/issues/1335)) ([965850f](https://github.com/nuxt-content/docus/commit/965850f03c76608a8943ed71721200e0fa158703))
+* **i18n:** add missing locale keys ([#1336](https://github.com/nuxt-content/docus/issues/1336)) ([3dd3e18](https://github.com/nuxt-content/docus/commit/3dd3e1868c4b03aaacc19ad643ccd801c3cb1a9f))
+
 ## [5.9.0](https://github.com/nuxt-content/docus/compare/v5.8.1...v5.9.0) (2026-04-02)
 
 ### Features
