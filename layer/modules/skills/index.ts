@@ -130,32 +130,15 @@ async function listFilesRecursively(dir: string, base: string = ''): Promise<str
 
 async function createSkillArtifact(skillDir: string, outputDir: string, name: string, files: string[]): Promise<Pick<SkillEntry, 'type' | 'url' | 'digest'>> {
   if (files.length === 1 && files[0] === 'SKILL.md') {
-    const outputPath = join(outputDir, name, 'SKILL.md')
     await mkdir(join(outputDir, name), { recursive: true })
     const content = await readFile(join(skillDir, 'SKILL.md'))
-    await writeFile(outputPath, content)
-
-    return {
-      type: 'skill-md',
-      url: `${WELL_KNOWN_PREFIX}/${name}/SKILL.md`,
-      digest: digest(await readFile(outputPath)),
-    }
+    await writeFile(join(outputDir, name, 'SKILL.md'), content)
+    return { type: 'skill-md', url: `${WELL_KNOWN_PREFIX}/${name}/SKILL.md`, digest: digest(content) }
   }
 
   const outputPath = join(outputDir, `${name}.tar.gz`)
-  await createTar({
-    cwd: skillDir,
-    file: outputPath,
-    gzip: true,
-    noMtime: true,
-    portable: true,
-  }, files)
-
-  return {
-    type: 'archive',
-    url: `${WELL_KNOWN_PREFIX}/${name}.tar.gz`,
-    digest: digest(await readFile(outputPath)),
-  }
+  await createTar({ cwd: skillDir, file: outputPath, gzip: true, noMtime: true, portable: true }, files)
+  return { type: 'archive', url: `${WELL_KNOWN_PREFIX}/${name}.tar.gz`, digest: digest(await readFile(outputPath)) }
 }
 
 async function scanSkills(skillsDir: string, artifactsDir: string): Promise<SkillEntry[]> {
