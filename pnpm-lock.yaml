@@ -204,6 +204,9 @@ importers:
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
+      tar:
+        specifier: ^7.5.13
+        version: 7.5.13
       ufo:
         specifier: ^1.6.3
         version: 1.6.3
