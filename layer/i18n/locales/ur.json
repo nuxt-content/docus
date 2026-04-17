@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "ورڈ مارک ڈاؤن لوڈ ہو گیا",
     "copyLogoFailed": "لوگو کاپی نہیں ہو سکا",
     "copyWordmarkFailed": "ورڈ مارک کاپی نہیں ہو سکا"
+  },
+  "assistant": {
+    "title": "AI سے پوچھیں۔",
+    "placeholder": "ایک سوال پوچھیں...",
+    "tooltip": "AI سے ایک سوال پوچھیں۔",
+    "tryAsking": "ایک سوال پوچھنے کی کوشش کریں۔",
+    "askAnything": "کچھ بھی پوچھو...",
+    "clearChat": "چیٹ صاف کریں۔",
+    "close": "بند",
+    "expand": "پھیلائیں۔",
+    "collapse": "سمٹنا",
+    "thinking": "سوچ رہا ہے...",
+    "askMeAnything": "کچھ بھی پوچھو",
+    "askMeAnythingDescription": "دستاویزات کو نیویگیٹ کرنے، تصورات کو سمجھنے اور جوابات تلاش کرنے میں مدد حاصل کریں۔",
+    "faq": "اکثر پوچھے گئے سوالات",
+    "chatCleared": "ریفریش پر چیٹ صاف ہو جاتی ہے۔",
+    "lineBreak": "لائن بریک",
+    "explainWithAi": "AI کے ساتھ وضاحت کریں۔",
+    "toolListPages": "درج دستاویزات کے صفحات",
+    "toolReadPage": "پڑھیں",
+    "loading": {
+      "searching": "دستاویزات کی تلاش",
+      "reading": "دستاویزات کے ذریعے پڑھنا",
+      "analyzing": "مواد کا تجزیہ",
+      "finding": "بہترین جواب تلاش کرنا",
+      "finished": "ذرائع استعمال کیے گئے۔"
+    }
   }
 }

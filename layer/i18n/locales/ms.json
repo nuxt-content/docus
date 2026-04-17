@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark dimuat turun",
     "copyLogoFailed": "Gagal menyalin logo",
     "copyWordmarkFailed": "Gagal menyalin wordmark"
+  },
+  "assistant": {
+    "title": "Tanya AI",
+    "placeholder": "Tanya soalan...",
+    "tooltip": "Tanya soalan kepada AI",
+    "tryAsking": "Cuba tanya soalan",
+    "askAnything": "Tanya apa-apa...",
+    "clearChat": "Kosongkan sembang",
+    "close": "Tutup",
+    "expand": "Kembangkan",
+    "collapse": "Kecilkan",
+    "thinking": "Berfikir...",
+    "askMeAnything": "Tanya apa sahaja",
+    "askMeAnythingDescription": "Dapatkan bantuan untuk menavigasi dokumentasi, memahami konsep, dan mencari jawapan.",
+    "faq": "Soalan Lazim",
+    "chatCleared": "Sembang dikosongkan semasa segar semula",
+    "lineBreak": "Pemutus baris",
+    "explainWithAi": "Terangkan dengan AI",
+    "toolListPages": "Halaman dokumentasi tersenarai",
+    "toolReadPage": "Baca",
+    "loading": {
+      "searching": "Mencari dokumentasi",
+      "reading": "Membaca dokumen",
+      "analyzing": "Menganalisis kandungan",
+      "finding": "Mencari jawapan terbaik",
+      "finished": "Sumber yang digunakan"
+    }
   }
 }

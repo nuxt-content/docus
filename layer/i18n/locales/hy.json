@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark downloaded",
     "copyLogoFailed": "Failed to copy logo",
     "copyWordmarkFailed": "Failed to copy wordmark"
+  },
+  "assistant": {
+    "title": "Հարցրեք AI-ին",
+    "placeholder": "Հարց տվեք...",
+    "tooltip": "Հարց տվեք AI-ին",
+    "tryAsking": "Փորձեք հարց տալ",
+    "askAnything": "Հարցրեք որևէ բան...",
+    "clearChat": "Ջնջել չատը",
+    "close": "Փակել",
+    "expand": "Ընդարձակել",
+    "collapse": "Փակել",
+    "thinking": "Մտածում եմ...",
+    "askMeAnything": "Հարցրեք որևէ բան",
+    "askMeAnythingDescription": "Ստացեք օգնություն՝ փաստաթղթերում կողմնորոշվելու, հասկացությունները հասկանալու և պատասխաններ գտնելու համար։",
+    "faq": "ՀՏՀ",
+    "chatCleared": "Զրույցը մաքրվում է թարմացնելիս",
+    "lineBreak": "Գծի ընդմիջում",
+    "explainWithAi": "Բացատրիր AI-ով",
+    "toolListPages": "Հրապարակված փաստաթղթերի էջեր",
+    "toolReadPage": "Կարդալ",
+    "loading": {
+      "searching": "Փաստաթղթերի որոնում",
+      "reading": "Փաստաթղթերի ընթերցում",
+      "analyzing": "Բովանդակության վերլուծություն",
+      "finding": "Գտնել լավագույն պատասխանը",
+      "finished": "Օգտագործված աղբյուրներ"
+    }
   }
 }

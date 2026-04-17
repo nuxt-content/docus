@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Đã tải wordmark",
     "copyLogoFailed": "Không thể sao chép logo",
     "copyWordmarkFailed": "Không thể sao chép wordmark"
+  },
+  "assistant": {
+    "title": "Hỏi AI",
+    "placeholder": "Đặt một câu hỏi...",
+    "tooltip": "Đặt câu hỏi cho AI",
+    "tryAsking": "Hãy thử đặt một câu hỏi",
+    "askAnything": "Hỏi bất cứ điều gì...",
+    "clearChat": "Xóa cuộc trò chuyện",
+    "close": "Đóng",
+    "expand": "Mở rộng",
+    "collapse": "Thu gọn",
+    "thinking": "Đang suy nghĩ...",
+    "askMeAnything": "Hỏi bất cứ điều gì",
+    "askMeAnythingDescription": "Nhận trợ giúp điều hướng tài liệu, hiểu các khái niệm và tìm câu trả lời.",
+    "faq": "Câu hỏi thường gặp",
+    "chatCleared": "Trò chuyện sẽ bị xóa khi làm mới",
+    "lineBreak": "Ngắt dòng",
+    "explainWithAi": "Giải thích bằng AI",
+    "toolListPages": "Các trang tài liệu được liệt kê",
+    "toolReadPage": "Đọc",
+    "loading": {
+      "searching": "Tìm kiếm tài liệu",
+      "reading": "Đọc qua tài liệu",
+      "analyzing": "Phân tích nội dung",
+      "finding": "Tìm câu trả lời tốt nhất",
+      "finished": "Nguồn được sử dụng"
+    }
   }
 }
