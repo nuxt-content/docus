@@ -10,17 +10,24 @@ interface SkillEntry {
   files: string[]
 }
 
+interface ModuleOptions {
+  dir?: string
+}
+
 const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
 
 const log = logger.withTag('Docus')
 
-export default defineNuxtModule({
+export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'skills',
   },
-  async setup(_options, nuxt) {
-    const skillsDir = join(nuxt.options.rootDir, 'skills')
+  defaults: {
+    dir: 'skills',
+  },
+  async setup(options, nuxt) {
+    const skillsDir = join(nuxt.options.rootDir, options.dir!)
     if (!existsSync(skillsDir)) return
 
     const catalog = await scanSkills(skillsDir)
