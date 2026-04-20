@@ -1,28 +1,25 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
-import type { MCPTransport } from '@ai-sdk/mcp'
-import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
 import type { H3Event } from 'h3'
 
 const MAX_STEPS = 10
 
-function createInternalMcpTransport(event: H3Event, path: string): MCPTransport {
+function createLocalFetch(event: H3Event): typeof fetch {
   const origin = getRequestURL(event).origin
-  const url = new URL(path, origin)
 
-  const localFetch = (input: string | URL, init?: RequestInit) => {
-    const requestUrl = input instanceof URL ? input : new URL(input, origin)
+  return (input, init) => {
+    const requestUrl = input instanceof URL
+      ? input
+      : typeof input === 'string'
+        ? new URL(input, origin)
+        : new URL(input.url)
     const localPath = requestUrl.origin === origin
       ? `${requestUrl.pathname}${requestUrl.search}`
       : requestUrl.toString()
 
     return event.fetch(localPath, init)
   }
-
-  return new StreamableHTTPClientTransport(url, {
-    fetch: localFetch,
-  }) as unknown as MCPTransport
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,12 +84,13 @@ export default defineEventHandler(async (event) => {
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
+  const localFetch = createLocalFetch(event)
 
   const transport = isExternalUrl
     ? { type: 'http' as const, url: mcpServer }
     : import.meta.dev
       ? { type: 'http' as const, url: `http://localhost:3000${baseURL}${mcpServer}` }
-      : createInternalMcpTransport(event, `${baseURL}${mcpServer}`)
+      : { type: 'http' as const, url: `${getRequestURL(event).origin}${baseURL}${mcpServer}`, fetch: localFetch }
 
   const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()

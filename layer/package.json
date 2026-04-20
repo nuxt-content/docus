@@ -24,12 +24,11 @@
   ],
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.83",
-    "@ai-sdk/mcp": "^1.0.30",
+    "@ai-sdk/mcp": "^1.0.36",
     "@ai-sdk/vue": "3.0.141",
     "@iconify-json/lucide": "^1.2.100",
     "@iconify-json/simple-icons": "^1.2.75",
     "@iconify-json/vscode-icons": "^1.2.45",
-    "@modelcontextprotocol/sdk": "^1.29.0",
     "@nuxt/content": "^3.12.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/kit": "^4.4.2",
