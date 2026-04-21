@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Chat } from '@ai-sdk/vue'
-import { DefaultChatTransport } from 'ai'
+import { DefaultChatTransport, isToolUIPart, isTextUIPart, getToolName } from 'ai'
+import { isToolStreaming } from '@nuxt/ui/utils/ai'
+import AssistantComark from '../../../../layer/modules/assistant/runtime/components/AssistantComark'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
@@ -35,34 +37,22 @@ const chat = isEnabled.value
     })
   : null
 
-const lastMessage = computed(() => chat?.messages.at(-1))
-const showThinking = computed(() =>
-  chat?.status === 'streaming'
-  && lastMessage.value?.role === 'assistant'
-  && !lastMessage.value?.parts?.some((p: { type: string }) => p.type === 'text'),
-)
+function getToolText(part: Parameters<typeof getToolName>[0]) {
+  const toolName = getToolName(part)
+  const input = (part as { input?: Record<string, string> }).input
+  const verb = part.state === 'output-available' ? 'Searched' : 'Searching'
+  const readVerb = part.state === 'output-available' ? 'Read' : 'Reading'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getMessageToolCalls(message: any) {
-  if (!message?.parts) return []
-  return message.parts
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((p: any) => p.type === 'data-tool-calls')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .flatMap((p: any) => p.data?.tools || [])
+  return {
+    'list-pages': `${verb} pages`,
+    'get-page': `${readVerb} ${input?.path || '...'}`,
+  }[toolName] || `${verb} ${toolName}`
 }
 
-function handleSubmit(event?: Event) {
-  event?.preventDefault()
+function handleSubmit() {
+  if (!input.value.trim() || !chat) return
 
-  if (!input.value.trim() || !chat) {
-    return
-  }
-
-  chat.sendMessage({
-    text: input.value,
-  })
-
+  chat.sendMessage({ text: input.value })
   input.value = ''
 }
 
@@ -90,7 +80,7 @@ function resetChat() {
         >
           <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
             <UIcon
-              name="i-lucide-sparkles"
+              name="i-custom:ai"
               class="size-5 text-primary"
             />
           </div>
@@ -119,26 +109,31 @@ function resetChat() {
           :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
           class="px-4 py-4"
         >
+          <template #indicator>
+            <UChatTool
+              icon="i-lucide-brain"
+              text="Thinking..."
+              streaming
+            />
+          </template>
+
           <template #content="{ message }">
-            <div class="flex flex-col gap-2">
-              <AssistantLoading
-                v-if="message.role === 'assistant' && (getMessageToolCalls(message).length > 0 || (showThinking && message.id === lastMessage?.id))"
-                :tool-calls="getMessageToolCalls(message)"
-                :is-loading="showThinking && message.id === lastMessage?.id"
+            <template
+              v-for="(part, index) in message.parts"
+              :key="`${message.id}-${part.type}-${index}`"
+            >
+              <AssistantComark
+                v-if="isTextUIPart(part) && part.text"
+                :markdown="part.text"
               />
-              <template
-                v-for="(part, index) in message.parts"
-                :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
-              >
-                <MDCCached
-                  v-if="part.type === 'text' && part.text"
-                  :value="part.text"
-                  :cache-key="`demo-${message.id}-${index}`"
-                  :parser-options="{ highlight: false }"
-                  class="*:first:mt-0 *:last:mb-0"
-                />
-              </template>
-            </div>
+
+              <UChatTool
+                v-else-if="isToolUIPart(part)"
+                :text="getToolText(part)"
+                :icon="getToolName(part) === 'get-page' ? 'i-lucide-file-text' : 'i-lucide-search'"
+                :streaming="isToolStreaming(part)"
+              />
+            </template>
           </template>
         </UChatMessages>
       </template>
@@ -160,41 +155,36 @@ function resetChat() {
     </div>
 
     <div class="p-3">
-      <form
-        class="flex items-center gap-2"
-        @submit.prevent="handleSubmit"
+      <UChatPrompt
+        v-model="input"
+        :disabled="!isEnabled"
+        :placeholder="t('assistant.askAnything')"
+        variant="subtle"
+        size="sm"
+        @submit="handleSubmit"
       >
-        <UInput
-          v-model="input"
-          :disabled="!isEnabled"
-          :placeholder="t('assistant.askAnything')"
-          size="sm"
-          class="flex-1"
-          :ui="{
-            base: 'bg-elevated',
-          }"
-          @keydown.enter.exact.prevent="handleSubmit"
-        />
-        <div class="flex items-center gap-1">
-          <UButton
-            v-if="chat?.messages.length"
-            icon="i-lucide-trash-2"
-            color="neutral"
-            variant="ghost"
-            size="xs"
-            :disabled="!isEnabled"
-            @click="resetChat"
-          />
-          <UButton
-            type="submit"
-            icon="i-lucide-arrow-up"
-            color="primary"
-            size="xs"
-            :disabled="!isEnabled || !input.trim() || chat?.status === 'streaming'"
-            :loading="chat?.status === 'streaming'"
-          />
-        </div>
-      </form>
+        <template #footer>
+          <div class="ml-auto flex items-center gap-2">
+            <UButton
+              v-if="chat?.messages.length"
+              icon="i-lucide-trash-2"
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              :disabled="!isEnabled"
+              @click="resetChat"
+            />
+
+            <UChatPromptSubmit
+              size="xs"
+              :status="chat?.status || 'ready'"
+              :disabled="!isEnabled || (chat?.status === 'ready' && !input.trim())"
+              @stop="chat?.stop()"
+              @reload="chat?.regenerate()"
+            />
+          </div>
+        </template>
+      </UChatPrompt>
     </div>
   </div>
 </template>

@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@nuxt/ui": "^4.6.1",
+    "@ai-sdk/vue": "3.0.141",
+    "ai": "6.0.141",
     "@nuxtjs/i18n": "^10.2.4",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",

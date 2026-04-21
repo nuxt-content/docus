@@ -10,7 +10,7 @@ const { seo } = appConfig
 const { forced: forcedColorMode } = useDocusColorMode()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
-const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
+const { isEnabled: isAssistantEnabled } = useAssistant()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
@@ -67,28 +67,31 @@ const { subNavigationMode } = useSubNavigation(navigation)
   <UApp :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
 
-    <div
-      :class="['transition-[margin-right] duration-200 ease-linear will-change-[margin-right]', { 'docus-sub-header': subNavigationMode === 'header' }]"
-      :style="{ marginRight: shouldPushContent ? `${assistantPanelWidth}px` : '0' }"
-    >
-      <AppHeader v-if="$route.meta.header !== false" />
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-      <AppFooter v-if="$route.meta.footer !== false" />
-    </div>
+    <div class="flex">
+      <div
+        class="flex-1 min-w-0"
+        :class="{ 'docus-sub-header': subNavigationMode === 'header' }"
+      >
+        <AppHeader v-if="$route.meta.header !== false" />
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+        <AppFooter v-if="$route.meta.footer !== false" />
 
-    <ClientOnly>
-      <LazyUContentSearch
-        :files="files"
-        :navigation="navigation"
-        :color-mode="!forcedColorMode"
-      />
-      <template v-if="isAssistantEnabled">
+        <ClientOnly>
+          <LazyUContentSearch
+            :files="files"
+            :navigation="navigation"
+            :color-mode="!forcedColorMode"
+          />
+          <LazyAssistantFloatingInput v-if="isAssistantEnabled" />
+        </ClientOnly>
+      </div>
+
+      <ClientOnly v-if="isAssistantEnabled">
         <LazyAssistantPanel />
-        <LazyAssistantFloatingInput />
-      </template>
-    </ClientOnly>
+      </ClientOnly>
+    </div>
   </UApp>
 </template>
 

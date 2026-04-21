@@ -1,7 +1,7 @@
 import type { UIMessage } from 'ai'
-import { useAppConfig, useRuntimeConfig, useState } from '#imports'
-import { useMediaQuery } from '@vueuse/core'
-import { computed } from 'vue'
+import { useAppConfig, useRuntimeConfig } from '#imports'
+import { createSharedComposable, useLocalStorage } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../types'
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
@@ -19,10 +19,7 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
   return questions as FaqCategory[]
 }
 
-const PANEL_WIDTH_COMPACT = 360
-const PANEL_WIDTH_EXPANDED = 520
-
-export function useAssistant() {
+export const useAssistant = createSharedComposable(() => {
   const config = useRuntimeConfig()
   const appConfig = useAppConfig()
   const assistantRuntimeConfig = config.public.assistant as { enabled?: boolean } | undefined
@@ -30,26 +27,30 @@ export function useAssistant() {
   const docusRuntimeConfig = appConfig.docus as { locale?: string } | undefined
   const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
 
-  const isOpen = useState('assistant-open', () => false)
-  const isExpanded = useState('assistant-expanded', () => false)
-  const messages = useState<UIMessage[]>('assistant-messages', () => [])
-  const pendingMessage = useState<string | undefined>('assistant-pending', () => undefined)
+  const storageOpen = useLocalStorage('assistant-open', false)
+  const messages = useLocalStorage<UIMessage[]>('assistant-messages', [])
 
-  const isMobile = useMediaQuery('(max-width: 767px)')
-  const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
-  const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
+  const isOpen = ref(false)
+
+  onNuxtReady(() => {
+    nextTick(() => {
+      isOpen.value = storageOpen.value
+    })
+  })
+
+  watch(isOpen, (value) => {
+    storageOpen.value = value
+  })
 
   const faqQuestions = computed<FaqCategory[]>(() => {
     const faqConfig = assistantConfig?.faqQuestions
     if (!faqConfig) return []
 
-    // Check if it's a localized object (has locale keys like 'en', 'fr')
     if (!Array.isArray(faqConfig)) {
       const localizedConfig = faqConfig as LocalizedFaqQuestions
       const currentLocale = docusRuntimeConfig?.locale || 'en'
       const defaultLocale = config.public.i18n?.defaultLocale || 'en'
 
-      // Try current locale, then default locale, then first available
       const questions = localizedConfig[currentLocale]
         || localizedConfig[defaultLocale]
         || Object.values(localizedConfig)[0]
@@ -66,13 +67,13 @@ export function useAssistant() {
     }
 
     if (initialMessage) {
-      pendingMessage.value = initialMessage
+      messages.value = [...messages.value, {
+        id: String(Date.now()),
+        role: 'user' as const,
+        parts: [{ type: 'text' as const, text: initialMessage }],
+      }]
     }
     isOpen.value = true
-  }
-
-  function clearPending() {
-    pendingMessage.value = undefined
   }
 
   function close() {
@@ -83,29 +84,13 @@ export function useAssistant() {
     isOpen.value = !isOpen.value
   }
 
-  function clearMessages() {
-    messages.value = []
-  }
-
-  function toggleExpanded() {
-    isExpanded.value = !isExpanded.value
-  }
-
   return {
     isEnabled,
     isOpen,
-    isExpanded,
-    isMobile,
-    panelWidth,
-    shouldPushContent,
     messages,
-    pendingMessage,
     faqQuestions,
     open,
-    clearPending,
     close,
     toggle,
-    toggleExpanded,
-    clearMessages,
   }
-}
+})

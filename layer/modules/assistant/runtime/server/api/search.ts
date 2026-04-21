@@ -1,5 +1,5 @@
-import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
-import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
+import { streamText, convertToModelMessages } from 'ai'
+import type { ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import type { H3Event } from 'h3'
 
@@ -23,11 +23,10 @@ function createLocalFetch(event: H3Event): typeof fetch {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function stopWhenResponseComplete({ steps }: { steps: any[] }): boolean {
+function stopWhenResponseComplete({ steps }: { steps: { text?: string, toolCalls?: unknown[] }[] }): boolean {
   const lastStep = steps.at(-1)
   if (!lastStep) return false
 
-  // Primary condition: stop when model gives a text response without tool calls
   const hasText = Boolean(lastStep.text && lastStep.text.trim().length > 0)
   const hasNoToolCalls = !lastStep.toolCalls || lastStep.toolCalls.length === 0
 
@@ -57,7 +56,7 @@ function getSystemPrompt(siteName: string) {
 
 **Links and exploration:**
 - Tool results include a \`url\` for each page — prefer markdown links \`[label](url)\` so users can open the doc in one click
-- When it helps, add extra links (related pages, “read more”, side topics) — make the answer easy to dig into, not a wall of text
+- When it helps, add extra links (related pages, "read more", side topics) — make the answer easy to dig into, not a wall of text
 - Stick to URLs from tool results (\`url\` / \`path\`) so links stay valid
 
 **FORMATTING RULES (CRITICAL):**
@@ -85,6 +84,9 @@ export default defineEventHandler(async (event) => {
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
 
+  const abortController = new AbortController()
+  event.node.req.on('close', () => abortController.abort())
+
   let transport: Parameters<typeof createMCPClient>[0]['transport']
   if (isExternalUrl) {
     transport = {
@@ -109,41 +111,19 @@ export default defineEventHandler(async (event) => {
   const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()
 
-  const stream = createUIMessageStream({
-    execute: async ({ writer }: { writer: UIMessageStreamWriter }) => {
-      const modelMessages = await convertToModelMessages(messages)
-      const result = streamText({
-        model: config.assistant.model,
-        maxOutputTokens: 4000,
-        maxRetries: 2,
-        stopWhen: stopWhenResponseComplete,
-        system: getSystemPrompt(siteName),
-        messages: modelMessages,
-        tools: mcpTools as ToolSet,
-        onStepFinish: ({ toolCalls }: { toolCalls: ToolCallPart[] }) => {
-          if (toolCalls.length === 0) return
-          writer.write({
-            id: toolCalls[0]?.toolCallId,
-            type: 'data-tool-calls',
-            data: {
-              tools: toolCalls.map((tc: ToolCallPart) => {
-                const args = 'args' in tc ? tc.args : 'input' in tc ? tc.input : {}
-                return {
-                  toolName: tc.toolName,
-                  toolCallId: tc.toolCallId,
-                  args,
-                }
-              }),
-            },
-          })
-        },
-      })
-      writer.merge(result.toUIMessageStream())
-    },
-    onFinish: async () => {
-      await httpClient.close()
-    },
-  })
+  const closeMcp = () => event.waitUntil(httpClient.close())
 
-  return createUIMessageStreamResponse({ stream })
+  return streamText({
+    model: config.assistant.model,
+    maxOutputTokens: 4000,
+    maxRetries: 2,
+    abortSignal: abortController.signal,
+    stopWhen: stopWhenResponseComplete,
+    system: getSystemPrompt(siteName),
+    messages: await convertToModelMessages(messages),
+    tools: mcpTools as ToolSet,
+    onFinish: closeMcp,
+    onAbort: closeMcp,
+    onError: closeMcp,
+  }).toUIMessageStreamResponse()
 })

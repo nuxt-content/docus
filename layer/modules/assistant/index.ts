@@ -33,6 +33,9 @@ export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
     name: 'assistant',
   },
+  moduleDependencies: {
+    '@comark/nuxt': {},
+  },
   setup(_options, nuxt) {
     const legacyOptions = nuxt.options.assistant
     if (legacyOptions && Object.keys(legacyOptions).length > 0) {
@@ -63,8 +66,6 @@ export default defineNuxtModule<AssistantModuleOptions>({
       'AssistantChat',
       'AssistantPanel',
       'AssistantFloatingInput',
-      'AssistantLoading',
-      'AssistantMatrix',
     ]
 
     components.forEach(name =>
@@ -86,7 +87,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
       model: options.model,
     }
 
-    const routePath = options.apiPath.replace(/^\//, '')
+    const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
       route: `/${routePath}`,
       handler: resolve('./runtime/server/api/search'),

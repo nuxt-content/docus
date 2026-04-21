@@ -25,7 +25,15 @@ export default defineNuxtModule({
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
 @source "../../app.config.ts";
-@source "${assistantDir.replace(/\\/g, '/')}/**/*";`
+@source "${assistantDir.replace(/\\/g, '/')}/**/*";
+
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}`
       },
     })
 
