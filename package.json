@@ -30,7 +30,7 @@
     "eslint": "^10.2.1",
     "nuxt": "4.4.2",
     "release-it": "^20.0.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vue-tsc": "^3.2.7"
   },
   "resolutions": {
