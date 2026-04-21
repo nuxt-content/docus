@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark descarregat",
     "copyLogoFailed": "No s'ha pogut copiar el logotip",
     "copyWordmarkFailed": "No s'ha pogut copiar el wordmark"
+  },
+  "assistant": {
+    "title": "Pregunta a la IA",
+    "placeholder": "Fes una pregunta...",
+    "tooltip": "Fes una pregunta a l'IA",
+    "tryAsking": "Prova de fer una pregunta",
+    "askAnything": "Pregunta qualsevol cosa...",
+    "clearChat": "Esborra el xat",
+    "close": "Tanca",
+    "expand": "Amplia",
+    "collapse": "Contraure",
+    "thinking": "Pensant...",
+    "askMeAnything": "Pregunta el que vulguis",
+    "askMeAnythingDescription": "Rep ajuda per navegar per la documentació, entendre els conceptes i trobar respostes.",
+    "faq": "Preguntes freqüents",
+    "chatCleared": "El xat s'esborra quan s'actualitza",
+    "lineBreak": "Salt de línia",
+    "explainWithAi": "Explica-ho amb IA",
+    "toolListPages": "Pàgines de documentació llistades",
+    "toolReadPage": "Llegir",
+    "loading": {
+      "searching": "Cerca a la documentació",
+      "reading": "Llegir els documents",
+      "analyzing": "Analitzar el contingut",
+      "finding": "Trobar la millor resposta",
+      "finished": "Fonts utilitzades"
+    }
   }
 }

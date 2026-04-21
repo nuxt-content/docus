@@ -1,4 +1,4 @@
-[![docus](https://docus.dev/__og-image__/static/og.png)](https://docus.dev)
+[![docus](https://docus.dev/_og/s/c_Landing,title_Write+beautiful+docs+with+Markdown,description_Ship+fast+flexible+and+SEO-optimized+documentation+with+beautiful+design+out+of+the+box.+Docus+brings+together+the+best+of+the+Nuxt+ecosystem.+Powered+by+Nuxt+UI.,p_Ii9lbiI.png)](https://docus.dev)
 
 > CLI tool to create beautiful docs with Markdown
 

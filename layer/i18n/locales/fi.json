@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Sanamerkki ladattu",
     "copyLogoFailed": "Logon kopiointi epäonnistui",
     "copyWordmarkFailed": "Sanamerkin kopiointi epäonnistui"
+  },
+  "assistant": {
+    "title": "Kysy tekoälyltä",
+    "placeholder": "Esitä kysymys...",
+    "tooltip": "Esitä tekoälylle kysymys",
+    "tryAsking": "Kokeile kysymyksen esittämistä",
+    "askAnything": "Kysy mitä tahansa...",
+    "clearChat": "Tyhjennä chat",
+    "close": "Sulje",
+    "expand": "Laajenna",
+    "collapse": "Pienennä",
+    "thinking": "Ajatellaan...",
+    "askMeAnything": "Kysy mitä tahansa",
+    "askMeAnythingDescription": "Saat apua dokumentaatiossa navigointiin, käsitteiden ymmärtämiseen ja vastausten löytämiseen.",
+    "faq": "UKK",
+    "chatCleared": "Keskustelu tyhjennetään päivitettäessä",
+    "lineBreak": "Rivinvaihto",
+    "explainWithAi": "Selitä tekoälyllä",
+    "toolListPages": "Luetellut dokumentaatiosivut",
+    "toolReadPage": "Lue",
+    "loading": {
+      "searching": "Dokumentaation hakeminen",
+      "reading": "Asiakirjojen lukeminen",
+      "analyzing": "Sisällön analysointi",
+      "finding": "Parhaan vastauksen löytäminen",
+      "finished": "Käytetyt lähteet"
+    }
   }
 }

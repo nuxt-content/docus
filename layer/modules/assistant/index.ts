@@ -1,4 +1,5 @@
 import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { defu } from 'defu'
 
 export interface AssistantModuleOptions {
   /**
@@ -22,24 +23,33 @@ export interface AssistantModuleOptions {
 
 const log = logger.withTag('Docus')
 
+const defaults: Required<AssistantModuleOptions> = {
+  apiPath: '/__docus__/assistant',
+  mcpServer: '/mcp',
+  model: 'google/gemini-3-flash',
+}
+
 export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
     name: 'assistant',
-    configKey: 'assistant',
   },
-  defaults: {
-    apiPath: '/__docus__/assistant',
-    mcpServer: '/mcp',
-    model: 'google/gemini-3-flash',
-  },
-  setup(options, nuxt) {
-    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
+  setup(_options, nuxt) {
+    const legacyOptions = nuxt.options.assistant
+    if (legacyOptions && Object.keys(legacyOptions).length > 0) {
+      log.warn('`assistant` top-level config is deprecated. Move it under `docus.assistant` in nuxt.config.ts')
+    }
+
+    const options = defu(nuxt.options.docus?.assistant, legacyOptions, defaults) as Required<AssistantModuleOptions>
+
+    const hasAiGatewayAuth = !!(
+      process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
+    )
 
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.assistant = {
-      enabled: hasApiKey,
-      apiPath: options.apiPath!,
+      enabled: hasAiGatewayAuth,
+      apiPath: options.apiPath,
     }
 
     addImports([
@@ -60,23 +70,23 @@ export default defineNuxtModule<AssistantModuleOptions>({
     components.forEach(name =>
       addComponent({
         name,
-        filePath: hasApiKey
+        filePath: hasAiGatewayAuth
           ? resolve(`./runtime/components/${name}.vue`)
           : resolve('./runtime/components/AssistantChatDisabled.vue'),
       }),
     )
 
-    if (!hasApiKey) {
-      log.warn('AI assistant disabled: AI_GATEWAY_API_KEY not found')
+    if (!hasAiGatewayAuth) {
+      log.warn('AI assistant disabled: neither AI_GATEWAY_API_KEY nor VERCEL_OIDC_TOKEN found')
       return
     }
 
     nuxt.options.runtimeConfig.assistant = {
-      mcpServer: options.mcpServer!,
-      model: options.model!,
+      mcpServer: options.mcpServer,
+      model: options.model,
     }
 
-    const routePath = options.apiPath!.replace(/^\//, '')
+    const routePath = options.apiPath.replace(/^\//, '')
     addServerHandler({
       route: `/${routePath}`,
       handler: resolve('./runtime/server/api/search'),

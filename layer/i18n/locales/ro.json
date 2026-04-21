@@ -32,5 +32,32 @@
     "wordmarkDownloaded": "Wordmark descărcat",
     "copyLogoFailed": "Nu s-a putut copia logo-ul",
     "copyWordmarkFailed": "Nu s-a putut copia wordmark-ul"
+  },
+  "assistant": {
+    "title": "Întrebați AI",
+    "placeholder": "Pune o întrebare...",
+    "tooltip": "Pune o întrebare AI",
+    "tryAsking": "Încercați să puneți o întrebare",
+    "askAnything": "Întreabă orice...",
+    "clearChat": "Ștergeți chatul",
+    "close": "Închide",
+    "expand": "Extindeți",
+    "collapse": "Colaps",
+    "thinking": "Gândind...",
+    "askMeAnything": "Întreabă orice",
+    "askMeAnythingDescription": "Obțineți ajutor pentru navigarea în documentație, înțelegerea conceptelor și găsirea răspunsurilor.",
+    "faq": "Întrebări frecvente",
+    "chatCleared": "Chatul este șters la reîmprospătare",
+    "lineBreak": "Rupere de linie",
+    "explainWithAi": "Explicați cu AI",
+    "toolListPages": "Pagini de documentație listate",
+    "toolReadPage": "Citiți",
+    "loading": {
+      "searching": "Căutarea documentației",
+      "reading": "Citind documentele",
+      "analyzing": "Analizând conținutul",
+      "finding": "Găsirea celui mai bun răspuns",
+      "finished": "Surse folosite"
+    }
   }
 }

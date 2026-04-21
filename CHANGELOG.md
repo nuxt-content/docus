@@ -1,5 +1,37 @@
 # Changelog
 
+## [5.10.0](https://github.com/nuxt-content/docus/compare/v5.9.0...v5.10.0) (2026-04-17)
+
+### Features
+
+* **customization:** add `AppHeaderLeft` component ([#1332](https://github.com/nuxt-content/docus/issues/1332)) ([313ef59](https://github.com/nuxt-content/docus/commit/313ef59edc2e8599c81a89c55ed4574b641a340e))
+* **layer:** forward app config defaultVariants to subcomponents ([#1338](https://github.com/nuxt-content/docus/issues/1338)) ([8abf0d4](https://github.com/nuxt-content/docus/commit/8abf0d4ac30bba28f984264d24e977094052d686))
+* **skills:** make directory configurable via module options ([#1341](https://github.com/nuxt-content/docus/issues/1341)) ([764329f](https://github.com/nuxt-content/docus/commit/764329f5df6497e41818674750876549c3e6fdcc))
+
+### Bug Fixes
+
+* **.starters:** accurate folder prefix ([#1334](https://github.com/nuxt-content/docus/issues/1334)) ([ff036f9](https://github.com/nuxt-content/docus/commit/ff036f9d80cb218379113e153f0df06fcfc37ea7))
+* **build:** remove noisy vite warns ([#1344](https://github.com/nuxt-content/docus/issues/1344)) ([a95607a](https://github.com/nuxt-content/docus/commit/a95607a16c278b1fa8f5887bfcd3a50591d9a302))
+* **i18n:** add Dutch (nl) locales for assistant UI ([#1335](https://github.com/nuxt-content/docus/issues/1335)) ([965850f](https://github.com/nuxt-content/docus/commit/965850f03c76608a8943ed71721200e0fa158703))
+* **i18n:** add missing locale keys ([#1336](https://github.com/nuxt-content/docus/issues/1336)) ([3dd3e18](https://github.com/nuxt-content/docus/commit/3dd3e1868c4b03aaacc19ad643ccd801c3cb1a9f))
+
+## [5.9.0](https://github.com/nuxt-content/docus/compare/v5.8.1...v5.9.0) (2026-04-02)
+
+### Features
+
+* **assistant:** accept OIDC or API key ([#1323](https://github.com/nuxt-content/docus/issues/1323)) ([b21799b](https://github.com/nuxt-content/docus/commit/b21799b29ab43afb11a29f42c826dfefd19b396b))
+* **assistant:** improve mcp page tools ([#1326](https://github.com/nuxt-content/docus/issues/1326)) ([66ea500](https://github.com/nuxt-content/docus/commit/66ea500c79b85874f9ca528238ae65af51f139b5))
+* **layer:** add option to force color-mode ([#1310](https://github.com/nuxt-content/docus/issues/1310)) ([8d8b0a7](https://github.com/nuxt-content/docus/commit/8d8b0a71ec3498e6133461320042e7431d0689b5))
+* **ogImage:** upgrade to v6 and use primary color ([#1312](https://github.com/nuxt-content/docus/issues/1312)) ([a30dcb8](https://github.com/nuxt-content/docus/commit/a30dcb8845d4b183059add869271322b741db67c))
+* **skills:** add agent skills discovery via `.well-known` ([#1297](https://github.com/nuxt-content/docus/issues/1297)) ([2f7861b](https://github.com/nuxt-content/docus/commit/2f7861bd2238d8cd228da8d9cbb31abda883761c))
+
+### Bug Fixes
+
+* **layer:** do not display edit page if github url missing ([#1327](https://github.com/nuxt-content/docus/issues/1327)) ([d056a2c](https://github.com/nuxt-content/docus/commit/d056a2c99251d3b65e6ddb196ebf95d760efa4a1))
+* **og:** limit description size ([#1325](https://github.com/nuxt-content/docus/issues/1325)) ([1981e83](https://github.com/nuxt-content/docus/commit/1981e83e9fab4e852facd74d423efa199f4966e1))
+* **og:** set og image as static ([#1324](https://github.com/nuxt-content/docus/issues/1324)) ([46eb49d](https://github.com/nuxt-content/docus/commit/46eb49d039e5b3af4d58e4b557fb7e894518c1da))
+* **starters:** use extend in nuxt config ([#1328](https://github.com/nuxt-content/docus/issues/1328)) ([c5f4580](https://github.com/nuxt-content/docus/commit/c5f4580be88fbd63a35fc6c2e8caa5838c52dee3))
+
 ## [5.8.1](https://github.com/nuxt-content/docus/compare/v5.8.0...v5.8.1) (2026-03-14)
 
 ### Bug Fixes

@@ -45,8 +45,10 @@ watch(() => navigation?.value, () => {
   headline.value = findPageHeadline(navigation?.value, page.value?.path) || headline.value
 })
 
-defineOgImageComponent('Docs', {
+defineOgImage('Docs', {
   headline: headline.value,
+  title: title?.slice(0, 60),
+  description: formatOgDescription(title, description),
 })
 
 const github = computed(() => appConfig.github ? appConfig.github : null)
@@ -115,17 +117,19 @@ addPrerenderPath(`/raw${route.path}.md`)
           >
             {{ t('docs.edit') }}
           </UButton>
-          <span>{{ t('common.or') }}</span>
-          <UButton
-            variant="link"
-            color="neutral"
-            :to="`${github.url}/issues/new/choose`"
-            target="_blank"
-            icon="i-lucide-alert-circle"
-            :ui="{ leadingIcon: 'size-4' }"
-          >
-            {{ t('docs.report') }}
-          </UButton>
+          <template v-if="github?.url">
+            <span>{{ t('common.or') }}</span>
+            <UButton
+              variant="link"
+              color="neutral"
+              :to="`${github.url}/issues/new/choose`"
+              target="_blank"
+              icon="i-lucide-alert-circle"
+              :ui="{ leadingIcon: 'size-4' }"
+            >
+              {{ t('docs.report') }}
+            </UButton>
+          </template>
         </div>
       </USeparator>
       <UContentSurround :surround="surround" />

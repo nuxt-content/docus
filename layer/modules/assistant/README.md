@@ -27,21 +27,30 @@ pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai motion-v shiki shiki-stream
 export default defineNuxtConfig({
   modules: ['./modules/assistant'],
 
-  assistant: {
-    apiPath: '/__docus__/assistant',
-    mcpServer: '/mcp',
-    model: 'google/gemini-3-flash',
-  }
+  docus: {
+    assistant: {
+      apiPath: '/__docus__/assistant',
+      mcpServer: '/mcp',
+      model: 'google/gemini-3-flash',
+    },
+  },
 })
 ```
 
-4. Set up your API key as an environment variable:
+4. Authenticate to AI Gateway in one of two ways:
+
+   - **`AI_GATEWAY_API_KEY`** — Set it in the Vercel project env UI (and locally in `.env` if you want).
+   - **OIDC** — On Vercel, `VERCEL_OIDC_TOKEN` is injected automatically; you do **not** add it (or an API key) in the dashboard. For local builds, run `vercel env pull` on a linked project so `.env` contains the token:
 
 ```bash
+# Option A — API key (dashboard + optional local .env)
 AI_GATEWAY_API_KEY=your-gateway-key
+
+# Option B — local only, after vercel env pull (not set manually on Vercel)
+VERCEL_OIDC_TOKEN=...
 ```
 
-> **Note:** The module will only be enabled if `AI_GATEWAY_API_KEY` is detected. If no key is found, the module is disabled and a message is logged to the console.
+> **Note:** The module enables when `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` is present at build time. On Vercel, OIDC covers that without you creating env vars in the UI. If neither is available at build, the module stays disabled and a warning is logged.
 
 ## Usage
 
@@ -199,7 +208,7 @@ Composable for syntax highlighting code blocks with Shiki.
 - Nuxt 4.x
 - Nuxt UI 3.x (for `USlideover`, `UButton`, `UTextarea`, `UChatMessages`, etc.)
 - An MCP server running (path configurable via `mcpServer`)
-- `AI_GATEWAY_API_KEY` environment variable
+- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time
 
 ## Customization
 

@@ -3,80 +3,22 @@ import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import type { H3Event } from 'h3'
 
-interface McpTransport {
-  start(): Promise<void>
-  close(): Promise<void>
-  send(message: Record<string, unknown>): Promise<void>
-  onmessage?: ((message: Record<string, unknown>) => void) | undefined
-  onerror?: ((error: Error) => void) | undefined
-  onclose?: (() => void) | undefined
-}
-
 const MAX_STEPS = 10
 
-/**
- * MCP transport that routes through Nitro's internal localFetch (event.fetch)
- * instead of globalThis.$fetch (event.$fetch) which uses the global fetch()
- * and triggers CF Workers self-fetch error 1042.
- */
-function createInternalMcpTransport(event: H3Event, mcpPath: string): McpTransport {
-  let _onmessage: ((message: Record<string, unknown>) => void) | undefined
-  let _onerror: ((error: Error) => void) | undefined
-  let _onclose: (() => void) | undefined
+function createLocalFetch(event: H3Event): typeof fetch {
+  const origin = getRequestURL(event).origin
 
-  return {
-    async start() {},
-    async close() { _onclose?.() },
-    get onmessage() { return _onmessage },
-    set onmessage(fn) { _onmessage = fn },
-    get onerror() { return _onerror },
-    set onerror(fn) { _onerror = fn },
-    get onclose() { return _onclose },
-    set onclose(fn) { _onclose = fn },
-    async send(message: Record<string, unknown>) {
-      try {
-        // event.fetch uses useNitroApp().localFetch on CF Workers
-        // event.$fetch uses globalThis.$fetch which triggers self-fetch error
-        const response = await event.fetch(mcpPath, {
-          method: 'POST',
-          body: JSON.stringify(message),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json, text/event-stream',
-          },
-        })
+  return (input, init) => {
+    const requestUrl = input instanceof URL
+      ? input
+      : typeof input === 'string'
+        ? new URL(input, origin)
+        : new URL(input.url)
+    const localPath = requestUrl.origin === origin
+      ? `${requestUrl.pathname}${requestUrl.search}`
+      : requestUrl.toString()
 
-        const contentType = response.headers.get('content-type') || ''
-
-        if (contentType.includes('text/event-stream') && response.body) {
-          const reader = response.body.pipeThrough(new TextDecoderStream()).getReader()
-          let buffer = ''
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) break
-            buffer += value
-            const lines = buffer.split('\n')
-            buffer = lines.pop() || ''
-            for (const line of lines) {
-              if (line.startsWith('data: ')) {
-                _onmessage?.(JSON.parse(line.slice(6)))
-              }
-            }
-          }
-          if (buffer.startsWith('data: ')) {
-            _onmessage?.(JSON.parse(buffer.slice(6)))
-          }
-        }
-        else {
-          const body = await response.json()
-          const messages = Array.isArray(body) ? body : [body]
-          for (const m of messages) _onmessage?.(m as Record<string, unknown>)
-        }
-      }
-      catch (error) {
-        _onerror?.(error as Error)
-      }
-    },
+    return event.fetch(localPath, init)
   }
 }
 
@@ -113,6 +55,11 @@ function getSystemPrompt(siteName: string) {
 - Be concise, helpful, and direct
 - Guide users like a friendly expert would
 
+**Links and exploration:**
+- Tool results include a \`url\` for each page — prefer markdown links \`[label](url)\` so users can open the doc in one click
+- When it helps, add extra links (related pages, “read more”, side topics) — make the answer easy to dig into, not a wall of text
+- Stick to URLs from tool results (\`url\` / \`path\`) so links stay valid
+
 **FORMATTING RULES (CRITICAL):**
 - NEVER use markdown headings (#, ##, ###, etc.)
 - Use **bold text** for emphasis and section labels
@@ -137,12 +84,13 @@ export default defineEventHandler(async (event) => {
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
+  const localFetch = createLocalFetch(event)
 
   const transport = isExternalUrl
     ? { type: 'http' as const, url: mcpServer }
     : import.meta.dev
       ? { type: 'http' as const, url: `http://localhost:3000${baseURL}${mcpServer}` }
-      : createInternalMcpTransport(event, `${baseURL}${mcpServer}`)
+      : { type: 'http' as const, url: `${getRequestURL(event).origin}${baseURL}${mcpServer}`, fetch: localFetch }
 
   const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()

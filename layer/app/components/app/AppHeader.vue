@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useDocusColorMode } from '../../composables/useDocusColorMode'
 import { useDocusI18n } from '../../composables/useDocusI18n'
 import { useSubNavigation } from '../../composables/useSubNavigation'
 
 const appConfig = useAppConfig()
-const site = useSiteConfig()
+const { forced: forcedColorMode } = useDocusColorMode()
 
 const { isEnabled: isAssistantEnabled } = useAssistant()
-const { localePath, isEnabled, locales } = useDocusI18n()
+const { isEnabled, locales } = useDocusI18n()
 const { subNavigationMode } = useSubNavigation()
 
 const links = computed(() => appConfig.github && appConfig.github.url
@@ -25,13 +26,11 @@ const links = computed(() => appConfig.github && appConfig.github.url
   <UHeader
     :ui="{ center: 'flex-1' }"
     :class="{ 'flex flex-col': subNavigationMode === 'header' }"
-    :to="localePath('/')"
-    :title="appConfig.header?.title || site.name"
   >
     <AppHeaderCenter />
 
-    <template #title>
-      <AppHeaderLogo class="h-6 w-auto shrink-0" />
+    <template #left>
+      <AppHeaderLeft />
     </template>
 
     <template #right>
@@ -58,7 +57,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
       <UContentSearchButton class="lg:hidden" />
 
-      <ClientOnly>
+      <ClientOnly v-if="!forcedColorMode">
         <UColorModeButton />
 
         <template #fallback>
