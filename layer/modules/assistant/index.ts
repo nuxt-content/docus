@@ -1,4 +1,5 @@
-import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, installModule, logger } from '@nuxt/kit'
+import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { defu } from 'defu'
 
 export interface AssistantModuleOptions {
   /**
@@ -22,17 +23,29 @@ export interface AssistantModuleOptions {
 
 const log = logger.withTag('Docus')
 
+const defaults: Required<AssistantModuleOptions> = {
+  apiPath: '/__docus__/assistant',
+  mcpServer: '/mcp',
+  model: 'google/gemini-3-flash',
+}
+
 export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
     name: 'assistant',
-    configKey: 'assistant',
   },
-  defaults: {
-    apiPath: '/__docus__/assistant',
-    mcpServer: '/mcp',
-    model: 'google/gemini-3-flash',
+  moduleDependencies: {
+    '@comark/nuxt': {
+      optional: true,
+    },
   },
-  async setup(options, nuxt) {
+  setup(_options, nuxt) {
+    const legacyOptions = nuxt.options.assistant
+    if (legacyOptions && Object.keys(legacyOptions).length > 0) {
+      log.warn('`assistant` top-level config is deprecated. Move it under `docus.assistant` in nuxt.config.ts')
+    }
+
+    const options = defu(nuxt.options.docus?.assistant, legacyOptions, defaults) as Required<AssistantModuleOptions>
+
     const hasAiGatewayAuth = !!(
       process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
     )
@@ -41,7 +54,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
 
     nuxt.options.runtimeConfig.public.assistant = {
       enabled: hasAiGatewayAuth,
-      apiPath: options.apiPath!,
+      apiPath: options.apiPath,
     }
 
     addImports([
@@ -72,12 +85,9 @@ export default defineNuxtModule<AssistantModuleOptions>({
     }
 
     nuxt.options.runtimeConfig.assistant = {
-      mcpServer: options.mcpServer!,
-      model: options.model!,
+      mcpServer: options.mcpServer,
+      model: options.model,
     }
-
-    // tmp fix for comark/nuxt, we'll remove it before installModule gets removed
-    await installModule('@comark/nuxt')
 
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({

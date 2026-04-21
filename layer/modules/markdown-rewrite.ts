@@ -32,16 +32,22 @@ export default defineNuxtModule({
           return
         }
 
-        // Always redirect / to /llms.txt
+        // Always redirect / to /llms.txt and ensure plain text content type
+        const markdownHeaders = {
+          'content-type': 'text/markdown; charset=utf-8',
+        }
+
         const routes = [
           {
             src: '^/$',
             dest: '/llms.txt',
+            headers: markdownHeaders,
             has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
           },
           {
             src: '^/$',
             dest: '/llms.txt',
+            headers: markdownHeaders,
             has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
           },
         ]
@@ -66,11 +72,13 @@ export default defineNuxtModule({
             {
               src: `^/(${localePattern})$`,
               dest: '/llms.txt',
+              headers: markdownHeaders,
               has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
             },
             {
               src: `^/(${localePattern})$`,
               dest: '/llms.txt',
+              headers: markdownHeaders,
               has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
             },
           )
@@ -109,11 +117,13 @@ export default defineNuxtModule({
               {
                 src: `^${pagePath}$`,
                 dest: rawPath,
+                headers: markdownHeaders,
                 has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
               },
               {
                 src: `^${pagePath}$`,
                 dest: rawPath,
+                headers: markdownHeaders,
                 has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
               },
             ]
