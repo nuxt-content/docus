@@ -34,9 +34,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
     name: 'assistant',
   },
   moduleDependencies: {
-    '@comark/nuxt': {
-      optional: true,
-    },
+    '@comark/nuxt': {},
   },
   setup(_options, nuxt) {
     const legacyOptions = nuxt.options.assistant
