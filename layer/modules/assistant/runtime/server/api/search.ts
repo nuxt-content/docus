@@ -1,8 +1,26 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
+import type { H3Event } from 'h3'
 
 const MAX_STEPS = 10
+
+function createLocalFetch(event: H3Event): typeof fetch {
+  const origin = getRequestURL(event).origin
+
+  return (input, init) => {
+    const requestUrl = input instanceof URL
+      ? input
+      : typeof input === 'string'
+        ? new URL(input, origin)
+        : new URL(input.url)
+    const localPath = requestUrl.origin === origin
+      ? `${requestUrl.pathname}${requestUrl.search}`
+      : requestUrl.toString()
+
+    return event.fetch(localPath, init)
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function stopWhenResponseComplete({ steps }: { steps: any[] }): boolean {
@@ -66,15 +84,29 @@ export default defineEventHandler(async (event) => {
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
-  const mcpUrl = isExternalUrl
-    ? mcpServer
-    : import.meta.dev
-      ? `http://localhost:3000${baseURL}${mcpServer}`
-      : `${getRequestURL(event).origin}${baseURL}${mcpServer}`
 
-  const httpClient = await createMCPClient({
-    transport: { type: 'http', url: mcpUrl },
-  })
+  let transport: Parameters<typeof createMCPClient>[0]['transport']
+  if (isExternalUrl) {
+    transport = {
+      type: 'http',
+      url: mcpServer,
+    }
+  }
+  else if (import.meta.dev) {
+    transport = {
+      type: 'http',
+      url: `http://localhost:3000${baseURL}${mcpServer}`,
+    }
+  }
+  else {
+    transport = {
+      type: 'http',
+      url: `${getRequestURL(event).origin}${baseURL}${mcpServer}`,
+      fetch: createLocalFetch(event),
+    }
+  }
+
+  const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()
 
   const stream = createUIMessageStream({
