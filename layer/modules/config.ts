@@ -39,7 +39,7 @@ export default defineNuxtModule({
       url,
       name: siteName,
       debug: false,
-    })
+    }) as typeof nuxt.options.site
 
     nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header, {
       title: siteName,
