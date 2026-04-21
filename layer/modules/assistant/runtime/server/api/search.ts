@@ -84,13 +84,27 @@ export default defineEventHandler(async (event) => {
   const mcpServer = config.assistant.mcpServer
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
-  const localFetch = createLocalFetch(event)
 
-  const transport = isExternalUrl
-    ? { type: 'http' as const, url: mcpServer }
-    : import.meta.dev
-      ? { type: 'http' as const, url: `http://localhost:3000${baseURL}${mcpServer}` }
-      : { type: 'http' as const, url: `${getRequestURL(event).origin}${baseURL}${mcpServer}`, fetch: localFetch }
+  let transport: Parameters<typeof createMCPClient>[0]['transport']
+  if (isExternalUrl) {
+    transport = {
+      type: 'http',
+      url: mcpServer,
+    }
+  }
+  else if (import.meta.dev) {
+    transport = {
+      type: 'http',
+      url: `http://localhost:3000${baseURL}${mcpServer}`,
+    }
+  }
+  else {
+    transport = {
+      type: 'http',
+      url: `${getRequestURL(event).origin}${baseURL}${mcpServer}`,
+      fetch: createLocalFetch(event),
+    }
+  }
 
   const httpClient = await createMCPClient({ transport })
   const mcpTools = await httpClient.tools()
