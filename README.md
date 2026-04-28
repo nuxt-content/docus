@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/nuxt-content-docus-badge.png)](https://mseep.ai/app/nuxt-content-docus)
+
 [![docus](https://docus.dev/_og/s/c_Landing,title_Write+beautiful+docs+with+Markdown,description_Ship+fast+flexible+and+SEO-optimized+documentation+with+beautiful+design+out+of+the+box.,p_Ii9lbiI.png)](https://docus.dev)
 
 > Create beautiful docs with Markdown & Vue components
