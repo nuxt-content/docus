@@ -34,8 +34,7 @@
     "vue-tsc": "^3.2.7"
   },
   "resolutions": {
-    "unimport": "5.6.0",
-    "@nuxt/ui": "https://pkg.pr.new/@nuxt/ui@dde09d0"
+    "unimport": "5.6.0"
   },
   "packageManager": "pnpm@10.33.0"
 }
