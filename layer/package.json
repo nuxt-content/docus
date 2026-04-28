@@ -32,7 +32,7 @@
     "@nuxt/content": "^3.13.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/kit": "^4.4.2",
-    "@nuxt/ui": "^4.6.1",
+    "@nuxt/ui": "^4.7.1",
     "@nuxtjs/i18n": "^10.2.4",
     "@nuxtjs/mcp-toolkit": "^0.13.4",
     "@nuxtjs/mdc": "^0.21.1",
