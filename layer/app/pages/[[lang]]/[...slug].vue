@@ -2,18 +2,19 @@
 import { kebabCase } from 'scule'
 import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
+import { useCollectionName } from '../../composables/useCollectionName'
 
 definePageMeta({
   layout: 'docs',
 })
 
 const route = useRoute()
-const { locale, isEnabled, t } = useDocusI18n()
+const { t } = useDocusI18n()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 const { shouldPushContent: shouldHideToc } = useAssistant()
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = useCollectionName('docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
   useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsCollectionItem>),
