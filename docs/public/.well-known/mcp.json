@@ -1,0 +1,50 @@
+{
+  "name": "WAI MCP Server",
+  "description": "MCP server for WAI (WhatsApp Analysis AI) providing tools for image analysis and audio transcription.",
+  "version": "1.0.0",
+  "server": {
+    "url": "https://wai.alazab.com/mcp",
+    "protocol": "mcp"
+  },
+  "authentication": {
+    "type": "oauth",
+    "authorization_url": "https://alazab.com/oauth/authorize",
+    "token_url": "https://alazab.com/oauth/token",
+    "redirect_url": "https://chatgpt.com/connector/oauth/rPKzN9FdEgdz"
+  },
+  "developer": {
+    "name": "Alazab Construction Company",
+    "website": "https://alazab.com",
+    "support": "support@alazab.com"
+  },
+  "tools": [
+    {
+      "name": "analyze_image",
+      "description": "Analyze an image and detect objects or visual elements.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "description": "URL of the image to analyze"
+          }
+        },
+        "required": ["image_url"]
+      }
+    },
+    {
+      "name": "transcribe_audio",
+      "description": "Convert audio recordings into text transcripts.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "audio_url": {
+            "type": "string",
+            "description": "URL of the audio file"
+          }
+        },
+        "required": ["audio_url"]
+      }
+    }
+  ]
+}

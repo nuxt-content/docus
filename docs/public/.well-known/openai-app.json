@@ -1,0 +1,57 @@
+{
+  "name": "Azab – WhatsApp Analysis AI",
+  "description": "منصة متقدمة لتحليل محادثات واتساب باستخدام الذكاء الاصطناعي. توفر إحصائيات دقيقة، تحليل مشاعر، وتقارير تفاعلية للشركات والأفراد.",
+  "logo_url": "https://al-azab.co/b.png",
+  "website_url": "https://alazab.com",
+  "privacy_policy_url": "https://alazab.com/privacy-policy",
+  "terms_of_service_url": "https://alazab.com/terms-of-service",
+  "support_url": "https://wa.me/01004006620",
+  "capabilities": {
+    "chat_analysis": {
+      "sentiment_analysis": true,
+      "statistics": true,
+      "export_reports": true,
+      "language": "ar"
+    },
+    "ai_features": {
+      "summarization": true,
+      "insights": true,
+      "trend_detection": true
+    }
+  },
+  "auth": {
+    "type": "oauth2",
+    "oauth2": {
+      "client_id": "your-client-id",
+      "authorization_url": "https://alazab.com/wai/oauth/authorize",
+      "token_url": "https://alazab.com/wai/oauth/token",
+      "scopes": ["read:chats", "write:reports"]
+    }
+  },
+  "supported_formats": ["txt", "zip", "pdf"],
+  "max_file_size": "50MB",
+  "pricing": {
+    "type": "freemium",
+    "plans": [
+      {
+        "name": "Free",
+        "limits": {
+          "chats_per_month": 10,
+          "export_formats": ["txt"]
+        }
+      },
+      {
+        "name": "Pro",
+        "price": "$4.99/month",
+        "limits": {
+          "chats_per_month": "unlimited",
+          "export_formats": ["pdf", "excel", "json"]
+        }
+      }
+    ]
+  },
+  "contact": {
+    "email": "support@alazab.com",
+    "whatsapp": "+201004006620"
+  }
+}

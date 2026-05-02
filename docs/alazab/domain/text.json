@@ -1,0 +1,184 @@
+﻿________________
+
+
+🎤 قاموس نطق خدمات التشطيب (Finishing Services Dictionary)
+1️⃣ أنواع التشطيب
+{
+  "تشطيب كامل": "tashteeb kamel",
+  "نصف تشطيب": "nosf tashteeb",
+  "تشطيب سوبر لوكس": "super lux finishing",
+  "تشطيب ديلوكس": "deluxe finishing",
+  "تشطيب اقتصادي": "economy finishing",
+  "تشطيب فاخر": "luxury finishing",
+  "تشطيب حديث": "modern finishing",
+  "تشطيب كلاسيك": "classic finishing",
+  "تشطيب مودرن": "modern finishing",
+  "تشطيب تسليم مفتاح": "turnkey finishing"
+}
+
+
+________________
+
+
+2️⃣ خدمات التشطيب الأساسية
+{
+  "أعمال التشطيب": "aamal tashteeb",
+  "مقاولات تشطيب": "mokawalat tashteeb",
+  "إدارة مشروع": "project management",
+  "استلام على المحارة": "receiving on plaster",
+  "تشطيب شقة": "apartment finishing",
+  "تشطيب فيلا": "villa finishing",
+  "تشطيب محل": "shop fitting",
+  "تشطيب مكتب": "office finishing",
+  "تشطيب مطعم": "restaurant finishing",
+  "تشطيب عيادة": "clinic finishing"
+}
+
+
+________________
+
+
+3️⃣ أعمال الديكور والجبس
+{
+  "جبس بورد": "gibs board",
+  "جبسون بورد": "gibson board",
+  "أسقف معلقة": "false ceiling",
+  "بيت نور": "light tray",
+  "كورنيشة": "cornice",
+  "ديكور جبس": "gypsum decor",
+  "قواطع جبس": "gypsum partition",
+  "ديكور حائط": "wall decor",
+  "وحدة تلفزيون": "tv unit",
+  "مكتبة جبس": "gypsum library"
+}
+
+
+________________
+
+
+4️⃣ أعمال الأرضيات
+{
+  "تركيب سيراميك": "ceramic installation",
+  "تركيب بورسلين": "porcelain installation",
+  "تركيب باركيه": "parquet installation",
+  "تركيب رخام": "marble installation",
+  "تركيب جرانيت": "granite installation",
+  "أرضيات خشب": "wood flooring",
+  "أرضيات فينيل": "vinyl flooring",
+  "أرضيات إيبوكسي": "epoxy flooring",
+  "تسوية أرضيات": "floor leveling"
+}
+
+
+________________
+
+
+5️⃣ أعمال الدهانات
+{
+  "دهانات": "paint works",
+  "دهان حوائط": "wall painting",
+  "دهان سقف": "ceiling painting",
+  "معجون حوائط": "wall putty",
+  "دهان بلاستيك": "plastic paint",
+  "دهان زيت": "oil paint",
+  "دهان لاكيه": "lacquer paint",
+  "دهان ديكوري": "decorative paint",
+  "دهان مؤثرات": "texture paint"
+}
+
+
+________________
+
+
+6️⃣ أعمال الكهرباء
+{
+  "كهرباء": "electrical works",
+  "تأسيس كهرباء": "electrical rough-in",
+  "تشطيب كهرباء": "electrical finishing",
+  "لوحة كهرباء": "electrical panel",
+  "مفاتيح كهرباء": "switches",
+  "نجف": "chandelier",
+  "سبوت لايت": "spot light",
+  "إضاءة مخفية": "hidden lighting",
+  "إنارة": "lighting"
+}
+
+
+________________
+
+
+7️⃣ أعمال السباكة
+{
+  "سباكة": "plumbing",
+  "تأسيس سباكة": "plumbing rough-in",
+  "تشطيب سباكة": "plumbing finishing",
+  "سخان": "water heater",
+  "خلاط": "mixer",
+  "حنفية": "faucet",
+  "طلمبة": "water pump",
+  "صرف صحي": "drainage",
+  "تغذية مياه": "water supply"
+}
+
+
+________________
+
+
+8️⃣ الأبواب والشبابيك
+{
+  "أبواب خشب": "wooden doors",
+  "باب مصفح": "security door",
+  "شباك": "window",
+  "ألوميتال": "alumetal",
+  "باب جرار": "sliding door",
+  "باب زجاج": "glass door",
+  "مطبخ ألوميتال": "aluminum kitchen",
+  "شباك ألومنيوم": "aluminum window"
+}
+
+
+________________
+
+
+النسخة المختصرة (أفضل 20 كلمة أساسية)
+لو النظام يسمح بعدد محدود:
+{
+  "تشطيب": "tashteeb",
+  "تشطيب كامل": "full finishing",
+  "تشطيب شقة": "apartment finishing",
+  "تشطيب فيلا": "villa finishing",
+  "جبس بورد": "gibs board",
+  "دهانات": "painting",
+  "كهرباء": "electrical",
+  "سباكة": "plumbing",
+  "سيراميك": "ceramic",
+  "بورسلين": "porcelain",
+  "رخام": "marble",
+  "باركيه": "parquet",
+  "نجف": "chandelier",
+  "سبوت لايت": "spot light",
+  "باب مصفح": "security door",
+  "ألوميتال": "alumetal",
+  "مطبخ": "kitchen",
+  "حمام": "bathroom",
+  "عرض سعر": "quotation",
+  "موعد": "appointment"
+}
+
+
+________________
+
+
+نصيحة تشغيلية مهمة لك كشركة تشطيب
+أضف أيضًا كلمات مرتبطة بالمبيعات لأنها تظهر كثيرًا في المكالمات:
+{
+  "عرض سعر": "quotation",
+  "معاينة": "inspection",
+  "زيارة": "site visit",
+  "حجز": "booking",
+  "موعد": "appointment",
+  "عقد": "contract",
+  "دفعة": "payment",
+  "تكلفة": "cost",
+  "ميزانية": "budget"
+}
