@@ -31,8 +31,8 @@ Your multilingual documentation site will be running at `http://localhost:3000`
 ## 🌍 Languages
 
 This starter comes pre-configured with:
+- 🇸🇦 **العربية** (`ar`) - Arabic (RTL) — الافتراضي / Default
 - 🇺🇸 **English** (`en`) - English
-- 🇸🇦 **العربية** (`ar`) - Arabic (RTL)
 
 ## 📁 Project Structure
 
