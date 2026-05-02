@@ -1,0 +1,37 @@
+version: "3.1"
+
+flows:
+  luxury_services:
+    description: "يعرض خدمات Luxury Finishing في التشطيبات الراقية للوحدات السكنية والتجارية"
+    name: "luxury services"
+    steps:
+      - action: utter_luxury_services
+        next: END
+
+  luxury_materials:
+    description: "يعرض الخامات والمواد الفاخرة التي تستخدمها Luxury Finishing مثل الرخام والبورسلان والخشب والدهانات"
+    name: "luxury materials"
+    steps:
+      - action: action_luxury_show_materials
+        next: END
+
+  luxury_portfolio:
+    description: "يعرض أعمال وبورتفوليو Luxury Finishing للاطلاع على نماذج التشطيبات"
+    name: "luxury portfolio"
+    steps:
+      - action: utter_luxury_portfolio
+        next: END
+
+  luxury_timeline:
+    description: "يوضح المدة الزمنية المتوقعة لإنجاز مشروع التشطيب"
+    name: "luxury timeline"
+    steps:
+      - action: utter_luxury_timeline
+        next: END
+
+  luxury_get_quote:
+    description: "يطلب عرض سعر لمشروع تشطيب فاخر من Luxury Finishing"
+    name: "luxury get quote"
+    steps:
+      - action: action_luxury_get_quote
+      - link: collect_lead

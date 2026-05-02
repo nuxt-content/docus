@@ -1,0 +1,37 @@
+version: "3.1"
+
+flows:
+  brand_services:
+    description: "يعرض خدمات Brand Identity في تصميم وتنفيذ الهويات التجارية وتجهيز المساحات التجارية"
+    name: "brand services"
+    steps:
+      - action: utter_brand_services
+        next: END
+
+  brand_process:
+    description: "يشرح مراحل عمل Brand Identity من الاستشارة حتى التسليم الكامل"
+    name: "brand process"
+    steps:
+      - action: action_brand_show_process
+        next: END
+
+  brand_portfolio:
+    description: "يعرض أعمال ومشاريع Brand Identity السابقة في مختلف القطاعات"
+    name: "brand portfolio"
+    steps:
+      - action: utter_brand_portfolio
+        next: END
+
+  brand_industries:
+    description: "يعرض القطاعات التي تخدمها Brand Identity مثل المطاعم والصيدليات والمحلات والمكاتب"
+    name: "brand industries"
+    steps:
+      - action: action_brand_show_industries
+        next: END
+
+  brand_get_quote:
+    description: "يطلب عرض سعر لتصميم أو تنفيذ هوية تجارية من Brand Identity"
+    name: "brand get quote"
+    steps:
+      - action: action_brand_get_quote
+      - link: collect_lead

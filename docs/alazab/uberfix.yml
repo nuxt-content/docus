@@ -1,0 +1,49 @@
+version: "3.1"
+
+flows:
+  uberfix_services:
+    description: "يعرض خدمات UberFix في الصيانة الذكية مثل الكهرباء والسباكة والتكييف والصيانة الدورية"
+    name: "uberfix services"
+    steps:
+      - action: utter_uberfix_services
+        next: END
+
+  uberfix_request:
+    description: "يسجل طلب صيانة جديد عبر منصة UberFix"
+    name: "uberfix request maintenance"
+    steps:
+      - collect: user_name
+        description: "اسم العميل صاحب طلب الصيانة"
+      - collect: user_phone
+        description: "رقم هاتف العميل للتواصل والمتابعة"
+      - collect: user_message
+        description: "وصف العطل أو طلب الصيانة بالتفصيل"
+      - action: action_uberfix_create_request
+        next: END
+
+  uberfix_track:
+    description: "يتتبع حالة طلب صيانة قائم في UberFix باستخدام رقم الطلب"
+    name: "uberfix track request"
+    steps:
+      - action: action_uberfix_track_request
+        next: END
+
+  uberfix_subscriptions:
+    description: "يعرض باقات الاشتراك السنوية في خدمة الصيانة الدورية من UberFix"
+    name: "uberfix subscriptions"
+    steps:
+      - action: action_uberfix_show_subscriptions
+        next: END
+
+  uberfix_emergency:
+    description: "حالة طوارئ صيانة عاجلة توجه المستخدم للتواصل الفوري مع UberFix"
+    name: "uberfix emergency"
+    steps:
+      - collect: user_name
+        description: "اسم العميل في حالة الطوارئ"
+      - collect: user_phone
+        description: "رقم هاتف العميل للحالة الطارئة"
+      - collect: user_message
+        description: "وصف الطارئ أو العطل العاجل"
+      - action: action_uberfix_create_request
+        next: END

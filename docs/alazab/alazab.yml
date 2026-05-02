@@ -1,0 +1,37 @@
+version: "3.1"
+
+flows:
+  alazab_services:
+    description: "يعرض خدمات Alazab Construction في تنفيذ المشروعات المعمارية السكنية والتجارية والخدمية"
+    name: "alazab services"
+    steps:
+      - action: utter_alazab_services
+        next: END
+
+  alazab_projects:
+    description: "يعرض أبرز المشاريع المنجزة والبورتفوليو لشركة Alazab Construction"
+    name: "alazab projects"
+    steps:
+      - action: action_alazab_show_projects
+        next: END
+
+  alazab_contact:
+    description: "يقدم معلومات التواصل مع شركة Alazab Construction مثل الهاتف والواتساب والبريد"
+    name: "alazab contact"
+    steps:
+      - action: utter_alazab_contact
+        next: END
+
+  alazab_about:
+    description: "يقدم تعريفًا بشركة Alazab Construction ورسالتها وتاريخها"
+    name: "alazab about"
+    steps:
+      - action: utter_alazab_about
+        next: END
+
+  alazab_get_quote:
+    description: "يطلب عرض سعر أو تسعير لمشروع بناء أو مقاولات من Alazab Construction"
+    name: "alazab get quote"
+    steps:
+      - action: action_alazab_get_quote
+      - link: collect_lead

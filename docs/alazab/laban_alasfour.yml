@@ -1,0 +1,37 @@
+version: "3.1"
+
+flows:
+  laban_products:
+    description: "يعرض منتجات وخامات Laban Alasfour من مواد البناء والتشطيب والصيانة"
+    name: "laban products"
+    steps:
+      - action: utter_laban_products
+        next: END
+
+  laban_catalog:
+    description: "يعرض كتالوج Laban Alasfour التفصيلي بجميع المنتجات والفئات المتاحة"
+    name: "laban catalog"
+    steps:
+      - action: action_laban_show_catalog
+        next: END
+
+  laban_delivery:
+    description: "يوضح تفاصيل خدمة التوصيل والشحن لمنتجات Laban Alasfour"
+    name: "laban delivery"
+    steps:
+      - action: action_laban_check_delivery
+        next: END
+
+  laban_bulk_order:
+    description: "يقدم عروضًا وأسعارًا خاصة للطلبات بالجملة من Laban Alasfour"
+    name: "laban bulk order"
+    steps:
+      - action: action_laban_bulk_quote
+      - link: collect_lead
+
+  laban_contact:
+    description: "يقدم معلومات التواصل مع Laban Alasfour لطلب الخامات والتوريدات"
+    name: "laban contact"
+    steps:
+      - action: utter_laban_contact
+        next: END
