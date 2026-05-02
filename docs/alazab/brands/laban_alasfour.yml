@@ -1,0 +1,43 @@
+version: "3.1"
+
+# ==================== Laban Alasfour ====================
+responses:
+  utter_laban_products:
+    - text: |
+        🧱 **منتجات Laban Alasfour المتوفرة:**
+        • بناء (طوب، أسمنت، حديد)
+        • تشطيب (رخام، سيراميك)
+        • تأسيس (كابلات، مواسير)
+      metadata:
+        rephrase: true
+
+  utter_laban_catalog:
+    - text: |
+        📖 كتالوج Laban Alasfour التفصيلي بجميع المنتجات والفئات.
+      metadata:
+        rephrase: true
+
+  utter_laban_delivery:
+    - text: |
+        🚚 تفاصيل خدمة التوصيل والشحن لمنتجات Laban Alasfour.
+      metadata:
+        rephrase: true
+
+  utter_laban_bulk_order:
+    - text: |
+        💼 عروض وأسعار خاصة للطلبات بالجملة للمقاولين والشركات.
+      metadata:
+        rephrase: true
+
+  utter_laban_contact:
+    - text: |
+        📞 تواصل مع Laban Alasfour لطلب الخامات: la@alazab.com
+      metadata:
+        rephrase: true
+
+actions:
+  - action_laban_show_catalog
+  - action_laban_check_delivery
+  - action_laban_bulk_quote
+  - action_laban_order_form
+  - action_submit_laban_order

@@ -1,0 +1,47 @@
+version: "3.1"
+
+# ==================== Alazab Construction ====================
+responses:
+  utter_alazab_about:
+    - text: |
+        🏢 **Alazab Construction**
+        الكيان الرئيسي لمجموعة العزب، متخصص في التنفيذ والإدارة المعمارية للمشروعات السكنية والتجارية والخدمية.
+      metadata:
+        rephrase: true
+
+  utter_alazab_services:
+    - text: |
+        🏢 **خدمات Alazab Construction:**
+        • إدارة وتنفيذ المشروعات السكنية والتجارية
+        • الإشراف الهندسي الكامل والتنسيق
+        • تنفيذ "تسليم مفتاح" جاهز للتشغيل
+      metadata:
+        rephrase: true
+
+  utter_alazab_projects:
+    - text: |
+        🏆 **أبرز إنجازات Alazab Construction:**
+        ✅ تنفيذ **125 وحدة تجارية** لسلسلة "أبو عوف".
+        ✅ إنشاء **20 وحدة سكنية** في القاهرة الجديدة.
+        ✅ تجهيز **10 وحدات تجارية** في أركان بلازا.
+      metadata:
+        rephrase: true
+
+  utter_alazab_contact:
+    - text: |
+        📞 **تواصل مع Alazab Construction:**
+        يمكنك مراسلتنا عبر: construction@alazab.com
+      metadata:
+        rephrase: true
+
+  utter_alazab_quote:
+    - text: |
+        💰 لطلب عرض سعر من Alazab Construction، يرجى تزويدي بنوع المشروع والمساحة.
+      metadata:
+        rephrase: true
+
+actions:
+  - action_alazab_show_projects
+  - action_alazab_get_quote
+  - action_construction_quote_form
+  - action_submit_construction_quote

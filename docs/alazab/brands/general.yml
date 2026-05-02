@@ -1,0 +1,440 @@
+version: "3.1"
+
+# ══════════════════════════════════════════════════════════════
+#  domain/general.yml — General shared responses & slots
+#  مجموعة العزب — AzaBot
+# ══════════════════════════════════════════════════════════════
+
+# ── Slots ──────────────────────────────────────────────────────
+slots:
+  # Human handoff
+  is_available:
+    type: bool
+    mappings:
+      - type: custom
+  queue_position:
+    type: float
+    mappings:
+      - type: custom
+  handoff_reason:
+    type: text
+    mappings:
+      - type: custom
+  escalation_details:
+    type: text
+    mappings:
+      - type: custom
+
+  # Feedback
+  rating:
+    type: float
+    mappings:
+      - type: custom
+  feedback_service:
+    type: text
+    mappings:
+      - type: custom
+  feedback_text:
+    type: text
+    mappings:
+      - type: custom
+  suggestion_text:
+    type: text
+    mappings:
+      - type: custom
+
+  # FAQ
+  search_found:
+    type: bool
+    mappings:
+      - type: custom
+  keyword:
+    type: text
+    mappings:
+      - type: custom
+  results:
+    type: text
+    mappings:
+      - type: custom
+
+# ── Responses ─────────────────────────────────────────────────
+responses:
+
+  # ── Bot Identity ────────────────────────────────────────────
+  utter_bot_challenge:
+    - text: |
+        🤖 أنا AzaBot، المساعد الذكي لمجموعة العزب!
+        أنا نظام ذكاء اصطناعي هنا لمساعدتك في خدمات الشركة.
+        كيف يمكنني مساعدتك اليوم؟
+
+  utter_ask_help:
+    - text: |
+        📚 كيف يمكنني مساعدتك اليوم؟
+
+        يمكنك أن تسألني عن:
+        • المقاولات: "عايز ابني عمارة"
+        • التشطيب: "أسعار التشطيب"
+        • الهوية التجارية: "تصميم هوية"
+        • الصيانة: "طلب صيانة أوبرفيكس"
+        • التوريدات: "خامات بناء وجملة"
+
+  utter_out_of_scope:
+    - text: |
+        🙏 عذراً، هذا الموضوع خارج نطاق خدماتنا.
+        أنا متخصص في خدمات مجموعة العزب فقط.
+        هل يمكنني مساعدتك في شيء آخر؟
+
+  utter_session_start:
+    - text: |
+        👋 مرحباً! أنا AzaBot، مساعدك الذكي من مجموعة العزب.
+        كيف يمكنني خدمتك اليوم؟
+
+  # ── Human Handoff ────────────────────────────────────────────
+  utter_ask_reason_for_handoff:
+    - text: |
+        👤 سأحولك إلى أحد ممثلي خدمة العملاء.
+        قبل ذلك، ما هو سبب رغبتك في التحدث مع ممثل؟
+
+  utter_offer_human_handoff:
+    - text: |
+        👤 يسعدنا تحويلك إلى ممثل خدمة العملاء.
+        هل تريد الانتظار أو التحدث مع ممثل الآن؟
+      buttons:
+        - title: "نعم، تحويل الآن"
+          payload: "/affirm"
+        - title: "لا، شكراً"
+          payload: "/deny"
+
+  utter_human_handoff_immediate:
+    - text: |
+        ✅ ممتاز! ممثل خدمة العملاء سيتحدث معك الآن.
+        برجاء الانتظار لحظة...
+
+  utter_human_handoff_queue:
+    - text: |
+        ⏳ أنت في قائمة الانتظار.
+        رقمك في الطابور: {queue_position}
+        سيصلك ممثل قريباً، برجاء الانتظار.
+
+  utter_agent_connected:
+    - text: |
+        🎉 تم الاتصال بممثل خدمة العملاء!
+        سيتولى خدمتك الآن. شكراً لصبرك.
+
+  utter_human_handoff_offline:
+    - text: |
+        😔 للأسف جميع ممثلينا مشغولون حالياً.
+        أوقات عملنا: السبت–الخميس 9ص–10م
+
+  utter_offer_alternative_contact:
+    - text: |
+        هل تريد التواصل عبر واتساب مباشرة؟
+      buttons:
+        - title: "نعم، واتساب"
+          payload: "/affirm"
+        - title: "لا شكراً"
+          payload: "/deny"
+
+  utter_provide_whatsapp:
+    - text: |
+        📱 تواصل معنا على واتساب:
+        +201000000000
+        فريقنا سيرد عليك في أقرب وقت.
+
+  utter_handoff_cancelled:
+    - text: |
+        تمام! بقيت معي 😊
+        هل يمكنني مساعدتك في شيء آخر؟
+
+  utter_receive_escalation:
+    - text: |
+        📋 سأرفع مشكلتك للمدير المسؤول.
+        من فضلك أخبرني بتفاصيل المشكلة.
+
+  utter_escalate_to_manager:
+    - text: |
+        ✅ تم إرسال مشكلتك للمدير المسؤول.
+        سيتواصل معك خلال 24 ساعة عمل.
+
+  # ── Collect Lead ──────────────────────────────────────────────
+  utter_ask_lead_info:
+    - text: |
+        📋 يسعدنا اهتمامك بخدماتنا!
+        لتحويل بياناتك لفريق المبيعات، أحتاج بعض المعلومات.
+
+  utter_ask_lead_confirmation:
+    - text: |
+        📋 هل هذه البيانات صحيحة؟
+        الاسم: {user_name}
+        الهاتف: {user_phone}
+        الموقع: {location}
+        الخدمة: {service_type}
+      buttons:
+        - title: "✅ نعم، صحيح"
+          payload: "/affirm"
+        - title: "❌ لا، تعديل"
+          payload: "/deny"
+
+  utter_lead_captured:
+    - text: |
+        ✅ تم استلام بياناتك بنجاح!
+        سيتواصل معك أحد مهندسينا خلال 24 ساعة عمل.
+        شكراً لاهتمامك بمجموعة العزب.
+
+  utter_ask_restart_collection:
+    - text: |
+        هل تريد البدء من جديد لتعديل البيانات؟
+      buttons:
+        - title: "نعم، ابدأ من جديد"
+          payload: "/affirm"
+        - title: "لا، إنهاء"
+          payload: "/deny"
+
+  # ── Feedback ──────────────────────────────────────────────────
+  utter_ask_feedback:
+    - text: |
+        ⭐ نقدر رأيك جداً!
+
+        هل تريد:
+        1️⃣ تقييم الخدمة (1–5 نجوم)
+        2️⃣ اقتراح تطوير
+        3️⃣ مشاركة تجربتك
+      buttons:
+        - title: "⭐ تقييم الخدمة"
+          payload: "/provide_rating"
+        - title: "💡 اقتراح"
+          payload: "/provide_suggestion"
+        - title: "📝 مشاركة تجربة"
+          payload: "/give_feedback"
+
+  utter_ask_which_service:
+    - text: |
+        🔧 أي خدمة تقيمها؟
+      buttons:
+        - title: "Alazab Construction"
+          payload: "/provide_rating{\"feedback_service\": \"alazab\"}"
+        - title: "Luxury Finishing"
+          payload: "/provide_rating{\"feedback_service\": \"luxury\"}"
+        - title: "Brand Identity"
+          payload: "/provide_rating{\"feedback_service\": \"brand\"}"
+        - title: "UberFix"
+          payload: "/provide_rating{\"feedback_service\": \"uberfix\"}"
+        - title: "Laban Alasfour"
+          payload: "/provide_rating{\"feedback_service\": \"laban\"}"
+
+  utter_ask_rating:
+    - text: |
+        ⭐ قيم خدمتنا من 1 إلى 5:
+
+        1⭐ سيء جداً
+        2⭐ سيء
+        3⭐ متوسط
+        4⭐ جيد
+        5⭐ ممتاز
+      buttons:
+        - title: "5 ⭐⭐⭐⭐⭐"
+          payload: "/provide_rating{\"rating\": 5}"
+        - title: "4 ⭐⭐⭐⭐"
+          payload: "/provide_rating{\"rating\": 4}"
+        - title: "3 ⭐⭐⭐"
+          payload: "/provide_rating{\"rating\": 3}"
+        - title: "2 ⭐⭐"
+          payload: "/provide_rating{\"rating\": 2}"
+        - title: "1 ⭐"
+          payload: "/provide_rating{\"rating\": 1}"
+
+  utter_ask_feedback_details:
+    - text: "📝 شاركنا تجربتك بالتفصيل. ماذا أعجبك أو لم يعجبك؟"
+
+  utter_ask_suggestion_details:
+    - text: "💡 شاركنا اقتراحك لتطوير الخدمة. نحن نسمعك!"
+
+  utter_ask_follow_up_contact:
+    - text: |
+        🙏 نأسف على تجربتك. هل تسمح لنا بالتواصل معك لحل المشكلة؟
+      buttons:
+        - title: "نعم، تواصلوا معي"
+          payload: "/affirm"
+        - title: "لا شكراً"
+          payload: "/deny"
+
+  utter_positive_feedback:
+    - text: "😊 يسعدنا جداً أنك راضٍ عن خدمتنا. شكراً لك!"
+
+  utter_negative_apology:
+    - text: "🙏 نأسف على تجربتك السيئة. سنعمل على تحسين الخدمة فوراً."
+
+  utter_neutral_feedback:
+    - text: "📝 شكراً لرأيك. نعمل باستمرار على تحسين خدماتنا."
+
+  utter_thanks_for_feedback:
+    - text: "📝 شكراً لمشاركتنا تجربتك. رأيك يصنع الفرق لنا."
+
+  utter_thanks_for_suggestion:
+    - text: "💡 شكراً لاقتراحك القيّم. سندرسه ونعمل على تطبيقه."
+
+  # ── FAQ ────────────────────────────────────────────────────────
+  utter_top_faqs:
+    - text: |
+        🔥 الأسئلة الأكثر شيوعاً:
+
+        💰 "كم سعر التشطيب للمتر؟"
+        ⏰ "كام المدة الزمنية للبناء؟"
+        🔒 "عندكم ضمان على الشغل؟"
+        📍 "بتشتغلوا في أي محافظات؟"
+        💳 "ايه طرق الدفع المتاحة؟"
+
+  utter_ask_faq_topic:
+    - text: |
+        🔍 أي موضوع تريد معرفة المزيد عنه؟
+      buttons:
+        - title: "💰 الأسعار"
+          payload: "/ask_faq_prices"
+        - title: "⏰ المدة الزمنية"
+          payload: "/ask_faq_timing"
+        - title: "🔒 الضمان"
+          payload: "/ask_faq_warranty"
+        - title: "💳 طرق الدفع"
+          payload: "/ask_faq_payment"
+        - title: "📍 التغطية الجغرافية"
+          payload: "/ask_faq_location"
+
+  utter_faqs_menu:
+    - text: |
+        📚 الأسئلة الشائعة — اختر موضوعاً:
+      buttons:
+        - title: "💰 الأسعار"
+          payload: "/ask_faq_prices"
+        - title: "⏰ المدة الزمنية"
+          payload: "/ask_faq_timing"
+        - title: "🔒 الضمان"
+          payload: "/ask_faq_warranty"
+        - title: "💳 طرق الدفع"
+          payload: "/ask_faq_payment"
+        - title: "📍 التغطية"
+          payload: "/ask_faq_location"
+
+  utter_faq_prices:
+    - text: |
+        💰 الأسعار التقريبية لخدمات مجموعة العزب:
+        • البناء (Alazab Construction): من 2,500 جنيه/م²
+        • التشطيب (Luxury Finishing): من 1,500 جنيه/م²
+        • الهوية التجارية (Brand Identity): من 15,000 جنيه
+        • الصيانة (UberFix): الكشفية تبدأ من 150 جنيه
+
+        *الأسعار استرشادية وتختلف حسب المشروع والمواصفات.*
+
+  utter_faq_timing:
+    - text: |
+        ⏰ المدة الزمنية التقريبية:
+        • بناء عمارة: 12–18 شهراً
+        • تشطيب شقة: 30–45 يوم
+        • هوية تجارية كاملة: 15–25 يوم
+        • صيانة طارئة: في نفس اليوم
+
+  utter_faq_warranty:
+    - text: |
+        🔒 ضمانات مجموعة العزب:
+        • هيكل البناء: 10 سنوات
+        • التشطيب: 3 سنوات
+        • صيانة UberFix: 3 أشهر على كل عمل منفّذ
+
+  utter_faq_payment:
+    - text: |
+        💳 طرق الدفع المتاحة:
+        • نقداً عند الاستلام
+        • تحويل بنكي
+        • بطاقات ائتمان (Visa / Mastercard)
+        • إنستا باي
+        • تقسيط ميسّر (حسب المشروع)
+
+  utter_faq_location:
+    - text: |
+        📍 التغطية الجغرافية:
+        • القاهرة الكبرى
+        • الإسكندرية ومحافظات الدلتا
+        • مدن الأقاليم الرئيسية
+        • الصعيد (حسب حجم المشروع)
+        • المدن الجديدة والعاصمة الإدارية
+
+  utter_ask_more_faqs:
+    - text: "هل تريد الاستفسار عن موضوع آخر؟"
+      buttons:
+        - title: "نعم"
+          payload: "/affirm"
+        - title: "لا، شكراً"
+          payload: "/deny"
+
+  utter_thanks_for_faq:
+    - text: "🙏 أتمنى أن أكون قد أجبت على استفسارك. أنا هنا إذا احتجت أي مساعدة."
+
+  utter_ask_faq_keyword:
+    - text: "🔎 اكتب كلمة مفتاحية عن ما تبحث عنه (مثل: سعر، ضمان، توصيل...):"
+
+  utter_search_results:
+    - text: |
+        📋 نتائج البحث عن "{keyword}":
+
+        {results}
+
+  utter_no_faq_results:
+    - text: |
+        😕 لم أجد نتائج لبحثك عن "{keyword}".
+        حاول كلمة أخرى أو اختر من القائمة.
+
+  # ── Confirm/Cancel (CALM patterns) ────────────────────────────
+  utter_confirm_cancel:
+    - text: |
+        هل أنت متأكد من الإلغاء؟
+      buttons:
+        - title: "نعم، إلغاء"
+          payload: "/affirm"
+        - title: "لا، تراجع"
+          payload: "/deny"
+
+# ── Actions list ──────────────────────────────────────────────
+actions:
+  - utter_bot_challenge
+  - utter_ask_help
+  - utter_out_of_scope
+  - utter_session_start
+  - utter_confirm_cancel
+  - utter_ask_reason_for_handoff
+  - utter_offer_human_handoff
+  - utter_human_handoff_immediate
+  - utter_human_handoff_queue
+  - utter_agent_connected
+  - utter_human_handoff_offline
+  - utter_offer_alternative_contact
+  - utter_provide_whatsapp
+  - utter_handoff_cancelled
+  - utter_receive_escalation
+  - utter_escalate_to_manager
+  - utter_ask_lead_info
+  - utter_ask_lead_confirmation
+  - utter_lead_captured
+  - utter_ask_restart_collection
+  - utter_ask_feedback
+  - utter_ask_which_service
+  - utter_ask_rating
+  - utter_ask_feedback_details
+  - utter_ask_suggestion_details
+  - utter_ask_follow_up_contact
+  - utter_positive_feedback
+  - utter_negative_apology
+  - utter_neutral_feedback
+  - utter_thanks_for_feedback
+  - utter_thanks_for_suggestion
+  - utter_top_faqs
+  - utter_ask_faq_topic
+  - utter_faqs_menu
+  - utter_faq_prices
+  - utter_faq_timing
+  - utter_faq_warranty
+  - utter_faq_payment
+  - utter_faq_location
+  - utter_ask_more_faqs
+  - utter_thanks_for_faq
+  - utter_ask_faq_keyword
+  - utter_search_results
+  - utter_no_faq_results

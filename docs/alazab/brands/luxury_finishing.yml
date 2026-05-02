@@ -1,0 +1,46 @@
+version: "3.1"
+
+# ==================== Luxury Finishing ====================
+responses:
+  utter_luxury_services:
+    - text: |
+        ✨ **Luxury Finishing** متخصصة في:
+        • تشطيبات الوحدات السكنية الراقية
+        • التصميم الداخلي الفاخر
+        • الإشراف الدقيق على التنفيذ
+      metadata:
+        rephrase: true
+
+  utter_luxury_materials:
+    - text: |
+        📦 **خامات Luxury Finishing:**
+        • أرضيات: رخام إيطالي، بورسلان فاخر
+        • حوائط: دهانات Jotun، ورق حائط إيطالي
+      metadata:
+        rephrase: true
+
+  utter_luxury_portfolio:
+    - text: |
+        🖼️ عرض أعمال وبورتفوليو Luxury Finishing للاطلاع على نماذج التشطيبات.
+      metadata:
+        rephrase: true
+
+  utter_luxury_timeline:
+    - text: |
+        📅 تختلف مدة التنفيذ حسب المساحة، وعادة ما تستغرق ما بين 3 إلى 6 أشهر للتشطيب المتكامل.
+      metadata:
+        rephrase: true
+
+  utter_luxury_quote:
+    - text: |
+        💰 **الأسعار الاسترشادية:**
+        • ديلوكس: من 2500 ج/م²
+        • سوبر لوكس: من 4500 ج/م²
+      metadata:
+        rephrase: true
+
+actions:
+  - action_luxury_show_materials
+  - action_luxury_get_quote
+  - action_finishing_inspection_form
+  - action_submit_inspection_request
