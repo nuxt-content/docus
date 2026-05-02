@@ -1,0 +1,200 @@
+[
+  {
+    "relative_path": "voice/audio_assets/samples/ElevenLabs_2026-04-25T04_10_09_Hazem #U2013 Polished Arabic Customer Care_pvc_sp96_s35_sb56_f2-5.mp3",
+    "size_bytes": 1584000,
+    "sha256": "8fb57cee4441ddd163707ec25a8db0a82aae2b93f8d2622501f0fed397a7d84e",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/Polished Arabic Customer Care_pvc_sp93_s35_sb49_f2-5.wav",
+    "size_bytes": 6691294,
+    "sha256": "69ea30548ffda3afa280b3cad500e70b4205c48482f66ff8fc48fb0890ef1c52",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/Polished Arabic Customer Care_pvc_sp93_s35_sb49_f2.mp3",
+    "size_bytes": 1246289,
+    "sha256": "185bb792342429d974f43877553f06ff05382b4430f1bf38cc3270fde46f3284",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v01.flac",
+    "size_bytes": 601769,
+    "sha256": "0dd57c6e9ef3adc88c07de011e83a4020bd3cc19c22983b8cedc6d497c8be09b",
+    "extension": "flac"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v01.mp3",
+    "size_bytes": 339318,
+    "sha256": "7652449e7e53b7e9a312d9af8e322e32228e83cabf6af4f0fbe52880d0206c65",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v01.wav",
+    "size_bytes": 1691614,
+    "sha256": "4b9b88f9047f5acf717f29481fa65dd0a21cfe946aae09041282c15725aad5e8",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v02.flac",
+    "size_bytes": 607341,
+    "sha256": "7cf1fdaaf3ffd4bfc20b4904e0dd980e1fa2b2f6f4097d613f4cf29be38eb92d",
+    "extension": "flac"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v02.mp3",
+    "size_bytes": 369829,
+    "sha256": "36f6eb2a84db94878547e30cb4025b14eb78c05d52dbc48d6d32f89078c8e020",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-azabot-v02.wav",
+    "size_bytes": 1859806,
+    "sha256": "dbad87491fb3e6ea4b20d49c2c856bc1014c25a8b17bf16068ae0ddd58beacbd",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-hazem-polished-arabic-care-v02.mp3",
+    "size_bytes": 1584000,
+    "sha256": "8fb57cee4441ddd163707ec25a8db0a82aae2b93f8d2622501f0fed397a7d84e",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-hijazi-professional-expressive-v02.flac",
+    "size_bytes": 1159709,
+    "sha256": "a024f9abe748c050c88322a4b92b0a6babdf5221f22deedd9582fb3019a319b7",
+    "extension": "flac"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-polished-arabic-customer-care-v01.mp3",
+    "size_bytes": 1246289,
+    "sha256": "185bb792342429d974f43877553f06ff05382b4430f1bf38cc3270fde46f3284",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/samples/sample-polished-arabic-customer-care-v01.wav",
+    "size_bytes": 6691294,
+    "sha256": "69ea30548ffda3afa280b3cad500e70b4205c48482f66ff8fc48fb0890ef1c52",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/ar-voice-alazab-core.mp3",
+    "size_bytes": 1115886,
+    "sha256": "3c41730c7741e5304f5667d2a5c789ec714a3a26b4817f49c1cfa29b9f0a344e",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/ar-voice-alazab.wav",
+    "size_bytes": 2251486,
+    "sha256": "b329c5f53070e720b066e05d7f0fcea012c6d0569c797c8026850731f662d703",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/ar-voice-alazab1.mp3",
+    "size_bytes": 597199,
+    "sha256": "26919bedaec41f72e370862c8b1b5dcbe071705966258ef69010496795273bfe",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/ar-voice-alazab2.mp3",
+    "size_bytes": 340572,
+    "sha256": "265b288b5acf36f0f9e2bda5593c48cdf69ac8892cd54b95ec703b78019cca7e",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/brand-01-al-azab-main-v02.mp3",
+    "size_bytes": 597199,
+    "sha256": "26919bedaec41f72e370862c8b1b5dcbe071705966258ef69010496795273bfe",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/brand-01-al-azab-main-v03.mp3",
+    "size_bytes": 667834,
+    "sha256": "9304099da0850e96e60998cbded5eb38b2dee49d4b0735bada89c9653dc58deb",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/alazab_construction/brand-01-al-azab-main-v04.mp3",
+    "size_bytes": 340572,
+    "sha256": "265b288b5acf36f0f9e2bda5593c48cdf69ac8892cd54b95ec703b78019cca7e",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/brand_identity/brand-02-brand-identity-main-v01.mp3",
+    "size_bytes": 1277636,
+    "sha256": "c5d05a22b0cf23b3d4879c459739157309c2267896f393516732396a34bdf760",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/brand_identity/brand-02-brand-identity-main-v02.mp3",
+    "size_bytes": 1247125,
+    "sha256": "5c2320f629ab69f8dfab83d1925b3f66134e992591d1ce6c0dab854ce6683931",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/brand_identity/brand-identity.mp3",
+    "size_bytes": 1277636,
+    "sha256": "c5d05a22b0cf23b3d4879c459739157309c2267896f393516732396a34bdf760",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/brand_identity/brand-identity2.mp3",
+    "size_bytes": 1247125,
+    "sha256": "5c2320f629ab69f8dfab83d1925b3f66134e992591d1ce6c0dab854ce6683931",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/laban_alasfour/ar-voice-laban-alasfour.mp3",
+    "size_bytes": 1246289,
+    "sha256": "f6f47ae04f4a43569792c8c065c7f95bdcffdb6663d11923572286d0bac5cf82",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/laban_alasfour/brand-04-laban-alasfour-main-v01.mp3",
+    "size_bytes": 65536,
+    "sha256": "4bab67218f663600801b9bb2419cd15cc0aa74b65e01b7c9995875ac63644886",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/luxury_finishing/brand-03-luxury-finishing-main-v01.mp3",
+    "size_bytes": 1651292,
+    "sha256": "7d2ca0510ab8f94bf5699b4dee5d1276f8021c12b714068a5ea7170c3e6f5892",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/luxury_finishing/brand-03-luxury-finishing-main-v02.mp3",
+    "size_bytes": 1561848,
+    "sha256": "6011b754866ad53d9b66300f9ee5e2c43fccd8d446593d1552184c774d0ff6c2",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/luxury_finishing/luxury-finishing.mp3",
+    "size_bytes": 1651292,
+    "sha256": "7d2ca0510ab8f94bf5699b4dee5d1276f8021c12b714068a5ea7170c3e6f5892",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/luxury_finishing/luxury-finishing2.mp3",
+    "size_bytes": 1561848,
+    "sha256": "6011b754866ad53d9b66300f9ee5e2c43fccd8d446593d1552184c774d0ff6c2",
+    "extension": "mp3"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/uberfix/ar-voice-uberfix.wav",
+    "size_bytes": 8552926,
+    "sha256": "4250bb93fecc84be82609b38d19f0f20515ececef1142a12b106f8623ec1b0d2",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/uberfix/brand-05-uberfix-master-v01.wav",
+    "size_bytes": 8552926,
+    "sha256": "4250bb93fecc84be82609b38d19f0f20515ececef1142a12b106f8623ec1b0d2",
+    "extension": "wav"
+  },
+  {
+    "relative_path": "voice/audio_assets/voice-brands/uberfix/uberfix.flac",
+    "size_bytes": 3189588,
+    "sha256": "5d35517f2a69554c0e83bf8bc8339eecb7e69cebc5c69e2d5aa96f09c13662fb",
+    "extension": "flac"
+  }
+]

@@ -1,0 +1,53 @@
+version: "3.1"
+
+slots:
+  enterprise_route:
+    type: categorical
+    values:
+      - general_project
+      - commercial_space
+      - luxury_finishing
+      - maintenance
+      - supply_request
+    mappings:
+      - type: custom
+  customer_name:
+    type: text
+    mappings:
+      - type: custom
+  customer_phone:
+    type: text
+    mappings:
+      - type: custom
+  service_type:
+    type: text
+    mappings:
+      - type: custom
+  customer_location:
+    type: text
+    mappings:
+      - type: custom
+  request_description:
+    type: text
+    mappings:
+      - type: custom
+
+responses:
+  utter_enterprise_fallback_router:
+    - text: |
+        هل احتياجك متعلق بصيانة، تشطيب، تجهيز فرع تجاري، توريد خامات، أم مشروع عام؟
+  utter_enterprise_need_contact:
+    - text: |
+        من فضلك أرسل الاسم ورقم الهاتف حتى يتم تحويل الطلب للفريق المختص.
+  utter_enterprise_submit_success:
+    - text: |
+        تم تسجيل بياناتك بنجاح، وسيتم توجيهها للفريق المختص داخل مجموعة العزب.
+
+forms:
+  enterprise_lead_form:
+    required_slots:
+      - customer_name
+      - customer_phone
+      - service_type
+      - customer_location
+      - request_description

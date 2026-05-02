@@ -1,0 +1,408 @@
+[
+  {
+    "id": "master_overview",
+    "title": "نظرة عامة على مجموعة العزب",
+    "brand_id": "alazab_group",
+    "type": "knowledge",
+    "chars": 2692
+  },
+  {
+    "id": "brand_alazab_group",
+    "title": "مجموعة العزب — Alazab Group",
+    "brand_id": "alazab_group",
+    "type": "brand_profile",
+    "chars": 1711
+  },
+  {
+    "id": "brand_brand_identity",
+    "title": "هوية العلامة التجارية — Brand Identity",
+    "brand_id": "brand_identity",
+    "type": "brand_profile",
+    "chars": 1804
+  },
+  {
+    "id": "brand_luxury_finishing",
+    "title": "التشطيب الراقي — Luxury Finishing",
+    "brand_id": "luxury_finishing",
+    "type": "brand_profile",
+    "chars": 1648
+  },
+  {
+    "id": "brand_uberfix",
+    "title": "أوبرفيكس — UberFix",
+    "brand_id": "uberfix",
+    "type": "brand_profile",
+    "chars": 1536
+  },
+  {
+    "id": "brand_laban_alasfour",
+    "title": "لبن العصفور — Laban Alasfour",
+    "brand_id": "laban_alasfour",
+    "type": "brand_profile",
+    "chars": 1693
+  },
+  {
+    "id": "faq_001",
+    "title": "ما هي مجموعة العزب؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 200
+  },
+  {
+    "id": "faq_002",
+    "title": "ما هي العلامات التابعة لمجموعة العزب؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 146
+  },
+  {
+    "id": "faq_003",
+    "title": "أريد تنفيذ مشروع ولا أعرف أين أبدأ",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 186
+  },
+  {
+    "id": "faq_004",
+    "title": "هل تعطون سعرًا فوريًا؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 155
+  },
+  {
+    "id": "faq_005",
+    "title": "أريد تجهيز فرع تجاري",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 168
+  },
+  {
+    "id": "faq_006",
+    "title": "ما هي Brand Identity؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 173
+  },
+  {
+    "id": "faq_007",
+    "title": "ما البيانات المطلوبة لتجهيز فرع؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 174
+  },
+  {
+    "id": "faq_008",
+    "title": "أريد تشطيب شقة",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 158
+  },
+  {
+    "id": "faq_009",
+    "title": "ما هي Luxury Finishing؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 158
+  },
+  {
+    "id": "faq_010",
+    "title": "أريد تقديم بلاغ صيانة",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 192
+  },
+  {
+    "id": "faq_011",
+    "title": "ما هو UberFix؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 144
+  },
+  {
+    "id": "faq_012",
+    "title": "ما تصنيف UberFix؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 142
+  },
+  {
+    "id": "faq_013",
+    "title": "ما البيانات المطلوبة لبلاغ الصيانة؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 149
+  },
+  {
+    "id": "faq_014",
+    "title": "لدي رقم طلب صيانة وأريد المتابعة",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 136
+  },
+  {
+    "id": "faq_015",
+    "title": "أريد خامة أو قطعة مش لاقيها",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 147
+  },
+  {
+    "id": "faq_016",
+    "title": "ما هو لبن العصفور؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 145
+  },
+  {
+    "id": "faq_017",
+    "title": "هل تدعمون ملفات منتجات ثلاثية الأبعاد؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 170
+  },
+  {
+    "id": "faq_018",
+    "title": "ما الفرق بين Brand Identity وLuxury Finishing؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 201
+  },
+  {
+    "id": "faq_019",
+    "title": "ما الفرق بين UberFix وLaban Alasfour؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 149
+  },
+  {
+    "id": "faq_020",
+    "title": "هل أبو عوف ضمن أعمالكم؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 116
+  },
+  {
+    "id": "faq_021",
+    "title": "هل يمكن إرسال صور؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 119
+  },
+  {
+    "id": "faq_022",
+    "title": "هل يمكن تصعيد شكوى؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 130
+  },
+  {
+    "id": "faq_023",
+    "title": "لماذا تسأل عن: ما نوع الاحتياج: تشطيب، تجهيز فرع، صيانة، توريد، أم مشروع عام؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 188
+  },
+  {
+    "id": "faq_024",
+    "title": "لماذا تسأل عن: هل الطلب سكني أم تجاري؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 149
+  },
+  {
+    "id": "faq_025",
+    "title": "لماذا تسأل عن: ما المدينة أو المنطقة؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 148
+  },
+  {
+    "id": "faq_026",
+    "title": "لماذا تسأل عن: هل توجد مساحة تقريبية أو صور أو ملف متاح؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 167
+  },
+  {
+    "id": "faq_027",
+    "title": "لماذا تسأل عن: هل المطلوب استشارة، عرض سعر، معاينة، أم متابعة طلب؟",
+    "brand_id": "alazab_group",
+    "type": "faq",
+    "chars": 177
+  },
+  {
+    "id": "faq_028",
+    "title": "لماذا تسأل عن: ما نوع النشاط التجاري؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 157
+  },
+  {
+    "id": "faq_029",
+    "title": "لماذا تسأل عن: هل يوجد شعار وهوية بصرية حالية؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 166
+  },
+  {
+    "id": "faq_030",
+    "title": "لماذا تسأل عن: كم عدد الفروع الحالية أو المستهدفة؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 170
+  },
+  {
+    "id": "faq_031",
+    "title": "لماذا تسأل عن: ما مساحة الفرع وموقعه؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 157
+  },
+  {
+    "id": "faq_032",
+    "title": "لماذا تسأل عن: هل المطلوب تصميم فقط أم تصميم وتنفيذ وتجهيز كامل؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 184
+  },
+  {
+    "id": "faq_033",
+    "title": "لماذا تسأل عن: هل توجد صور أو مخطط أو معاينة مطلوبة؟",
+    "brand_id": "brand_identity",
+    "type": "faq",
+    "chars": 172
+  },
+  {
+    "id": "faq_034",
+    "title": "لماذا تسأل عن: ما نوع الوحدة: شقة أم فيلا؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 155
+  },
+  {
+    "id": "faq_035",
+    "title": "لماذا تسأل عن: ما المساحة التقريبية؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 149
+  },
+  {
+    "id": "faq_036",
+    "title": "لماذا تسأل عن: هل الوحدة على الطوب أم نصف تشطيب أم تحتاج تجديد؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 176
+  },
+  {
+    "id": "faq_037",
+    "title": "لماذا تسأل عن: ما مستوى التشطيب المطلوب؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 153
+  },
+  {
+    "id": "faq_038",
+    "title": "لماذا تسأل عن: هل توجد صور أو مخطط؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 148
+  },
+  {
+    "id": "faq_039",
+    "title": "لماذا تسأل عن: ما المنطقة والموعد المتوقع للبدء؟",
+    "brand_id": "luxury_finishing",
+    "type": "faq",
+    "chars": 161
+  },
+  {
+    "id": "faq_040",
+    "title": "لماذا تسأل عن: ما نوع العطل؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 135
+  },
+  {
+    "id": "faq_041",
+    "title": "لماذا تسأل عن: هل الطلب سكني أم تجاري؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 145
+  },
+  {
+    "id": "faq_042",
+    "title": "لماذا تسأل عن: ما الموقع أو الفرع؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 141
+  },
+  {
+    "id": "faq_043",
+    "title": "لماذا تسأل عن: هل توجد صور للعطل؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 140
+  },
+  {
+    "id": "faq_044",
+    "title": "لماذا تسأل عن: هل لديك رقم طلب سابق؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 143
+  },
+  {
+    "id": "faq_045",
+    "title": "لماذا تسأل عن: ما درجة الاستعجال؟",
+    "brand_id": "uberfix",
+    "type": "faq",
+    "chars": 140
+  },
+  {
+    "id": "faq_046",
+    "title": "لماذا تسأل عن: ما نوع الخامة أو المنتج المطلوب؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 157
+  },
+  {
+    "id": "faq_047",
+    "title": "لماذا تسأل عن: هل توجد صورة أو كود أو مقاس؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 153
+  },
+  {
+    "id": "faq_048",
+    "title": "لماذا تسأل عن: ما الكمية المطلوبة؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 144
+  },
+  {
+    "id": "faq_049",
+    "title": "لماذا تسأل عن: هل المطلوب بديل أم نفس المنتج؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 155
+  },
+  {
+    "id": "faq_050",
+    "title": "لماذا تسأل عن: هل التوريد لمشروع، صيانة، أم تشطيب؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 160
+  },
+  {
+    "id": "faq_051",
+    "title": "لماذا تسأل عن: ما موعد الاحتياج؟",
+    "brand_id": "laban_alasfour",
+    "type": "faq",
+    "chars": 142
+  },
+  {
+    "id": "source_original_knowledge_base",
+    "title": "ملف المعرفة الأصلي المستورد",
+    "brand_id": "alazab_group",
+    "type": "source_import",
+    "chars": 7418
+  }
+]

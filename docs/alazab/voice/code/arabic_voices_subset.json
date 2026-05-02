@@ -1,0 +1,62 @@
+{
+  "ar_JO-kareem-low": {
+    "key": "ar_JO-kareem-low",
+    "name": "kareem",
+    "language": {
+      "code": "ar_JO",
+      "family": "ar",
+      "region": "JO",
+      "name_native": "العربية",
+      "name_english": "Arabic",
+      "country_english": "Jordan"
+    },
+    "quality": "low",
+    "num_speakers": 1,
+    "speaker_id_map": {},
+    "files": {
+      "ar/ar_JO/kareem/low/ar_JO-kareem-low.onnx": {
+        "size_bytes": 63201294,
+        "md5_digest": "d335cd06fe4045a7ee9d8fb0712afaa9"
+      },
+      "ar/ar_JO/kareem/low/ar_JO-kareem-low.onnx.json": {
+        "size_bytes": 5022,
+        "md5_digest": "465724f7d2d5f2ff061b53acb8e7f7cc"
+      },
+      "ar/ar_JO/kareem/low/MODEL_CARD": {
+        "size_bytes": 274,
+        "md5_digest": "b6f0eaf5a7fd094be22a1bcb162173fb"
+      }
+    },
+    "aliases": []
+  },
+  "ar_JO-kareem-medium": {
+    "key": "ar_JO-kareem-medium",
+    "name": "kareem",
+    "language": {
+      "code": "ar_JO",
+      "family": "ar",
+      "region": "JO",
+      "name_native": "العربية",
+      "name_english": "Arabic",
+      "country_english": "Jordan"
+    },
+    "quality": "medium",
+    "num_speakers": 1,
+    "speaker_id_map": {},
+    "files": {
+      "ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx": {
+        "size_bytes": 63201294,
+        "md5_digest": "c0697df8a7fb180079cc5ac523f91a8e"
+      },
+      "ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx.json": {
+        "size_bytes": 5024,
+        "md5_digest": "dd70b31eb5a395907241b1e5367ace3a"
+      },
+      "ar/ar_JO/kareem/medium/MODEL_CARD": {
+        "size_bytes": 283,
+        "md5_digest": "9ec7a4a27b89946848dce9b7f5c53cfd"
+      }
+    },
+    "aliases": []
+  }
+}

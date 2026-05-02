@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-05-01T07:00:24.398965+00:00",
+  "input_archive": "knowledge.zip",
+  "source_files_observed": 64,
+  "brands_count": 5,
+  "faqs_count": 51,
+  "rag_documents_count": 58,
+  "rag_chunks_count": 71,
+  "audio_assets_count": 33,
+  "waba_accounts_count": 7,
+  "whatsapp_templates_count": 88,
+  "security_actions": [
+    "Excluded real meta_whatsapp.env",
+    "Generated env.example",
+    "Sanitized Meta/WhatsApp inventory",
+    "Added secret scan script"
+  ],
+  "known_limitations": [
+    "Full Rasa semantic validation must be run inside the real Rasa project.",
+    "Final prices/legal commitments intentionally excluded."
+  ],
+  "status": "ready_for_review_and_staging_publish",
+  "publish_files_generated": 106,
+  "total_size_bytes": 65212846
+}

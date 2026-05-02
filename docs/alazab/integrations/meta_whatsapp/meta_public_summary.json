@@ -1,0 +1,23 @@
+{
+  "source": "meta_alazab_all.json",
+  "sanitized": true,
+  "generated_at": "2026-05-01T07:00:24.398965+00:00",
+  "business": {
+    "id": "314437023701205",
+    "name": "Mohamed Azab",
+    "verification_status": "verified",
+    "created_time": "2021-08-14T06:48:04+0000"
+  },
+  "meta_app": {
+    "app_id": "889346333913449",
+    "type": "SYSTEM_USER",
+    "application": "ASW",
+    "is_valid": true,
+    "expires_at": 0,
+    "data_access_expires_at": 0,
+    "scopes_count": 22
+  },
+  "waba_accounts_count": 7,
+  "templates_count": 88,
+  "security_note": "تم حذف/عدم نشر مفاتيح الوصول والأسرار. استخدم env.example فقط وضع القيم الحقيقية داخل Secret Manager أو .env خارج Git."
+}

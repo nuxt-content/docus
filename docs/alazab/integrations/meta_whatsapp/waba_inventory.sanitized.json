@@ -1,0 +1,151 @@
+[
+  {
+    "index": 1,
+    "waba_id": "2154838801923462",
+    "name": "Mohamed Azab",
+    "message_template_namespace": "c9484a81_4740_47be_a3a8_92b5700ffee7",
+    "phones": [
+      {
+        "id": "1011864912017679",
+        "display_phone_number": "+20 10 92750351",
+        "verified_name": "Mohamed Azab",
+        "quality_rating": "UNKNOWN",
+        "status": "DISCONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 0,
+    "apps_count": 0,
+    "webhooks_present": false
+  },
+  {
+    "index": 2,
+    "waba_id": "1303965001665007",
+    "name": "Alazab",
+    "message_template_namespace": "c7ebabba_b271_4dc9_a237_c509a30a4f71",
+    "phones": [
+      {
+        "id": "1061490140383829",
+        "display_phone_number": "+20 11 46397010",
+        "verified_name": "Alazab",
+        "quality_rating": "UNKNOWN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 2,
+    "apps_count": 1,
+    "webhooks_present": false
+  },
+  {
+    "index": 3,
+    "waba_id": "1431578851609413",
+    "name": "Azab Group",
+    "message_template_namespace": "421703ff_a98e_409d_9f72_13320dc4d27b",
+    "phones": [
+      {
+        "id": "1016301248242500",
+        "display_phone_number": "+20 11 46397010",
+        "verified_name": "Azab Group",
+        "quality_rating": "UNKNOWN",
+        "status": "PENDING",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 0,
+    "apps_count": 0,
+    "webhooks_present": false
+  },
+  {
+    "index": 4,
+    "waba_id": "3773448776290331",
+    "name": "Mohamed Azab",
+    "message_template_namespace": "e4e924f3_a71d_4539_8eff_c9f23bf48bc9",
+    "phones": [
+      {
+        "id": "873908352481274",
+        "display_phone_number": "+20 10 04006620",
+        "verified_name": "Mohamed Azab",
+        "quality_rating": "GREEN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 4,
+    "apps_count": 1,
+    "webhooks_present": false
+  },
+  {
+    "index": 5,
+    "waba_id": "2144651456337012",
+    "name": "Mohamed Azab",
+    "message_template_namespace": "f492b3dc_fb6a_47b9_8458_cd1e3527ad97",
+    "phones": [
+      {
+        "id": "1020054711186921",
+        "display_phone_number": "+1 205-460-5650",
+        "verified_name": "Mohamed Azab",
+        "quality_rating": "GREEN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 22,
+    "apps_count": 2,
+    "webhooks_present": false
+  },
+  {
+    "index": 6,
+    "waba_id": "1458856398934130",
+    "name": "Azab",
+    "message_template_namespace": "881a3a5e_adc3_4e13_8c14_a90bb4e3c601",
+    "phones": [
+      {
+        "id": "1032441389943808",
+        "display_phone_number": "+1 206-479-5608",
+        "verified_name": "Mohamed Azab",
+        "quality_rating": "GREEN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      },
+      {
+        "id": "952530191273396",
+        "display_phone_number": "+1 208-379-9564",
+        "verified_name": "Mohamed Azab",
+        "quality_rating": "UNKNOWN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 20,
+    "apps_count": 5,
+    "webhooks_present": false
+  },
+  {
+    "index": 7,
+    "waba_id": "459851797218855",
+    "name": "UberFix ",
+    "message_template_namespace": "02b6697a_5e6c_4da2_bab0_80f2d26e7595",
+    "phones": [
+      {
+        "id": "644995285354639",
+        "display_phone_number": "+1 555-728-5727",
+        "verified_name": "alazabfix‎",
+        "quality_rating": "GREEN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      },
+      {
+        "id": "527697617099639",
+        "display_phone_number": "+1 555-724-5001",
+        "verified_name": "alazab",
+        "quality_rating": "GREEN",
+        "status": "CONNECTED",
+        "account_mode": "LIVE"
+      }
+    ],
+    "templates_count": 40,
+    "apps_count": 4,
+    "webhooks_present": false
+  }
+]

@@ -1,0 +1,44 @@
+version: "3.1"
+
+# ==================== Brand Identity ====================
+responses:
+  utter_brand_services:
+    - text: |
+        🎨 **Brand Identity** تنفذ:
+        • تصميم الهوية البصرية والشعار
+        • تجهيز المحلات والمساحات التجارية
+        • تنفيذ اللافتات والعلامات التجارية
+      metadata:
+        rephrase: true
+
+  utter_brand_process:
+    - text: |
+        📋 **مراحل عمل Brand Identity:**
+        استشارة ⬅️ تصميم ⬅️ تجهيز ⬅️ تنفيذ ⬅️ تسليم.
+      metadata:
+        rephrase: true
+
+  utter_brand_portfolio:
+    - text: |
+        🖼️ نماذج من أعمال ومشاريع Brand Identity السابقة في مختلف القطاعات.
+      metadata:
+        rephrase: true
+
+  utter_brand_industries:
+    - text: |
+        🏪 نخدم قطاعات: المطاعم، الصيدليات، المحلات التجارية، المكاتب.
+      metadata:
+        rephrase: true
+
+  utter_brand_quote:
+    - text: |
+        💰 لطلب عرض سعر لتصميم هويتك التجارية، يرجى تزويدنا بنوع النشاط والمساحة.
+      metadata:
+        rephrase: true
+
+actions:
+  - action_brand_show_process
+  - action_brand_show_industries
+  - action_brand_get_quote
+  - action_brand_consultation_form
+  - action_submit_brand_request

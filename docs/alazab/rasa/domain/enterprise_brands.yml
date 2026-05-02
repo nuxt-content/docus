@@ -1,0 +1,116 @@
+version: "3.1"
+
+responses:
+  utter_alazab_group_about:
+    - text: |
+        مجموعة العزب — Alazab Group
+        المظلة الرئيسية التي تجمع التنفيذ المعماري، تجهيز المساحات التجارية، التشطيبات الراقية، الصيانة وإدارة المرافق، والتوريدات العامة.
+        الرابط: https://alazab.com
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_alazab_group_collect_data:
+    - text: |
+        لخدمتك بدقة في مسار مجموعة العزب، أحتاج البيانات التالية:
+        • ما نوع الاحتياج: تشطيب، تجهيز فرع، صيانة، توريد، أم مشروع عام؟
+        • هل الطلب سكني أم تجاري؟
+        • ما المدينة أو المنطقة؟
+        • هل توجد مساحة تقريبية أو صور أو ملف متاح؟
+        • هل المطلوب استشارة، عرض سعر، معاينة، أم متابعة طلب؟
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_brand_identity_about:
+    - text: |
+        هوية العلامة التجارية — Brand Identity
+        علامة متخصصة في تصميم وتأسيس وتجهيز المساحات التجارية، مع ربط التصميم بالتنفيذ وسلاسل الإمداد والتجربة البصرية للعميل داخل الفرع.
+        الرابط: https://brand-identity.alazab.com
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_brand_identity_collect_data:
+    - text: |
+        لخدمتك بدقة في مسار هوية العلامة التجارية، أحتاج البيانات التالية:
+        • ما نوع النشاط التجاري؟
+        • هل يوجد شعار وهوية بصرية حالية؟
+        • كم عدد الفروع الحالية أو المستهدفة؟
+        • ما مساحة الفرع وموقعه؟
+        • هل المطلوب تصميم فقط أم تصميم وتنفيذ وتجهيز كامل؟
+        • هل توجد صور أو مخطط أو معاينة مطلوبة؟
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_luxury_finishing_about:
+    - text: |
+        التشطيب الراقي — Luxury Finishing
+        خدمة موجهة للوحدات السكنية والفيلات والعملاء الباحثين عن مستوى تشطيب فاخر ومتزن، بخامات محترمة وتنفيذ دقيق وتفاصيل هادئة.
+        الرابط: https://luxury-finishing.alazab.com
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_luxury_finishing_collect_data:
+    - text: |
+        لخدمتك بدقة في مسار التشطيب الراقي، أحتاج البيانات التالية:
+        • ما نوع الوحدة: شقة أم فيلا؟
+        • ما المساحة التقريبية؟
+        • هل الوحدة على الطوب أم نصف تشطيب أم تحتاج تجديد؟
+        • ما مستوى التشطيب المطلوب؟
+        • هل توجد صور أو مخطط؟
+        • ما المنطقة والموعد المتوقع للبدء؟
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_uberfix_about:
+    - text: |
+        أوبرفيكس — UberFix
+        أوبرفيكس هو مسار الصيانة وإدارة المرافق داخل منظومة العزب، يركز على تسجيل البلاغات، متابعة الحالة، توجيه الفنيين، وتنظيم التشغيل للفروع والوحدات.
+        الرابط: https://uberfix.alazab.com
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_uberfix_collect_data:
+    - text: |
+        لخدمتك بدقة في مسار أوبرفيكس، أحتاج البيانات التالية:
+        • ما نوع العطل؟
+        • هل الطلب سكني أم تجاري؟
+        • ما الموقع أو الفرع؟
+        • هل توجد صور للعطل؟
+        • هل لديك رقم طلب سابق؟
+        • ما درجة الاستعجال؟
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_laban_alasfour_about:
+    - text: |
+        لبن العصفور — Laban Alasfour
+        لبن العصفور هو مسار التوريدات العامة والخامات والمنتجات النادرة أو صعبة الوصول، مع توجه مستقبلي لعرض المنتجات وتجربتها افتراضيًا.
+        الرابط: https://laban-alasfour.alazab.com
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+  utter_laban_alasfour_collect_data:
+    - text: |
+        لخدمتك بدقة في مسار لبن العصفور، أحتاج البيانات التالية:
+        • ما نوع الخامة أو المنتج المطلوب؟
+        • هل توجد صورة أو كود أو مقاس؟
+        • ما الكمية المطلوبة؟
+        • هل المطلوب بديل أم نفس المنتج؟
+        • هل التوريد لمشروع، صيانة، أم تشطيب؟
+        • ما موعد الاحتياج؟
+      metadata:
+        source: alazab_enterprise_knowledge_base
+        rephrase: true
+
+actions:
+  - action_route_enterprise_request
+  - action_collect_enterprise_lead
+  - action_submit_enterprise_lead

@@ -1,0 +1,3654 @@
+{
+  "meta": {
+    "app_id": "889346333913449",
+    "type": "SYSTEM_USER",
+    "application": "ASW",
+    "data_access_expires_at": 0,
+    "expires_at": 0,
+    "is_valid": true,
+    "issued_at": 1772161256,
+    "scopes": [
+      "catalog_management",
+      "pages_show_list",
+      "business_management",
+      "pages_messaging",
+      "instagram_basic",
+      "instagram_manage_comments",
+      "instagram_manage_insights",
+      "instagram_content_publish",
+      "whatsapp_business_management",
+      "instagram_manage_messages",
+      "pages_read_engagement",
+      "pages_manage_metadata",
+      "whatsapp_business_messaging",
+      "instagram_shopping_tag_products",
+      "instagram_branded_content_brand",
+      "read_audience_network_insights",
+      "instagram_branded_content_ads_brand",
+      "manage_app_solution",
+      "pages_utility_messaging",
+      "paid_marketing_messages",
+      "whatsapp_business_manage_events",
+      "public_profile"
+    ],
+    "granular_scopes": [
+      {
+        "scope": "pages_show_list"
+      },
+      {
+        "scope": "business_management"
+      },
+      {
+        "scope": "pages_messaging"
+      },
+      {
+        "scope": "instagram_basic"
+      },
+      {
+        "scope": "instagram_manage_comments"
+      },
+      {
+        "scope": "instagram_manage_insights"
+      },
+      {
+        "scope": "instagram_content_publish"
+      },
+      {
+        "scope": "whatsapp_business_management"
+      },
+      {
+        "scope": "instagram_manage_messages"
+      },
+      {
+        "scope": "pages_read_engagement"
+      },
+      {
+        "scope": "pages_manage_metadata"
+      },
+      {
+        "scope": "whatsapp_business_messaging"
+      },
+      {
+        "scope": "instagram_shopping_tag_products"
+      },
+      {
+        "scope": "instagram_branded_content_brand"
+      },
+      {
+        "scope": "read_audience_network_insights"
+      },
+      {
+        "scope": "instagram_branded_content_ads_brand"
+      },
+      {
+        "scope": "manage_app_solution"
+      },
+      {
+        "scope": "pages_utility_messaging"
+      },
+      {
+        "scope": "paid_marketing_messages"
+      },
+      {
+        "scope": "whatsapp_business_manage_events"
+      }
+    ],
+    "user_id": "122172793790780848"
+  },
+  "business": {
+    "id": "314437023701205",
+    "name": "Mohamed Azab",
+    "verification_status": "verified",
+    "created_time": "2021-08-14T06:48:04+0000"
+  },
+  "wabas": [
+    {
+      "id": "2154838801923462",
+      "info": {
+        "id": "2154838801923462",
+        "name": "Mohamed Azab",
+        "timezone_id": "0",
+        "message_template_namespace": "c9484a81_4740_47be_a3a8_92b5700ffee7"
+      },
+      "phones": [
+        {
+          "id": "1011864912017679",
+          "display_phone_number": "+20 10 92750351",
+          "verified_name": "Mohamed Azab",
+          "quality_rating": "UNKNOWN",
+          "status": "DISCONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [],
+      "apps": [],
+      "webhooks": null
+    },
+    {
+      "id": "1303965001665007",
+      "info": {
+        "id": "1303965001665007",
+        "name": "Alazab",
+        "timezone_id": "53",
+        "message_template_namespace": "c7ebabba_b271_4dc9_a237_c509a30a4f71"
+      },
+      "phones": [
+        {
+          "id": "1061490140383829",
+          "display_phone_number": "+20 11 46397010",
+          "verified_name": "Alazab",
+          "quality_rating": "UNKNOWN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [
+        {
+          "name": "delivery",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Your order {{1}} is out for delivery and is expected to arrive by {{2}}.\n\nThank you for your business.",
+              "example": {
+                "body_text": [
+                  [
+                    "#12345",
+                    "Jan 1, 2024"
+                  ]
+                ]
+              }
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "delivery_update_4",
+          "id": "961192893361496"
+        },
+        {
+          "name": "event_rsvp",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "شكرًا على الاستجابة لـ {{نص}} بواسطة {نص}}.\n\nأراكم على {{text}} في التوقيت المحلي.\n"
+            }
+          ],
+          "language": "ar",
+          "status": "REJECTED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "event_rsvp_confirmation_1",
+          "id": "1323030819751520"
+        }
+      ],
+      "apps": [
+        {
+          "whatsapp_business_api_data": {
+            "link": "https://www.facebook.com/games/?app_id=1592615517968289",
+            "name": "ElevenLabs Agents",
+            "id": "1592615517968289"
+          },
+          "override_callback_uri": "https://api.us.elevenlabs.io/v1/convai/whatsapp"
+        }
+      ],
+      "webhooks": null
+    },
+    {
+      "id": "1431578851609413",
+      "info": {
+        "id": "1431578851609413",
+        "name": "Azab Group",
+        "currency": "USD",
+        "timezone_id": "53",
+        "message_template_namespace": "421703ff_a98e_409d_9f72_13320dc4d27b"
+      },
+      "phones": [
+        {
+          "id": "1016301248242500",
+          "display_phone_number": "+20 11 46397010",
+          "verified_name": "Azab Group",
+          "quality_rating": "UNKNOWN",
+          "status": "PENDING",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [],
+      "apps": [],
+      "webhooks": null
+    },
+    {
+      "id": "3773448776290331",
+      "info": {
+        "id": "3773448776290331",
+        "name": "Mohamed Azab",
+        "currency": "USD",
+        "timezone_id": "53",
+        "message_template_namespace": "e4e924f3_a71d_4539_8eff_c9f23bf48bc9"
+      },
+      "phones": [
+        {
+          "id": "873908352481274",
+          "display_phone_number": "+20 10 04006620",
+          "verified_name": "Mohamed Azab",
+          "quality_rating": "GREEN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [
+        {
+          "name": "technician_assigned",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم تعيين فني لطلب الصيانة الخاص بك.\n\nرقم الطلب {{order_id}}\nالفني {{technician_name}}\nالموعد {{date}} - {{time}}\n\nسيتم التواصل معك قبل الزيارة.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_id",
+                    "example": "ORD-5566"
+                  },
+                  {
+                    "param_name": "technician_name",
+                    "example": "أحمد سعيد"
+                  },
+                  {
+                    "param_name": "date",
+                    "example": "2024-01-20"
+                  },
+                  {
+                    "param_name": "time",
+                    "example": "3:00 م"
+                  }
+                ]
+              }
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "4298069390465341"
+        },
+        {
+          "name": "booking_confirmation",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم تأكيد حجزك بنجاح ✅\n\nتفاصيل الحجز:\nرقم الطلب {{order_number}}\nالخدمة {{service_type}}\nالتاريخ {{appointment_date}} في {{appointment_time}}\nالموقع {{location}}\nالفني المختص {{technician_name}}\n\nنتمنى لك تجربة مميزة.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_number",
+                    "example": "BK-78901"
+                  },
+                  {
+                    "param_name": "service_type",
+                    "example": "صيانة سباكة"
+                  },
+                  {
+                    "param_name": "appointment_date",
+                    "example": "2024-01-15"
+                  },
+                  {
+                    "param_name": "appointment_time",
+                    "example": "10:00 ص"
+                  },
+                  {
+                    "param_name": "location",
+                    "example": "جدة"
+                  },
+                  {
+                    "param_name": "technician_name",
+                    "example": "محمد العلي"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تتبع الطلب"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إلغاء الحجز"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "2068093277343758"
+        },
+        {
+          "name": "order_created",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم استلام طلب الصيانة بنجاح.\n\nرقم الطلب: {{order_id}}\nالخدمة: {{service_name}}\nالموقع: {{location}}\n\nسيتم مراجعة الطلب والتواصل معك قريباً.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_id",
+                    "example": "ORD-12345"
+                  },
+                  {
+                    "param_name": "service_name",
+                    "example": "صيانة كهرباء"
+                  },
+                  {
+                    "param_name": "location",
+                    "example": "الرياض - حي النرجس"
+                  }
+                ]
+              }
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "714201091490383"
+        },
+        {
+          "name": "test_service",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، هذه رسالة اختبار للتأكد من عمل خدمة WhatsApp بشكل صحيح. شكراً لك!",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تم الفهم ✓"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1961865481091790"
+        }
+      ],
+      "apps": [
+        {
+          "whatsapp_business_api_data": {
+            "category": "أعمال",
+            "link": "https://alazab.com/",
+            "name": "ASW",
+            "namespace": "alazabasw",
+            "id": "889346333913449"
+          }
+        }
+      ],
+      "webhooks": null
+    },
+    {
+      "id": "2144651456337012",
+      "info": {
+        "id": "2144651456337012",
+        "name": "Mohamed Azab",
+        "currency": "USD",
+        "timezone_id": "53",
+        "message_template_namespace": "f492b3dc_fb6a_47b9_8458_cd1e3527ad97"
+      },
+      "phones": [
+        {
+          "id": "1020054711186921",
+          "display_phone_number": "+1 205-460-5650",
+          "verified_name": "Mohamed Azab",
+          "quality_rating": "GREEN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [
+        {
+          "name": "project_approval",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "DOCUMENT",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/617671881_1673686007144292_7219486742684421628_n.pdf?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=If1VEWmhdx4Q7kNvwFevyHN&_nc_oc=AdoaAYrF2uFSuglzUO2EdGroWqRSsY1zDXVHCeRpQivwQBwLdI8JYHyU5Lf2KE-LIdE&_nc_zt=3&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=rZ81WjrU9Oj-PrMOITRocQ&_nc_tpa=Q5bMBQGjfHugfKmOSZYHYLwvX96Y7F1w41DbvZMwZty5MvzNpHmrUoDnH-8dIsyfFAARbFgzm8fPXU47&oh=01_Q5Aa4QGQG2CdQYgofbnQD6J4-4gZPlzm3b8sYJC-iznE4eEuhA&oe=6A1A3846"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، نرفق لك {{document_type}} الخاص بمشروع {{project_name}}. يرجى مراجعته والرد بالموافقة أو الرفض أو طلب المناقشة.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  },
+                  {
+                    "param_name": "document_type",
+                    "example": "عرض السعر"
+                  },
+                  {
+                    "param_name": "project_name",
+                    "example": "فيلا الرياض"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "موافقة"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "رفض"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "مناقشة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1673686003810959"
+        },
+        {
+          "name": "technician_on_way",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، سيصل الفني لدينا إلى موقعك خلال {{estimated_time}} تقريباً.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "estimated_time",
+                    "example": "15 دقيقة"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "اتصل بالفني"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تتبع الموقع"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1422073375913895"
+        },
+        {
+          "name": "statement_ready",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "هذا لإعلامك بأن أحدث كشف حساب لحسابك {{account_number}} متاح الآن. يرجى تسجيل الدخول إلى حسابك للاطلاع على كشف الحساب.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "account_number",
+                    "example": "ACC-12345"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "عرض الكشف"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "987586796954043"
+        },
+        {
+          "name": "lux_welcome",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً بك في *Luxury Finishing* ✨\n\nنحن متخصصون في التشطيبات الراقية التي تحول المساحات إلى تحف معمارية.\n\nيسعدنا خدمتك {{customer_name}}، كيف يمكننا مساعدتك اليوم؟",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "طلب جديد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "استفسار"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "متابعة طلب"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "2080687079141970"
+        },
+        {
+          "name": "lux_service_intro",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "*Luxury Finishing* - التشطيبات الراقية\n\nنحن نقدم حلول تشطيب فاخرة للمشروعات السكنية والتجارية، مع التركيز على:\n\n• جودة التنفيذ والإتقان\n• استخدام أفضل الخامات\n• تصاميم عصرية وراقية\n• متابعة دقيقة لكل مرحلة\n\nخدماتنا تشمل: الشقق، الفلل، المكاتب، والمشروعات التجارية.\n\nهل تود بدء مشروع جديد معنا؟"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "نعم، أريد البدء"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "أريد المزيد من المعلومات"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1430574292417324"
+        },
+        {
+          "name": "lux_project_type",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "ما هو نوع المشروع الذي تريد تشطيبه {{customer_name}}؟\n\nاختر النوع المناسب:",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "شقة"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "فيلا"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "مكتب"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "3388655484628453"
+        },
+        {
+          "name": "lux_project_location",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "ممتاز! 📍\n\nالآن يرجى إرسال موقع المشروع {{project_type}}.\n\nيمكنك إرسال:\n• المدينة / الحي\n• أو موقع جغرافي مباشر\n\nهذا سيساعدنا في تحديد موعد المعاينة بشكل أسرع.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "project_type",
+                    "example": "الشقة"
+                  }
+                ]
+              }
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "26380775831577896"
+        },
+        {
+          "name": "lux_new_project_start",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "رائع {{customer_name}}! 🌟\n\nلنبدأ في تسجيل طلب التشطيب الخاص بك.\n\nسنحتاج إلى بعض المعلومات الأساسية لنقدم لك أفضل عرض يناسب مشروعك.\n\nهل أنت جاهز للبدء؟",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "نعم، لنبدأ"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "لاحقاً"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1874922909957380"
+        },
+        {
+          "name": "lux_inspection_request",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "رائع {{customer_name}}! ✨\n\nللحصول على عرض دقيق وتصور شامل لمشروعك، يجب تحديد موعد معاينة ميدانية.\n\nالمعاينة مجانية وغير ملزمة.\n\nمتى يناسبك الموعد؟",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "اليوم"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "غداً"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "خلال أسبوع"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1482086090213115"
+        },
+        {
+          "name": "lux_identify_purpose",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "شكراً لتواصلك معنا {{customer_name}}.\n\nلنقدم لك أفضل خدمة، يرجى اختيار الغرض من تواصلك:",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "استفسار عن الخدمة"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "طلب جديد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "متابعة طلب قائم"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1485705973258311"
+        },
+        {
+          "name": "lux_finishing_level",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "ما هو مستوى التشطيب الذي ترغب به؟\n\nاختر من الخيارات التالية:"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تشطيب فاخر"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تشطيب راقٍ"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تطوير قائم"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1000126005679805"
+        },
+        {
+          "name": "invoice_ready",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، نود إعلامك بأن فاتورتك رقم {{invoice_number}} أصبحت متاحة الآن. يمكنك مشاهدة الفاتورة عبر الإنترنت، تحميلها على جهازك أو طبعها مباشرة. 🙏",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "invoice_number",
+                    "example": "INV-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض الفاتورة",
+                  "url": "https://uberfix.app/invoice/{{1}}",
+                  "example": [
+                    "https://uberfix.app/invoice/12345"
+                  ]
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "953876947014316"
+        },
+        {
+          "name": "appointment_rescheduled",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، تم إعادة جدولة موعدك القادم مع {{company_name}} إلى {{new_date}} الساعة {{new_time}}. نحن نتطلع إلى رؤيتك!",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "company_name",
+                    "example": "UberFix"
+                  },
+                  {
+                    "param_name": "new_date",
+                    "example": "الأحد 5 يناير"
+                  },
+                  {
+                    "param_name": "new_time",
+                    "example": "10:00 صباحاً"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تأكيد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تعديل مرة أخرى"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1249441900700537"
+        },
+        {
+          "name": "order_cancellation_confirmed",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً، نؤكد لك أننا ألغينا بنجاح طلبك رقم {{order_number}} الذي قدمته مؤخراً. شكراً لك.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_number",
+                    "example": "MR-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "طلب جديد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "2013168046210404"
+        },
+        {
+          "name": "feedback_request",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "إننا في {{company_name}}، نولي اهتماماً كبيراً لملاحظات العملاء ونستفيد منها في تحسين {{service_name}} باستمرار. نرجو منك إكمال استبيان قصير لتخبرنا بالمزيد عن {{experience_type}} التي أجريتها مؤخراً معنا. نشكرك مقدماً.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "company_name",
+                    "example": "UberFix"
+                  },
+                  {
+                    "param_name": "service_name",
+                    "example": "خدماتنا"
+                  },
+                  {
+                    "param_name": "experience_type",
+                    "example": "تجربة الصيانة"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "قيّم الخدمة"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "لاحقاً"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "2407201083053535"
+        },
+        {
+          "name": "booking_confirmed",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello {{customer_name}}, Thank you for booking with {{company_name}}. Your appointment for {{service_type}} on {{appointment_date}} at {{appointment_time}} is confirmed.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "Ahmed"
+                  },
+                  {
+                    "param_name": "company_name",
+                    "example": "UberFix"
+                  },
+                  {
+                    "param_name": "service_type",
+                    "example": "AC Maintenance"
+                  },
+                  {
+                    "param_name": "appointment_date",
+                    "example": "January 5th"
+                  },
+                  {
+                    "param_name": "appointment_time",
+                    "example": "10:00 AM"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "View details"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "Reschedule"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1962229264650604"
+        },
+        {
+          "name": "order_delivered",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "لدينا أخبار رائعة لك يا {{customer_name}}! تم توصيل طلبك رقم {{order_number}}. هل تحتاج إلى إرجاع عنصر أو استبداله؟",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  },
+                  {
+                    "param_name": "order_number",
+                    "example": "MR-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إدارة الطلب"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "947559657712249"
+        },
+        {
+          "name": "support_call_request",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "هل ترغب في تلقي مكالمة من أحد ممثلينا؟ نحن هنا لمساعدتك."
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "نعم، اتصلوا بي"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "لا، شكراً"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "4406866926209518"
+        },
+        {
+          "name": "technician_visit_scheduling",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، نحن نحدد موعداً لزيارة فني لـ {{service_type}} في {{visit_date}} بين {{start_time}} و {{end_time}}. يرجى تأكيد ما إذا كانت هذه الفترة مناسبة لك.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "service_type",
+                    "example": "صيانة التكييف"
+                  },
+                  {
+                    "param_name": "visit_date",
+                    "example": "الأحد 5 يناير"
+                  },
+                  {
+                    "param_name": "start_time",
+                    "example": "10:00 صباحاً"
+                  },
+                  {
+                    "param_name": "end_time",
+                    "example": "12:00 ظهراً"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تأكيد الموعد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "طلب تعديل"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إلغاء"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "902577505870023"
+        },
+        {
+          "name": "requests_delivery",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}، تم تسليم طلبك {{order_number}} بنجاح. يمكنك إدارة طلبك أدناه.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "order_number",
+                    "example": "MR-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تفاصيل الطلب"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "896131986571326"
+        },
+        {
+          "name": "hello",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello world!"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "View Flow",
+                  "flow_id": 1946584099618562,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SELECT_BRANCH"
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "FORM",
+          "is_primary_device_delivery_only": false,
+          "id": "1567295111152491"
+        },
+        {
+          "name": "installation_complete",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Installation complete"
+            },
+            {
+              "type": "BODY",
+              "text": "Hi {{1}}, your {{2}} installation is complete! Our technician has configured your connection, and you're now ready to go online. If you have any issues, feel free to reply or contact {{3}} for assistance.",
+              "example": {
+                "body_text": [
+                  [
+                    "John",
+                    "Fibre Broadband",
+                    "support@telco.com"
+                  ]
+                ]
+              }
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "installation_complete",
+          "id": "955131554138421"
+        }
+      ],
+      "apps": [
+        {
+          "whatsapp_business_api_data": {
+            "category": "أعمال",
+            "link": "https://alazab.com/",
+            "name": "ASW",
+            "namespace": "alazabasw",
+            "id": "889346333913449"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "link": "https://www.facebook.com/games/?app_id=1087358919742996",
+            "name": "Kapso",
+            "id": "1087358919742996"
+          }
+        }
+      ],
+      "webhooks": null
+    },
+    {
+      "id": "1458856398934130",
+      "info": {
+        "id": "1458856398934130",
+        "name": "Azab",
+        "currency": "USD",
+        "timezone_id": "53",
+        "message_template_namespace": "881a3a5e_adc3_4e13_8c14_a90bb4e3c601"
+      },
+      "phones": [
+        {
+          "id": "1032441389943808",
+          "display_phone_number": "+1 206-479-5608",
+          "verified_name": "Mohamed Azab",
+          "quality_rating": "GREEN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        },
+        {
+          "id": "952530191273396",
+          "display_phone_number": "+1 208-379-9564",
+          "verified_name": "Mohamed Azab",
+          "quality_rating": "UNKNOWN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [
+        {
+          "name": "uberone",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "VIDEO",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/588801637_1550461492914117_439664769325769472_n.mp4?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=SMe-tPAwQyoQ7kNvwHPGieb&_nc_oc=AdrQ80r3AmVkA0r0jsOW8q39CoPtxAyilf3LARRY-_HgXliVYCVfDlE6DdvoACWLI3A&_nc_zt=28&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=-z9Q2ibkvLby5vrqH3F4Tw&_nc_tpa=Q5bMBQFm7QXCiJF3del9xCLiuNt4Hxh40tl8XdbTYT703naEUtptVQCwNurnMBJCZrf7b_TXj3yWpr04&oh=01_Q5Aa4QHu8bsWHxJ6HQH4H8fQHI0dumAhM_PxruIFm42aTV5Y6g&oe=6A1A4E16"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "There's a Difference Between Requesting Maintenance and *Managing* It."
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix Maintenance Solutions"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "View Flow",
+                  "flow_id": 879748478181451,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "QUESTION_ONE"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "FORM",
+          "is_primary_device_delivery_only": false,
+          "id": "1550461489580784"
+        },
+        {
+          "name": "missed_appointment",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "الزيارة لم تفتقدها"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، افتقدناك في موعدك المجدول {{2}} في {{3}}. يرجى الرد لإعادة الجدولة أو الاتصال بـ {{4}} لحجز موعد جديد.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "تركيب النطاق العريض",
+                    "2025-12-31",
+                    " support@telco.com "
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إعادة الجدولة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "missed_appointment",
+          "id": "2036635873734786"
+        },
+        {
+          "name": "appointment_scheduling",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "زيارة فني"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، نحن نحدد موعدًا لزيارة فني لـ {{2}} في {{3}} بين {{4}} و {{5}}. يرجى تأكيد ما إذا كانت هذه الفترة مناسبة لك.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "تركيب النطاق العريض",
+                    "2025-12-31",
+                    "10:00 ص",
+                    "2:00 م"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "أكد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إعادة الجدولة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_scheduling",
+          "id": "925222166624859"
+        },
+        {
+          "name": "appointment_confirmed",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم تأكيد الموعد"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبا {{1}}،\n\nموعدك مقرر في {{2}}.\nالخدمة: {{3}}\nرقم التأكيد: {{4}}\n\nنحن نتطلع إلى زيارتك.\n",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "25 يناير 2026 الساعة 10:00 صباحاً",
+                    "قصة شعر",
+                    "ABC123"
+                  ]
+                ]
+              }
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_confirmed",
+          "id": "1443910377115321"
+        },
+        {
+          "name": "appointment_cancellation",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم إلغاء موعدك"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبا {{1}}،\n\nتم إلغاء موعدك القادم مع {{2}} في {{3}} الساعة {{4}}.\n\nأخبرنا إذا كان لديك أي أسئلة أو تحتاج إلى إعادة الجدولة.\n\n",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "Fashion Styles",
+                    "December 31, 2020",
+                    "1:00 مساءً"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض التفاصيل",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_cancellation_1",
+          "id": "1781092799228487"
+        },
+        {
+          "name": "delivery_code",
+          "message_send_ttl_seconds": 600,
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Your order is arriving soon. *{{1}}* is your verification code. Please show this to the delivery associate.\n\nIf you have any concerns or questions, contact us at {{2}}.",
+              "example": {
+                "body_text": [
+                  [
+                    "123456",
+                    "1800-555-1234"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "url": "https://www.whatsapp.com/otp/code/?otp_type=NO_BUTTONS&code=otp{{1}}",
+                  "example": [
+                    "https://www.whatsapp.com/otp/code/?otp_type=NO_BUTTONS&code=otp123456"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "AUTHENTICATION",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "delivery_code_1",
+          "id": "873771338835468"
+        },
+        {
+          "name": "maintenance_request_form",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello world!"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "View Flow",
+                  "flow_id": 1425432505630029,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SERVICE_DETAILS"
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "FORM",
+          "is_primary_device_delivery_only": false,
+          "id": "828024176950673"
+        },
+        {
+          "name": "booking_confirmation_admin",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "🔔 طلب حجز استشارة جديد\n\n👤 الاسم: {{full_name}}\n📧 البريد: {{email}}\n📱 الهاتف: {{phone}}\n🔧 الخدمة: {{service_type}}\n📅 التاريخ: {{date}}\n🕐 الوقت: {{time}}\n\n📋 رقم الحجز: {{booking_id}}\n\nيرجى المتابعة.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "full_name",
+                    "example": "أحمد محمد"
+                  },
+                  {
+                    "param_name": "email",
+                    "example": "ahmed@example.com"
+                  },
+                  {
+                    "param_name": "phone",
+                    "example": "+201234567890"
+                  },
+                  {
+                    "param_name": "service_type",
+                    "example": "صيانة التكييف"
+                  },
+                  {
+                    "param_name": "date",
+                    "example": "الأحد 5 يناير"
+                  },
+                  {
+                    "param_name": "time",
+                    "example": "10:00 صباحًا"
+                  },
+                  {
+                    "param_name": "booking_id",
+                    "example": "BK-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix Admin Notification"
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "1607982397051161"
+        },
+        {
+          "name": "property_status_update",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً من UberFix 🏢\n\nإليكم تحديث حالة العقار الخاص بكم.\nتم تحديث البيانات في النظام.\n\nللاستفسار يرجى التواصل معنا."
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "899956366299323"
+        },
+        {
+          "name": "welcome_message",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً {{customer_name}}! 👋\n\nأهلاً بك في UberFix - خدمة الصيانة السريعة.\n\nكيف يمكننا مساعدتك اليوم?\n\n📋 أرسل \"طلب\" لفتح طلب صيانة جديد\n📍 أرسل \"حالة\" لمتابعة طلباتك\n📞 أرسل \"تواصل\" للتحدث مع فريق الدعم",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "customer_name",
+                    "example": "أحمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "طلب جديد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "متابعة طلب"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل معنا"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "2364289283994208"
+        },
+        {
+          "name": "invoice_issued",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحباً من UberFix 📄\n\nتم إصدار فاتورة جديدة لكم.\nرقم الفاتورة: {{invoice_number}}\nالمبلغ: {{amount}} ج.م\n\nيمكنكم الاطلاع على التفاصيل والدفع عبر التطبيق.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "invoice_number",
+                    "example": "INV-2025-001"
+                  },
+                  {
+                    "param_name": "amount",
+                    "example": "500"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "شكراً لثقتكم بنا"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض الفاتورة",
+                  "url": "https://uberfix.app/invoice/%7B%7Binvoice_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/invoice/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1579533249921028"
+        },
+        {
+          "name": "appointment_reminder",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تذكير من UberFix ⏰\n\nلديكم موعد صيانة قادم:\n📅 {{date}} — ⏰ {{time}}\n\nيرجى التأكد من توفركم في الموعد المحدد.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "date",
+                    "example": "الأحد 5 يناير"
+                  },
+                  {
+                    "param_name": "time",
+                    "example": "10:00 صباحًا"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تأكيد الموعد",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1708669090572351"
+        },
+        {
+          "name": "service_cancelled",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "❌ تم إلغاء الطلب\n\n📋 رقم الطلب: {{order_id}}\n\nتم إلغاء طلب الصيانة.\nللمساعدة، تواصل معنا.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_id",
+                    "example": "MR-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "تواصل مع الدعم"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1342184297596484"
+        },
+        {
+          "name": "service_completed",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم الانتهاء من الصيانة ✅\nيرجى مراجعة الأعمال واعتماد الإغلاق:"
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "اعتماد الإغلاق",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "4149566491974056"
+        },
+        {
+          "name": "work_in_progress",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "بدأ تنفيذ أعمال الصيانة 🛠\nفي حال احتجت أي تواصل أثناء التنفيذ:"
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "التواصل مع الفني",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "932216912577872"
+        },
+        {
+          "name": "technician_on_way",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "الفني في الطريق إليك الآن 🚚\nيمكنك متابعة الحالة لحظة بلحظة من هنا:"
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبّع الفني",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1550421369390793"
+        },
+        {
+          "name": "appointment_scheduled",
+          "previous_category": "UTILITY",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم تحديد موعد الصيانة 🗓\n📅 {{date}} — ⏰ {{time}}\nلمراجعة التفاصيل أو تغيير الموعد:",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "date",
+                    "example": "الأحد 5 يناير"
+                  },
+                  {
+                    "param_name": "time",
+                    "example": "10:00 صباحًا"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "إدارة الموعد",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "is_primary_device_delivery_only": false,
+          "id": "915900351376118"
+        },
+        {
+          "name": "technician_assigned",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "👷 تم تعيين فني\n\n📋 رقم الطلب: {{order_id}}\n👤 الفني: {{technician_name}}\n\nسيتم التواصل معك لتحديد موعد الزيارة.",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_id",
+                    "example": "MR-2025-001"
+                  },
+                  {
+                    "param_name": "technician_name",
+                    "example": "أحمد محمد"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبّع الطلب",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1606002977106310"
+        },
+        {
+          "name": "request_received",
+          "parameter_format": "NAMED",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "تم استلام طلب الصيانة بنجاح ✅\nرقم الطلب: {{order_id}}\nيمكنك متابعة حالة الطلب من هنا 👇",
+              "example": {
+                "body_text_named_params": [
+                  {
+                    "param_name": "order_id",
+                    "example": "MR-2025-001"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمة الصيانة السريعة"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبّع الطلب",
+                  "url": "https://uberfix.app/track/%7B%7Btrack_url%7D%7D",
+                  "example": [
+                    "https://uberfix.app/track/abc123xyz"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1454877156234136"
+        },
+        {
+          "name": "order_confirm_manual_2",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، تم تقديم طلب {{2}} الخاص بك! قم بالرد **الجدول الزمني** لاختيار فترة زمنية لموعدك.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "راوتر"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "الجدول الزمني"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "order_confirm_manual_schedule",
+          "id": "1618559682609488"
+        }
+      ],
+      "apps": [
+        {
+          "whatsapp_business_api_data": {
+            "link": "http://www.jotform.com/",
+            "name": "Jotform Agent",
+            "id": "1102773744861735"
+          },
+          "override_callback_uri": "https://api.jotform.com/ai-agent-builder/019d555c475c7c9ba9050a7069d25aa3923f/webhook"
+        },
+        {
+          "whatsapp_business_api_data": {
+            "category": "أعمال",
+            "link": "https://alazab.com/",
+            "name": "ASW",
+            "namespace": "alazabasw",
+            "id": "889346333913449"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "link": "https://facebook.com/61576570322299",
+            "name": "Brand Identity",
+            "namespace": "brand-identity",
+            "id": "1216514430638152"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "link": "https://www.facebook.com/games/?app_id=1087358919742996",
+            "name": "Kapso",
+            "id": "1087358919742996"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "category": "أدوات مفيدة",
+            "link": "https://uberfix.shop/",
+            "name": "UberFix",
+            "namespace": "uberfix",
+            "id": "724370950034089"
+          }
+        }
+      ],
+      "webhooks": null
+    },
+    {
+      "id": "459851797218855",
+      "info": {
+        "id": "459851797218855",
+        "name": "UberFix ",
+        "currency": "USD",
+        "timezone_id": "53",
+        "message_template_namespace": "02b6697a_5e6c_4da2_bab0_80f2d26e7595"
+      },
+      "phones": [
+        {
+          "id": "644995285354639",
+          "display_phone_number": "+1 555-728-5727",
+          "verified_name": "alazabfix‎",
+          "quality_rating": "GREEN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        },
+        {
+          "id": "527697617099639",
+          "display_phone_number": "+1 555-724-5001",
+          "verified_name": "alazab",
+          "quality_rating": "GREEN",
+          "status": "CONNECTED",
+          "account_mode": "LIVE"
+        }
+      ],
+      "templates": [
+        {
+          "name": "uberfix_request_paid",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم استلام الدفع"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}،\nتم استلام دفعة قيمتها {{2}} ج.م لفاتورة طلب الصيانة رقم {{3}} 💳\nشكرًا لتعاملك مع UberFix.",
+              "example": {
+                "body_text": [
+                  [
+                    "محمد",
+                    "500",
+                    "MR-26-01040"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض الفاتورة",
+                  "url": "https://uberfix.shop/track/{{1}}",
+                  "example": [
+                    "https://uberfix.shop/track/abc123"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1004423828765774"
+        },
+        {
+          "name": "uberfix_request_completed",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "اكتملت أعمال الصيانة"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}،\nتم الانتهاء من أعمال الصيانة لطلبك رقم {{2}} بنجاح ✅\nيرجى مراجعة الأعمال واعتماد إغلاق الطلب.",
+              "example": {
+                "body_text": [
+                  [
+                    "محمد",
+                    "MR-26-01040"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - شكرًا لثقتك"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "اعتماد الإغلاق",
+                  "url": "https://uberfix.shop/track/{{1}}",
+                  "example": [
+                    "https://uberfix.shop/track/abc123"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1474221431012426"
+        },
+        {
+          "name": "uberfix_work_started",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "بدأ تنفيذ الصيانة"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}،\nبدأ الفني تنفيذ أعمال الصيانة لطلبك رقم {{2}} 🛠️\nسنبلغك فور الانتهاء.",
+              "example": {
+                "body_text": [
+                  [
+                    "محمد",
+                    "MR-26-01040"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "متابعة مباشرة",
+                  "url": "https://uberfix.shop/track/{{1}}",
+                  "example": [
+                    "https://uberfix.shop/track/abc123"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "1274422488128957"
+        },
+        {
+          "name": "uberfix_request_assigned",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم تعيين فني لطلبك"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}،\nتم تعيين الفني {{2}} للعمل على طلب الصيانة رقم {{3}} 👨‍🔧\nسيتواصل معك لتأكيد موعد الزيارة.",
+              "example": {
+                "body_text": [
+                  [
+                    "محمد",
+                    "أحمد علي",
+                    "MR-26-01040"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبع الطلب",
+                  "url": "https://uberfix.shop/track/{{1}}",
+                  "example": [
+                    "https://uberfix.shop/track/abc123"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "981478144320222"
+        },
+        {
+          "name": "uberfix_request_received",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم استلام طلب الصيانة"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}،\nتم استلام طلب الصيانة الخاص بك بنجاح ✅\nرقم الطلب: {{2}}\nسنتواصل معك قريبًا لتحديد موعد الزيارة.",
+              "example": {
+                "body_text": [
+                  [
+                    "محمد",
+                    "MR-26-01040"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - خدمات الصيانة الاحترافية"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبع الطلب",
+                  "url": "https://uberfix.shop/track/{{1}}",
+                  "example": [
+                    "https://uberfix.shop/track/abc123"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "id": "2114402875769864"
+        },
+        {
+          "name": "otp_verification",
+          "message_send_ttl_seconds": 300,
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "كلمة المرور المؤقتة الخاصة بك هي {{1}}. يرجى تسجيل الدخول وتحديثه في أقرب وقت ممكن. لأسباب تتعلق بأمانك، يرجى عدم مشاركة هذا الرمز.",
+              "example": {
+                "body_text": [
+                  [
+                    "qwe123"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "نسخ الرمز",
+                  "url": "https://www.whatsapp.com/otp/code/?otp_type=COPY_CODE&code=otp{{1}}",
+                  "example": [
+                    "https://www.whatsapp.com/otp/code/?otp_type=COPY_CODE&code=otp123456"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "AUTHENTICATION",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "temporary_password",
+          "id": "1660318395155199"
+        },
+        {
+          "name": "uberfix_hello_world",
+          "previous_category": "MARKETING",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "IMAGE",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/646751189_1383205120194105_2393050418691543913_n.png?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=aHya1Z7j1LMQ7kNvwH_bJoq&_nc_oc=Ado3R1Cvpl8Thh3-P8089r2ezBPIA7shycnU3U1c16p618NTO7kWm-Bv9li0BHQ0IzQ&_nc_zt=3&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=aN_oHan-Uemrkfq4loxVNg&_nc_tpa=Q5bMBQFpabhUx0_qLtrRmOYhsIWMLrozLagMmfM21XxbwibZ4gg7qzM3y5J_7CmmdB24R8PcJwH_GoY4&oh=01_Q5Aa4QFWZKar1Im4PjhJ0pAdbeYtTdx0d--PGDuLi2mysQQvsw&oe=6A1A4533"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "Hello! Welcome to UberFix. We're here to help you with all your maintenance needs. Thank you for choosing us!"
+            },
+            {
+              "type": "FOOTER",
+              "text": "UberFix - Professional Maintenance Services"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "Visit website",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "correct_category": "UTILITY",
+          "id": "1361626022352015"
+        },
+        {
+          "name": "feedback_form",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "إننا في {{1}}، نولي اهتمامًا كبيرًا لملاحظات العملاء ونستفيد منها في تحسين {{2}} باستمرار. \n\nنرجو منك إكمال {{3}} قصير (الرابط موضح أدناه) لتخبرنا بالمزيد عن {{4}} التي أجريتها مؤخرًا معنا. \n\nنشكرك مقدمًا.",
+              "example": {
+                "body_text": [
+                  [
+                    "Jasper's Market",
+                    "منتجاتنا",
+                    "استبيان",
+                    "عملية الشراء"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "المشاركة في الاستبيان",
+                  "flow_id": 1595214401700896,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SURVEY"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "feedback_survey_form_2",
+          "id": "914092141622255"
+        },
+        {
+          "name": "shifting_journey",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، يتم الآن معالجة طلب تحويل اتصال النطاق العريض الخاص بك! سنبقيك على اطلاع بالمستجدات بشأن الحالة.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبع الحالة",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "shifting_journey",
+          "id": "1609476400328218"
+        },
+        {
+          "name": "pass_temp",
+          "message_send_ttl_seconds": 600,
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "رمز التحقق لمرة واحدة (OTP): {{1}}. هذا هو رمز التحقق الخاص بك لـ {{2}}. الرمز صالح لمدة {{3}}. اتصل على الرقم {{4}} إذا لم تقم بهذا الطلب. لأسباب تتعلق بأمانك، يرجى عدم مشاركة هذا الرمز.\n\nإذا كانت لديك أي أسئلة أو استفسارات، يُرجى التواصل معنا على ‏{{5}}.‏",
+              "example": {
+                "body_text": [
+                  [
+                    "123456",
+                    "دقائق 10",
+                    "المعاملة",
+                    "123-456-7890",
+                    "1800-555-1234"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "تنتهي صلاحيتها خلال ‏١٠‏ دقائق."
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "نسخ الرمز",
+                  "url": "https://www.whatsapp.com/otp/code/?otp_type=ONE_TAP&cta_display_name=%D9%85%D9%84%D8%A1+%D8%AA%D9%84%D9%82%D8%A7%D8%A6%D9%8A&package_name=com.alazab.app&signature_hash=F5D6F4B8E5E&code=otp{{1}}",
+                  "example": [
+                    "https://www.whatsapp.com/otp/code/?otp_type=ONE_TAP&cta_display_name=%D9%85%D9%84%D8%A1+%D8%AA%D9%84%D9%82%D8%A7%D8%A6%D9%8A&package_name=com.alazab.app&signature_hash=F5D6F4B8E5E&code=otp123456"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "AUTHENTICATION",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "verify_code",
+          "id": "900359469727385"
+        },
+        {
+          "name": "otp_verify",
+          "message_send_ttl_seconds": 600,
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "رمز التحقق لمرة واحدة (OTP): {{1}}. هذا هو رمز التحقق الخاص بك لـ {{2}}. الرمز صالح لمدة {{3}}. اتصل على الرقم {{4}} إذا لم تقم بهذا الطلب. لأسباب تتعلق بأمانك، يرجى عدم مشاركة هذا الرمز.\n\nإذا كانت لديك أي أسئلة أو استفسارات، يُرجى التواصل معنا على ‏{{5}}.‏",
+              "example": {
+                "body_text": [
+                  [
+                    "123456",
+                    "دقائق 10",
+                    "المعاملة",
+                    "123-456-7890",
+                    "1800-555-1234"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "تنتهي صلاحيتها خلال ‏١٠‏ دقائق."
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "نسخ الرمز",
+                  "url": "https://www.whatsapp.com/otp/code/?otp_type=ONE_TAP&cta_display_name=%D9%85%D9%84%D8%A1+%D8%AA%D9%84%D9%82%D8%A7%D8%A6%D9%8A&package_name=com.alazab.app&signature_hash=F5D6F4B8E5E&code=otp{{1}}",
+                  "example": [
+                    "https://www.whatsapp.com/otp/code/?otp_type=ONE_TAP&cta_display_name=%D9%85%D9%84%D8%A1+%D8%AA%D9%84%D9%82%D8%A7%D8%A6%D9%8A&package_name=com.alazab.app&signature_hash=F5D6F4B8E5E&code=otp123456"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "AUTHENTICATION",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "verify_code",
+          "id": "831755329214907"
+        },
+        {
+          "name": "feedback_survey_form",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Rate your experience"
+            },
+            {
+              "type": "BODY",
+              "text": "Your feedback is important to us. \n\nPlease take a quick survey about your recent {{1}} experience.",
+              "example": {
+                "body_text": [
+                  [
+                    "flight booking"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "Take survey",
+                  "flow_id": 1214837130762411,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SURVEY"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "feedback_survey_form_1",
+          "id": "1302705165017135"
+        },
+        {
+          "name": "permission_request",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Would you like to receive a call from one of our representatives?"
+            },
+            {
+              "type": "CALL_PERMISSION_REQUEST"
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "sub_category": "CALL_PERMISSIONS_REQUEST",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "call_permission_request_1",
+          "id": "1267718818594610"
+        },
+        {
+          "name": "survey_form",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Rate your experience"
+            },
+            {
+              "type": "BODY",
+              "text": "Your feedback is important to us. \n\nPlease take a quick survey about your recent {{1}} experience.",
+              "example": {
+                "body_text": [
+                  [
+                    "flight booking"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "Take survey",
+                  "flow_id": 1221154473531367,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SURVEY"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "feedback_survey_form_1",
+          "id": "847495374990380"
+        },
+        {
+          "name": "group_invite_link_concise",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Your {{1}} request with {{2}} is confirmed. Please join the WhatsApp group to start:\n{{3}} Thank you!",
+              "example": {
+                "body_text": [
+                  [
+                    "live demo service",
+                    "ABC consultation",
+                    "Y2FwaV9ncm91cDoxOTUwNTU1MDA3OToxMjAzNjMyNDQwODgyNzY1NDYZD"
+                  ]
+                ]
+              }
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "group_invite_link_concise",
+          "id": "4282775242010041"
+        },
+        {
+          "name": "group_invite_link",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hi {{1}}, your request for {{2}} service from {{3}} was successfully received!\n\nYou can start the service by clicking and joining the group below.\n{{4}}\n\nThank you!",
+              "example": {
+                "body_text": [
+                  [
+                    "John",
+                    "live demo service",
+                    "ABC consultation",
+                    "Y2FwaV9ncm91cDoxOTUwNTU1MDA3OToxMjAzNjMyNDQwODgyNzY1NDYZD"
+                  ]
+                ]
+              }
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "group_invite_link",
+          "id": "2178649532542954"
+        },
+        {
+          "name": "appointment_cancellation",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Your appointment was canceled"
+            },
+            {
+              "type": "BODY",
+              "text": "Hello {{1}},\n\nYour upcoming appointment with {{2}} on {{3}} at {{4}} has been canceled.\n\nLet us know if you have any questions or need to reschedule.\n\n",
+              "example": {
+                "body_text": [
+                  [
+                    "John",
+                    "Fashion Styles",
+                    "December 31, 2025",
+                    "1:00 PM"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "View details",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_cancellation_1",
+          "id": "1331187732388421"
+        },
+        {
+          "name": "call_permission_request",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Would you like to receive a call from one of our representatives?"
+            },
+            {
+              "type": "CALL_PERMISSION_REQUEST"
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "sub_category": "CALL_PERMISSIONS_REQUEST",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "call_permission_request_1",
+          "id": "2167682460644292"
+        },
+        {
+          "name": "hello_worldd",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "IMAGE",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/616123304_872505909091754_3259963864442867372_n.png?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=MdDdGt7V9UgQ7kNvwHmz8SG&_nc_oc=AdoclW5prS_kuy9HvZJte3MUJyPdyiahTxeSk8jP1GYqo12c1KJ0_-9eyJLdPSM2cbU&_nc_zt=3&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=aN_oHan-Uemrkfq4loxVNg&_nc_tpa=Q5bMBQFvRjd-9RCXXCoAHsXkvfFXWz2cg5HUJfLgrT2SpEBJAtGQtrmhYYQRrR4vrxU3iWvEBjx0S64I&oh=01_Q5Aa4QH605v-NelZaxBrKH-3tIIHKDGH2EFC03nXCHwZmwH8lw&oe=6A1A615A"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "Hello"
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "872505905758421"
+        },
+        {
+          "name": "invoice_available",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "IMAGE",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/595558608_648503891649167_4588375056619095512_n.png?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=t_NZ_8j5uRYQ7kNvwFCVFHK&_nc_oc=AdoZX-dG_2ftJpZ_doIZfeJlNGRXqxuV0HB0N4teBERtTkKjpqFjohLzmVGPtFade0w&_nc_zt=3&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=aN_oHan-Uemrkfq4loxVNg&_nc_tpa=Q5bMBQFb_KU-8HPQ9tus1BEpFfUAx9z5IGX_2uV9ROHSh26kljdwh3SEAp2wKVBQNtnhn3cero4q0CtK&oh=01_Q5Aa4QHiq8Z08-mCwLuLjXznuLVZ8FBsVhPBBwdUKl8-i55Esw&oe=6A1A55CC"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "مرحباً {{1}}،\n\nنود إعلامك بأن فاتورتك رقم {{2}} أصبحت متاحة الآن.\n\nيمكنك مشاهدة الفاتوره عبر الانترنت, تحميله على جهازك أو طبعه مباشرة بجانب خيارات أخرى عبر الرابط التالى.{{3}}🙏",
+              "example": {
+                "body_text": [
+                  [
+                    "{%client-name%}",
+                    "{%invoice_no%}",
+                    "{%view_link%}"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "FOOTER",
+              "text": "شركة العزب للمقاولات والخدمات"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "Visit website",
+                  "url": "https://alazab-co.daftra.com/"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "648503888315834"
+        },
+        {
+          "name": "technician_arrival",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، سيصل الفني لدينا إلى موقعك خلال {{2}}. اضغط لتتبع الموقع الفعلي.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "30 دقيقة"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "تتبع الموقع",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "technician_arrival",
+          "id": "1951684145783893"
+        },
+        {
+          "name": "appointment_scheduling",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "زيارة فني"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، نحن نحدد موعدًا لزيارة فني إلى {{2}} في {{3}} بين {{4}} و {{5}}. يرجى تأكيد ما إذا كانت هذه الفترة مناسبة لك.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "123 شارع مابل",
+                    "2025-12-31",
+                    "10:00 صباحًا",
+                    "2:00 مساءً"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "أكد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إعادة الجدولة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_scheduling_address",
+          "id": "25769912275991897"
+        },
+        {
+          "name": "azab_welcome_en",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello"
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "1384532093267343"
+        },
+        {
+          "name": "statement_available",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "البيان متاح"
+            },
+            {
+              "type": "BODY",
+              "text": "هذا لإعلامك بأن أحدث بيان لك لحسابك {{1}} متاح الآن.\n\nيرجى تسجيل الدخول إلى حسابك للاطلاع على بيانك.",
+              "example": {
+                "body_text": [
+                  [
+                    "Mankt checking plus"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض البيان",
+                  "url": "https://uberfix.shop/statements"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "statement_available_2",
+          "id": "1470422588422874"
+        },
+        {
+          "name": "account_creation_confirmation_3",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Finalize account set-up"
+            },
+            {
+              "type": "BODY",
+              "text": "Hi {{1}},\n\nYour new account has been created successfully. \n\nPlease verify {{2}} to complete your profile.",
+              "example": {
+                "body_text": [
+                  [
+                    "John",
+                    "your email address"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "Verify account",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "account_creation_confirmation_3",
+          "id": "800576509669806"
+        },
+        {
+          "name": "hello_world_1",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello World"
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "863462623322806"
+        },
+        {
+          "name": "appointment_reschedule_1",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تمت إعادة جدولة موعدك"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبا {{1}}،\n\nتم إعادة جدولة موعدك القادم مع {{2}} إلى {{3}} الساعة {{4}}.\n\nنحن نتطلع إلى رؤيتك!\n",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "Fashion Styles",
+                    "December 31, 2020",
+                    "1:00 مساءً"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض التفاصيل",
+                  "url": "https://uberfix.shop/"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_reschedule_1",
+          "id": "1933677487498842"
+        },
+        {
+          "name": "appointment_scheduling_address",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "زيارة فني"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، نحن نحدد موعدًا لزيارة فني إلى {{2}} في {{3}} بين {{4}} و {{5}}. يرجى تأكيد ما إذا كانت هذه الفترة مناسبة لك.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "123 شارع مابل",
+                    "2025-12-31",
+                    "10:00 صباحًا",
+                    "2:00 مساءً"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "أكد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إعادة الجدولة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_scheduling_address",
+          "id": "1923192101606072"
+        },
+        {
+          "name": "requstes_2",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Your appointment is booked"
+            },
+            {
+              "type": "BODY",
+              "text": "Hello {{1}},\n\nThank you for booking with {{2}}.\n\nYour appointment for {{3}} on {{4}} at {{5}} is confirmed.\n",
+              "example": {
+                "body_text": [
+                  [
+                    "John",
+                    "Fashion Styles",
+                    "Men's haircut",
+                    "December 31, 2025",
+                    "1:00 PM"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "View details",
+                  "url": "https://uberfix.shop/requstes"
+                }
+              ]
+            }
+          ],
+          "language": "en_US",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_confirmation_1",
+          "id": "1739116526756503"
+        },
+        {
+          "name": "feedback_survey_form",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "إننا في {{1}}، نولي اهتمامًا كبيرًا لملاحظات العملاء ونستفيد منها في تحسين {{2}} باستمرار. \n\nنرجو منك إكمال {{3}} قصير (الرابط موضح أدناه) لتخبرنا بالمزيد عن {{4}} التي أجريتها مؤخرًا معنا. \n\nنشكرك مقدمًا.",
+              "example": {
+                "body_text": [
+                  [
+                    "Jasper's Market",
+                    "منتجاتنا",
+                    "استبيان",
+                    "عملية الشراء"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "المشاركة في الاستبيان",
+                  "flow_id": 1845463846087272,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SURVEY"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "feedback_survey_form_2",
+          "id": "1975483113026197"
+        },
+        {
+          "name": "helloworld",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "Hello"
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "FORM",
+          "is_primary_device_delivery_only": false,
+          "id": "2260300477780345"
+        },
+        {
+          "name": "order_canceled",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحبًا، نؤكد لك أننا ألغينا بنجاح طلبك رقم {{1}} الذي قدمته مؤخرًا. \n\nشكرًا لك.",
+              "example": {
+                "body_text": [
+                  [
+                    "#559032"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "عرض تفاصيل الطلب",
+                  "url": "https://uberfix.shop/requests"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "order_canceled_3",
+          "id": "2338743973222405"
+        },
+        {
+          "name": "requests",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، تم تسليم طلبك {{2}} بنجاح.\n\nيمكنك إدارة طلبك أدناه.\n",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "ORD1234"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "إدارة الطلب",
+                  "url": "https://uberfix.shop/requests"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "delivery_confirmation_1",
+          "id": "1270627708452231"
+        },
+        {
+          "name": "support",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "هل ترغب في تلقي مكالمة من أحد ممثلينا؟"
+            },
+            {
+              "type": "CALL_PERMISSION_REQUEST"
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "sub_category": "CALL_PERMISSIONS_REQUEST",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "call_permission_request_1",
+          "id": "1534558084483861"
+        },
+        {
+          "name": "technician_visit",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "زيارة فني"
+            },
+            {
+              "type": "BODY",
+              "text": "مرحبًا {{1}}، نحن نحدد موعدًا لزيارة فني لـ {{2}} في {{3}} بين {{4}} و {{5}}. يرجى تأكيد ما إذا كانت هذه الفترة مناسبة لك.",
+              "example": {
+                "body_text": [
+                  [
+                    "جون",
+                    "تركيب النطاق العريض",
+                    "2025-12-31",
+                    "10:00 ص",
+                    "2:00 م"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "أكد"
+                },
+                {
+                  "type": "QUICK_REPLY",
+                  "text": "إعادة الجدولة"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "appointment_scheduling",
+          "id": "2174113113394070"
+        },
+        {
+          "name": "uberfix",
+          "previous_category": "UTILITY",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "مرحبا عملاء اوبرفيكس"
+            },
+            {
+              "type": "BODY",
+              "text": "كيف يمكننا مساعدتك"
+            },
+            {
+              "type": "FOOTER",
+              "text": "© 2025 Alazab Construction - Privacy Policy"
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "2769024126782546"
+        },
+        {
+          "name": "hello",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "Alazab"
+            },
+            {
+              "type": "BODY",
+              "text": "hello_world"
+            },
+            {
+              "type": "FOOTER",
+              "text": "© 2025 Al-Azab Construction Company — Privacy Policy"
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "CUSTOM",
+          "is_primary_device_delivery_only": false,
+          "id": "1385963419888210"
+        },
+        {
+          "name": "azfed",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "BODY",
+              "text": "إننا في {{1}}، نولي اهتمامًا كبيرًا لملاحظات العملاء ونستفيد منها في تحسين {{2}} باستمرار. \n\nنرجو منك إكمال {{3}} قصير (الرابط موضح أدناه) لتخبرنا بالمزيد عن {{4}} التي أجريتها مؤخرًا معنا. \n\nنشكرك مقدمًا.",
+              "example": {
+                "body_text": [
+                  [
+                    "Jasper's Market",
+                    "منتجاتنا",
+                    "استبيان",
+                    "عملية الشراء"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "المشاركة في الاستبيان",
+                  "flow_id": 882351327691153,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "SURVEY"
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "feedback_survey_form_2",
+          "id": "1295311389013343"
+        },
+        {
+          "name": "mohamed_azab",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "IMAGE",
+              "example": {
+                "header_handle": [
+                  "https://scontent.whatsapp.net/v/t61.29466-34/485127891_1329123058140003_965957978313151210_n.jpg?ccb=1-7&_nc_sid=8b1bef&_nc_ohc=o1Dnfy50Tg0Q7kNvwE_7KQj&_nc_oc=AdqacjaNvyEKk14ahnIiz6gCJ1crBWxAPtwTeBgvCkPhZIQlWaCkbYAf2sqWsTtFt90&_nc_zt=3&_nc_ht=scontent.whatsapp.net&edm=AH51TzQEAAAA&_nc_gid=aN_oHan-Uemrkfq4loxVNg&_nc_tpa=Q5bMBQF2fRWh2NWVgUTCjI_Cy8SV9Nv21YLhUpMEpbaHEfvuww8nBTvOziCSSHr2qwHFrpGYLwINxODA&oh=01_Q5Aa4QFzwV7nnd67oTILmYtAAnQgqmNASslqCWnyaX98vETOjg&oe=6A1A3BD4"
+                ]
+              }
+            },
+            {
+              "type": "BODY",
+              "text": "AtoZ Several Architectural by Alazab Team"
+            },
+            {
+              "type": "FOOTER",
+              "text": "Eng:Mohamed Azab"
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "FLOW",
+                  "text": "View Alazab",
+                  "flow_id": 1585408262620528,
+                  "flow_action": "NAVIGATE",
+                  "navigate_screen": "WELCOME_SCREEN"
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "status": "APPROVED",
+          "category": "MARKETING",
+          "sub_category": "FORM",
+          "is_primary_device_delivery_only": false,
+          "id": "1329123054806670"
+        },
+        {
+          "name": "azord",
+          "parameter_format": "POSITIONAL",
+          "components": [
+            {
+              "type": "HEADER",
+              "format": "TEXT",
+              "text": "تم توصيل الطلب"
+            },
+            {
+              "type": "BODY",
+              "text": "لدينا أخبار رائعة لك يا {{1}}! \n\nتم توصيل طلبك رقم {{2}}.\n\nهل تحتاج إلى إرجاع عنصر أو استبداله؟ انقر هنا لإدارة طلبك.",
+              "example": {
+                "body_text": [
+                  [
+                    "طارق",
+                    "#12345"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "BUTTONS",
+              "buttons": [
+                {
+                  "type": "URL",
+                  "text": "إدارة الطلب",
+                  "url": "https://www.example.com/{{1}}",
+                  "example": [
+                    "https://al-azab.co/"
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "ar",
+          "status": "APPROVED",
+          "category": "UTILITY",
+          "is_primary_device_delivery_only": false,
+          "library_template_name": "delivery_confirmation_2",
+          "id": "1660063644862746"
+        }
+      ],
+      "apps": [
+        {
+          "whatsapp_business_api_data": {
+            "category": "أعمال",
+            "link": "https://alazab.com/",
+            "name": "ASW",
+            "namespace": "alazabasw",
+            "id": "889346333913449"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "link": "https://facebook.com/61576570322299",
+            "name": "Brand Identity",
+            "namespace": "brand-identity",
+            "id": "1216514430638152"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "category": "أدوات مفيدة",
+            "link": "https://uberfix.shop/",
+            "name": "UberFix",
+            "namespace": "uberfix",
+            "id": "724370950034089"
+          }
+        },
+        {
+          "whatsapp_business_api_data": {
+            "link": "http://www.jotform.com/",
+            "name": "Jotform Agent",
+            "id": "1102773744861735"
+          },
+          "override_callback_uri": "https://api.jotform.com/ai-agent-builder/0194abdee59871f7b73e2eae35ed720e8ce0/webhook"
+        }
+      ],
+      "webhooks": null
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+version: "3.1"
+
+# ==================== UberFix ====================
+responses:
+  utter_uberfix_request:
+    - text: |
+        📞 **طلب صيانة UberFix**
+
+        ممتاز! لتسجيل طلب صيانتك أحتاج:
+        1️⃣ اسمك الكريم
+        2️⃣ رقم هاتفك
+        3️⃣ وصف المشكلة أو العطل
+
+        ابدأ بكتابة اسمك 👇
+
+  utter_uberfix_services:
+    - text: |
+        🔧 **خدمات UberFix:**
+        صيانة كهرباء، سباكة، تكييف، وصيانة دورية للمنازل والمنشآت.
+      metadata:
+        rephrase: true
+
+  utter_uberfix_subscriptions:
+    - text: |
+        📦 **باقات اشتراك UberFix:**
+        باقات سنوية للصيانة الدورية (أساسية، متقدمة، بريميوم).
+      metadata:
+        rephrase: true
+
+  utter_uberfix_emergency:
+    - text: |
+        🚨 **طوارئ صيانة عاجلة!**
+        يرجى التواصل الفوري عبر واتساب: **+201004006620**
+      metadata:
+        rephrase: true
+
+actions:
+  - action_uberfix_create_request
+  - action_uberfix_track_request
+  - action_uberfix_show_subscriptions
+  - action_uberfix_create_order
+  - action_uberfix_track_order
+  - action_uberfix_subscribe
+  - action_uberfix_schedule_appointment
+  - action_uberfix_submit_feedback
