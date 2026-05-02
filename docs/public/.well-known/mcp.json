@@ -1,16 +1,10 @@
 {
-  "name": "WAI MCP Server",
-  "description": "MCP server for WAI (WhatsApp Analysis AI) providing tools for image analysis and audio transcription.",
+  "name": "قاعدة معرفة مجموعة العزب",
+  "description": "قاعدة المعرفة الرسمية لمجموعة العزب للحلول المعمارية. تشمل معلومات العلامات التجارية، الأسئلة الشائعة، توجيه الطلبات، والمحتوى التوثيقي.",
   "version": "1.0.0",
   "server": {
-    "url": "https://wai.alazab.com/mcp",
+    "url": "/mcp",
     "protocol": "mcp"
-  },
-  "authentication": {
-    "type": "oauth",
-    "authorization_url": "https://alazab.com/oauth/authorize",
-    "token_url": "https://alazab.com/oauth/token",
-    "redirect_url": "https://chatgpt.com/connector/oauth/rPKzN9FdEgdz"
   },
   "developer": {
     "name": "Alazab Construction Company",
@@ -19,32 +13,28 @@
   },
   "tools": [
     {
-      "name": "analyze_image",
-      "description": "Analyze an image and detect objects or visual elements.",
-      "input_schema": {
-        "type": "object",
-        "properties": {
-          "image_url": {
-            "type": "string",
-            "description": "URL of the image to analyze"
-          }
-        },
-        "required": ["image_url"]
-      }
+      "name": "alazab_kb_search",
+      "description": "البحث في قاعدة معرفة مجموعة العزب الفعلية واسترجاع مقتطفات مرتبطة بالمصدر."
     },
     {
-      "name": "transcribe_audio",
-      "description": "Convert audio recordings into text transcripts.",
-      "input_schema": {
-        "type": "object",
-        "properties": {
-          "audio_url": {
-            "type": "string",
-            "description": "URL of the audio file"
-          }
-        },
-        "required": ["audio_url"]
-      }
+      "name": "alazab_faq_search",
+      "description": "البحث في الأسئلة الشائعة العربية المستخرجة من قاعدة المعرفة."
+    },
+    {
+      "name": "alazab_route",
+      "description": "توجيه رسالة عميل للعلامة التجارية الصحيحة داخل مجموعة العزب."
+    },
+    {
+      "name": "alazab_context_pack",
+      "description": "بناء حزمة سياق شاملة تجمع بحث KB والأسئلة الشائعة والتوجيه."
+    },
+    {
+      "name": "list-pages",
+      "description": "استعراض جميع صفحات التوثيق المتاحة مع عناوينها ومساراتها."
+    },
+    {
+      "name": "get-page",
+      "description": "استرجاع المحتوى الكامل لصفحة توثيق محددة عبر مسارها."
     }
   ]
 }
