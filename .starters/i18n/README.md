@@ -31,8 +31,8 @@ Your multilingual documentation site will be running at `http://localhost:3000`
 ## 🌍 Languages
 
 This starter comes pre-configured with:
-- 🇺🇸 **English** (`en`) - Default language
-- 🇫🇷 **Français** (`fr`) - French translation
+- 🇺🇸 **English** (`en`) - English
+- 🇸🇦 **العربية** (`ar`) - Arabic (RTL)
 
 ## 📁 Project Structure
 
@@ -42,9 +42,9 @@ my-docs/
 │   ├── en/              # English content
 │   │   ├── index.md     # English homepage
 │   │   └── docs/        # English documentation
-│   └── fr/              # French content
-│       ├── index.md     # French homepage
-│       └── docs/        # French documentation
+│   └── ar/              # Arabic content (RTL)
+│       ├── index.md     # Arabic homepage
+│       └── docs/        # Arabic documentation
 ├── public/              # Static assets
 ├── nuxt.config.ts       # Nuxt configuration with i18n setup
 └── package.json         # Dependencies and scripts
@@ -64,7 +64,7 @@ content/
 │   └── 2.essentials/
 │       ├── markdown.md
 │       └── components.md
-└── fr/                   # French content
+└── ar/                   # Arabic content (RTL)
     ├── index.md
     ├── 1.getting-started/
     │   ├── installation.md
@@ -78,9 +78,9 @@ content/
 
 The i18n starter generates URLs with language prefixes:
 
+- Arabic (default): `/ar/getting-started/installation`
 - English: `/en/getting-started/installation`
-- French: `/fr/getting-started/installation`
-- Default locale fallback: `/getting-started/installation` (redirects to English)
+- Default locale fallback: `/getting-started/installation` (redirects to Arabic)
 
 ## ⚡ Built with
 
