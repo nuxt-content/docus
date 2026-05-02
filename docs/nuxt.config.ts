@@ -11,6 +11,14 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2025-07-18',
+  nitro: {
+    serverAssets: [
+      {
+        baseName: 'alazab',
+        dir: './alazab',
+      },
+    ],
+  },
   vite: {
     build: {
       sourcemap: false,
