@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/i18n', 'nuxt-studio'],
   css: ['~/assets/css/main.css'],
   site: {
-    name: 'Docus',
+    name: 'مجموعة العزب',
   },
   mdc: {
     highlight: {
@@ -17,33 +17,31 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'ar',
     locales: [{
-      code: 'en',
-      name: 'English',
-    }, {
-      code: 'fr',
-      name: 'Français',
+      code: 'ar',
+      name: 'العربية',
+      dir: 'rtl',
     }],
   },
   llms: {
-    domain: 'https://docus.dev',
-    title: 'Docus',
-    description: 'Write beautiful docs with Markdown.',
+    domain: 'https://alazab.com',
+    title: 'قاعدة معرفة مجموعة العزب',
+    description: 'قاعدة المعرفة الرسمية لمجموعة العزب للحلول المعمارية.',
     full: {
-      title: 'Docus',
-      description: 'Write beautiful docs with Markdown.',
+      title: 'قاعدة معرفة مجموعة العزب',
+      description: 'قاعدة المعرفة الرسمية لمجموعة العزب للحلول المعمارية.',
     },
   },
   mcp: {
-    name: 'Docus documentation',
-    browserRedirect: '/en/ai/mcp',
+    name: 'قاعدة معرفة مجموعة العزب',
+    browserRedirect: '/ar',
   },
   studio: {
     route: '/admin',
     repository: {
       provider: 'github',
-      owner: 'nuxt-content',
+      owner: 'mohamedazab224',
       repo: 'docus',
       rootDir: 'docs',
     },
