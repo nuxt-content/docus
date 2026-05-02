@@ -1,10 +1,10 @@
 export default defineAppConfig({
   header: {
-    title: 'Docus',
+    title: 'مجموعة العزب',
     logo: {
       light: '/logo/logo-dark.svg',
       dark: '/logo/logo-light.svg',
-      alt: 'Docus Logo',
+      alt: 'شعار مجموعة العزب',
       wordmark: {
         light: '/logo/wordmark-dark.svg',
         dark: '/logo/wordmark-light.svg',
@@ -13,48 +13,39 @@ export default defineAppConfig({
     },
   },
   socials: {
-    x: 'https://x.com/nuxt_js',
-    discord: 'https://discord.com/invite/ps2h6QT',
-    nuxt: 'https://nuxt.com',
+    x: 'https://x.com/alazabgroup',
+    website: 'https://alazab.com',
   },
   github: {
     rootDir: 'docs',
   },
   assistant: {
     faqQuestions: {
-      en: [
-        { category: 'Getting Started', items: [
-          'How do I install Docus?',
-          'What is the project structure?',
-          'How do I deploy my documentation?',
-        ] },
-        { category: 'Customization', items: [
-          'How do I customize the theme?',
-          'How do I add custom components?',
-          'How do I configure internationalization?',
-        ] },
-        { category: 'AI Features', items: [
-          'How do I enable the assistant?',
-          'What is the MCP server?',
-          'How do I generate llms.txt files?',
-        ] },
-      ],
-      fr: [
-        { category: 'Démarrage', items: [
-          'Comment installer Docus ?',
-          'Quelle est la structure du projet ?',
-          'Comment déployer ma documentation ?',
-        ] },
-        { category: 'Personnalisation', items: [
-          'Comment personnaliser le thème ?',
-          'Comment ajouter des composants personnalisés ?',
-          'Comment configurer l\'internationalisation ?',
-        ] },
-        { category: 'Fonctionnalités IA', items: [
-          'Comment activer l\'assistant ?',
-          'Qu\'est-ce que le serveur MCP ?',
-          'Comment générer les fichiers llms.txt ?',
-        ] },
+      ar: [
+        {
+          category: 'من نحن',
+          items: [
+            'من أنتم؟',
+            'ما هي علامات مجموعة العزب؟',
+            'ما هو نطاق عمل المجموعة؟',
+          ],
+        },
+        {
+          category: 'الخدمات',
+          items: [
+            'أريد تنفيذ مشروع كامل، أبدأ من أين؟',
+            'ما الفرق بين هوية العلامة التجارية والتشطيب الراقي؟',
+            'هل تعملون في السكني والتجاري؟',
+          ],
+        },
+        {
+          category: 'الصيانة والتواصل',
+          items: [
+            'ما هو أوبرفيكس؟',
+            'كيف أسجل طلب صيانة؟',
+            'كيف يمكن التواصل معكم؟',
+          ],
+        },
       ],
     },
   },
@@ -62,21 +53,21 @@ export default defineAppConfig({
     bottom: {
       links: [
         {
-          icon: 'i-lucide-book-open',
-          label: 'Nuxt UI docs',
-          to: 'https://ui.nuxt.com/getting-started/installation/nuxt',
+          icon: 'i-lucide-globe',
+          label: 'موقع مجموعة العزب',
+          to: 'https://alazab.com',
           target: '_blank',
         },
         {
-          icon: 'i-lucide-book-open',
-          label: 'Nuxt Content docs',
-          to: 'https://content.nuxt.com/docs/getting-started/installation/',
+          icon: 'i-lucide-wrench',
+          label: 'أوبرفيكس — الصيانة',
+          to: 'https://uberfix.alazab.com',
           target: '_blank',
         },
         {
-          icon: 'i-lucide-book-open',
-          label: 'Nuxt Studio docs',
-          to: 'https://nuxt.studio/introduction',
+          icon: 'i-lucide-phone',
+          label: 'تواصل معنا',
+          to: 'https://linktr.ee/Alazab.co',
           target: '_blank',
         },
       ],

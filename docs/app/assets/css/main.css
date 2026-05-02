@@ -2,6 +2,25 @@
 @import "@nuxt/ui";
 
 @theme {
-  --font-sans: 'Public Sans', sans-serif;
+  /* Cairo is an excellent Arabic font.
+     To enable it, add the following to your nuxt.config.ts:
+       modules: ['@nuxtjs/google-fonts'],
+       googleFonts: { families: { Cairo: [400, 500, 600, 700] } }
+     Or add to your app/plugins or app.vue via useHead():
+       useHead({ link: [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap' }] })
+  */
+  --font-sans: 'Cairo', 'Public Sans', sans-serif;
   --ui-container: 90rem;
+}
+
+/* Arabic RTL support */
+html[lang="ar"],
+html[dir="rtl"] {
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] .prose {
+  direction: rtl;
+  text-align: right;
 }
