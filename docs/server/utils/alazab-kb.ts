@@ -104,7 +104,10 @@ function clip(text: string, query = '', radius = 520): string {
   const qTokens = tokens(query).filter(x => x.length > 3)
   const nraw = normalizeArabic(raw)
   let idx = -1
-  for (const t of qTokens) { idx = nraw.indexOf(t); if (idx >= 0) break }
+  for (const t of qTokens) {
+    idx = nraw.indexOf(t)
+    if (idx >= 0) break
+  }
   if (idx < 0) return raw.slice(0, radius * 2) + '…'
   const start = Math.max(0, idx - radius)
   const end = Math.min(raw.length, idx + radius)
@@ -179,7 +182,7 @@ export function routeMessage(
   evidence: SearchResult[]
   next_action: string
 } {
-  const brandScores: Record<string, number> = {}
+  const brandScores: Record<string, number> = { enterprise: 0 }
   for (const key of Object.keys(kb.brands || {})) brandScores[key] = 0
 
   const results = searchKB(kb, message, 'all', 20).results
