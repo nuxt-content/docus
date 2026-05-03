@@ -153,7 +153,7 @@ import { join, extname } from 'path';
 import { stat } from 'fs/promises';
 
 const PORT = process.env.PORT || 3005;
-const ASSETS_DIR = '/var/www/assets-standalone';
+const ASSETS_DIR = '/var/www/assets';
 
 const MIME_TYPES = {
     '.pdf': 'application/pdf',
@@ -246,10 +246,50 @@ if ! command -v pm2 &>/dev/null; then
     npm install -g pm2 --silent
 fi
 
+# نسخ ملف الإعداد إلى مجلد التطبيق
+ECOSYSTEM_SRC="$(cd "$(dirname "$0")" && pwd)/ecosystem.config.cjs"
+if [[ -f "$ECOSYSTEM_SRC" ]]; then
+    cp "$ECOSYSTEM_SRC" "${APP_DIR}/ecosystem.config.cjs" \
+        || fail "فشل نسخ ecosystem.config.cjs إلى ${APP_DIR}"
+else
+    warn "ملف ecosystem.config.cjs غير موجود بجانب السكربت، سيتم الإنشاء تلقائياً"
+    cat > "${APP_DIR}/ecosystem.config.cjs" <<ECOSYSTEM
+module.exports = {
+  apps: [{
+    name: 'assets-standalone',
+    script: 'server.js',
+    cwd: '${APP_DIR}',
+    env: { NODE_ENV: 'production', PORT: ${APP_PORT} },
+    instances: 1,
+    exec_mode: 'fork',
+    watch: false,
+    autorestart: true,
+    restart_delay: 5000,
+    max_restarts: 10,
+    max_memory_restart: '256M',
+    out_file: '${LOG_DIR}/out.log',
+    error_file: '${LOG_DIR}/error.log',
+    log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+    merge_logs: true,
+  }],
+};
+ECOSYSTEM
+fi
+
 pm2 delete assets-standalone 2>/dev/null || true
-pm2 start server.js --name assets-standalone --cwd "$APP_DIR" -- --port $APP_PORT
+pm2 start "${APP_DIR}/ecosystem.config.cjs"
 pm2 save
-pm2 startup systemd -u root --hp /root 2>/dev/null || true
+
+# تفعيل بدء التشغيل التلقائي فقط لو لم يكن مفعلاً من قبل
+# (نتجنب إعادة توليد الـ unit file لأن PM2 يخدم خدمات إنتاج أخرى)
+PM2_SERVICE="pm2-$(id -un)"
+if ! systemctl is-enabled "$PM2_SERVICE" &>/dev/null; then
+    log "تفعيل PM2 عند بدء تشغيل النظام..."
+    pm2 startup systemd -u root --hp /root 2>/dev/null || true
+    pm2 save
+else
+    ok "PM2 startup مفعل مسبقاً — لا حاجة لتعديله"
+fi
 
 ok "التطبيق يعمل على المنفذ ${APP_PORT}"
 
