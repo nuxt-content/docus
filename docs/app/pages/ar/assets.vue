@@ -15,7 +15,7 @@ const activeExt = ref('all')
 
 // ── Fetch ────────────────────────────────────────────────────────────────────
 const { data, pending, refresh, error } = await useAsyncData<AssetsBrowserResponse>(
-  () => `assets-${currentPath.value}`,
+  'assets-browser',
   () => $fetch<AssetsBrowserResponse>('/api/assets-browser', {
     query: { path: currentPath.value },
   }),
@@ -97,7 +97,11 @@ const filteredEntries = computed(() => {
   })
 })
 
-// ── Icons / UI Helpers ───────────────────────────────────────────────────────
+// ── Image fallback ───────────────────────────────────────────────────────────
+const failedImages = ref<Set<string>>(new Set())
+function onImageError(url: string) {
+  failedImages.value = new Set([...failedImages.value, url])
+}
 function fileIcon(entry: AssetEntry): string {
   if (entry.type === 'directory') return 'i-lucide-folder'
   const g = entryGroup(entry)
@@ -275,7 +279,7 @@ function formatDate(mtime: string): string {
       >
         <!-- Image thumbnail -->
         <div
-          v-if="entryGroup(entry) === 'images'"
+          v-if="entryGroup(entry) === 'images' && !failedImages.has(entry.url)"
           class="w-full h-20 rounded-lg overflow-hidden bg-elevated"
         >
           <img
@@ -283,6 +287,7 @@ function formatDate(mtime: string): string {
             :alt="entry.name"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform"
             loading="lazy"
+            @error="onImageError(entry.url)"
           >
         </div>
 

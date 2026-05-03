@@ -33,7 +33,7 @@ function sanitizePath(raw: string): string {
   // Decode once, strip null bytes, collapse multiple slashes
   const decoded = decodeURIComponent(raw || '/').replace(/\0/g, '').replace(/\/+/g, '/')
   // Reject any attempt at path traversal
-  if (decoded.includes('..') || decoded.includes('//')) return '/'
+  if (decoded.includes('..')) return '/'
   // Must start with /
   return decoded.startsWith('/') ? decoded : `/${decoded}`
 }
