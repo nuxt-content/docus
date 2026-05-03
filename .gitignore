@@ -43,3 +43,10 @@ template/pnpm-lock.yaml
 .starters/default/pnpm-workspace.yaml
 .starters/i18n/pnpm-lock.yaml
 .starters/i18n/pnpm-workspace.yaml
+
+# PM2
+ecosystem.config.local.cjs
+
+# Build artifacts
+*.local
+.vercel

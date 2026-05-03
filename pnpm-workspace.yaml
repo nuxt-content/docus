@@ -3,6 +3,7 @@ packages:
   - cli
   - docs
   - layer
+  - playground
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'

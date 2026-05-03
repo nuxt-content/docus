@@ -26,13 +26,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: Install node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -50,8 +50,7 @@ jobs:
         run: pnpm run typecheck
 
       - name: Build CLI
-        run: pnpm run build
-        working-directory: ./cli
+        run: pnpm run build:cli
 
       - name: Publish CLI and Layer
         run: npx pkg-pr-new publish --compact './cli' './layer'
