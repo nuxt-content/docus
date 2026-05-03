@@ -1,11 +1,11 @@
 <template>
   <UButton
-    v-if="$route.path == '/'"
-    to="/getting-started/installation"
+    v-if="/^\/(ar)?\/?$/.test($route.path)"
+    to="/ar/about"
     color="neutral"
     size="sm"
     class="hidden lg:inline-flex"
   >
-    Get Started
+    من نحن
   </UButton>
 </template>
