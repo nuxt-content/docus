@@ -25,7 +25,7 @@ fail() { echo -e "${RED}[✗] $*${NC}" >&2; exit 1; }
 # ─── الإعدادات الثابتة ──────────────────────────────────────────────────────
 DOMAIN="assets.alazab.com"
 APP_PORT="3005"
-APP_DIR="/var/www/assets-standalone"
+APP_DIR="/var/www/assets"
 CONFIG_DIR="${APP_DIR}/config"
 PUBLIC_DIR="${APP_DIR}/public"
 LOG_DIR="/var/log/assets-standalone"
