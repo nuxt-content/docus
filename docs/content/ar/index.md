@@ -123,5 +123,31 @@ seo:
     #description
     إجابات على أكثر الأسئلة شيوعاً حول خدمات مجموعة العزب وطريقة التواصل والتسعير والمتابعة.
     ::::
+
+    ::::u-page-card
+    ---
+    spotlight: true
+    class: col-span-2 lg:col-span-1
+    to: /ar/projects
+    ---
+    #title
+    [معرض المشروعات]{.text-primary}
+
+    #description
+    معرض شامل لمشروعات مجموعة العزب المعمارية — تجارية وسكنية — مع متابعة حالة كل مشروع أولاً بأول.
+    ::::
+
+    ::::u-page-card
+    ---
+    spotlight: true
+    class: col-span-2 lg:col-span-1
+    to: /ar/assets
+    ---
+    #title
+    [مستودع الملفات]{.text-primary}
+
+    #description
+    تصفح الملفات والمواد المرجعية المحفوظة في مستودع مجموعة العزب على assets.alazab.com بشكل ديناميكي.
+    ::::
   :::
 ::

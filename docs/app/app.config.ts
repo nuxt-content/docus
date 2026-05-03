@@ -70,6 +70,16 @@ export default defineAppConfig({
           to: 'https://linktr.ee/Alazab.co',
           target: '_blank',
         },
+        {
+          icon: 'i-lucide-building',
+          label: 'معرض المشروعات',
+          to: '/ar/projects',
+        },
+        {
+          icon: 'i-lucide-hard-drive',
+          label: 'مستودع الملفات',
+          to: '/ar/assets',
+        },
       ],
     },
   },
