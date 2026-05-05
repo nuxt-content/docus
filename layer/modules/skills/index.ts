@@ -70,13 +70,14 @@ export default defineNuxtModule<SkillsModuleOptions>({
   },
 })
 
-function parseFrontmatter(content: string): { name?: string, description?: string } | null {
+function parseFrontmatter(content: string, source: string): { name?: string, description?: string } | null {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
   if (!match?.[1]) return null
   try {
     return parseYaml(match[1])
   }
-  catch {
+  catch (error) {
+    log.warn(`Skipping skill at "${source}": invalid YAML frontmatter (${(error as Error).message})`)
     return null
   }
 }
@@ -125,7 +126,7 @@ async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
     if (!existsSync(skillMdPath)) continue
 
     const content = await readFile(skillMdPath, 'utf-8')
-    const frontmatter = parseFrontmatter(content)
+    const frontmatter = parseFrontmatter(content, skillMdPath)
 
     if (!frontmatter?.description) {
       log.warn(`Skipping skill "${entry.name}": missing description in SKILL.md frontmatter`)

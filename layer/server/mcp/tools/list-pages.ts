@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
+import { useLogger, createError } from 'evlog'
 import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
 import { inferSiteURL } from '../../../utils/meta'
 
@@ -39,11 +40,14 @@ OUTPUT: Returns a structured list with:
   cache: '1h',
   handler: async ({ locale }) => {
     const event = useEvent()
+    const log = useLogger(event)
     const config = useRuntimeConfig(event).public
 
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
     const availableLocales = getAvailableLocales(config)
     const collections = getCollectionsToQuery(locale, availableLocales)
+
+    log.set({ content: { locale: locale ?? null, collections } })
 
     try {
       const allPages = await Promise.all(
@@ -62,10 +66,20 @@ OUTPUT: Returns a structured list with:
         }),
       )
 
-      return allPages.flat()
+      const flat = allPages.flat()
+      log.set({ content: { locale: locale ?? null, collections, pageCount: flat.length } })
+      return flat
     }
-    catch {
-      throw createError({ statusCode: 500, message: 'Failed to list pages' })
+    catch (error) {
+      const err = createError({
+        message: 'Failed to list pages',
+        status: 500,
+        why: `Querying collections [${collections.join(', ')}] failed`,
+        fix: 'Verify @nuxt/content collections are built and locale codes match content directories',
+        cause: error as Error,
+      })
+      log.error(err)
+      throw err
     }
   },
 })

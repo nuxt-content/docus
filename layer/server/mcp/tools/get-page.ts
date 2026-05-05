@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
+import { useLogger, createError } from 'evlog'
 import { getAvailableLocales, getCollectionFromPath } from '../../utils/content'
 import { inferSiteURL } from '../../../utils/meta'
 
@@ -33,6 +34,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   cache: '1h',
   handler: async ({ path }) => {
     const event = useEvent()
+    const log = useLogger(event)
     const config = useRuntimeConfig(event).public
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
 
@@ -41,6 +43,8 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       ? getCollectionFromPath(path, availableLocales)
       : 'docs'
 
+    log.set({ content: { path, collectionName } })
+
     try {
       const page = await queryCollection(event, collectionName as keyof Collections)
         .where('path', '=', path)
@@ -48,10 +52,26 @@ WORKFLOW: This tool returns the complete page content including title, descripti
         .first()
 
       if (!page) {
-        throw createError({ statusCode: 404, message: 'Page not found' })
+        const err = createError({
+          message: `Page "${path}" not found in collection "${collectionName}"`,
+          status: 404,
+          why: 'No content document matches this path',
+          fix: 'Call list-pages to discover available paths or check the locale prefix',
+        })
+        log.error(err)
+        throw err
       }
 
       const content = await event.$fetch<string>(`/raw${path}.md`)
+
+      log.set({
+        content: {
+          path,
+          collectionName,
+          title: page.title,
+          contentLength: content?.length ?? 0,
+        },
+      })
 
       return {
         title: page.title,
@@ -62,8 +82,18 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       }
     }
     catch (error) {
-      if ((error as { statusCode?: number }).statusCode === 404) throw error
-      throw createError({ statusCode: 500, message: 'Failed to get page' })
+      const status = (error as { status?: number, statusCode?: number }).status
+        ?? (error as { statusCode?: number }).statusCode
+      if (status === 404) throw error
+      const err = createError({
+        message: 'Failed to get page',
+        status: 500,
+        why: `Underlying query for "${path}" in "${collectionName}" failed`,
+        fix: 'Check that the content collection is built and the path is correctly prefixed',
+        cause: error as Error,
+      })
+      log.error(err)
+      throw err
     }
   },
 })
