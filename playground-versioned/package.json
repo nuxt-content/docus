@@ -1,0 +1,13 @@
+{
+  "name": "playground-versioned",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev --extends ../layer",
+    "build": "nuxt build --extends ../layer"
+  },
+  "dependencies": {
+    "docus": "latest",
+    "better-sqlite3": "^12.5.0",
+    "nuxt": "^4.3.1"
+  }
+}

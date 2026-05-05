@@ -20,3 +20,17 @@ export function docsFolderExists(rootDir: string, locale?: string): boolean {
     : joinURL(rootDir, 'content', 'docs')
   return existsSync(docsPath)
 }
+
+export function versionFolderExists(rootDir: string, version: string, locale?: string): boolean {
+  const versionPath = locale
+    ? joinURL(rootDir, 'content', version, locale)
+    : joinURL(rootDir, 'content', version)
+  return existsSync(versionPath)
+}
+
+export function versionDocsFolderExists(rootDir: string, version: string, locale?: string): boolean {
+  const docsPath = locale
+    ? joinURL(rootDir, 'content', version, locale, 'docs')
+    : joinURL(rootDir, 'content', version, 'docs')
+  return existsSync(docsPath)
+}

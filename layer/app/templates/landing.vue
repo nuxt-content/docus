@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
+import { useCollectionName } from '../composables/useCollectionName'
 
 const route = useRoute()
-const { locale, isEnabled } = useDocusI18n()
 
-// Dynamic collection name based on i18n status
-const collectionName = computed(() => isEnabled.value ? `landing_${locale.value}` : 'landing')
+const collectionName = useCollectionName('landing')
 
 const { data: page } = await useAsyncData(collectionName.value, () => queryCollection(collectionName.value as keyof Collections).path(route.path).first())
 if (!page.value) {

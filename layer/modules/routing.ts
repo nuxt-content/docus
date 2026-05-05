@@ -1,5 +1,6 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
 import { landingPageExists } from '../utils/pages'
+import type { DocusVersionsConfig } from './config'
 
 type DocusI18nOptions = { locales?: Array<string | { code: string }> }
 
@@ -13,14 +14,21 @@ export default defineNuxtModule({
     const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
     const isI18nEnabled = !!i18nOptions?.locales
 
-    // Ensure useDocusI18n is available in the app
-    nuxt.hook('imports:extend', (imports) => {
-      if (imports.some(i => i.name === 'useDocusI18n')) return
+    const typedOptions = nuxt.options as typeof nuxt.options & { docus?: { versions?: DocusVersionsConfig } }
+    const versionsConfig = typedOptions.docus?.versions
 
-      imports.push({
-        name: 'useDocusI18n',
-        from: resolve('../app/composables/useDocusI18n'),
-      })
+    nuxt.hook('imports:extend', (imports) => {
+      const composables = [
+        { name: 'useDocusI18n', from: resolve('../app/composables/useDocusI18n') },
+        { name: 'useVersion', from: resolve('../app/composables/useVersion') },
+        { name: 'useCollectionName', from: resolve('../app/composables/useCollectionName') },
+      ]
+
+      for (const composable of composables) {
+        if (!imports.some(i => i.name === composable.name)) {
+          imports.push(composable)
+        }
+      }
     })
 
     // Only add landing if index.vue is not already defined
@@ -41,6 +49,26 @@ export default defineNuxtModule({
             path: '/',
             file: landingTemplate,
           })
+        }
+      })
+    }
+
+    // Add version prerender hints for prefix strategy
+    if (versionsConfig?.strategy === 'prefix' && versionsConfig.items?.length) {
+      nuxt.hook('nitro:config', (nitroConfig) => {
+        nitroConfig.prerender = nitroConfig.prerender || {}
+        nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
+
+        for (const version of versionsConfig.items) {
+          if (isI18nEnabled && i18nOptions?.locales) {
+            for (const locale of i18nOptions.locales) {
+              const code = typeof locale === 'string' ? locale : locale.code
+              nitroConfig.prerender.routes.push(`/${code}/${version.value}`)
+            }
+          }
+          else {
+            nitroConfig.prerender.routes.push(`/${version.value}`)
+          }
         }
       })
     }

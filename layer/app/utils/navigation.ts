@@ -7,22 +7,32 @@ export const flattenNavigation = (items?: ContentNavigationItem[]): ContentNavig
 ) || []
 
 /**
- * Transform navigation data by stripping locale and docs levels
+ * Transform navigation data by stripping locale, version, and docs levels
  */
 export function transformNavigation(
   data: ContentNavigationItem[],
   isI18nEnabled: boolean,
   locale?: string,
+  isVersioned?: boolean,
+  version?: string,
 ): ContentNavigationItem[] {
+  let result = data
+
   if (isI18nEnabled && locale) {
-    // i18n: first strip locale level, then check for docs level
-    const localeResult = data.find(item => item.path === `/${locale}`)?.children || data
-    return localeResult.find(item => item.path === `/${locale}/docs`)?.children || localeResult
+    result = result.find(item => item.path === `/${locale}`)?.children || result
   }
-  else {
-    // non-i18n: strip docs level if exists
-    return data.find(item => item.path === '/docs')?.children || data
+
+  if (isVersioned && version) {
+    result = result.find(item => item.path.endsWith(`/${version}`))?.children || result
   }
+
+  const docsPrefix = isI18nEnabled && locale
+    ? (isVersioned && version ? `/${locale}/${version}/docs` : `/${locale}/docs`)
+    : (isVersioned && version ? `/${version}/docs` : '/docs')
+
+  result = result.find(item => item.path === docsPrefix)?.children || result
+
+  return result
 }
 
 export interface BreadcrumbItem {

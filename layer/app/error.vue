@@ -4,6 +4,8 @@ import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
 import { useDocusColorMode } from './composables/useDocusColorMode'
+import { useVersion } from './composables/useVersion'
+import { useCollectionName } from './composables/useCollectionName'
 
 const props = defineProps<{
   error: NuxtError
@@ -11,6 +13,7 @@ const props = defineProps<{
 
 const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
+const { version, isVersioned } = useVersion()
 
 const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
@@ -47,11 +50,11 @@ if (isEnabled.value) {
   })
 }
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = useCollectionName('docs')
 
 const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),
-  watch: [locale],
+  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value, isVersioned.value, version.value),
+  watch: [locale, version],
 })
 const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value as keyof PageCollections), {
   server: false,
