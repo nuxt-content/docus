@@ -14,10 +14,10 @@ export function formatOgDescription(title: string | undefined, description: stri
   const maxLen = OG_BUDGET - titleLen
   if (maxLen <= 0) return undefined
 
-  const cleaned = description.replace(/,/g, '')
+  const cleaned = description.replace(/,/g, '').replace(/\.+$/, '')
   if (cleaned.length <= maxLen) return cleaned
 
   const truncated = cleaned.slice(0, maxLen)
   const lastDot = truncated.lastIndexOf('.')
-  return lastDot > 0 ? truncated.slice(0, lastDot + 1) : truncated
+  return lastDot > 0 ? truncated.slice(0, lastDot) : truncated
 }
