@@ -1,6 +1,8 @@
 import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { UIMessageStreamWriter, ToolCallPart, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
+import { useLogger, createError } from 'evlog'
+import { createAILogger, createEvlogIntegration } from 'evlog/ai'
 import type { H3Event } from 'h3'
 
 const MAX_STEPS = 10
@@ -27,7 +29,6 @@ function stopWhenResponseComplete({ steps }: { steps: any[] }): boolean {
   const lastStep = steps.at(-1)
   if (!lastStep) return false
 
-  // Primary condition: stop when model gives a text response without tool calls
   const hasText = Boolean(lastStep.text && lastStep.text.trim().length > 0)
   const hasNoToolCalls = !lastStep.toolCalls || lastStep.toolCalls.length === 0
 
@@ -75,6 +76,11 @@ function getSystemPrompt(siteName: string) {
 }
 
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event)
+  const ai = createAILogger(log, {
+    toolInputs: { maxLength: 200 },
+  })
+
   const { messages } = await readBody(event)
   const config = useRuntimeConfig()
   const siteConfig = getSiteConfig(event)
@@ -85,18 +91,19 @@ export default defineEventHandler(async (event) => {
   const isExternalUrl = mcpServer.startsWith('http://') || mcpServer.startsWith('https://')
   const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
 
+  log.set({
+    assistant: {
+      mcpServer,
+      messageCount: Array.isArray(messages) ? messages.length : 0,
+    },
+  })
+
   let transport: Parameters<typeof createMCPClient>[0]['transport']
   if (isExternalUrl) {
-    transport = {
-      type: 'http',
-      url: mcpServer,
-    }
+    transport = { type: 'http', url: mcpServer }
   }
   else if (import.meta.dev) {
-    transport = {
-      type: 'http',
-      url: `http://localhost:3000${baseURL}${mcpServer}`,
-    }
+    transport = { type: 'http', url: `http://localhost:3000${baseURL}${mcpServer}` }
   }
   else {
     transport = {
@@ -106,20 +113,57 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const httpClient = await createMCPClient({ transport })
-  const mcpTools = await httpClient.tools()
+  let httpClient: Awaited<ReturnType<typeof createMCPClient>>
+  try {
+    httpClient = await createMCPClient({ transport })
+  }
+  catch (error) {
+    throw createError({
+      message: 'Failed to connect to MCP server',
+      status: 502,
+      why: `MCP transport for "${mcpServer}" rejected the handshake`,
+      fix: 'Verify the MCP endpoint is reachable and supports the streamable HTTP transport',
+      cause: error as Error,
+    })
+  }
+
+  let mcpTools: Awaited<ReturnType<typeof httpClient.tools>>
+  try {
+    mcpTools = await httpClient.tools()
+  }
+  catch (error) {
+    await httpClient.close()
+    throw createError({
+      message: 'Failed to load MCP tools',
+      status: 502,
+      why: 'MCP server returned an error during tools/list',
+      fix: 'Check that the MCP server is healthy and exposes the tools/list method',
+      cause: error as Error,
+    })
+  }
+
+  log.set({ assistant: { tools: Object.keys(mcpTools) } })
 
   const stream = createUIMessageStream({
     execute: async ({ writer }: { writer: UIMessageStreamWriter }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
-        model: config.assistant.model,
+        model: ai.wrap(config.assistant.model),
         maxOutputTokens: 4000,
         maxRetries: 2,
         stopWhen: stopWhenResponseComplete,
         system: getSystemPrompt(siteName),
         messages: modelMessages,
         tools: mcpTools as ToolSet,
+        experimental_telemetry: {
+          isEnabled: true,
+          functionId: 'docus.assistant',
+          metadata: {
+            mcpServer,
+            messageCount: Array.isArray(messages) ? messages.length : 0,
+          },
+          integrations: [createEvlogIntegration(ai)],
+        },
         onStepFinish: ({ toolCalls }: { toolCalls: ToolCallPart[] }) => {
           if (toolCalls.length === 0) return
           writer.write({
@@ -136,6 +180,9 @@ export default defineEventHandler(async (event) => {
               }),
             },
           })
+        },
+        onError: ({ error }) => {
+          log.error(error as Error)
         },
       })
       writer.merge(result.toUIMessageStream())

@@ -129,8 +129,8 @@ export default defineNuxtModule({
             ]
             routes.push(...docsRoutes)
           }
-          catch {
-            // Skip invalid URLs
+          catch (error) {
+            log.warn(`Skipping invalid URL "${url}" in llms.txt: ${(error as Error).message}`)
           }
         }
 

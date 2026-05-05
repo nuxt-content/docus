@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         dir: join(nuxt.options.srcDir, 'assets/icons'),
       })
     },
+    'evlog/nuxt',
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -106,6 +107,22 @@ export default defineNuxtConfig({
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
       nitroConfig.prerender.routes.push(...(routes || []))
       nitroConfig.prerender.routes.push('/sitemap.xml')
+    },
+  },
+  evlog: {
+    env: { service: 'docus' },
+    exclude: [
+      '/_nuxt/**',
+      '/_ipx/**',
+      '/_content/**',
+      '/_fonts/**',
+      '/__nuxt_devtools__/**',
+      '/__nuxt_island/**',
+      '/__nuxt_error',
+      '__nuxt_studio/**',
+    ],
+    routes: {
+      '/__docus__/assistant': { service: 'docus/assistant' },
     },
   },
   icon: {
