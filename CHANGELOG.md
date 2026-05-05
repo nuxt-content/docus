@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.10.1](https://github.com/nuxt-themes/docus/compare/v5.10.0...v5.10.1) (2026-05-05)
+
+### Bug Fixes
+
+* **ai:** make sure to set markdown headers as response ([#1348](https://github.com/nuxt-themes/docus/issues/1348)) ([cc0fc5b](https://github.com/nuxt-themes/docus/commit/cc0fc5beabeab77be788f9e7ae928cfd90023de9))
+* **assistant:** use internal fetch for MCP on workers ([#1309](https://github.com/nuxt-themes/docus/issues/1309)) ([596d027](https://github.com/nuxt-themes/docus/commit/596d027e12ee28b77c823758b6caed742ab818b1))
+
 ## [5.10.0](https://github.com/nuxt-content/docus/compare/v5.9.0...v5.10.0) (2026-04-17)
 
 ### Features
