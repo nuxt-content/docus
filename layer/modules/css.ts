@@ -1,6 +1,6 @@
 import { defineNuxtModule, addTemplate, createResolver, logger } from '@nuxt/kit'
-import { existsSync } from 'fs'
-import { readFile } from 'fs/promises'
+import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { resolve } from 'pathe'
 import { resolveModulePath } from 'exsolve'
 
@@ -27,7 +27,8 @@ export default defineNuxtModule({
           log.warn('`app.css` contains `@import "tailwindcss";` consider removing it to avoid duplicate css.')
         })
       }
-    } else {
+    }
+    else {
       userDocusPath = null
     }
 
