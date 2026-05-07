@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+import { joinURL, withTrailingSlash } from 'ufo'
 import { useRuntimeConfig } from '#imports'
 
 const route = useRoute()
 const toast = useToast()
-const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
+const runtimeConfig = useRuntimeConfig()
+const appBaseURL = runtimeConfig.app?.baseURL || '/'
+const mcpRoute = (runtimeConfig.public.mcp as { route?: string } | undefined)?.route || '/mcp'
 
 const { copy, copied } = useClipboard()
 const { t } = useDocusI18n()
 
-const markdownLink = computed(() => `${window?.location?.origin}${appBaseURL}raw${route.path}.md`)
+const markdownLink = computed(() => `${window?.location?.origin}${withTrailingSlash(appBaseURL)}raw${route.path}.md`)
+const mcpServerUrl = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, mcpRoute)}`)
+const mcpDeeplink = joinURL(mcpRoute, 'deeplink')
 const items = [
   [{
     label: t('docs.copy.link'),
@@ -41,7 +46,7 @@ const items = [
       label: 'Copy MCP Server URL',
       icon: 'i-lucide-link',
       onSelect() {
-        copy(`${window?.location?.origin}${appBaseURL}mcp`)
+        copy(mcpServerUrl.value)
         toast.add({
           title: 'Copied to clipboard',
           icon: 'i-lucide-check-circle',
@@ -52,7 +57,7 @@ const items = [
       label: 'Add MCP Server',
       icon: 'i-simple-icons:cursor',
       target: '_blank',
-      to: `/mcp/deeplink`,
+      to: mcpDeeplink,
     },
   ],
 ]
