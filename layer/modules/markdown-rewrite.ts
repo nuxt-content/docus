@@ -2,7 +2,7 @@ import { defineNuxtModule, logger } from '@nuxt/kit'
 import { resolve } from 'node:path'
 import { readFile, writeFile } from 'node:fs/promises'
 
-const log = logger.withTag('Docus')
+const log = logger.withTag('docus')
 
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }

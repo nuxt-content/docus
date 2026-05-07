@@ -21,7 +21,7 @@ export interface AssistantModuleOptions {
   model?: string
 }
 
-const log = logger.withTag('Docus')
+const log = logger.withTag('docus')
 
 const defaults: Required<AssistantModuleOptions> = {
   apiPath: '/__docus__/assistant',
@@ -78,7 +78,9 @@ export default defineNuxtModule<AssistantModuleOptions>({
     )
 
     if (!hasAiGatewayAuth) {
-      log.warn('AI assistant disabled: neither AI_GATEWAY_API_KEY nor VERCEL_OIDC_TOKEN found')
+      nuxt.hook('modules:done', () => {
+        log.warn('AI assistant disabled: neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN` found')
+      })
       return
     }
 

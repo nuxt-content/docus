@@ -201,6 +201,9 @@ importers:
       nuxt-og-image:
         specifier: ^6.4.5
         version: 6.4.5(b2d783c839050aabda43ec2f68abe3b0)
+      pathe:
+        specifier: ^2.0.3
+        version: 2.0.3
       pkg-types:
         specifier: ^2.3.0
         version: 2.3.0
