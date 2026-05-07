@@ -76,6 +76,7 @@ addPrerenderPath(`/raw${route.path}.md`)
   <UPage
     v-if="page"
     :key="`page-${shouldHideToc}`"
+    :ui="{ root: 'lg:grid-cols-12', center: 'lg:col-span-9', right: 'lg:col-span-3' }"
   >
     <UPageHeader
       :title="page.title"
