@@ -19,7 +19,7 @@ export default defineNuxtModule({
     const layerDir = resolver.resolve('../app')
     const assistantDir = resolver.resolve('../modules/assistant')
 
-    let userDocusPath = resolve(nuxt.options.srcDir, 'app.css')
+    let userDocusPath: string | null = resolve(nuxt.options.srcDir, 'app.css')
     if (existsSync(userDocusPath)) {
       const userDocusCss = await readFile(userDocusPath, 'utf-8')
       if (userDocusCss.includes('@import "tailwindcss"')) {
