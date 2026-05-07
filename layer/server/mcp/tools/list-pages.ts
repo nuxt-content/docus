@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { joinURL } from 'ufo'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
@@ -39,10 +40,12 @@ OUTPUT: Returns a structured list with:
   cache: '1h',
   handler: async ({ locale }) => {
     const event = useEvent()
-    const config = useRuntimeConfig(event).public
+    const config = useRuntimeConfig(event)
+    const publicConfig = config.public
 
     const siteUrl = getRequestURL(event).origin || inferSiteURL()
-    const availableLocales = getAvailableLocales(config)
+    const baseURL = config.app?.baseURL || '/'
+    const availableLocales = getAvailableLocales(publicConfig)
     const collections = getCollectionsToQuery(locale, availableLocales)
 
     try {
@@ -57,7 +60,7 @@ OUTPUT: Returns a structured list with:
             path: page.path,
             description: page.description,
             locale: collectionName.replace('docs_', ''),
-            url: `${siteUrl}${page.path}`,
+            url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
           }))
         }),
       )
