@@ -7,7 +7,7 @@
     "dev": "nuxt dev"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.6.1",
+    "@nuxt/ui": "^4.7.1",
     "@ai-sdk/vue": "3.0.141",
     "ai": "6.0.141",
     "@nuxtjs/i18n": "^10.2.4",
