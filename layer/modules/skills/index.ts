@@ -19,7 +19,7 @@ export interface SkillsModuleOptions {
 const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
 
-const log = logger.withTag('Docus')
+const log = logger.withTag('docus')
 
 const defaults: Required<SkillsModuleOptions> = {
   dir: 'skills',
@@ -38,7 +38,9 @@ export default defineNuxtModule<SkillsModuleOptions>({
     const catalog = await scanSkills(skillsDir)
     if (!catalog.length) return
 
-    log.info(`Found ${catalog.length} agent skill${catalog.length > 1 ? 's' : ''}: ${catalog.map(s => s.name).join(', ')}`)
+    nuxt.hook('modules:done', () => {
+      log.info(`Found ${catalog.length} agent skill${catalog.length > 1 ? 's' : ''}: ${catalog.map(s => s.name).join(', ')}`)
+    })
 
     nuxt.options.runtimeConfig.skills = { catalog }
 

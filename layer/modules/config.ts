@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
-const log = logger.withTag('Docus')
+const log = logger.withTag('docus')
 
 type I18nLocale = string | { code: string, name?: string }
 type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }

@@ -1,20 +1,35 @@
-import { defineNuxtModule, addTemplate, createResolver } from '@nuxt/kit'
-import { joinURL } from 'ufo'
+import { defineNuxtModule, addTemplate, createResolver, logger } from '@nuxt/kit'
+import { existsSync } from 'fs'
+import { readFile } from 'fs/promises'
+import { resolve } from 'pathe'
 import { resolveModulePath } from 'exsolve'
+
+const log = logger.withTag('docus')
 
 export default defineNuxtModule({
   meta: {
-    name: 'css',
+    name: 'docus-css',
   },
   async setup(_options, nuxt) {
-    const dir = nuxt.options.rootDir
     const resolver = createResolver(import.meta.url)
 
-    const contentDir = joinURL(dir, 'content')
+    const contentDir = resolve(nuxt.options.rootDir, 'content')
     const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
     const layerDir = resolver.resolve('../app')
     const assistantDir = resolver.resolve('../modules/assistant')
+
+    let userDocusPath = resolve(nuxt.options.srcDir, 'app.css')
+    if (existsSync(userDocusPath)) {
+      const userDocusCss = await readFile(userDocusPath, 'utf-8')
+      if (userDocusCss.includes('@import "tailwindcss"')) {
+        nuxt.hook('modules:done', () => {
+          log.warn('`app.css` contains `@import "tailwindcss";` consider removing it to avoid duplicate css.')
+        })
+      }
+    } else {
+      userDocusPath = null
+    }
 
     const cssTemplate = addTemplate({
       filename: 'docus.css',
@@ -25,7 +40,13 @@ export default defineNuxtModule({
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
 @source "../../app.config.ts";
-@source "${assistantDir.replace(/\\/g, '/')}/**/*";`
+@source "${assistantDir.replace(/\\/g, '/')}/**/*";
+
+@layer base {
+  :root {
+    --ui-container: 90rem;
+  }
+}` + (userDocusPath ? `\n@import ${JSON.stringify(userDocusPath)};` : '')
       },
     })
 
