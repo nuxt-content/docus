@@ -42,15 +42,13 @@ const shortcuts = computed(() => ({
       inputRef.value?.inputRef?.focus()
     },
   },
-  escape: {
-    usingInput: true,
-    handler: () => {
-      inputRef.value?.inputRef?.blur()
-    },
-  },
 }))
 
 defineShortcuts(shortcuts)
+
+function onEscape() {
+  inputRef.value?.inputRef?.blur()
+}
 </script>
 
 <template>
@@ -82,6 +80,7 @@ defineShortcuts(shortcuts)
               trailing: 'pe-2',
             }"
             @keydown.enter.exact.prevent="handleSubmit"
+            @keydown.escape="onEscape"
           >
             <template #trailing>
               <div class="flex items-center gap-2">
