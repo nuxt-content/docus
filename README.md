@@ -33,6 +33,7 @@ That's it! Your documentation site will be running at `http://localhost:3000`
 Start by deploying the docus template and create your git repository directly from Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-description=Markdown-based%20documentation%20starter%20with%20Nuxt%20and%20Vue%20components.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5rLcegeMuG3ggDNfQt7rj9%2F040036056f7b30d2c99dc8998dc6b132%2Fdocus.png&demo-title=Docus&demo-url=https%3A%2F%2Fdocus.dev%2F&from=templates&project-name=Docus&repository-name=docus&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-content%2Fdocus%2Ftree%2Fmain%2F.starters%2Fdefault&skippable-integrations=1&teamSlug=vercel)
+[![Deploy to PandaStack](https://dashboard.pandastack.io/deploy-button.svg)](https://dashboard.pandastack.io/deploy?repo=nuxt-content/docus&type=static&buildCmd=npm+run+build&outputDir=dist)
 
 ## 🎯 What it creates
 
