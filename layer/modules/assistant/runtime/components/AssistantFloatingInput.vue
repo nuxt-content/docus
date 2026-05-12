@@ -62,11 +62,11 @@ defineShortcuts(shortcuts)
       :animate="{ y: 0, opacity: 1 }"
       :exit="{ y: 100, opacity: 0 }"
       :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="pointer-events-none fixed inset-x-0 z-10 bottom-[max(1.5rem,env(safe-area-inset-bottom))] px-4 sm:px-80"
+      class="pointer-events-none fixed inset-x-0 z-10 bottom-[max(1.5rem,env(safe-area-inset-bottom))] px-4 sm:px-24"
       style="will-change: transform"
     >
       <form
-        class="pointer-events-none flex w-full justify-center"
+        class="pointer-events-none flex w-full min-w-3xs justify-center"
         @submit.prevent="handleSubmit"
       >
         <div class="pointer-events-auto w-full max-w-96">
