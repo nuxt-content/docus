@@ -17,7 +17,7 @@ export default defineAppConfig({
     },
     contentToc: {
       defaultVariants: {
-        highlight: true,
+        highlightVariant: 'circuit',
       },
     },
     contentNavigation: {

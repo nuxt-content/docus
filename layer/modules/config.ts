@@ -5,10 +5,11 @@ import { join } from 'node:path'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
-const log = logger.withTag('Docus')
+const log = logger.withTag('docus')
 
 type I18nLocale = string | { code: string, name?: string }
 type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }
+type DocusMcpOptions = { route?: string, enabled?: boolean }
 type RegisterModuleOptions = {
   langDir: string
   locales: Array<{ code: string, name: string, file: string }>
@@ -57,6 +58,16 @@ export default defineNuxtModule({
       url: gitInfo?.url,
       branch: getGitBranch(),
     })
+
+    /*
+    ** MCP route (expose to client so the page header dropdown stays in sync
+    ** with the user-configured `mcp.route` from @nuxtjs/mcp-toolkit)
+    */
+    const mcpOptions = (nuxt.options as typeof nuxt.options & { mcp?: DocusMcpOptions }).mcp
+    nuxt.options.runtimeConfig.public.mcp = defu(
+      nuxt.options.runtimeConfig.public.mcp as DocusMcpOptions | undefined,
+      { route: mcpOptions?.route || '/mcp' },
+    )
 
     const forcedColorMode = (nuxt.options.appConfig.docus as Record<string, unknown>)?.colorMode as string | undefined
     if (forcedColorMode === 'light' || forcedColorMode === 'dark') {

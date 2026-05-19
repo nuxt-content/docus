@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import { consola } from 'consola'
 
-const log = consola.withTag('Docus')
+const log = consola.withTag('docus')
 
 // Lazy import functions for locale files (bundled but not eagerly loaded)
 const localeFiles = import.meta.glob<{ default: Record<string, unknown> }>('../../i18n/locales/*.json')
