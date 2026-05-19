@@ -7,11 +7,20 @@ import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 import AssistantComark from './AssistantComark'
 import AssistantIndicator from './AssistantIndicator.vue'
 
-const { isOpen, messages, faqQuestions } = useAssistant()
+const { isOpen, isStudioExpanded, messages, faqQuestions } = useAssistant()
 const config = useRuntimeConfig()
 const toast = useToast()
 const { t } = useDocusI18n()
 const input = ref('')
+
+const open = computed({
+  get: () => isOpen.value && !isStudioExpanded.value,
+  set: (value) => {
+    if (!isStudioExpanded.value) {
+      isOpen.value = value
+    }
+  },
+})
 
 const displayTitle = computed(() => t('assistant.title'))
 const displayPlaceholder = computed(() => t('assistant.placeholder'))
@@ -135,7 +144,7 @@ function clearMessages() {
 defineShortcuts({
   meta_i: {
     handler: () => {
-      isOpen.value = !isOpen.value
+      open.value = !open.value
     },
     usingInput: true,
   },
@@ -144,12 +153,12 @@ defineShortcuts({
 
 <template>
   <USidebar
-    v-model:open="isOpen"
+    v-model:open="open"
     side="right"
     :title="displayTitle"
     rail
     :style="{ '--sidebar-width': '24rem' }"
-    :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
+    :ui="{ footer: 'p-0', actions: 'gap-0.5', container: '!left-auto' }"
   >
     <template #actions>
       <UTooltip
@@ -175,7 +184,7 @@ defineShortcuts({
           color="neutral"
           variant="ghost"
           aria-label="Close"
-          @click="isOpen = false"
+          @click="open = false"
         />
       </UTooltip>
     </template>

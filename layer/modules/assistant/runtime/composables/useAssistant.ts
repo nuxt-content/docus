@@ -31,11 +31,18 @@ export const useAssistant = createSharedComposable(() => {
   const messages = useLocalStorage<UIMessage[]>('assistant-messages', [])
 
   const isOpen = ref(false)
+  const isStudioExpanded = ref(false)
 
   onNuxtReady(() => {
     nextTick(() => {
       isOpen.value = storageOpen.value
     })
+
+    isStudioExpanded.value = document.body.hasAttribute('data-expand-sidebar')
+    const observer = new MutationObserver(() => {
+      isStudioExpanded.value = document.body.hasAttribute('data-expand-sidebar')
+    })
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-expand-sidebar'] })
   })
 
   watch(isOpen, (value) => {
@@ -62,6 +69,8 @@ export const useAssistant = createSharedComposable(() => {
   })
 
   function open(initialMessage?: string, clearPrevious = false) {
+    if (isStudioExpanded.value) return
+
     if (clearPrevious) {
       messages.value = []
     }
@@ -81,12 +90,14 @@ export const useAssistant = createSharedComposable(() => {
   }
 
   function toggle() {
+    if (isStudioExpanded.value) return
     isOpen.value = !isOpen.value
   }
 
   return {
     isEnabled,
     isOpen,
+    isStudioExpanded,
     messages,
     faqQuestions,
     open,
