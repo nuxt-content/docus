@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.11.0](https://github.com/nuxt-content/docus/compare/v5.10.1...v5.11.0) (2026-05-07)
+
+### Features
+
+* **css:** add support for `app/app.css` to avoid duplicate tailwind ([#1364](https://github.com/nuxt-content/docus/issues/1364)) ([98f68d5](https://github.com/nuxt-content/docus/commit/98f68d56dce1b80e0ab5a40be54ff90cc10e0b07))
+* **layer:** set `ContentTOC` default variant to `circuit` ([#1360](https://github.com/nuxt-content/docus/issues/1360)) ([7d90d20](https://github.com/nuxt-content/docus/commit/7d90d20c2ec167129c291683aac3b8ad737ed79d))
+* **toc:** improve main grid to make it wider ([#1363](https://github.com/nuxt-content/docus/issues/1363)) ([45c65cc](https://github.com/nuxt-content/docus/commit/45c65cc84c99f2371ec7c134641e8e606bc9b609))
+
+### Bug Fixes
+
+* **css:** don't use [@layer](https://github.com/layer) base for prod hydration ([73606b7](https://github.com/nuxt-content/docus/commit/73606b78aa4ca79f8b2bef89cb0bd0291356641e))
+* **layer:** incorrect MCP tools when `app.baseURL` is set ([#1361](https://github.com/nuxt-content/docus/issues/1361)) ([f7e42eb](https://github.com/nuxt-content/docus/commit/f7e42ebf45625523815eaac1ed011c474438be4e))
+* **mcp:** respect `mcp.route` in page header dropdown ([#1362](https://github.com/nuxt-content/docus/issues/1362)) ([5c36cd4](https://github.com/nuxt-content/docus/commit/5c36cd4ee30e098b74792d335c99340ae7c8694a))
+
 ## [5.10.1](https://github.com/nuxt-themes/docus/compare/v5.10.0...v5.10.1) (2026-05-05)
 
 ### Bug Fixes
