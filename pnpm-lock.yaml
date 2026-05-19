@@ -139,8 +139,8 @@ importers:
         specifier: ^10.2.4
         version: 10.2.4(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@vue/compiler-dom@3.5.32)(db0@0.3.4(better-sqlite3@12.8.0))(eslint@10.2.1(jiti@2.7.0))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.1)(typescript@6.0.3)(vue@3.5.31(typescript@6.0.3))
       '@nuxtjs/mcp-toolkit':
-        specifier: https://pkg.pr.new/@nuxtjs/mcp-toolkit@263
-        version: https://pkg.pr.new/@nuxtjs/mcp-toolkit@263(@vue/compiler-sfc@3.5.32)(h3@1.15.11)(magicast@0.5.2)(rollup@4.60.1)(vite@7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.31(typescript@6.0.3))(zod@4.3.6)
+        specifier: ^0.17.2
+        version: 0.17.2(@vue/compiler-sfc@3.5.32)(h3@1.15.11)(magicast@0.5.2)(rollup@4.60.1)(vite@7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.31(typescript@6.0.3))(zod@4.3.6)
       '@nuxtjs/mdc':
         specifier: ^0.21.1
         version: 0.21.1(magicast@0.5.2)
@@ -1530,9 +1530,8 @@ packages:
     resolution: {integrity: sha512-T5nN7hT/tbExant+CeXtKXs9GbjWsEWnymCHJyU3Ujxfcw1WQsZZP6tyEtFRhkwjBwy8m4mj7GtU2qUCggUkkg==}
     engines: {node: '>=20.11.1'}
 
-  '@nuxtjs/mcp-toolkit@https://pkg.pr.new/@nuxtjs/mcp-toolkit@263':
-    resolution: {integrity: sha512-m7/2mycI3D01rRhQBEPv0S4lpa0gz86Nho00QNWvZOte61gz06RjoM9RbquykxqlHFy3+O1DSeuf9WxOa58G0Q==, tarball: https://pkg.pr.new/@nuxtjs/mcp-toolkit@263}
-    version: 0.17.1
+  '@nuxtjs/mcp-toolkit@0.17.2':
+    resolution: {integrity: sha512-8/4d/QTc6KfUTml8IlQ2mrznszQcBCribciz+wogbCL+YCrKjqbzSz8azaQ8MvqdSHk1h3acTL4qdkLNLurLlA==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.5.34
       agents: '>=0.12.4'
@@ -9237,7 +9236,7 @@ snapshots:
 
   '@nuxt/devtools-kit@4.0.0-alpha.3(magicast@0.5.2)(vite@7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@nuxt/kit': 4.4.4(magicast@0.5.2)
+      '@nuxt/kit': 4.4.6(magicast@0.5.2)
       tinyexec: 1.1.1
       vite: 7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
@@ -10062,7 +10061,7 @@ snapshots:
       - uploadthing
       - vue
 
-  '@nuxtjs/mcp-toolkit@https://pkg.pr.new/@nuxtjs/mcp-toolkit@263(@vue/compiler-sfc@3.5.32)(h3@1.15.11)(magicast@0.5.2)(rollup@4.60.1)(vite@7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.31(typescript@6.0.3))(zod@4.3.6)':
+  '@nuxtjs/mcp-toolkit@0.17.2(@vue/compiler-sfc@3.5.32)(h3@1.15.11)(magicast@0.5.2)(rollup@4.60.1)(vite@7.3.1(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.31(typescript@6.0.3))(zod@4.3.6)':
     dependencies:
       '@modelcontextprotocol/sdk': 1.29.0(zod@4.3.6)
       '@nuxt/kit': 4.4.6(magicast@0.5.2)
@@ -14763,7 +14762,7 @@ snapshots:
 
   nuxt-site-config-kit@4.0.8(magicast@0.5.2)(vue@3.5.31(typescript@6.0.3)):
     dependencies:
-      '@nuxt/kit': 4.4.4(magicast@0.5.2)
+      '@nuxt/kit': 4.4.6(magicast@0.5.2)
       site-config-stack: 4.0.8(vue@3.5.31(typescript@6.0.3))
       std-env: 4.1.0
       ufo: 1.6.3
