@@ -15,3 +15,5 @@ onlyBuiltDependencies:
   - '@vercel/speed-insights'
   - better-sqlite3
   - sharp
+
+minimumReleaseAge: 2880
