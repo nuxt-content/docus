@@ -15,7 +15,7 @@ const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpan
 
 const { isOpen, isExpanded, isMobile, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAssistant()
 const config = useRuntimeConfig()
-const toast = useToast()
+const { report } = useAssistantErrorReporter()
 const { t } = useDocusI18n()
 const input = ref('')
 
@@ -28,22 +28,7 @@ const chat = new Chat({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.assistant.apiPath,
   }),
   onError: (error: Error) => {
-    const message = (() => {
-      try {
-        const parsed = JSON.parse(error.message)
-        return parsed?.message || error.message
-      }
-      catch {
-        return error.message
-      }
-    })()
-
-    toast.add({
-      description: message,
-      icon: 'i-lucide-alert-circle',
-      color: 'error',
-      duration: 0,
-    })
+    report(error, { action: 'assistant.panel' })
   },
   onFinish: () => {
     messages.value = chat.messages

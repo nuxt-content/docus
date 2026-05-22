@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { useLogger } from 'evlog'
 import { getAvailableLocales, getCollectionsToQuery } from '../utils/content'
 import { inferSiteURL } from '../../utils/meta'
 
@@ -7,7 +8,16 @@ interface SitemapUrl {
   lastmod?: string
 }
 
+function isMissingCollectionError(error: unknown): boolean {
+  const message = (error as { message?: string }).message ?? ''
+  const code = (error as { code?: string }).code
+  return code === 'COLLECTION_NOT_FOUND'
+    || /no such (?:table|collection)/i.test(message)
+    || /collection .* (?:does not exist|not found)/i.test(message)
+}
+
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event)
   const config = useRuntimeConfig(event)
   const siteUrl = inferSiteURL() || ''
 
@@ -23,7 +33,10 @@ export default defineEventHandler(async (event) => {
     collections.push('landing')
   }
 
+  log.set({ sitemap: { locales: availableLocales, collectionCount: collections.length } })
+
   const urls: SitemapUrl[] = []
+  const failedCollections: string[] = []
 
   for (const collection of collections) {
     try {
@@ -33,28 +46,35 @@ export default defineEventHandler(async (event) => {
         const meta = page as Record<string, unknown>
         const pagePath = page.path || '/'
 
-        // Skip pages with sitemap: false in frontmatter
         if (meta.sitemap === false) continue
-
-        // Skip .navigation files (used for navigation configuration)
         if (pagePath.endsWith('.navigation') || pagePath.includes('/.navigation')) continue
 
-        const urlEntry: SitemapUrl = {
-          loc: pagePath,
-        }
+        const urlEntry: SitemapUrl = { loc: pagePath }
 
-        // Add lastmod if available (modifiedAt from content)
         if (meta.modifiedAt && typeof meta.modifiedAt === 'string') {
-          urlEntry.lastmod = meta.modifiedAt.split('T')[0] // Use date part only (YYYY-MM-DD)
+          urlEntry.lastmod = meta.modifiedAt.split('T')[0]
         }
 
         urls.push(urlEntry)
       }
     }
-    catch {
-      // Collection might not exist, skip it
+    catch (error) {
+      if (isMissingCollectionError(error)) continue
+      failedCollections.push(collection)
+      log.error(error as Error, {
+        sitemap: { failedCollection: collection },
+      })
     }
   }
+
+  log.set({
+    sitemap: {
+      locales: availableLocales,
+      collectionCount: collections.length,
+      urlCount: urls.length,
+      failedCollections,
+    },
+  })
 
   const sitemap = generateSitemap(urls, siteUrl)
 

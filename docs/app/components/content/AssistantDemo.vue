@@ -4,6 +4,7 @@ import { DefaultChatTransport } from 'ai'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
+const { report } = useAssistantErrorReporter()
 const isEnabled = computed(() => config.public.assistant?.enabled ?? false)
 
 const input = ref('')
@@ -30,7 +31,7 @@ const chat = isEnabled.value
         api: config.public.assistant.apiPath,
       }),
       onError: (error: Error) => {
-        console.error('AI Chat error:', error)
+        report(error, { action: 'assistant.demo' })
       },
     })
   : null
