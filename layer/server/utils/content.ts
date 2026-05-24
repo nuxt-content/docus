@@ -25,6 +25,10 @@ export function getCollectionsToQuery(locale: string | undefined, availableLocal
     : ['docs']
 }
 
+export function isNavigationPath(path: string): boolean {
+  return path.endsWith('.navigation') || path.includes('/.navigation/')
+}
+
 export function getCollectionFromPath(path: string, availableLocales: string[]): string {
   const pathSegments = path.split('/').filter(Boolean)
   const firstSegment = pathSegments[0]

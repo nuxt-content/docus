@@ -1,6 +1,6 @@
 import { queryCollection } from '@nuxt/content/server'
-import { getAvailableLocales, getCollectionsToQuery } from '../utils/content'
 import { inferSiteURL } from '../../utils/meta'
+import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../utils/content'
 
 interface SitemapUrl {
   loc: string
@@ -27,7 +27,10 @@ export default defineEventHandler(async (event) => {
 
   for (const collection of collections) {
     try {
-      const pages = await (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Array<Record<string, unknown> & { path?: string }>> })(event, collection).all()
+      const pages = await (queryCollection as unknown as (
+        event: unknown,
+        collection: string,
+      ) => { all: () => Promise<Array<Record<string, unknown> & { path?: string }>> })(event, collection).all()
 
       for (const page of pages) {
         const meta = page as Record<string, unknown>
@@ -37,7 +40,7 @@ export default defineEventHandler(async (event) => {
         if (meta.sitemap === false) continue
 
         // Skip .navigation files (used for navigation configuration)
-        if (pagePath.endsWith('.navigation') || pagePath.includes('/.navigation')) continue
+        if (isNavigationPath(pagePath)) continue
 
         const urlEntry: SitemapUrl = {
           loc: pagePath,

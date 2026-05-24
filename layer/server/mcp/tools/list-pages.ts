@@ -1,9 +1,9 @@
-import { z } from 'zod'
-import { joinURL } from 'ufo'
-import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
+import { queryCollection } from '@nuxt/content/server'
+import { joinURL } from 'ufo'
+import { z } from 'zod'
 import { inferSiteURL } from '../../../utils/meta'
+import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -55,13 +55,15 @@ OUTPUT: Returns a structured list with:
             .select('title', 'path', 'description')
             .all()
 
-          return pages.map(page => ({
-            title: page.title,
-            path: page.path,
-            description: page.description,
-            locale: collectionName.replace('docs_', ''),
-            url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
-          }))
+          return pages
+            .filter(page => !isNavigationPath(page.path))
+            .map(page => ({
+              title: page.title,
+              path: page.path,
+              description: page.description,
+              locale: collectionName.replace('docs_', ''),
+              url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
+            }))
         }),
       )
 
