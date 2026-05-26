@@ -297,6 +297,20 @@ export default defineNuxtSchema({
           default: '',
           required: ['', 'light', 'dark'],
         }),
+        shortcuts: group({
+          title: 'Shortcuts',
+          description: 'Keyboard shortcuts configuration.',
+          icon: 'i-lucide-keyboard',
+          fields: {
+            toggleColorMode: field({
+              type: 'string',
+              title: 'Toggle Color Mode',
+              description: 'Shortcut to toggle light and dark mode (e.g., d, meta_d). Leave empty to disable.',
+              icon: 'i-lucide-keyboard',
+              default: 'd',
+            }),
+          },
+        }),
       },
     }),
     assistant: group({
