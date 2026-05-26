@@ -2,12 +2,10 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
-import { useDocusColorMode } from './composables/useDocusColorMode'
 import { useSubNavigation } from './composables/useSubNavigation'
 
 const appConfig = useAppConfig()
 const { seo } = appConfig
-const { forced: forcedColorMode } = useDocusColorMode()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()
@@ -53,10 +51,6 @@ const { data: navigation } = await useAsyncData(() => `navigation_${collectionNa
   transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),
   watch: [locale],
 })
-const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value as keyof PageCollections), {
-  server: false,
-  watch: [locale],
-})
 
 provide('navigation', navigation)
 
@@ -79,11 +73,7 @@ const { subNavigationMode } = useSubNavigation(navigation)
     </div>
 
     <ClientOnly>
-      <LazyUContentSearch
-        :files="files"
-        :navigation="navigation"
-        :color-mode="!forcedColorMode"
-      />
+      <AppSearch :navigation="navigation" />
       <template v-if="isAssistantEnabled">
         <LazyAssistantPanel />
         <LazyAssistantFloatingInput />

@@ -299,6 +299,20 @@ export default defineNuxtSchema({
         }),
       },
     }),
+    search: group({
+      title: 'Search',
+      description: 'Search configuration.',
+      icon: 'i-lucide-search',
+      fields: {
+        fts: field({
+          type: 'boolean',
+          title: 'Full-Text Search',
+          description: 'Use SQLite FTS5 full-text search instead of Fuse.js. Requires @nuxt/content v3.14+.',
+          icon: 'i-lucide-database',
+          default: false,
+        }),
+      },
+    }),
     assistant: group({
       title: 'Assistant',
       description: 'Assistant configuration.',

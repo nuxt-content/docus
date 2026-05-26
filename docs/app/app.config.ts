@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  search: {
+    fts: true,
+  },
   header: {
     title: 'Docus',
     logo: {
