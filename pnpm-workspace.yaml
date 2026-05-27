@@ -15,3 +15,26 @@ onlyBuiltDependencies:
   - '@vercel/speed-insights'
   - better-sqlite3
   - sharp
+
+minimumReleaseAge: 2880
+
+minimumReleaseAgeExclude:
+  # Nuxt
+  - '@nuxt/*'
+  - '@nuxtjs/*'
+  - 'nuxt'
+  - 'nuxt-*'
+  # Vercel
+  - '@vercel/*'
+  - '@ai-sdk/*'
+  - 'ai'
+  # Comark
+  - 'comark'
+
+allowBuilds:
+  '@parcel/watcher': false
+  better-sqlite3: true
+  esbuild: false
+  sharp: true
+  unrs-resolver: false
+  vue-demi: false
