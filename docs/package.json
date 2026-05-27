@@ -9,8 +9,8 @@
   "dependencies": {
     "@nuxt/ui": "^4.8.0",
     "@nuxtjs/i18n": "^10.4.0",
-    "@ai-sdk/vue": "3.0.141",
-    "ai": "6.0.141",
+    "@ai-sdk/vue": "3.0.191",
+    "ai": "6.0.191",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "docus": "workspace:*",
