@@ -6,6 +6,20 @@ declare module 'nuxt/schema' {
   interface AppConfig {
     docus: {
       locale: string
+      /**
+       * Force a specific color mode. Leave empty for system preference with toggle.
+       */
+      colorMode?: '' | 'light' | 'dark'
+      /**
+       * Keyboard shortcuts configuration.
+       */
+      shortcuts?: {
+        /**
+         * Shortcut to toggle light and dark mode.
+         * @default 'd'
+         */
+        toggleColorMode?: string
+      }
     }
     seo: {
       titleTemplate: string
