@@ -4,7 +4,9 @@ import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart, ge
 import { Chat } from '@ai-sdk/vue'
 import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
-import AssistantComark from './AssistantComark'
+import highlight from '@comark/nuxt/plugins/highlight'
+
+const comarkPlugins = [highlight()]
 import AssistantIndicator from './AssistantIndicator.vue'
 
 const { isOpen, isStudioExpanded, messages, faqQuestions } = useAssistant()
@@ -231,20 +233,28 @@ defineShortcuts({
               :streaming="isPartStreaming(part)"
               icon="i-lucide-brain"
             >
-              <AssistantComark
-                :markdown="part.text"
-                :streaming="isPartStreaming(part)"
-              />
+              <Suspense>
+                <Comark
+                  :markdown="part.text"
+                  :streaming="isPartStreaming(part)"
+                  :plugins="comarkPlugins"
+                  class="*:first:mt-0 *:last:mb-0"
+                />
+              </Suspense>
             </UChatReasoning>
 
-            <template v-else-if="isTextUIPart(part) && part.text.length > 0">
-              <AssistantComark
-                v-if="message.role === 'assistant'"
-                :markdown="part.text"
-                :streaming="isPartStreaming(part)"
-              />
+            <template v-else-if="isTextUIPart(part)">
+              <Suspense v-if="message.role === 'assistant'">
+                <Comark
+                  :markdown="part.text"
+                  :streaming="isPartStreaming(part)"
+                  :plugins="comarkPlugins"
+                  class="*:first:mt-0 *:last:mb-0"
+                  caret
+                />
+              </Suspense>
               <p
-                v-else-if="message.role === 'user'"
+                v-else-if="message.role === 'user' && part.text.length > 0"
                 class="whitespace-pre-wrap text-sm/6"
               >
                 {{ part.text }}

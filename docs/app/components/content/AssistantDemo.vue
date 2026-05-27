@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, isToolUIPart, isTextUIPart, getToolName } from 'ai'
-import { isToolStreaming } from '@nuxt/ui/utils/ai'
+import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
+import highlight from '@comark/nuxt/plugins/highlight'
+
+const comarkPlugins = [highlight()]
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
@@ -122,10 +125,15 @@ function resetChat() {
               v-for="(part, index) in message.parts"
               :key="`${message.id}-${part.type}-${index}`"
             >
-              <AssistantComark
-                v-if="isTextUIPart(part) && part.text"
-                :markdown="part.text"
-              />
+              <Suspense v-if="isTextUIPart(part)">
+                <Comark
+                  :markdown="part.text"
+                  :streaming="isPartStreaming(part)"
+                  :plugins="comarkPlugins"
+                  class="*:first:mt-0 *:last:mb-0"
+                  caret
+                />
+              </Suspense>
 
               <UChatTool
                 v-else-if="isToolUIPart(part)"
