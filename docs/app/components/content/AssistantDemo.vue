@@ -70,6 +70,7 @@ function resetChat() {
 </script>
 
 <template>
+  <ClientOnly>
   <div class="flex flex-col w-full h-96 rounded-lg overflow-hidden">
     <div class="flex-1 overflow-y-auto">
       <template v-if="isEnabled && chat">
@@ -186,4 +187,5 @@ function resetChat() {
       </UChatPrompt>
     </div>
   </div>
+  </ClientOnly>
 </template>
