@@ -74,10 +74,7 @@ addPrerenderPath(`/raw${route.path}.md`)
 <template>
   <UPage
     v-if="page"
-    :ui="isOpen ? {
-      center: 'lg:col-span-10',
-      right: 'lg:col-span-0',
-    } : undefined"
+    :ui="isOpen ? { center: 'lg:col-span-10' } : undefined"
   >
     <UPageHeader
       :title="page.title"
@@ -137,7 +134,10 @@ addPrerenderPath(`/raw${route.path}.md`)
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template #right>
+    <template
+      v-if="!isOpen"
+      #right
+    >
       <DocsAsideRight
         :page="page"
       />

@@ -89,6 +89,11 @@ export default defineNuxtModule<AssistantModuleOptions>({
       model: options.model,
     }
 
+    addComponent({
+      name: 'AssistantComark',
+      filePath: resolve('./runtime/components/AssistantComark'),
+    })
+
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
       route: `/${routePath}`,

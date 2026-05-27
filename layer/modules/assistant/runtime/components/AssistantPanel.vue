@@ -2,7 +2,7 @@
 import type { ToolUIPart, DynamicToolUIPart } from 'ai'
 import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart, getToolName } from 'ai'
 import { Chat } from '@ai-sdk/vue'
-import { isReasoningStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
+import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 import AssistantComark from './AssistantComark'
 import AssistantIndicator from './AssistantIndicator.vue'
@@ -52,7 +52,7 @@ const chat = new Chat({
   },
   onFinish: () => {
     _skipSync = true
-    messages.value = chat.messages
+    messages.value = [...chat.messages]
     nextTick(() => {
       _skipSync = false
     })
@@ -63,7 +63,7 @@ watch(messages, (newMessages) => {
   if (_skipSync) return
 
   chat.messages = newMessages
-  if (chat.lastMessage?.role === 'user') {
+  if (chat.lastMessage?.role === 'user' && chat.status !== 'streaming') {
     chat.regenerate()
   }
 })
@@ -228,12 +228,12 @@ defineShortcuts({
             <UChatReasoning
               v-if="isReasoningUIPart(part)"
               :text="part.text"
-              :streaming="isReasoningStreaming(message, index, chat)"
+              :streaming="isPartStreaming(part)"
               icon="i-lucide-brain"
             >
               <AssistantComark
                 :markdown="part.text"
-                :streaming="isReasoningStreaming(message, index, chat)"
+                :streaming="isPartStreaming(part)"
               />
             </UChatReasoning>
 
@@ -241,7 +241,7 @@ defineShortcuts({
               <AssistantComark
                 v-if="message.role === 'assistant'"
                 :markdown="part.text"
-                :streaming="isReasoningStreaming(message, index, chat)"
+                :streaming="isPartStreaming(part)"
               />
               <p
                 v-else-if="message.role === 'user'"

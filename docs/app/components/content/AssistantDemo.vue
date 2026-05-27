@@ -2,7 +2,6 @@
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, isToolUIPart, isTextUIPart, getToolName } from 'ai'
 import { isToolStreaming } from '@nuxt/ui/utils/ai'
-import AssistantComark from '../../../../layer/modules/assistant/runtime/components/AssistantComark'
 
 const config = useRuntimeConfig()
 const { t, locale } = useDocusI18n()
