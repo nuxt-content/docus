@@ -111,6 +111,9 @@ onUnmounted(() => {
       />
     </div>
 
-    <UChatShimmer :text="displayedText" class="font-mono tracking-tight" />
+    <UChatShimmer
+      :text="displayedText"
+      class="font-mono tracking-tight"
+    />
   </div>
 </template>

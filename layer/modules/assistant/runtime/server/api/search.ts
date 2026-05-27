@@ -22,7 +22,6 @@ function createLocalFetch(event: H3Event): typeof fetch {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function stopWhenResponseComplete({ steps }: { steps: { text?: string, toolCalls?: unknown[] }[] }): boolean {
   const lastStep = steps.at(-1)
   if (!lastStep) return false
