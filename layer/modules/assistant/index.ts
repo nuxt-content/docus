@@ -32,6 +32,9 @@ const defaults: Required<AssistantModuleOptions> = {
 export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
     name: 'assistant',
+    moduleDependencies: {
+      '@comark/nuxt': {},
+    },
   },
   setup(_options, nuxt) {
     const legacyOptions = nuxt.options.assistant
