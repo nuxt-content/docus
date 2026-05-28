@@ -32,7 +32,7 @@
     "@nuxt/ui": "^4.8.0",
     "@nuxtjs/i18n": "^10.4.0",
     "@nuxtjs/mcp-toolkit": "^0.17.2",
-    "@nuxtjs/mdc": "^0.22.0",
+    "@nuxtjs/mdc": "^0.21.0",
     "@nuxtjs/robots": "^6.0.9",
     "@shikijs/core": "^4.1.0",
     "@shikijs/engine-javascript": "^4.1.0",
