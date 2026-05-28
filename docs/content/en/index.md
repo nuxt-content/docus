@@ -61,7 +61,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Optimized by the most famous Vue framework. Docus gives you everything you need to build fast, performant, and SEO-friendly websites.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -86,7 +85,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Beautiful out of the box, minimal by design but highly customizable. Docus leverages Nuxt UI to give you the best docs writing experience with zero boilerplate, just focus on your content.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -99,21 +97,17 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
             ::::::::note{.my-0}
             Here's some additional information for you.
             ::::::::
-
             ::::::::tip{.my-0}
             Here's a helpful suggestion.
             ::::::::
-
             ::::::::warning{.my-0}
             Be careful with this action as it might have unexpected results.
             ::::::::
-
             ::::::::caution{.my-0}
             This action cannot be undone.
             ::::::::
           :::::::
         ::::::
-
         ::::::tabs-item
         ---
         class: mt-5 mb-2 text-xs overflow-x-auto
@@ -124,15 +118,12 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
         ::note
         Here's some additional information.
         ::
-
         ::tip
         Here's a helpful suggestion.
         ::
-
         ::warning
         Be careful with this action as it might have unexpected results.
         ::
-
         ::caution
         This action cannot be undone.
         ::
@@ -146,7 +137,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     The only thing you need to take care about is writing your content. Write your pages in Markdown and extend with MDC syntax to embed Nuxt UI or custom Vue components. Structure, routing, and rendering are handled for you.
     ::::
-
     ::::u-page-card
     ---
     class: col-span-2 md:col-span-1
@@ -159,7 +149,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Let visitors ask questions about your documentation in natural language. The assistant searches your content and provides accurate answers with source citations.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -174,7 +163,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Built-in dark mode provided, no configuration required.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -200,7 +188,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Only focus on ordering your content, Docus handles the search modal and auto-generates the side navigation for you.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -217,7 +204,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Write and manage your content visually, with zero Markdown knowledge required. Let your non technical colleagues collaborate on the documentation and integrate Vue components without code skills.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -242,7 +228,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Docus automatically converts Markdown images to use `<NuxtImg>` .
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -267,7 +252,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Built-in i18n support with automatic routing and content management. Create multi-language documentation effortlessly.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -292,7 +276,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Built-in Model Context Protocol server connects your documentation to AI tools like Cursor, VS Code, and Claude. Automatic generation of `llms.txt` and `llms-full.txt` files for seamless LLM integration.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -320,7 +303,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
     #description
     Update colors, social links, header logos and component styles globally using the `app.config.ts`, no direct code modifications required.
     ::::
-
     ::::u-page-card
     ---
     spotlight: true
@@ -338,7 +320,6 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
           ---
           Read Documentation
           :::::::
-
           :::::::u-button
           ---
           block: true
