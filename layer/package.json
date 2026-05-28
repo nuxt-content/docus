@@ -32,6 +32,7 @@
     "@nuxt/ui": "^4.8.0",
     "@nuxtjs/i18n": "^10.4.0",
     "@nuxtjs/mcp-toolkit": "^0.17.2",
+    "@comark/nuxt": "^0.3.1",
     "@nuxtjs/mdc": "^0.22.0",
     "@nuxtjs/robots": "^6.0.9",
     "@shikijs/core": "^4.1.0",
@@ -60,7 +61,6 @@
     "@ai-sdk/gateway": "^3.0.120",
     "@ai-sdk/mcp": "^1.0.43",
     "@ai-sdk/vue": "^3.0.191",
-    "@comark/nuxt": "^0.3.1",
     "ai": "^6.0.191",
     "better-sqlite3": "12.x",
     "nuxt": "4.x"
@@ -69,7 +69,6 @@
     "@ai-sdk/gateway": { "optional": true },
     "@ai-sdk/mcp": { "optional": true },
     "@ai-sdk/vue": { "optional": true },
-    "@comark/nuxt": { "optional": true },
     "ai": { "optional": true }
   }
 }

@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         dir: join(nuxt.options.srcDir, 'assets/icons'),
       })
     },
+    '@comark/nuxt',
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
