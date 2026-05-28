@@ -4,6 +4,9 @@ packages:
   - docs
   - layer
 
+overrides:
+  '@nuxtjs/mdc': '0.21.1'
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'

@@ -34,7 +34,6 @@
     "vue-tsc": "^3.3.1"
   },
   "resolutions": {
-    "@nuxtjs/mdc": "^0.21.0",
     "@nuxt/content": "^3.14.0",
     "unimport": "5.6.0"
   },
