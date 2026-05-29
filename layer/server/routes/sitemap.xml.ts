@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
       ) => { all: () => Promise<Array<Record<string, unknown> & { path?: string }>> })(event, collection).all()
 
       for (const page of pages) {
-        const meta = page as Record<string, unknown>
+        const meta = page.meta as Record<string, unknown>
         const pagePath = page.path || '/'
 
         // Skip pages with sitemap: false in frontmatter
