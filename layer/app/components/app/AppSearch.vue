@@ -9,18 +9,18 @@ const appConfig = useAppConfig()
 const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, isEnabled } = useDocusI18n()
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
-const useFts = (appConfig.search as { fts?: boolean })?.fts
+const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` : 'docs') as keyof PageCollections)
+const useFts = appConfig.search.fts
 
 const { data: files } = useFts
   ? { data: ref(null) }
-  : useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value as keyof PageCollections), {
+  : useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value), {
       server: false,
       watch: [locale],
     })
 
 const { search, status: searchStatus, init } = useFts
-  ? useSearchCollection(collectionName as unknown as ComputedRef<keyof PageCollections>, { immediate: false, ignoredTags: ['style'] })
+  ? useSearchCollection(collectionName, { immediate: false, ignoredTags: ['style'] })
   : { search: undefined, status: ref(undefined), init: () => {} }
 
 if (useFts) {

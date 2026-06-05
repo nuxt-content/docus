@@ -62,6 +62,14 @@ declare module 'nuxt/schema' {
       branch: string
       rootDir?: string
     } | false
+    search: {
+      /**
+       * Use SQLite FTS5 full-text search instead of Fuse.js.
+       * Requires @nuxt/content v3.14+.
+       * @default false
+       */
+      fts: boolean
+    }
     assistant?: {
       /**
        * Show the floating input at the bottom of documentation pages.
