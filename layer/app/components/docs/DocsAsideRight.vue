@@ -8,7 +8,6 @@ const props = defineProps<{
 
 const links = computed(() => props.page?.body?.toc?.links || [])
 
-const { shouldPushContent: shouldHideToc } = useAssistant()
 const { subNavigationMode } = useSubNavigation()
 const appConfig = useAppConfig()
 const { t } = useDocusI18n()
@@ -19,7 +18,7 @@ const contentTocVariants = useUIConfig('contentToc')
 <template>
   <div>
     <UContentToc
-      v-if="links.length && !shouldHideToc"
+      v-if="links.length"
       :highlight="contentTocVariants.highlight ?? true"
       :highlight-color="contentTocVariants.highlightColor"
       :highlight-variant="contentTocVariants.highlightVariant"

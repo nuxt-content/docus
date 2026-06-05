@@ -4,10 +4,10 @@ const route = useRoute()
 const pageUrl = route.path
 const appConfig = useAppConfig()
 const { t } = useDocusI18n()
-const { isEnabled, open } = useAssistant()
+const { isEnabled, isStudioExpanded, open } = useAssistant()
 
 const showExplainWithAi = computed(() => {
-  return isEnabled.value && appConfig.assistant?.explainWithAi !== false
+  return isEnabled.value && appConfig.assistant?.explainWithAi !== false && !isStudioExpanded.value
 })
 
 const explainIcon = computed(() => appConfig.assistant?.icons?.explain || 'i-lucide-brain')

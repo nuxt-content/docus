@@ -4,7 +4,7 @@ import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const route = useRoute()
 const appConfig = useAppConfig()
-const { open, isOpen } = useAssistant()
+const { open, isOpen, isStudioExpanded } = useAssistant()
 const { t } = useDocusI18n()
 const input = ref('')
 const isVisible = ref(true)
@@ -54,7 +54,7 @@ function onEscape() {
 <template>
   <AnimatePresence>
     <motion.div
-      v-if="isFloatingInputEnabled && isDocsRoute && isVisible && !isOpen"
+      v-if="isFloatingInputEnabled && isDocsRoute && isVisible && !isOpen && !isStudioExpanded"
       key="floating-input"
       :initial="{ y: 20, opacity: 0 }"
       :animate="{ y: 0, opacity: 1 }"

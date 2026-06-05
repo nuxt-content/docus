@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ShikiCachedRenderer } from 'shiki-stream/vue'
+import { ShikiCachedRenderer } from '@shikijs/stream/vue'
 import { useColorMode } from '#imports'
 import { useHighlighter } from '../composables/useHighlighter'
 

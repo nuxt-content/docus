@@ -9,10 +9,9 @@ definePageMeta({
 
 const route = useRoute()
 const { locale, isEnabled, t } = useDocusI18n()
+const { isOpen } = useAssistant()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const { shouldPushContent: shouldHideToc } = useAssistant()
-
 const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
@@ -75,8 +74,7 @@ addPrerenderPath(`/raw${route.path}.md`)
 <template>
   <UPage
     v-if="page"
-    :key="`page-${shouldHideToc}`"
-    :ui="{ root: 'lg:grid-cols-12', center: 'lg:col-span-9', right: 'lg:col-span-3' }"
+    :ui="isOpen ? { center: 'lg:col-span-10' } : undefined"
   >
     <UPageHeader
       :title="page.title"
@@ -136,7 +134,10 @@ addPrerenderPath(`/raw${route.path}.md`)
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template #right>
+    <template
+      v-if="!isOpen"
+      #right
+    >
       <DocsAsideRight
         :page="page"
       />

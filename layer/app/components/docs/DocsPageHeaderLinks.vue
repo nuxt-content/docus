@@ -14,8 +14,8 @@ const { t } = useDocusI18n()
 
 const markdownLink = computed(() => `${window?.location?.origin}${withTrailingSlash(appBaseURL)}raw${route.path}.md`)
 const mcpServerUrl = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, mcpRoute)}`)
-const mcpDeeplink = joinURL(mcpRoute, 'deeplink')
-const items = [
+const mcpDeeplink = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, mcpRoute, 'deeplink')}`)
+const items = computed(() => [
   [{
     label: t('docs.copy.link'),
     icon: 'i-lucide-link',
@@ -57,10 +57,10 @@ const items = [
       label: 'Add MCP Server',
       icon: 'i-simple-icons:cursor',
       target: '_blank',
-      to: mcpDeeplink,
+      to: mcpDeeplink.value,
     },
   ],
-]
+])
 
 async function copyPage() {
   const page = await $fetch<string>(`/raw${route.path}.md`)

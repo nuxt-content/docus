@@ -120,23 +120,23 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
         icon: i-lucide-code
         label: Code
         ---
-        ```mdc
-        ::note
-        Here's some additional information.
-        ::
+```mdc
+::note
+Here's some additional information.
+::
 
-        ::tip
-        Here's a helpful suggestion.
-        ::
+::tip
+Here's a helpful suggestion.
+::
 
-        ::warning
-        Be careful with this action as it might have unexpected results.
-        ::
+::warning
+Be careful with this action as it might have unexpected results.
+::
 
-        ::caution
-        This action cannot be undone.
-        ::
-        ```
+::caution
+This action cannot be undone.
+::
+```
         ::::::
       :::::
 

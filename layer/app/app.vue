@@ -2,10 +2,12 @@
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 import { transformNavigation } from './utils/navigation'
+import { useDocusShortcuts } from './composables/useDocusShortcuts'
 import { useSubNavigation } from './composables/useSubNavigation'
 
 const appConfig = useAppConfig()
 const { seo } = appConfig
+useDocusShortcuts()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled, panelWidth: assistantPanelWidth, shouldPushContent } = useAssistant()

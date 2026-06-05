@@ -1,9 +1,9 @@
-import { z } from 'zod'
-import { joinURL } from 'ufo'
-import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getCollectionsToQuery, getAvailableLocales } from '../../utils/content'
+import { queryCollection } from '@nuxt/content/server'
+import { joinURL } from 'ufo'
+import { z } from 'zod'
 import { inferSiteURL } from '../../../utils/meta'
+import { getAvailableLocales, getCollectionsToQuery } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -52,6 +52,7 @@ OUTPUT: Returns a structured list with:
       const allPages = await Promise.all(
         collections.map(async (collectionName) => {
           const pages = await queryCollection(event, collectionName as keyof Collections)
+            .where('path', 'NOT LIKE', '%.navigation')
             .select('title', 'path', 'description')
             .all()
 

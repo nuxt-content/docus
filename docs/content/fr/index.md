@@ -120,23 +120,23 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
         icon: i-lucide-code
         label: Code
         ---
-        ```mdc
-        ::note
-        Voici des informations supplémentaires.
-        ::
+```mdc
+::note
+Voici des informations supplémentaires.
+::
 
-        ::tip
-        Voici une suggestion utile.
-        ::
+::tip
+Voici une suggestion utile.
+::
 
-        ::warning
-        Faites attention à cette action car elle pourrait avoir des résultats inattendus.
-        ::
+::warning
+Faites attention à cette action car elle pourrait avoir des résultats inattendus.
+::
 
-        ::caution
-        Cette action est irréversible.
-        ::
-        ```
+::caution
+Cette action est irréversible.
+::
+```
         ::::::
       :::::
 

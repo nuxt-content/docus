@@ -1,9 +1,9 @@
-import { z } from 'zod'
-import { joinURL } from 'ufo'
-import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
-import { getAvailableLocales, getCollectionFromPath } from '../../utils/content'
+import { queryCollection } from '@nuxt/content/server'
+import { joinURL } from 'ufo'
+import { z } from 'zod'
 import { inferSiteURL } from '../../../utils/meta'
+import { getAvailableLocales, getCollectionFromPath, isNavigationPath } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Retrieves the full content and details of a specific documentation page.
@@ -25,7 +25,9 @@ WORKFLOW: This tool returns the complete page content including title, descripti
     openWorldHint: false,
   },
   inputSchema: {
-    path: z.string().describe('The page path from list-pages or provided by the user (e.g., /en/getting-started/installation)'),
+    path: z.string().describe(
+      'The page path from list-pages or provided by the user (e.g., /en/getting-started/installation)',
+    ),
   },
   inputExamples: [
     { path: '/en/getting-started/installation' },
@@ -33,6 +35,10 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   ],
   cache: '1h',
   handler: async ({ path }) => {
+    if (isNavigationPath(path)) {
+      throw createError({ statusCode: 404, message: 'Page not found' })
+    }
+
     const event = useEvent()
     const config = useRuntimeConfig(event)
     const publicConfig = config.public
