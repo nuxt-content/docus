@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm run docs:dev",
-    "docs:dev": "cd docs && nuxt dev --extends ../layer",
+    "docs:dev": "cd docs && TMPDIR=/tmp nuxt dev --extends ../layer",
     "docs:build": "nuxt build docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer && nuxt prepare playground --extends ../layer",
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
@@ -25,17 +25,17 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/eslint-config": "^1.15.2",
-    "@release-it/bumper": "^7.0.5",
-    "@release-it/conventional-changelog": "^11.0.0",
-    "eslint": "^10.4.0",
-    "nuxt": "4.4.6",
-    "release-it": "^20.0.1",
+    "@release-it/bumper": "^7.0.6",
+    "@release-it/conventional-changelog": "^11.0.1",
+    "eslint": "^10.4.1",
+    "nuxt": "4.4.7",
+    "release-it": "^20.2.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.1"
+    "vue-tsc": "^3.3.3"
   },
   "resolutions": {
     "@nuxt/content": "^3.14.0",
     "unimport": "5.6.0"
   },
-  "packageManager": "pnpm@11.3.0"
+  "packageManager": "pnpm@11.5.1"
 }

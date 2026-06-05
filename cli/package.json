@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@nuxt/cli": "3.35.2",
-    "@nuxt/kit": "^4.4.6",
+    "@nuxt/kit": "^4.4.7",
     "c12": "^3.3.4",
     "citty": "^0.2.2",
     "defu": "^6.1.7",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "tsup": "^8.5.1",
-    "tsx": "^4.22.3"
+    "tsx": "^4.22.4"
   },
-  "packageManager": "pnpm@11.3.0"
+  "packageManager": "pnpm@11.5.1"
 }
