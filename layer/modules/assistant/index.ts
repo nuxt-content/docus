@@ -33,9 +33,6 @@ export default defineNuxtModule<AssistantModuleOptions>({
   meta: {
     name: 'assistant',
   },
-  moduleDependencies: {
-    '@comark/nuxt': {},
-  },
   setup(_options, nuxt) {
     const legacyOptions = nuxt.options.assistant
     if (legacyOptions && Object.keys(legacyOptions).length > 0) {
@@ -77,6 +74,11 @@ export default defineNuxtModule<AssistantModuleOptions>({
       }),
     )
 
+    addComponent({
+      name: 'AssistantComark',
+      filePath: resolve('./runtime/components/AssistantComark'),
+    })
+
     if (!hasAiGatewayAuth) {
       nuxt.hook('modules:done', () => {
         log.warn('AI assistant disabled: neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN` found')
@@ -88,11 +90,6 @@ export default defineNuxtModule<AssistantModuleOptions>({
       mcpServer: options.mcpServer,
       model: options.model,
     }
-
-    addComponent({
-      name: 'AssistantComark',
-      filePath: resolve('./runtime/components/AssistantComark'),
-    })
 
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
