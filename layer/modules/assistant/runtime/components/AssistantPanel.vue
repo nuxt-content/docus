@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { ToolUIPart, DynamicToolUIPart } from 'ai'
-import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart, getToolName } from 'ai'
+import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart } from 'ai'
 import { Chat } from '@ai-sdk/vue'
 import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
+import { getToolText, getToolSuffix, getToolIcon } from '../../../../app/utils/assistantTools'
 import AssistantComark from './AssistantComark'
 import AssistantIndicator from './AssistantIndicator.vue'
 
@@ -71,54 +72,22 @@ watch(messages, (newMessages) => {
 const canClear = computed(() => messages.value.length > 0)
 
 type ToolPart = ToolUIPart | DynamicToolUIPart
-type ToolState = ToolPart['state']
-
-function getToolMessage(state: ToolState, toolName: string, input: Record<string, string | undefined>) {
-  const searchVerb = state === 'output-available' ? 'Searched' : 'Searching'
-  const readVerb = state === 'output-available' ? 'Read' : 'Reading'
-
-  return {
-    'list-pages': `${searchVerb} pages`,
-    'get-page': `${readVerb} ${input.path || '...'}`,
-  }[toolName] || `${searchVerb} ${toolName}`
-}
-
-function getToolText(part: ToolPart) {
-  return getToolMessage(part.state, getToolName(part), (part.input || {}) as Record<string, string | undefined>)
-}
-
-function getToolIcon(part: ToolPart): string {
-  const toolName = getToolName(part)
-
-  return {
-    'get-page': 'i-lucide-file-text',
-  }[toolName] || 'i-lucide-search'
-}
 
 function getToolOutput(part: ToolPart): string | undefined {
   if (part.state !== 'output-available' || !part.output) return undefined
 
   const output = part.output as Record<string, unknown>
+  const content = (output.content ?? output) as Array<{ text?: string }> | string
 
-  if (getToolName(part) === 'list-pages') {
-    const content = (output.content ?? output) as Array<{ text?: string }> | string
-    if (typeof content === 'string') return content
-    return content
-      ?.map(c => c.text)
-      .filter(Boolean)
-      .join('\n') || undefined
+  if (typeof content === 'string') {
+    return content || undefined
   }
 
-  if (getToolName(part) === 'get-page') {
-    const content = (output.content ?? output) as Array<{ text?: string }> | string
-    if (typeof content === 'string') {
-      return content.length > 500 ? `${content.slice(0, 500)}…` : content
-    }
-    const text = content?.map(c => c.text).filter(Boolean).join('\n') || ''
-    return text.length > 500 ? `${text.slice(0, 500)}…` : text || undefined
+  if (Array.isArray(content)) {
+    return content.map(c => c.text).filter(Boolean).join('\n') || undefined
   }
 
-  return JSON.stringify(output, null, 2).slice(0, 500)
+  return JSON.stringify(output, null, 2)
 }
 
 function onSubmit() {
@@ -214,7 +183,7 @@ defineShortcuts({
         :status="chat.status"
         compact
         class="px-0 gap-2"
-        :user="{ ui: { container: 'max-w-full' } }"
+        :user="{ ui: { container: 'max-w-full pb-3' } }"
       >
         <template #indicator>
           <AssistantIndicator />
@@ -230,6 +199,7 @@ defineShortcuts({
               :text="part.text"
               :streaming="isPartStreaming(part)"
               icon="i-lucide-brain"
+              chevron="leading"
             >
               <AssistantComark
                 :markdown="part.text"
@@ -254,13 +224,14 @@ defineShortcuts({
             <UChatTool
               v-else-if="isToolUIPart(part)"
               :text="getToolText(part)"
+              :suffix="getToolSuffix(part)"
               :icon="getToolIcon(part)"
               :streaming="isToolStreaming(part)"
               chevron="leading"
             >
               <pre
                 v-if="getToolOutput(part)"
-                class="text-xs text-dimmed whitespace-pre-wrap"
+                class="text-xs text-muted whitespace-pre-wrap break-all rounded-md border border-muted bg-muted p-2 max-h-64 overflow-y-auto"
                 v-text="getToolOutput(part)"
               />
             </UChatTool>
