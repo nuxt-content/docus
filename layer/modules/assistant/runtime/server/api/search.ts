@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages } from 'ai'
+import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
 import type { ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import type { H3Event } from 'h3'
@@ -20,19 +20,6 @@ function createLocalFetch(event: H3Event): typeof fetch {
 
     return event.fetch(localPath, init)
   }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function stopWhenResponseComplete({ steps }: { steps: { text?: string, toolCalls?: unknown[] }[] }): boolean {
-  const lastStep = steps.at(-1)
-  if (!lastStep) return false
-
-  const hasText = Boolean(lastStep.text && lastStep.text.trim().length > 0)
-  const hasNoToolCalls = !lastStep.toolCalls || lastStep.toolCalls.length === 0
-
-  if (hasText && hasNoToolCalls) return true
-
-  return steps.length >= MAX_STEPS
 }
 
 function getSystemPrompt(siteName: string) {
@@ -115,13 +102,24 @@ export default defineEventHandler(async (event) => {
 
   return streamText({
     model: config.assistant.model,
-    maxOutputTokens: 4000,
+    maxOutputTokens: 8000,
     maxRetries: 2,
     abortSignal: abortController.signal,
-    stopWhen: stopWhenResponseComplete,
+    stopWhen: stepCountIs(MAX_STEPS),
+    // On the last allowed step, disable tools so the model is forced to
+    // produce a final text answer instead of stopping mid tool-calling.
+    prepareStep: ({ stepNumber }) => {
+      return stepNumber >= MAX_STEPS - 1 ? { toolChoice: 'none' } : {}
+    },
+    providerOptions: {
+      gateway: {
+        caching: 'auto',
+      },
+    },
     system: getSystemPrompt(siteName),
     messages: await convertToModelMessages(messages),
     tools: mcpTools as ToolSet,
+    experimental_transform: smoothStream(),
     onFinish: closeMcp,
     onAbort: closeMcp,
     onError: closeMcp,

@@ -92,7 +92,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center text-xs text-muted overflow-hidden">
+  <div class="flex items-center text-sm text-muted overflow-hidden">
     <div
       class="shrink-0 mr-2 grid"
       :style="{
@@ -111,6 +111,6 @@ onUnmounted(() => {
       />
     </div>
 
-    <UChatShimmer :text="displayedText" class="font-mono tracking-tight" />
+    <UChatShimmer :text="displayedText" />
   </div>
 </template>
