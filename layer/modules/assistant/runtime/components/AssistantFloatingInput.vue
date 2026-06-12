@@ -49,6 +49,18 @@ defineShortcuts(shortcuts)
 function onEscape() {
   inputRef.value?.inputRef?.blur()
 }
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+    event.preventDefault()
+    handleSubmit()
+    return
+  }
+
+  if (event.key === 'Escape') {
+    onEscape()
+  }
+}
 </script>
 
 <template>
@@ -79,8 +91,7 @@ function onEscape() {
               base: 'bg-default shadow-lg rounded-xl text-base',
               trailing: 'pe-2',
             }"
-            @keydown.enter.exact.prevent="handleSubmit"
-            @keydown.escape="onEscape"
+            @keydown="onKeydown"
           >
             <template #trailing>
               <div class="flex items-center gap-2">
