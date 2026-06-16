@@ -44,7 +44,7 @@ const tocDrawerOpen = ref(false)
           :navigation="sidebarNavigation"
           :highlight="contentNavVariants.highlight ?? true"
           :highlight-color="contentNavVariants.highlightColor"
-          :variant="contentNavVariants.variant ?? 'pill'"
+          :variant="contentNavVariants.variant ?? 'link'"
           :color="contentNavVariants.color"
           default-open
           trailing-icon="i-lucide-chevron-right"

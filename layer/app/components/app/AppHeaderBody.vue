@@ -23,7 +23,7 @@ const items = computed<ContentNavigationItem[]>(() => {
     :collapsible="false"
     :highlight="contentNavVariants.highlight ?? true"
     :highlight-color="contentNavVariants.highlightColor"
-    :variant="contentNavVariants.variant ?? 'pill'"
+    :variant="contentNavVariants.variant ?? 'link'"
     :color="contentNavVariants.color"
     :navigation="items"
   />
