@@ -15,28 +15,19 @@ export default defineAppConfig({
       slots: {
         item: 'items-center',
         input: '[&_.iconify]:size-4 [&_.iconify]:mx-0.5',
-        itemLeadingIcon: 'size-4 mx-0.5',
       },
-    },
-    contentToc: {
-      defaultVariants: {
-        highlightVariant: 'circuit',
+      variants: {
+        size: {
+          md: {
+            itemLeadingIcon: 'size-4 mx-0.5',
+          },
+        },
       },
     },
     contentNavigation: {
       slots: {
-        linkLeadingIcon: 'size-4 mr-1',
+        linkLeadingIcon: 'size-4 mx-0.5',
         linkTrailing: 'hidden',
-      },
-      defaultVariants: {
-        variant: 'link',
-        highlight: true,
-      },
-    },
-    navigationMenu: {
-      defaultVariants: {
-        variant: 'pill',
-        highlight: true,
       },
     },
     pageLinks: {

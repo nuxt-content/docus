@@ -34,8 +34,8 @@ const tocDrawerOpen = ref(false)
         :label="t('docs.menu')"
         icon="i-lucide-text-align-start"
         color="neutral"
-        variant="link"
-        size="xs"
+        variant="ghost"
+        square
         :aria-label="t('docs.menu')"
       />
 
@@ -44,7 +44,7 @@ const tocDrawerOpen = ref(false)
           :navigation="sidebarNavigation"
           :highlight="contentNavVariants.highlight ?? true"
           :highlight-color="contentNavVariants.highlightColor"
-          :variant="contentNavVariants.variant ?? 'link'"
+          :variant="contentNavVariants.variant ?? 'pill'"
           :color="contentNavVariants.color"
           default-open
           trailing-icon="i-lucide-chevron-right"
@@ -67,7 +67,7 @@ const tocDrawerOpen = ref(false)
         trailing-icon="i-lucide-chevron-right"
         color="neutral"
         variant="link"
-        size="xs"
+        square
         :aria-label="t('docs.toc')"
       />
 
@@ -76,7 +76,7 @@ const tocDrawerOpen = ref(false)
           v-if="links?.length"
           :highlight="contentTocVariants.highlight ?? true"
           :highlight-color="contentTocVariants.highlightColor"
-          :highlight-variant="contentTocVariants.highlightVariant"
+          :highlight-variant="contentTocVariants.highlightVariant ?? 'circuit'"
           :color="contentTocVariants.color"
           :links="links"
           :open="true"

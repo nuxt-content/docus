@@ -24,7 +24,7 @@ interface UIConfigMap {
 export function useUIConfig<K extends keyof UIConfigMap>(componentName: K): ComputedRef<UIConfigMap[K]> {
   const appConfig = useAppConfig()
   return computed(() => {
-    const ui = appConfig.ui
+    const ui = appConfig.ui as Record<K, { defaultVariants?: UIConfigMap[K] } | undefined>
     return (ui?.[componentName]?.defaultVariants || {}) as UIConfigMap[K]
   })
 }

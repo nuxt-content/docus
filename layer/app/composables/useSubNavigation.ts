@@ -1,6 +1,6 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 
-function getFirstPagePath(item: ContentNavigationItem): string {
+export function getFirstPagePath(item: ContentNavigationItem): string {
   let current = item
   while (current.children?.length) {
     current = current.children[0]!
