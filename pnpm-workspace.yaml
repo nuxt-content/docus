@@ -4,6 +4,9 @@ packages:
   - docs
   - layer
 
+overrides:
+  h3: 1.15.11
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
