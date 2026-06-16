@@ -223,7 +223,7 @@ defineShortcuts({
 
             <UChatTool
               v-else-if="isToolUIPart(part)"
-              :text="getToolText(part)"
+              :text="getToolText(part, t)"
               :suffix="getToolSuffix(part)"
               :icon="getToolIcon(part)"
               :streaming="isToolStreaming(part)"

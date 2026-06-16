@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
+
+const { t } = useDocusI18n()
+
 const size = 4
 const dotSize = 2
 const gap = 2
@@ -32,9 +36,14 @@ function nextStep() {
   }
 }
 
-const statusMessages = ['Thinking...', 'Searching...', 'Reading...', 'Analyzing...']
+const statusMessages = computed(() => [
+  t('assistant.loading.thinking'),
+  t('assistant.loading.searching'),
+  t('assistant.loading.reading'),
+  t('assistant.loading.analyzing'),
+])
 const currentIndex = ref(0)
-const displayedText = ref(statusMessages[0]!)
+const displayedText = ref(statusMessages.value[0]!)
 const chars = 'abcdefghijklmnopqrstuvwxyz'
 
 function scramble(from: string, to: string) {
@@ -80,8 +89,8 @@ onMounted(() => {
   matrixInterval = setInterval(nextStep, 120)
   textInterval = setInterval(() => {
     const prev = displayedText.value
-    currentIndex.value = (currentIndex.value + 1) % statusMessages.length
-    scramble(prev, statusMessages[currentIndex.value]!)
+    currentIndex.value = (currentIndex.value + 1) % statusMessages.value.length
+    scramble(prev, statusMessages.value[currentIndex.value]!)
   }, 3500)
 })
 

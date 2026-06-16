@@ -3,18 +3,20 @@ import type { ToolUIPart, DynamicToolUIPart } from 'ai'
 
 export type AssistantToolPart = ToolUIPart | DynamicToolUIPart
 
-const VERBS: Record<string, [active: string, done: string]> = {
-  list: ['Searching', 'Searched'],
-  search: ['Searching', 'Searched'],
-  find: ['Searching', 'Searched'],
-  query: ['Searching', 'Searched'],
-  get: ['Reading', 'Read'],
-  read: ['Reading', 'Read'],
-  fetch: ['Reading', 'Read'],
-  show: ['Finding', 'Found'],
-  open: ['Opening', 'Opened'],
-  generate: ['Generating', 'Generated'],
-  create: ['Creating', 'Created'],
+type Translator = (key: string) => string
+
+const VERB_KEYS: Record<string, [active: string, done: string]> = {
+  list: ['searching', 'searched'],
+  search: ['searching', 'searched'],
+  find: ['searching', 'searched'],
+  query: ['searching', 'searched'],
+  get: ['reading', 'read'],
+  read: ['reading', 'read'],
+  fetch: ['reading', 'read'],
+  show: ['finding', 'found'],
+  open: ['opening', 'opened'],
+  generate: ['generating', 'generated'],
+  create: ['creating', 'created'],
 }
 
 const SUFFIX_KEYS = [
@@ -33,24 +35,23 @@ const SUFFIX_KEYS = [
   'id',
 ]
 
-function parseToolName(toolName: string): { verb?: [string, string], label: string } {
+function parseToolName(toolName: string): { verbKey?: [string, string], label: string } {
   const parts = toolName.split(/[-_\s]+/).filter(Boolean)
   const head = parts[0]?.toLowerCase()
 
-  if (head && VERBS[head] && parts.length > 1) {
-    return { verb: VERBS[head], label: parts.slice(1).join(' ') }
+  if (head && VERB_KEYS[head] && parts.length > 1) {
+    return { verbKey: VERB_KEYS[head], label: parts.slice(1).join(' ') }
   }
 
   return { label: parts.join(' ') || toolName }
 }
 
-export function getToolText(part: AssistantToolPart): string {
+export function getToolText(part: AssistantToolPart, t: Translator): string {
   const done = part.state === 'output-available'
-  const { verb, label } = parseToolName(getToolName(part))
+  const { verbKey, label } = parseToolName(getToolName(part))
+  const key = verbKey ? verbKey[done ? 1 : 0] : (done ? 'searched' : 'searching')
 
-  if (verb) return `${done ? verb[1] : verb[0]} ${label}`
-
-  return `${done ? 'Searched' : 'Searching'} ${label}`
+  return `${t(`assistant.tools.${key}`)} ${label}`.trim()
 }
 
 export function getToolSuffix(part: AssistantToolPart): string | undefined {

@@ -99,7 +99,7 @@ function resetChat() {
           <template #indicator>
             <UChatTool
               icon="i-lucide-brain"
-              text="Thinking..."
+              :text="t('assistant.loading.thinking')"
               streaming
             />
           </template>
@@ -116,7 +116,7 @@ function resetChat() {
 
               <UChatTool
                 v-else-if="isToolUIPart(part)"
-                :text="getToolText(part)"
+                :text="getToolText(part, t)"
                 :suffix="getToolSuffix(part)"
                 :icon="getToolIcon(part)"
                 :streaming="isToolStreaming(part)"
