@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.12.1](https://github.com/nuxt-content/docus/compare/v5.12.0...v5.12.1) (2026-06-08)
+
+### Bug Fixes
+
+* **deps:** remove useless peers and fix comp resolving ([#1391](https://github.com/nuxt-content/docus/issues/1391)) ([5de9fdc](https://github.com/nuxt-content/docus/commit/5de9fdc90dff2d61d171aa31300a259559a699c2))
+
 ## [5.12.0](https://github.com/nuxt-content/docus/compare/v5.11.0...v5.12.0) (2026-06-05)
 
 ### Features

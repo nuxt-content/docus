@@ -1,7 +1,7 @@
 {
   "name": "create-docus",
   "description": "CLI for creating Docus documentation projects",
-  "version": "5.12.0",
+  "version": "5.12.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-content/docus.git"
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@nuxt/cli": "3.35.2",
-    "@nuxt/kit": "^4.4.7",
+    "@nuxt/kit": "^4.4.8",
     "c12": "^3.3.4",
     "citty": "^0.2.2",
     "defu": "^6.1.7",
@@ -30,9 +30,9 @@
     "unctx": "^2.5.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.3",
     "tsup": "^8.5.1",
     "tsx": "^4.22.4"
   },
-  "packageManager": "pnpm@11.5.1"
+  "packageManager": "pnpm@11.6.0"
 }
