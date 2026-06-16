@@ -27,15 +27,15 @@
     "@nuxt/eslint-config": "^1.16.0",
     "@release-it/bumper": "^7.0.6",
     "@release-it/conventional-changelog": "^11.0.1",
-    "eslint": "^10.4.1",
+    "eslint": "^10.5.0",
     "nuxt": "4.4.8",
     "release-it": "^20.2.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.4"
+    "vue-tsc": "^3.3.5"
   },
   "resolutions": {
     "@nuxt/content": "^3.14.0",
     "unimport": "5.6.0"
   },
-  "packageManager": "pnpm@11.5.2"
+  "packageManager": "pnpm@11.6.0"
 }

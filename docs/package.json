@@ -14,10 +14,10 @@
     "docus": "workspace:*",
     "nuxt": "4.4.8",
     "nuxt-studio": "^1.7.0",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
-    "@ai-sdk/vue": "^3.0.199",
-    "ai": "^6.0.199"
+    "@ai-sdk/vue": "^3.0.205",
+    "ai": "^6.0.205"
   }
 }
