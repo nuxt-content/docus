@@ -23,9 +23,9 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.133",
-    "@ai-sdk/mcp": "^1.0.52",
-    "@ai-sdk/vue": "^3.0.208",
+    "@ai-sdk/gateway": "3.0.131",
+    "@ai-sdk/mcp": "1.0.50",
+    "@ai-sdk/vue": "3.0.205",
     "@comark/vue": "^0.4.0",
     "@iconify-json/lucide": "^1.2.114",
     "@iconify-json/simple-icons": "^1.2.86",
@@ -45,7 +45,7 @@
     "@shikijs/themes": "^4.2.0",
     "@takumi-rs/core": "^1.8.6",
     "@vueuse/core": "^14.3.0",
-    "ai": "^6.0.208",
+    "ai": "6.0.205",
     "defu": "^6.1.7",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
