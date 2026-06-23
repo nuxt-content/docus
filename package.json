@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "pnpm run docs:dev",
     "docs:dev": "cd docs && TMPDIR=/tmp nuxt dev --extends ../layer",
-    "docs:build": "nuxt build docs --extends ../layer",
+    "docs:build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer && nuxt prepare playground --extends ../layer",
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
     "lint": "eslint .",
