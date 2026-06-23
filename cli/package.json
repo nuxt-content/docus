@@ -34,5 +34,5 @@
     "tsup": "^8.5.1",
     "tsx": "^4.22.4"
   },
-  "packageManager": "pnpm@11.6.0"
+  "packageManager": "pnpm@11.8.0"
 }
