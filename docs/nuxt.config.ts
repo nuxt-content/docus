@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   extends: ['docus'],
-  modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n', 'nuxt-studio'],
   site: {
     name: 'Docus',
   },
@@ -38,13 +38,13 @@ export default defineNuxtConfig({
     name: 'Docus documentation',
     browserRedirect: '/en/ai/mcp',
   },
-  // studio: {
-  //   route: '/admin',
-  //   repository: {
-  //     provider: 'github',
-  //     owner: 'nuxt-content',
-  //     repo: 'docus',
-  //     rootDir: 'docs',
-  //   },
-  // },
+  studio: {
+    route: '/admin',
+    repository: {
+      provider: 'github',
+      owner: 'nuxt-content',
+      repo: 'docus',
+      rootDir: 'docs',
+    },
+  },
 })
