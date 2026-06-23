@@ -6,6 +6,7 @@ packages:
 
 overrides:
   h3: 1.15.11
+  tailwindcss: 4.3.0
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'
