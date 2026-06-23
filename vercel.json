@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "NODE_OPTIONS='--max-old-space-size=7168' pnpm run docs:build"
+}
