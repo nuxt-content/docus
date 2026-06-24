@@ -14,6 +14,7 @@ export default defineNuxtModule({
     const resolver = createResolver(import.meta.url)
 
     const contentDir = resolve(nuxt.options.rootDir, 'content')
+    const appConfigPath = resolve(nuxt.options.srcDir, 'app.config.ts')
     const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
     const layerDir = resolver.resolve('../app')
@@ -34,13 +35,14 @@ export default defineNuxtModule({
 
     const cssTemplate = addTemplate({
       filename: 'docus.css',
+      write: true,
       getContents: () => {
         return `@import ${JSON.stringify(tailwindPath)};
 @import ${JSON.stringify(uiPath)};
 
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
-@source "../../app.config.ts";
+@source "${appConfigPath.replace(/\\/g, '/')}";
 @source "${assistantDir.replace(/\\/g, '/')}/**/*";
 
 html.dark .shiki span {
