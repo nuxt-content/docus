@@ -19,6 +19,8 @@ export default defineNuxtModule({
     const layerDir = resolver.resolve('../app')
     const assistantDir = resolver.resolve('../modules/assistant')
 
+    const appConfigPath = resolve(nuxt.options.srcDir, 'app.config.ts')
+
     let userDocusPath: string | null = resolve(nuxt.options.srcDir, 'app.css')
     if (existsSync(userDocusPath)) {
       const userDocusCss = await readFile(userDocusPath, 'utf-8')
@@ -40,8 +42,8 @@ export default defineNuxtModule({
 
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
-@source "../../app.config.ts";
 @source "${assistantDir.replace(/\\/g, '/')}/**/*";
+${existsSync(appConfigPath) ? `@source "${appConfigPath.replace(/\\/g, '/')}";` : ''}
 
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
