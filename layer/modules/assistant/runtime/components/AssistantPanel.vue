@@ -23,6 +23,12 @@ const open = computed({
   },
 })
 
+const promptRef = ref<{ textareaRef?: HTMLTextAreaElement } | null>(null)
+watch(open, (value) => {
+  if (!value) return
+  nextTick(() => promptRef.value?.textareaRef?.focus({ preventScroll: true }))
+})
+
 const displayTitle = computed(() => t('assistant.title'))
 const displayPlaceholder = computed(() => t('assistant.placeholder'))
 
@@ -273,6 +279,7 @@ defineShortcuts({
 
     <template #footer>
       <UChatPrompt
+        ref="promptRef"
         v-model="input"
         :error="chat.error"
         :placeholder="displayPlaceholder"

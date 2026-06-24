@@ -148,6 +148,7 @@ function resetChat() {
         :disabled="!isEnabled"
         :placeholder="t('assistant.askAnything')"
         variant="subtle"
+        :autofocus="false"
         size="sm"
         @submit="handleSubmit"
       >
