@@ -15,7 +15,6 @@
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer && nuxt prepare playground --extends ../layer",
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
     "lint": "eslint .",
-    "test:starters": "node test/starters.mjs",
     "typecheck": "nuxt typecheck layer",
     "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck && pnpm run docs:build",
     "layer:release": "release-it --config .release-it.layer.json && cd layer && npm publish",
