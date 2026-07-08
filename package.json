@@ -10,8 +10,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm run docs:dev",
-    "docs:dev": "cd docs && cross-env TMPDIR=/tmp nuxt dev --extends ../layer",
-    "docs:build": "nuxt build docs --extends ../layer",
+    "docs:dev": "nuxt prepare layer && cd docs && cross-env TMPDIR=/tmp nuxt dev --extends ../layer",
+    "docs:build": "nuxt prepare layer && nuxt build docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer && nuxt prepare playground --extends ../layer",
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
     "lint": "eslint .",
