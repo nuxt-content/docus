@@ -159,7 +159,7 @@ defineShortcuts({
           color="neutral"
           variant="ghost"
           aria-label="Close"
-          @click="open = false"
+          @click="() => { open = false }"
         />
       </UTooltip>
     </template>
