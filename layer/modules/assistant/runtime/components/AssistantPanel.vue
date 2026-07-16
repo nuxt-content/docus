@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ToolUIPart, DynamicToolUIPart } from 'ai'
 import { DefaultChatTransport, isToolUIPart, isReasoningUIPart, isTextUIPart } from 'ai'
-import { Chat } from '@ai-sdk/vue'
+import { useChat } from '@ai-sdk/vue'
 import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 import { getToolText, getToolSuffix, getToolIcon } from '../../../../app/utils/assistantTools'
@@ -34,7 +34,14 @@ const displayPlaceholder = computed(() => t('assistant.placeholder'))
 
 let _skipSync = false
 
-const chat = new Chat({
+const {
+  messages: chatMessages,
+  status,
+  error,
+  sendMessage,
+  regenerate,
+  stop,
+} = useChat({
   messages: messages.value,
   transport: new DefaultChatTransport({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.assistant.apiPath,
@@ -59,7 +66,7 @@ const chat = new Chat({
   },
   onFinish: () => {
     _skipSync = true
-    messages.value = [...chat.messages]
+    messages.value = [...chatMessages.value]
     nextTick(() => {
       _skipSync = false
     })
@@ -69,9 +76,10 @@ const chat = new Chat({
 watch(messages, (newMessages) => {
   if (_skipSync) return
 
-  chat.messages = newMessages
-  if (chat.lastMessage?.role === 'user' && chat.status !== 'streaming') {
-    chat.regenerate()
+  chatMessages.value = newMessages
+  const lastMessage = chatMessages.value[chatMessages.value.length - 1]
+  if (lastMessage?.role === 'user' && status.value !== 'streaming') {
+    regenerate()
   }
 })
 
@@ -99,7 +107,7 @@ function getToolOutput(part: ToolPart): string | undefined {
 function onSubmit() {
   if (!input.value.trim()) return
 
-  chat.sendMessage({ text: input.value })
+  sendMessage({ text: input.value })
   input.value = ''
 }
 
@@ -109,11 +117,11 @@ function askQuestion(question: string) {
 }
 
 function clearMessages() {
-  if (chat.status === 'streaming') {
-    chat.stop()
+  if (status.value === 'streaming') {
+    stop()
   }
   messages.value = []
-  chat.messages = []
+  chatMessages.value = []
 }
 
 defineShortcuts({
@@ -183,10 +191,10 @@ defineShortcuts({
       }"
     >
       <UChatMessages
-        v-if="chat.messages.length"
+        v-if="chatMessages.length"
         should-auto-scroll
-        :messages="chat.messages"
-        :status="chat.status"
+        :messages="chatMessages"
+        :status="status"
         compact
         class="px-0 gap-2"
         :user="{ ui: { container: 'max-w-full pb-3' } }"
@@ -281,7 +289,7 @@ defineShortcuts({
       <UChatPrompt
         ref="promptRef"
         v-model="input"
-        :error="chat.error"
+        :error="error"
         :placeholder="displayPlaceholder"
         variant="naked"
         size="sm"
@@ -305,10 +313,10 @@ defineShortcuts({
 
           <UChatPromptSubmit
             size="sm"
-            :status="chat.status"
-            :disabled="chat.status === 'ready' && !input.trim()"
-            @stop="chat.stop()"
-            @reload="chat.regenerate()"
+            :status="status"
+            :disabled="status === 'ready' && !input.trim()"
+            @stop="stop()"
+            @reload="regenerate()"
           />
         </template>
       </UChatPrompt>

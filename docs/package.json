@@ -17,7 +17,7 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@ai-sdk/vue": "^3.0.208",
-    "ai": "^6.0.208"
+    "@ai-sdk/vue": "^4.0.29",
+    "ai": "^7.0.29"
   }
 }
