@@ -6,6 +6,9 @@ packages:
 
 overrides:
   h3: 1.15.11
+  ai: ^7.0.29
+  '@ai-sdk/vue': ^4.0.29
+  '@ai-sdk/gateway': ^4.0.21
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'

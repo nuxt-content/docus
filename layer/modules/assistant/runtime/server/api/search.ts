@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
+import { streamText, convertToModelMessages, isStepCount, smoothStream, toUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import type { H3Event } from 'h3'
@@ -100,12 +100,12 @@ export default defineEventHandler(async (event) => {
 
   const closeMcp = () => event.waitUntil(httpClient.close())
 
-  return streamText({
+  const result = streamText({
     model: config.assistant.model,
     maxOutputTokens: 8000,
     maxRetries: 2,
     abortSignal: abortController.signal,
-    stopWhen: stepCountIs(MAX_STEPS),
+    stopWhen: isStepCount(MAX_STEPS),
     // On the last allowed step, disable tools so the model is forced to
     // produce a final text answer instead of stopping mid tool-calling.
     prepareStep: ({ stepNumber }) => {
@@ -116,12 +116,16 @@ export default defineEventHandler(async (event) => {
         caching: 'auto',
       },
     },
-    system: getSystemPrompt(siteName),
+    instructions: getSystemPrompt(siteName),
     messages: await convertToModelMessages(messages),
     tools: mcpTools as ToolSet,
     experimental_transform: smoothStream(),
-    onFinish: closeMcp,
+    onEnd: closeMcp,
     onAbort: closeMcp,
     onError: closeMcp,
-  }).toUIMessageStreamResponse()
+  })
+
+  return createUIMessageStreamResponse({
+    stream: toUIMessageStream({ stream: result.stream }),
+  })
 })

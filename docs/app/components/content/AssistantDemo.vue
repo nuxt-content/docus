@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Chat } from '@ai-sdk/vue'
+import { useChat } from '@ai-sdk/vue'
 import { DefaultChatTransport, isToolUIPart, isTextUIPart } from 'ai'
 import { isToolStreaming } from '@nuxt/ui/utils/ai'
 
@@ -24,45 +24,49 @@ const suggestedQuestionsMap: Record<string, string[]> = {
 
 const suggestedQuestions = computed(() => suggestedQuestionsMap[locale.value] || suggestedQuestionsMap.en)
 
-const chat = isEnabled.value
-  ? new Chat({
-      messages: [],
-      transport: new DefaultChatTransport({
-        api: config.public.assistant.apiPath,
-      }),
-      onError: (error: Error) => {
-        console.error('AI Chat error:', error)
-      },
-    })
-  : null
+const {
+  messages: chatMessages,
+  status,
+  sendMessage,
+  stop,
+  regenerate,
+} = useChat({
+  messages: [],
+  transport: new DefaultChatTransport({
+    api: config.public.assistant.apiPath,
+  }),
+  onError: (error: Error) => {
+    console.error('AI Chat error:', error)
+  },
+})
 
 function handleSubmit() {
-  if (!input.value.trim() || !chat) return
+  if (!input.value.trim() || !isEnabled.value) return
 
-  chat.sendMessage({ text: input.value })
+  sendMessage({ text: input.value })
   input.value = ''
 }
 
 function askQuestion(question: string) {
-  if (!chat) return
-  chat.sendMessage({
+  if (!isEnabled.value) return
+  sendMessage({
     text: question,
   })
 }
 
 function resetChat() {
-  if (!chat) return
-  chat.stop()
-  chat.messages.length = 0
+  if (!isEnabled.value) return
+  stop()
+  chatMessages.value = []
 }
 </script>
 
 <template>
   <div class="flex flex-col w-full h-96 rounded-lg overflow-hidden">
     <div class="flex-1 overflow-y-auto">
-      <template v-if="isEnabled && chat">
+      <template v-if="isEnabled">
         <div
-          v-if="chat.messages.length === 0"
+          v-if="chatMessages.length === 0"
           class="h-full flex flex-col items-center justify-center p-4"
         >
           <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
@@ -89,9 +93,9 @@ function resetChat() {
         <UChatMessages
           v-else
           should-auto-scroll
-          :messages="chat.messages"
+          :messages="chatMessages"
           compact
-          :status="chat.status"
+          :status="status"
           :user="{ ui: { content: 'text-sm' } }"
           :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
           class="px-4 py-4"
@@ -155,7 +159,7 @@ function resetChat() {
         <template #footer>
           <div class="ml-auto flex items-center gap-2">
             <UButton
-              v-if="chat?.messages.length"
+              v-if="chatMessages.length"
               icon="i-lucide-trash-2"
               color="neutral"
               variant="ghost"
@@ -166,10 +170,10 @@ function resetChat() {
 
             <UChatPromptSubmit
               size="xs"
-              :status="chat?.status || 'ready'"
-              :disabled="!isEnabled || (chat?.status === 'ready' && !input.trim())"
-              @stop="chat?.stop()"
-              @reload="chat?.regenerate()"
+              :status="status"
+              :disabled="!isEnabled || (status === 'ready' && !input.trim())"
+              @stop="stop()"
+              @reload="regenerate()"
             />
           </div>
         </template>
