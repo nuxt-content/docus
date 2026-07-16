@@ -27,11 +27,11 @@
     "@nuxt/eslint-config": "^1.16.0",
     "@release-it/bumper": "^7.0.6",
     "@release-it/conventional-changelog": "^11.0.1",
-    "eslint": "^10.5.0",
+    "eslint": "^10.7.0",
     "nuxt": "4.4.8",
-    "release-it": "^20.2.0",
+    "release-it": "^20.2.1",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.7"
   },
-  "packageManager": "pnpm@11.8.0"
+  "packageManager": "pnpm@11.13.0"
 }
