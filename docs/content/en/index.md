@@ -149,6 +149,7 @@ This action cannot be undone.
 
     ::::u-page-card
     ---
+    spotlight: true
     class: col-span-2 md:col-span-1
     ---
     :assistant-demo
