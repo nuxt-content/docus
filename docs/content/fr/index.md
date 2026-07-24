@@ -149,6 +149,7 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
 
     ::::u-page-card
     ---
+    spotlight: true
     class: col-span-2 md:col-span-1
     ---
     :assistant-demo

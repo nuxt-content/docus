@@ -149,6 +149,7 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
 
     ::::u-page-card
     ---
+    spotlight: true
     class: col-span-2 md:col-span-1
     ---
     :assistant-demo
