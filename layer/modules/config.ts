@@ -60,6 +60,14 @@ export default defineNuxtModule({
     })
 
     /*
+    ** Site URL (expose to the server: /sitemap.xml needs it at runtime)
+    */
+    nuxt.options.runtimeConfig.public.site = defu(
+      nuxt.options.runtimeConfig.public.site as { url?: string } | undefined,
+      { url: (typeof nuxt.options.site === 'object' && nuxt.options.site?.url) || url },
+    )
+
+    /*
     ** MCP route (expose to client so the page header dropdown stays in sync
     ** with the user-configured `mcp.route` from @nuxtjs/mcp-toolkit)
     */
