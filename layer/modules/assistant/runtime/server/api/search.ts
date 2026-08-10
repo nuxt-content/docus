@@ -140,10 +140,7 @@ export default defineEventHandler(async (event) => {
     experimental_transform: smoothStream(),
     onEnd: closeMcp,
     onAbort: closeMcp,
-    onError: (error) => {
-      closeMcp()
-      console.error('Error in assistant search API:', error)
-    },
+    onError: closeMcp,
   })
 
   return createUIMessageStreamResponse({
