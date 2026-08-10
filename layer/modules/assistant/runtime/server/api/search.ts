@@ -1,6 +1,8 @@
 import { streamText, convertToModelMessages, isStepCount, smoothStream, toUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import type { ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
+import { createAiGateway } from 'ai-gateway-provider'
+import { createUnified } from 'ai-gateway-provider/providers/unified'
 import type { H3Event } from 'h3'
 
 const MAX_STEPS = 10
@@ -60,6 +62,20 @@ function getSystemPrompt(siteName: string) {
 - Provide actionable guidance, not just information dumps`
 }
 
+function getAssistantModel(config: ReturnType<typeof useRuntimeConfig>) {
+  if (config.assistant.provider !== 'cloudflare') {
+    return config.assistant.model
+  }
+
+  const gateway = createAiGateway({
+    accountId: config.assistant.cloudflare.accountId,
+    gateway: config.assistant.cloudflare.aiGatewayId,
+    apiKey: config.assistant.cloudflare.aigToken,
+  })
+
+  return gateway(createUnified()(config.assistant.model))
+}
+
 export default defineEventHandler(async (event) => {
   const { messages } = await readBody(event)
   const config = useRuntimeConfig()
@@ -101,7 +117,7 @@ export default defineEventHandler(async (event) => {
   const closeMcp = () => event.waitUntil(httpClient.close())
 
   const result = streamText({
-    model: config.assistant.model,
+    model: getAssistantModel(config),
     maxOutputTokens: 8000,
     maxRetries: 2,
     abortSignal: abortController.signal,
@@ -111,18 +127,23 @@ export default defineEventHandler(async (event) => {
     prepareStep: ({ stepNumber }) => {
       return stepNumber >= MAX_STEPS - 1 ? { toolChoice: 'none' } : {}
     },
-    providerOptions: {
-      gateway: {
-        caching: 'auto',
-      },
-    },
+    providerOptions: config.assistant.provider === 'vercel'
+      ? {
+          gateway: {
+            caching: 'auto',
+          },
+        }
+      : undefined,
     instructions: getSystemPrompt(siteName),
     messages: await convertToModelMessages(messages),
     tools: mcpTools as ToolSet,
     experimental_transform: smoothStream(),
     onEnd: closeMcp,
     onAbort: closeMcp,
-    onError: closeMcp,
+    onError: (error) => {
+      closeMcp()
+      console.error('Error in assistant search API:', error)
+    },
   })
 
   return createUIMessageStreamResponse({

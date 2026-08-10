@@ -1,6 +1,21 @@
 import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { defu } from 'defu'
 
+export type AssistantProvider = 'vercel' | 'cloudflare'
+
+export interface CloudflareAssistantOptions {
+  /**
+   * Cloudflare account ID.
+   * @default ''
+   */
+  accountId?: string
+  /**
+   * Cloudflare AI Gateway ID.
+   * @default ''
+   */
+  gateway?: string
+}
+
 export interface AssistantModuleOptions {
   /**
    * API endpoint path for the assistant
@@ -15,18 +30,38 @@ export interface AssistantModuleOptions {
    */
   mcpServer?: string
   /**
-   * AI model to use via AI SDK Gateway
-   * @default 'google/gemini-3-flash'
+   * AI Gateway provider to use.
+   * @default 'vercel'
+   */
+  provider?: AssistantProvider
+  /**
+   * Cloudflare AI Gateway configuration.
+   * Only used when `provider` is `'cloudflare'`.
+   */
+  cloudflare?: CloudflareAssistantOptions
+  /**
+   * AI model to use via the configured AI Gateway
+   * @default 'google/gemini-3-flash' for Vercel, 'workers-ai/@cf/zai-org/glm-4.7-flash' for Cloudflare
    */
   model?: string
 }
 
 const log = logger.withTag('docus')
 
+const defaultModels = {
+  vercel: 'google/gemini-3-flash',
+  cloudflare: 'workers-ai/@cf/zai-org/glm-4.7-flash',
+} as const
+
 const defaults: Required<AssistantModuleOptions> = {
   apiPath: '/__docus__/assistant',
   mcpServer: '/mcp',
-  model: 'google/gemini-3-flash',
+  provider: 'vercel',
+  cloudflare: {
+    accountId: '',
+    gateway: '',
+  },
+  model: defaultModels.vercel,
 }
 
 export default defineNuxtModule<AssistantModuleOptions>({
@@ -39,16 +74,24 @@ export default defineNuxtModule<AssistantModuleOptions>({
       log.warn('`assistant` top-level config is deprecated. Move it under `docus.assistant` in nuxt.config.ts')
     }
 
-    const options = defu(nuxt.options.docus?.assistant, legacyOptions, defaults) as Required<AssistantModuleOptions>
+    const configuredOptions = defu(nuxt.options.docus?.assistant, legacyOptions) as AssistantModuleOptions
+    const provider = configuredOptions.provider || defaults.provider
+    const options = defu(configuredOptions, {
+      ...defaults,
+      provider,
+      model: provider === 'cloudflare' ? defaultModels.cloudflare : defaultModels.vercel,
+    }) as Required<AssistantModuleOptions>
 
-    const hasAiGatewayAuth = !!(
-      process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
-    )
+    const cloudflareAccountId = options.cloudflare?.accountId || ''
+    const cloudflareGateway = options.cloudflare?.gateway || ''
+    const isAssistantConfigured = options.provider === 'cloudflare'
+      ? true
+      : !!(process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN)
 
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.assistant = {
-      enabled: hasAiGatewayAuth,
+      enabled: isAssistantConfigured,
       apiPath: options.apiPath,
     }
 
@@ -68,7 +111,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
     components.forEach(name =>
       addComponent({
         name,
-        filePath: hasAiGatewayAuth
+        filePath: isAssistantConfigured
           ? resolve(`./runtime/components/${name}.vue`)
           : resolve('./runtime/components/AssistantChatDisabled.vue'),
       }),
@@ -79,9 +122,11 @@ export default defineNuxtModule<AssistantModuleOptions>({
       filePath: resolve('./runtime/components/AssistantComark'),
     })
 
-    if (!hasAiGatewayAuth) {
+    if (!isAssistantConfigured) {
       nuxt.hook('modules:done', () => {
-        log.warn('AI assistant disabled: neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN` found')
+        if (options.provider === 'vercel') {
+          log.warn('AI assistant disabled: neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN` found')
+        }
       })
       return
     }
@@ -89,6 +134,12 @@ export default defineNuxtModule<AssistantModuleOptions>({
     nuxt.options.runtimeConfig.assistant = {
       mcpServer: options.mcpServer,
       model: options.model,
+      provider: options.provider,
+      cloudflare: {
+        accountId: cloudflareAccountId,
+        aiGatewayId: cloudflareGateway,
+        aigToken: '',
+      },
     }
 
     const routePath = options.apiPath!.replace(/^\//, '')
@@ -110,6 +161,12 @@ declare module 'nuxt/schema' {
     assistant: {
       mcpServer: string
       model: string
+      provider: AssistantProvider
+      cloudflare: {
+        accountId: string
+        aiGatewayId: string
+        aigToken: string
+      }
     }
   }
 }

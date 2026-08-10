@@ -46,6 +46,7 @@
     "@takumi-rs/core": "^2.2.0",
     "@vueuse/core": "^14.3.0",
     "ai": "^7.0.29",
+    "ai-gateway-provider": "^4.0.0",
     "defu": "^6.1.7",
     "exsolve": "^1.1.0",
     "git-url-parse": "^16.1.0",

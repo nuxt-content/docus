@@ -18,7 +18,7 @@ A Nuxt module that provides an AI-powered chat interface using MCP (Model Contex
 2. Install the required dependencies:
 
 ```bash
-pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai motion-v shiki shiki-stream
+pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai ai-gateway-provider motion-v shiki shiki-stream
 ```
 
 3. Add the module to your `nuxt.config.ts`:
@@ -37,7 +37,9 @@ export default defineNuxtConfig({
 })
 ```
 
-4. Authenticate to AI Gateway in one of two ways:
+4. Choose an AI Gateway provider and authenticate it:
+
+  **Vercel AI Gateway (default)**
 
    - **`AI_GATEWAY_API_KEY`** — Set it in the Vercel project env UI (and locally in `.env` if you want).
    - **OIDC** — On Vercel, `VERCEL_OIDC_TOKEN` is injected automatically; you do **not** add it (or an API key) in the dashboard. For local builds, run `vercel env pull` on a linked project so `.env` contains the token:
@@ -50,7 +52,30 @@ AI_GATEWAY_API_KEY=your-gateway-key
 VERCEL_OIDC_TOKEN=...
 ```
 
-> **Note:** The module enables when `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` is present at build time. On Vercel, OIDC covers that without you creating env vars in the UI. If neither is available at build, the module stays disabled and a warning is logged.
+   **Cloudflare AI Gateway**
+
+   Configure the provider in `nuxt.config.ts`:
+
+```ts
+docus: {
+  assistant: {
+    provider: 'cloudflare',
+    cloudflare: {
+      gateway: 'default',
+    },
+  },
+}
+```
+
+  Set these variables at runtime:
+
+  - **`NUXT_ASSISTANT_CLOUDFLARE_ACCOUNT_ID`** — Cloudflare account ID.
+  - **`NUXT_ASSISTANT_CLOUDFLARE_AI_GATEWAY_ID`** — Cloudflare AI Gateway ID.
+  - **`NUXT_ASSISTANT_CLOUDFLARE_AIG_TOKEN`** — Cloudflare AI Gateway token.
+
+  Cloudflare BYOK or Unified Billing can provide upstream provider authentication, but the gateway token is still required when gateway authentication is enabled.
+
+> **Note:** The module enables when the selected provider has its required configuration at build time. If it is not configured, the assistant stays disabled and a warning is logged.
 
 ## Usage
 
@@ -158,7 +183,9 @@ clearMessages()
 |--------|------|---------|-------------|
 | `apiPath` | `string` | `/__docus__/assistant` | API endpoint path for the chat |
 | `mcpServer` | `string` | `/mcp` | MCP server path or full URL (e.g., `https://docs.example.com/mcp` for external servers) |
-| `model` | `string` | `google/gemini-3-flash` | AI model identifier for AI SDK Gateway |
+| `provider` | `'vercel' \| 'cloudflare'` | `vercel` | AI Gateway provider to use |
+| `cloudflare` | `object` | `{}` | Cloudflare account and gateway settings; used when `provider` is `cloudflare` |
+| `model` | `string` | `google/gemini-3-flash` (Vercel) / `workers-ai/@cf/zai-org/glm-4.7-flash` (Cloudflare) | AI model identifier for the selected gateway |
 
 ## Components
 
@@ -208,7 +235,7 @@ Composable for syntax highlighting code blocks with Shiki.
 - Nuxt 4.x
 - Nuxt UI 3.x (for `USlideover`, `UButton`, `UTextarea`, `UChatMessages`, etc.)
 - An MCP server running (path configurable via `mcpServer`)
-- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time
+- Credentials for the selected AI Gateway provider at build time
 
 ## Customization
 
