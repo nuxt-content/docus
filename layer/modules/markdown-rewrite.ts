@@ -21,7 +21,7 @@ export default defineNuxtModule({
   setup(_options, nuxt) {
     const { resolve: resolveLayer } = createResolver(import.meta.url)
     const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
-    const runtimeConfig = nuxt.options.runtimeConfig as typeof nuxt.options.runtimeConfig & DocusRuntimeConfig
+    const runtimeConfig = nuxt.options.runtimeConfig as DocusRuntimeConfig
     runtimeConfig.docus ||= {}
     runtimeConfig.docus.markdownNegotiation = {
       locales: (i18nOptions?.locales || []).map(locale => typeof locale === 'string' ? locale : locale.code),
@@ -43,7 +43,7 @@ export default defineNuxtModule({
           .filter(route => !route.error && !route.skip)
           .map(route => route.route)
 
-        const nitroRuntimeConfig = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+        const nitroRuntimeConfig = nitro.options.runtimeConfig as DocusRuntimeConfig
         nitroRuntimeConfig.docus ||= {}
         nitroRuntimeConfig.docus.markdownNegotiation = {
           locales: runtimeConfig.docus?.markdownNegotiation?.locales,
@@ -70,7 +70,7 @@ export default createCloudflarePagesHandler(cloudflarePages)
           const cloudflareRoutes = JSON.parse(await readFile(routesPath, 'utf8')) as {
             exclude?: string[]
           }
-          const config = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+          const config = nitro.options.runtimeConfig as DocusRuntimeConfig
           const routes = config.docus?.markdownNegotiation?.routes
 
           cloudflareRoutes.exclude = withoutNegotiatedRoutes(cloudflareRoutes.exclude, routes)
@@ -84,7 +84,7 @@ export default createCloudflarePagesHandler(cloudflarePages)
           const vercelConfig = JSON.parse(await readFile(configPath, 'utf8')) as {
             routes?: VercelRoute[]
           }
-          const config = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+          const config = nitro.options.runtimeConfig as DocusRuntimeConfig
           const routes = vercelConfig.routes || []
           const fallbackDestination = routes.find(route => route.src === '/(.*)' && route.dest)?.dest
           const negotiationRoutes = createVercelNegotiationRoutes(
