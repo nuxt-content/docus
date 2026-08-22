@@ -1,17 +1,3 @@
-export type MarkdownNegotiationRequest = {
-  method: string
-  path: string
-  accept?: string
-  userAgent?: string
-  routes?: Record<string, string>
-  fetch: (path: string, init: RequestInit) => Promise<Response>
-}
-
-export type MarkdownNegotiationResult = {
-  vary: boolean
-  response?: Response
-}
-
 export type VercelRoute = {
   handle?: string
   src?: string
@@ -19,96 +5,51 @@ export type VercelRoute = {
   [key: string]: unknown
 }
 
-type MarkdownPreference = {
-  present: boolean
-  accepted: boolean
-}
+function markdownPreference(accept?: string): boolean | undefined {
+  let found = false
 
-function getMarkdownPreference(accept?: string): MarkdownPreference {
-  if (!accept) {
-    return { present: false, accepted: false }
-  }
-
-  let present = false
-  let accepted = false
-
-  for (const range of accept.split(',')) {
+  for (const range of accept?.split(',') || []) {
     const [type, ...parameters] = range.split(';')
     if (type?.trim().toLowerCase() !== 'text/markdown') {
       continue
     }
 
-    present = true
-    let quality = 1
-
-    for (const parameter of parameters) {
-      const match = parameter.match(/^\s*q\s*=\s*(?:"([^"]*)"|([^\s;]+))\s*$/i)
-      if (!match) {
-        continue
-      }
-
-      const value = Number(match[1] ?? match[2])
-      quality = Number.isFinite(value) && value >= 0 && value <= 1 ? value : 0
-      break
+    found = true
+    const quality = parameters.find(parameter => /^\s*q\s*=/i.test(parameter))
+    if (!quality) {
+      return true
     }
 
-    if (quality > 0) {
-      accepted = true
-    }
+    const value = Number(quality.slice(quality.indexOf('=') + 1).trim().replace(/^"|"$/g, ''))
+    if (value > 0 && value <= 1) return true
   }
 
-  return { present, accepted }
-}
-
-export function acceptsMarkdown(accept?: string): boolean {
-  return getMarkdownPreference(accept).accepted
+  return found ? false : undefined
 }
 
 export function wantsMarkdown(accept?: string, userAgent?: string): boolean {
-  const preference = getMarkdownPreference(accept)
-  if (preference.present) {
-    return preference.accepted
-  }
-
-  const isCurl = /^curl\//i.test(userAgent || '')
-  const acceptsAnything = !accept || accept.trim() === '*/*'
-  return isCurl && acceptsAnything
+  const preference = markdownPreference(accept)
+  return preference ?? (/^curl\//i.test(userAgent || '') && (!accept || accept.trim() === '*/*'))
 }
 
 export function createMarkdownRoutes(
-  prerenderedRoutes: string[],
-  locales: string[] = [],
   llmsText = '',
+  locales: string[] = [],
 ): Record<string, string> {
   const routes: Record<string, string> = {}
-  const prerenderedRouteSet = new Set(prerenderedRoutes)
-  const rawPaths = new Set(
-    prerenderedRoutes.filter(route => route.startsWith('/raw/') && route.endsWith('.md')),
-  )
+  if (!llmsText) return routes
 
-  for (const match of llmsText.matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+  routes['/'] = '/llms.txt'
+  for (const locale of locales) routes[`/${locale}`] = '/llms.txt'
+
+  for (const [, link] of llmsText.matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
     try {
-      const path = new URL(match[1]!, 'https://docus.local').pathname
-      if (path.startsWith('/raw/') && path.endsWith('.md')) {
-        rawPaths.add(path)
-      }
+      const rawPath = new URL(link!, 'https://docus.local').pathname
+      if (!rawPath.startsWith('/raw/') || !rawPath.endsWith('.md')) continue
+      routes[rawPath.slice(4, -3)] = rawPath
     }
     catch {
-      // Ignore malformed links in user-authored llms.txt content.
-    }
-  }
-
-  for (const route of rawPaths) {
-    const pagePath = route.replace(/^\/raw/, '').replace(/\.md$/, '')
-    if (prerenderedRouteSet.has(pagePath)) {
-      routes[pagePath] = route
-    }
-  }
-
-  if (prerenderedRouteSet.has('/llms.txt') || llmsText) {
-    routes['/'] = '/llms.txt'
-    for (const locale of locales) {
-      routes[`/${locale}`] = '/llms.txt'
+      // Ignore malformed links in generated or user-authored llms.txt content.
     }
   }
 
@@ -116,15 +57,7 @@ export function createMarkdownRoutes(
 }
 
 export function getMarkdownPath(path: string, routes: Record<string, string> = {}): string | undefined {
-  return routes[path]
-}
-
-export function withoutNegotiatedRoutes(
-  excludedRoutes: string[] = [],
-  markdownRoutes: Record<string, string> = {},
-): string[] {
-  const negotiatedRoutes = new Set(Object.keys(markdownRoutes))
-  return excludedRoutes.filter(route => !negotiatedRoutes.has(route))
+  return routes[path === '/' ? path : path.replace(/\/+$/, '')]
 }
 
 export function createCloudflareModuleWorkerRoutes(
@@ -136,24 +69,15 @@ export function createCloudflareModuleWorkerRoutes(
   }
 
   const workerRoutes = new Set(Array.isArray(current) ? current : [])
-  const topLevelRoutes = new Map<string, boolean>()
-
   for (const path of Object.keys(markdownRoutes)) {
     if (path === '/') {
       workerRoutes.add(path)
       continue
     }
 
-    const segments = path.split('/').filter(Boolean)
-    const topLevelPath = `/${segments[0]}`
-    topLevelRoutes.set(topLevelPath, (topLevelRoutes.get(topLevelPath) || false) || segments.length > 1)
-  }
-
-  for (const [path, hasChildren] of topLevelRoutes) {
-    workerRoutes.add(path)
-    if (hasChildren) {
-      workerRoutes.add(`${path}/*`)
-    }
+    const topLevelPath = `/${path.split('/')[1]}`
+    workerRoutes.add(topLevelPath)
+    workerRoutes.add(`${topLevelPath}/*`)
   }
 
   return [...workerRoutes]
@@ -164,7 +88,7 @@ export function createVercelNegotiationRoutes(
   destination = '/__fallback',
 ): VercelRoute[] {
   return Object.keys(markdownRoutes).flatMap((path) => {
-    const src = `^${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`
+    const src = `^${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${path === '/' ? '' : '/?'}$`
 
     return [
       {
@@ -196,18 +120,8 @@ export function createVercelNegotiationRoutes(
 
 export function withMarkdownHeaders(response: Response): Response {
   const headers = new Headers(response.headers)
-  headers.set('content-type', 'text/markdown; charset=utf-8')
-
-  return withVaryHeader(new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  }))
-}
-
-export function withVaryHeader(response: Response): Response {
-  const headers = new Headers(response.headers)
   const vary = headers.get('vary')
+  headers.set('content-type', 'text/markdown; charset=utf-8')
 
   if (!vary) {
     headers.set('vary', 'Accept')
@@ -221,38 +135,4 @@ export function withVaryHeader(response: Response): Response {
     statusText: response.statusText,
     headers,
   })
-}
-
-export async function negotiateMarkdown(request: MarkdownNegotiationRequest): Promise<MarkdownNegotiationResult> {
-  if (request.method !== 'GET' && request.method !== 'HEAD') {
-    return { vary: false }
-  }
-
-  const markdownPath = getMarkdownPath(request.path, request.routes)
-  if (!markdownPath) {
-    return { vary: false }
-  }
-
-  if (!wantsMarkdown(request.accept, request.userAgent)) {
-    return { vary: true }
-  }
-
-  try {
-    const response = await request.fetch(markdownPath, {
-      method: 'GET',
-      headers: { accept: '*/*' },
-    })
-
-    if (!response.ok) {
-      return { vary: true }
-    }
-
-    return {
-      vary: true,
-      response: withMarkdownHeaders(response),
-    }
-  }
-  catch {
-    return { vary: true }
-  }
 }

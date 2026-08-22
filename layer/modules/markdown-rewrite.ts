@@ -1,7 +1,7 @@
 import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { createCloudflareModuleWorkerRoutes, createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute, withoutNegotiatedRoutes } from './runtime/server/utils/markdown-negotiation'
+import { createCloudflareModuleWorkerRoutes, createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute } from './runtime/server/utils/markdown-negotiation'
 
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
@@ -47,19 +47,15 @@ export default defineNuxtModule({
         return
       }
 
-      nitro.hooks.hook('prerender:done', async ({ prerenderedRoutes }) => {
-        const prerenderedPaths = prerenderedRoutes
-          .filter(route => !route.error && !route.skip)
-          .map(route => route.route)
+      nitro.hooks.hook('prerender:done', async () => {
         const llmsText = await readFile(resolve(nitro.options.output.publicDir, 'llms.txt'), 'utf8')
           .catch(() => '')
 
         const nitroRuntimeConfig = nitro.options.runtimeConfig as DocusRuntimeConfig
         nitroRuntimeConfig.docus ||= {}
         const routes = createMarkdownRoutes(
-          prerenderedPaths,
-          runtimeConfig.docus?.markdownNegotiation?.locales,
           llmsText,
+          runtimeConfig.docus?.markdownNegotiation?.locales,
         )
         nitroRuntimeConfig.docus.markdownNegotiation = {
           locales: runtimeConfig.docus?.markdownNegotiation?.locales,
@@ -77,30 +73,6 @@ export default defineNuxtModule({
           )
         }
       })
-
-      if (nitro.options.preset.includes('cloudflare-pages')) {
-        const cloudflarePagesEntry = nitro.options.entry
-        const cloudflareWrapper = resolveLayer('./runtime/server/cloudflare-pages')
-        nitro.options.virtual['#docus-cloudflare-pages-entry'] = `
-import cloudflarePages from ${JSON.stringify(cloudflarePagesEntry)}
-import { createCloudflarePagesHandler } from ${JSON.stringify(cloudflareWrapper)}
-
-export default createCloudflarePagesHandler(cloudflarePages)
-`
-        nitro.options.entry = '#docus-cloudflare-pages-entry'
-
-        nitro.hooks.hook('compiled', async () => {
-          const routesPath = resolve(nitro.options.output.dir, '_routes.json')
-          const cloudflareRoutes = JSON.parse(await readFile(routesPath, 'utf8')) as {
-            exclude?: string[]
-          }
-          const config = nitro.options.runtimeConfig as DocusRuntimeConfig
-          const routes = config.docus?.markdownNegotiation?.routes
-
-          cloudflareRoutes.exclude = withoutNegotiatedRoutes(cloudflareRoutes.exclude, routes)
-          await writeFile(routesPath, JSON.stringify(cloudflareRoutes, null, 2), 'utf8')
-        })
-      }
 
       if (nitro.options.preset.includes('vercel')) {
         nitro.hooks.hook('compiled', async () => {
