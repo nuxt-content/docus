@@ -207,6 +207,23 @@ describe('Markdown negotiation', () => {
     assert.equal(result.response?.headers.get('vary'), 'Accept-Encoding, Accept')
     assert.equal(await result.response?.text(), '# Guide')
   })
+
+  it('uses GET to resolve the representation for HEAD requests', async () => {
+    let method: string | undefined
+    const result = await negotiateMarkdown({
+      method: 'HEAD',
+      path: '/guide',
+      accept: 'text/markdown',
+      routes: { '/guide': '/raw/guide.md' },
+      fetch: async (_path, init) => {
+        method = init.method
+        return new Response('# Guide')
+      },
+    })
+
+    assert.equal(method, 'GET')
+    assert.equal(result.response?.headers.get('content-type'), 'text/markdown; charset=utf-8')
+  })
 })
 
 describe('negotiation fallback', () => {

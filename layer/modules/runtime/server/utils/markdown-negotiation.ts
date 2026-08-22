@@ -239,7 +239,7 @@ export async function negotiateMarkdown(request: MarkdownNegotiationRequest): Pr
 
   try {
     const response = await request.fetch(markdownPath, {
-      method: request.method,
+      method: 'GET',
       headers: { accept: '*/*' },
     })
 
