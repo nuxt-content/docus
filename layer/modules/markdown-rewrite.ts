@@ -1,7 +1,7 @@
 import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { createCloudflareModuleWorkerRoutes, createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute } from './runtime/server/utils/markdown-negotiation'
+import { createCloudflareModuleWorkerRoutes, createMarkdownRoutes, createVercelNegotiationRoutes, getPrerenderedHtmlPaths, type VercelRoute } from './runtime/server/utils/markdown-negotiation'
 
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
@@ -71,6 +71,11 @@ export default defineNuxtModule({
             routes,
             options.cloudflare.wrangler.assets.run_worker_first,
           )
+        }
+        else if (!nitro.options.preset.includes('vercel')) {
+          await Promise.all(getPrerenderedHtmlPaths(routes).map(path => (
+            rm(resolve(nitro.options.output.publicDir, path), { force: true })
+          )))
         }
       })
 

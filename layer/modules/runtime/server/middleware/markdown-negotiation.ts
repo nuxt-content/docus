@@ -1,5 +1,5 @@
-import { appendResponseHeader, defineEventHandler, getRequestHeader, getRequestURL } from 'h3'
-import { getMarkdownPath, wantsMarkdown, withMarkdownHeaders } from '../utils/markdown-negotiation'
+import { appendResponseHeader, defineEventHandler, getRequestHeader, getRequestURL, setResponseHeader, setResponseStatus } from 'h3'
+import { getMarkdownPath, negotiateContentType, withMarkdownHeaders } from '../utils/markdown-negotiation'
 
 type DocusRuntimeConfig = {
   docus?: {
@@ -19,8 +19,21 @@ export default defineEventHandler(async (event) => {
   )
   if (!markdownPath) return
 
-  if (!wantsMarkdown(getRequestHeader(event, 'accept'), getRequestHeader(event, 'user-agent'))) {
+  const contentType = negotiateContentType(
+    getRequestHeader(event, 'accept'),
+    getRequestHeader(event, 'user-agent'),
+  )
+
+  if (!contentType) {
     appendResponseHeader(event, 'vary', 'Accept')
+    setResponseStatus(event, 406, 'Not Acceptable')
+    setResponseHeader(event, 'content-type', 'text/plain; charset=utf-8')
+    return 'Not Acceptable\n\nAvailable: text/html, text/markdown\n'
+  }
+
+  if (contentType === 'text/html') {
+    appendResponseHeader(event, 'vary', 'Accept')
+    appendResponseHeader(event, 'link', `<${markdownPath}>; rel="alternate"; type="text/markdown"`)
     return
   }
 

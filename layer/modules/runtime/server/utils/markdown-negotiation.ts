@@ -1,3 +1,5 @@
+import Negotiator from 'negotiator'
+
 export type VercelRoute = {
   handle?: string
   src?: string
@@ -5,31 +7,14 @@ export type VercelRoute = {
   [key: string]: unknown
 }
 
-function markdownPreference(accept?: string): boolean | undefined {
-  let found = false
-
-  for (const range of accept?.split(',') || []) {
-    const [type, ...parameters] = range.split(';')
-    if (type?.trim().toLowerCase() !== 'text/markdown') {
-      continue
-    }
-
-    found = true
-    const quality = parameters.find(parameter => /^\s*q\s*=/i.test(parameter))
-    if (!quality) {
-      return true
-    }
-
-    const value = Number(quality.slice(quality.indexOf('=') + 1).trim().replace(/^"|"$/g, ''))
-    if (value > 0 && value <= 1) return true
+export function negotiateContentType(accept?: string, userAgent?: string): 'text/html' | 'text/markdown' | undefined {
+  const mediaTypes = accept?.split(',').map(range => range.split(';')[0]?.trim().toLowerCase()) || []
+  const hasExplicitDocumentType = mediaTypes.some(type => type === 'text/html' || type === 'text/markdown')
+  if (/^curl\//i.test(userAgent || '') && (!accept || (mediaTypes.includes('*/*') && !hasExplicitDocumentType))) {
+    return 'text/markdown'
   }
 
-  return found ? false : undefined
-}
-
-export function wantsMarkdown(accept?: string, userAgent?: string): boolean {
-  const preference = markdownPreference(accept)
-  return preference ?? (/^curl\//i.test(userAgent || '') && (!accept || accept.trim() === '*/*'))
+  return new Negotiator({ headers: { accept } }).mediaType(['text/html', 'text/markdown']) as 'text/html' | 'text/markdown' | undefined
 }
 
 export function createMarkdownRoutes(
@@ -46,7 +31,8 @@ export function createMarkdownRoutes(
     try {
       const rawPath = new URL(link!, 'https://docus.local').pathname
       if (!rawPath.startsWith('/raw/') || !rawPath.endsWith('.md')) continue
-      routes[rawPath.slice(4, -3)] = rawPath
+      const pagePath = rawPath.slice(4, -3).replace(/\/index$/, '') || '/'
+      routes[pagePath] = rawPath
     }
     catch {
       // Ignore malformed links in generated or user-authored llms.txt content.
@@ -58,6 +44,13 @@ export function createMarkdownRoutes(
 
 export function getMarkdownPath(path: string, routes: Record<string, string> = {}): string | undefined {
   return routes[path === '/' ? path : path.replace(/\/+$/, '')]
+}
+
+export function getPrerenderedHtmlPaths(routes: Record<string, string> = {}): string[] {
+  return Object.keys(routes).flatMap((route) => {
+    const path = route === '/' ? 'index' : route.slice(1)
+    return [`${path}.html`, `${path}/index.html`]
+  })
 }
 
 export function createCloudflareModuleWorkerRoutes(
@@ -111,7 +104,10 @@ export function createVercelNegotiationRoutes(
       },
       {
         src,
-        headers: { vary: 'Accept' },
+        headers: {
+          link: `<${markdownRoutes[path]}>; rel="alternate"; type="text/markdown"`,
+          vary: 'Accept',
+        },
         continue: true,
       },
     ]

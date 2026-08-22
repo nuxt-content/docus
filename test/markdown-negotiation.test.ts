@@ -5,30 +5,36 @@ import {
   createMarkdownRoutes,
   createVercelNegotiationRoutes,
   getMarkdownPath,
-  wantsMarkdown,
+  getPrerenderedHtmlPaths,
+  negotiateContentType,
   withMarkdownHeaders,
 } from '../layer/modules/runtime/server/utils/markdown-negotiation.ts'
 
 describe('Markdown negotiation', () => {
   it('honors Accept quality and curl fallback', () => {
-    assert.equal(wantsMarkdown('text/html, text/markdown; q=0.5'), true)
-    assert.equal(wantsMarkdown('text/markdown;q=0'), false)
-    assert.equal(wantsMarkdown('text/markdown;q=invalid'), false)
-    assert.equal(wantsMarkdown('text/markdown;q=0, text/markdown;q=0.2'), true)
-    assert.equal(wantsMarkdown('*/*', 'curl/8.7.1'), true)
-    assert.equal(wantsMarkdown('text/html', 'curl/8.7.1'), false)
+    assert.equal(negotiateContentType('text/html, text/markdown;q=0.5'), 'text/html')
+    assert.equal(negotiateContentType('text/markdown, text/html;q=0.5'), 'text/markdown')
+    assert.equal(negotiateContentType('application/pdf'), undefined)
+    assert.equal(negotiateContentType('text/markdown;q=0'), undefined)
+    assert.equal(negotiateContentType('text/markdown;q=invalid'), undefined)
+    assert.equal(negotiateContentType('text/markdown;q=0, text/markdown;q=0.2'), 'text/markdown')
+    assert.equal(negotiateContentType('*/*', 'curl/8.7.1'), 'text/markdown')
+    assert.equal(negotiateContentType('*/*,image/webp', 'curl/8.7.1'), 'text/markdown')
+    assert.equal(negotiateContentType('text/html', 'curl/8.7.1'), 'text/html')
   })
 
   it('maps pages listed in llms.txt and accepts canonical trailing slashes', () => {
     const routes = createMarkdownRoutes(`
 - [Guide](https://docs.example.com/raw/docs/guide.md)
 - [Blog](/raw/blog/agents.md)
+- [Home](/raw/index.md)
+- [French home](/raw/fr/index.md)
 - [External](https://example.com/guide.md)
 `, ['fr'])
 
     assert.deepEqual(routes, {
-      '/': '/llms.txt',
-      '/fr': '/llms.txt',
+      '/': '/raw/index.md',
+      '/fr': '/raw/fr/index.md',
       '/docs/guide': '/raw/docs/guide.md',
       '/blog/agents': '/raw/blog/agents.md',
     })
@@ -36,6 +42,18 @@ describe('Markdown negotiation', () => {
     assert.equal(getMarkdownPath('/blog/agents/', routes), '/raw/blog/agents.md')
     assert.equal(getMarkdownPath('/missing', routes), undefined)
     assert.deepEqual(createMarkdownRoutes('', ['fr']), {})
+  })
+
+  it('finds prerendered HTML files that would bypass negotiation', () => {
+    assert.deepEqual(getPrerenderedHtmlPaths({
+      '/': '/raw/index.md',
+      '/docs/guide': '/raw/docs/guide.md',
+    }), [
+      'index.html',
+      'index/index.html',
+      'docs/guide.html',
+      'docs/guide/index.html',
+    ])
   })
 
   it('routes negotiated page groups through Cloudflare Workers Assets', () => {
@@ -70,7 +88,10 @@ describe('Markdown negotiation', () => {
     assert.equal(routes[3]?.src, '^/guide/v1\\.0/\\(intro\\)/?$')
     assert.deepEqual(routes[5], {
       src: '^/guide/v1\\.0/\\(intro\\)/?$',
-      headers: { vary: 'Accept' },
+      headers: {
+        link: '</raw/guide/v1.0/(intro).md>; rel="alternate"; type="text/markdown"',
+        vary: 'Accept',
+      },
       continue: true,
     })
   })
