@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import {
   acceptsMarkdown,
+  createCloudflareModuleWorkerRoutes,
   createMarkdownRoutes,
   createVercelNegotiationRoutes,
   getMarkdownPath,
@@ -83,6 +84,28 @@ describe('Markdown route mapping', () => {
       '/_nuxt/*',
       '/raw/en/guide/getting-started.md',
     ])
+  })
+
+  it('routes negotiated page groups through Cloudflare Workers Assets', () => {
+    const workerRoutes = createCloudflareModuleWorkerRoutes({
+      '/': '/llms.txt',
+      '/about': '/raw/about.md',
+      '/docs': '/raw/docs.md',
+      '/docs/guide': '/raw/docs/guide.md',
+      '/fr': '/llms.txt',
+      '/fr/guide': '/raw/fr/guide.md',
+    }, ['/api/*'])
+
+    assert.deepEqual(workerRoutes, [
+      '/api/*',
+      '/',
+      '/about',
+      '/docs',
+      '/docs/*',
+      '/fr',
+      '/fr/*',
+    ])
+    assert.equal(createCloudflareModuleWorkerRoutes({}, true), true)
   })
 
   it('routes exact negotiated pages through the Vercel function', () => {

@@ -112,6 +112,38 @@ export function withoutNegotiatedRoutes(
   return excludedRoutes.filter(route => !negotiatedRoutes.has(route))
 }
 
+export function createCloudflareModuleWorkerRoutes(
+  markdownRoutes: Record<string, string> = {},
+  current: boolean | string[] | undefined = [],
+): boolean | string[] {
+  if (current === true) {
+    return true
+  }
+
+  const workerRoutes = new Set(Array.isArray(current) ? current : [])
+  const topLevelRoutes = new Map<string, boolean>()
+
+  for (const path of Object.keys(markdownRoutes)) {
+    if (path === '/') {
+      workerRoutes.add(path)
+      continue
+    }
+
+    const segments = path.split('/').filter(Boolean)
+    const topLevelPath = `/${segments[0]}`
+    topLevelRoutes.set(topLevelPath, (topLevelRoutes.get(topLevelPath) || false) || segments.length > 1)
+  }
+
+  for (const [path, hasChildren] of topLevelRoutes) {
+    workerRoutes.add(path)
+    if (hasChildren) {
+      workerRoutes.add(`${path}/*`)
+    }
+  }
+
+  return [...workerRoutes]
+}
+
 export function createVercelNegotiationRoutes(
   markdownRoutes: Record<string, string> = {},
   destination = '/__fallback',

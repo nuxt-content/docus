@@ -1,7 +1,7 @@
 import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute, withoutNegotiatedRoutes } from './runtime/server/utils/markdown-negotiation'
+import { createCloudflareModuleWorkerRoutes, createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute, withoutNegotiatedRoutes } from './runtime/server/utils/markdown-negotiation'
 
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
@@ -10,6 +10,15 @@ type DocusRuntimeConfig = {
     markdownNegotiation?: {
       locales?: string[]
       routes?: Record<string, string>
+    }
+  }
+}
+type DocusCloudflareConfig = {
+  cloudflare?: {
+    wrangler?: {
+      assets?: {
+        run_worker_first?: boolean | string[]
+      }
     }
   }
 }
@@ -45,12 +54,24 @@ export default defineNuxtModule({
 
         const nitroRuntimeConfig = nitro.options.runtimeConfig as DocusRuntimeConfig
         nitroRuntimeConfig.docus ||= {}
+        const routes = createMarkdownRoutes(
+          prerenderedPaths,
+          runtimeConfig.docus?.markdownNegotiation?.locales,
+        )
         nitroRuntimeConfig.docus.markdownNegotiation = {
           locales: runtimeConfig.docus?.markdownNegotiation?.locales,
-          routes: createMarkdownRoutes(
-            prerenderedPaths,
-            runtimeConfig.docus?.markdownNegotiation?.locales,
-          ),
+          routes,
+        }
+
+        if (nitro.options.preset.includes('cloudflare-module')) {
+          const options = nitro.options as DocusCloudflareConfig
+          options.cloudflare ||= {}
+          options.cloudflare.wrangler ||= {}
+          options.cloudflare.wrangler.assets ||= {}
+          options.cloudflare.wrangler.assets.run_worker_first = createCloudflareModuleWorkerRoutes(
+            routes,
+            options.cloudflare.wrangler.assets.run_worker_first,
+          )
         }
       })
 
