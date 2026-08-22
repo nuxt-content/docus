@@ -12,7 +12,7 @@ import {
 } from '../layer/modules/runtime/server/utils/markdown-negotiation.ts'
 
 describe('Markdown negotiation', () => {
-  it('publishes Negotiator with its declarations', async () => {
+  it('publishes negotiator with its declarations', async () => {
     const packageJson = JSON.parse(await readFile(new URL('../layer/package.json', import.meta.url), 'utf8'))
 
     assert.equal(typeof packageJson.dependencies.negotiator, 'string')
@@ -82,6 +82,7 @@ describe('Markdown negotiation', () => {
       '/blog',
       '/blog/*',
     ])
+    assert.deepEqual(createCloudflareModuleWorkerRoutes({ '/docs/guide': '/raw/docs/guide.md' }, false), ['/docs', '/docs/*'])
     assert.equal(createCloudflareModuleWorkerRoutes({}, true), true)
   })
 
