@@ -75,22 +75,37 @@ export function wantsMarkdown(accept?: string, userAgent?: string): boolean {
   return isCurl && acceptsAnything
 }
 
-export function createMarkdownRoutes(prerenderedRoutes: string[], locales: string[] = []): Record<string, string> {
+export function createMarkdownRoutes(
+  prerenderedRoutes: string[],
+  locales: string[] = [],
+  llmsText = '',
+): Record<string, string> {
   const routes: Record<string, string> = {}
   const prerenderedRouteSet = new Set(prerenderedRoutes)
+  const rawPaths = new Set(
+    prerenderedRoutes.filter(route => route.startsWith('/raw/') && route.endsWith('.md')),
+  )
 
-  for (const route of prerenderedRoutes) {
-    if (!route.startsWith('/raw/') || !route.endsWith('.md')) {
-      continue
+  for (const match of llmsText.matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+    try {
+      const path = new URL(match[1]!, 'https://docus.local').pathname
+      if (path.startsWith('/raw/') && path.endsWith('.md')) {
+        rawPaths.add(path)
+      }
     }
+    catch {
+      // Ignore malformed links in user-authored llms.txt content.
+    }
+  }
 
+  for (const route of rawPaths) {
     const pagePath = route.replace(/^\/raw/, '').replace(/\.md$/, '')
     if (prerenderedRouteSet.has(pagePath)) {
       routes[pagePath] = route
     }
   }
 
-  if (prerenderedRouteSet.has('/llms.txt')) {
+  if (prerenderedRouteSet.has('/llms.txt') || llmsText) {
     routes['/'] = '/llms.txt'
     for (const locale of locales) {
       routes[`/${locale}`] = '/llms.txt'

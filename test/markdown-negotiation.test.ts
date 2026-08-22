@@ -74,6 +74,22 @@ describe('Markdown route mapping', () => {
     assert.equal(getMarkdownPath('/guide', routesWithoutLlms), '/raw/guide.md')
   })
 
+  it('maps dynamically served raw pages from the generated llms.txt', () => {
+    const routesFromLlms = createMarkdownRoutes([
+      '/llms.txt',
+      '/guide',
+      '/about',
+    ], [], `
+- [Guide](https://docs.example.com/raw/guide.md)
+- [About](/raw/about.md)
+- [External](https://example.com/guide.md)
+`)
+
+    assert.equal(getMarkdownPath('/guide', routesFromLlms), '/raw/guide.md')
+    assert.equal(getMarkdownPath('/about', routesFromLlms), '/raw/about.md')
+    assert.equal(getMarkdownPath('/raw/guide.md', routesFromLlms), undefined)
+  })
+
   it('keeps negotiated pages in the Cloudflare Pages worker routes', () => {
     assert.deepEqual(withoutNegotiatedRoutes([
       '/_nuxt/*',

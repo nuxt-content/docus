@@ -47,16 +47,19 @@ export default defineNuxtModule({
         return
       }
 
-      nitro.hooks.hook('prerender:done', ({ prerenderedRoutes }) => {
+      nitro.hooks.hook('prerender:done', async ({ prerenderedRoutes }) => {
         const prerenderedPaths = prerenderedRoutes
           .filter(route => !route.error && !route.skip)
           .map(route => route.route)
+        const llmsText = await readFile(resolve(nitro.options.output.publicDir, 'llms.txt'), 'utf8')
+          .catch(() => '')
 
         const nitroRuntimeConfig = nitro.options.runtimeConfig as DocusRuntimeConfig
         nitroRuntimeConfig.docus ||= {}
         const routes = createMarkdownRoutes(
           prerenderedPaths,
           runtimeConfig.docus?.markdownNegotiation?.locales,
+          llmsText,
         )
         nitroRuntimeConfig.docus.markdownNegotiation = {
           locales: runtimeConfig.docus?.markdownNegotiation?.locales,
