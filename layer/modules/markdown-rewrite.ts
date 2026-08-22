@@ -1,144 +1,103 @@
-import { defineNuxtModule, logger } from '@nuxt/kit'
-import { resolve } from 'node:path'
+import { addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { readFile, writeFile } from 'node:fs/promises'
-
-const log = logger.withTag('docus')
+import { resolve } from 'node:path'
+import { createMarkdownRoutes, createVercelNegotiationRoutes, type VercelRoute, withoutNegotiatedRoutes } from './runtime/server/utils/markdown-negotiation'
 
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
+type DocusRuntimeConfig = {
+  docus?: {
+    markdownNegotiation?: {
+      locales?: string[]
+      routes?: Record<string, string>
+    }
+  }
+}
 
 export default defineNuxtModule({
   meta: {
     name: 'markdown-rewrite',
   },
   setup(_options, nuxt) {
+    const { resolve: resolveLayer } = createResolver(import.meta.url)
+    const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
+    const runtimeConfig = nuxt.options.runtimeConfig as typeof nuxt.options.runtimeConfig & DocusRuntimeConfig
+    runtimeConfig.docus ||= {}
+    runtimeConfig.docus.markdownNegotiation = {
+      locales: (i18nOptions?.locales || []).map(locale => typeof locale === 'string' ? locale : locale.code),
+      routes: {},
+    }
+
+    addServerHandler({
+      handler: resolveLayer('./runtime/server/middleware/markdown-negotiation'),
+      middleware: true,
+    })
+
     nuxt.hooks.hook('nitro:init', (nitro) => {
-      if (nitro.options.dev || !nitro.options.preset.includes('vercel')) {
+      if (nitro.options.dev) {
         return
       }
 
-      nitro.hooks.hook('compiled', async () => {
-        const vcJSON = resolve(nitro.options.output.dir, 'config.json')
-        const vcConfig = JSON.parse(await readFile(vcJSON, 'utf8'))
+      nitro.hooks.hook('prerender:done', ({ prerenderedRoutes }) => {
+        const prerenderedPaths = prerenderedRoutes
+          .filter(route => !route.error && !route.skip)
+          .map(route => route.route)
 
-        // Check if llms.txt exists before setting up any routes
-        let llmsTxt
-        const llmsTxtPath = resolve(nitro.options.output.publicDir, 'llms.txt')
-        try {
-          llmsTxt = await readFile(llmsTxtPath, 'utf-8')
+        const nitroRuntimeConfig = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+        nitroRuntimeConfig.docus ||= {}
+        nitroRuntimeConfig.docus.markdownNegotiation = {
+          locales: runtimeConfig.docus?.markdownNegotiation?.locales,
+          routes: createMarkdownRoutes(
+            prerenderedPaths,
+            runtimeConfig.docus?.markdownNegotiation?.locales,
+          ),
         }
-        catch {
-          log.warn('llms.txt not found, skipping markdown redirect routes')
-          return
-        }
-
-        // Always redirect / to /llms.txt and ensure plain text content type
-        const markdownHeaders = {
-          'content-type': 'text/markdown; charset=utf-8',
-        }
-
-        const routes = [
-          {
-            src: '^/$',
-            dest: '/llms.txt',
-            headers: markdownHeaders,
-            has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-          },
-          {
-            src: '^/$',
-            dest: '/llms.txt',
-            headers: markdownHeaders,
-            has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
-          },
-        ]
-
-        // Check if i18n is enabled
-        const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
-        const isI18nEnabled = !!i18nOptions?.locales
-        let localeCodes: string[] = []
-
-        if (isI18nEnabled) {
-          // Get locale codes
-          const locales = i18nOptions?.locales || []
-          localeCodes = locales.map((locale: I18nLocale) => {
-            return typeof locale === 'string' ? locale : locale.code
-          })
-
-          // Create a regex pattern for all locales (e.g., "en|fr|es")
-          const localePattern = localeCodes.join('|')
-
-          // Add routes for each locale homepage: /{locale} → /llms.txt
-          routes.push(
-            {
-              src: `^/(${localePattern})$`,
-              dest: '/llms.txt',
-              headers: markdownHeaders,
-              has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-            },
-            {
-              src: `^/(${localePattern})$`,
-              dest: '/llms.txt',
-              headers: markdownHeaders,
-              has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
-            },
-          )
-        }
-
-        // Parse llms.txt to get all documentation pages
-        const urlRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
-        const matches = [...llmsTxt.matchAll(urlRegex)]
-
-        for (const match of matches) {
-          const url = match[2]
-          if (!url) continue
-
-          try {
-            // Extract path from URL
-            const urlObj = new URL(url)
-            const rawPath = urlObj.pathname
-
-            // Skip root path (already handled)
-            if (rawPath === '/') continue
-
-            // Only process raw markdown URLs from llms.txt
-            if (!rawPath.startsWith('/raw/')) continue
-
-            // Convert /raw/en/getting-started/installation.md to /en/getting-started/installation
-            const pagePath = rawPath.replace('/raw', '').replace(/\.md$/, '')
-
-            // Skip locale homepages (e.g., /en, /fr) - they already redirect to /llms.txt
-            if (isI18nEnabled) {
-              const isLocaleHomepage = localeCodes.some(code => pagePath === `/${code}`)
-              if (isLocaleHomepage) continue
-            }
-
-            // Add redirect routes: page URL → raw markdown URL
-            const docsRoutes = [
-              {
-                src: `^${pagePath}$`,
-                dest: rawPath,
-                headers: markdownHeaders,
-                has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-              },
-              {
-                src: `^${pagePath}$`,
-                dest: rawPath,
-                headers: markdownHeaders,
-                has: [{ type: 'header', key: 'user-agent', value: 'curl/.*' }],
-              },
-            ]
-            routes.push(...docsRoutes)
-          }
-          catch {
-            // Skip invalid URLs
-          }
-        }
-
-        vcConfig.routes.unshift(...routes)
-
-        await writeFile(vcJSON, JSON.stringify(vcConfig, null, 2), 'utf8')
-        log.info(`Successfully wrote ${routes.length} routes to ${vcJSON} (serve markdown content to AI agents)`)
       })
+
+      if (nitro.options.preset.includes('cloudflare-pages')) {
+        const cloudflarePagesEntry = nitro.options.entry
+        const cloudflareWrapper = resolveLayer('./runtime/server/cloudflare-pages')
+        nitro.options.virtual['#docus-cloudflare-pages-entry'] = `
+import cloudflarePages from ${JSON.stringify(cloudflarePagesEntry)}
+import { createCloudflarePagesHandler } from ${JSON.stringify(cloudflareWrapper)}
+
+export default createCloudflarePagesHandler(cloudflarePages)
+`
+        nitro.options.entry = '#docus-cloudflare-pages-entry'
+
+        nitro.hooks.hook('compiled', async () => {
+          const routesPath = resolve(nitro.options.output.dir, '_routes.json')
+          const cloudflareRoutes = JSON.parse(await readFile(routesPath, 'utf8')) as {
+            exclude?: string[]
+          }
+          const config = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+          const routes = config.docus?.markdownNegotiation?.routes
+
+          cloudflareRoutes.exclude = withoutNegotiatedRoutes(cloudflareRoutes.exclude, routes)
+          await writeFile(routesPath, JSON.stringify(cloudflareRoutes, null, 2), 'utf8')
+        })
+      }
+
+      if (nitro.options.preset.includes('vercel')) {
+        nitro.hooks.hook('compiled', async () => {
+          const configPath = resolve(nitro.options.output.dir, 'config.json')
+          const vercelConfig = JSON.parse(await readFile(configPath, 'utf8')) as {
+            routes?: VercelRoute[]
+          }
+          const config = nitro.options.runtimeConfig as typeof nitro.options.runtimeConfig & DocusRuntimeConfig
+          const routes = vercelConfig.routes || []
+          const fallbackDestination = routes.find(route => route.src === '/(.*)' && route.dest)?.dest
+          const negotiationRoutes = createVercelNegotiationRoutes(
+            config.docus?.markdownNegotiation?.routes,
+            fallbackDestination,
+          )
+          const filesystemIndex = routes.findIndex(route => route.handle === 'filesystem')
+          routes.splice(filesystemIndex < 0 ? 0 : filesystemIndex, 0, ...negotiationRoutes)
+          vercelConfig.routes = routes
+
+          await writeFile(configPath, JSON.stringify(vercelConfig, null, 2), 'utf8')
+        })
+      }
     })
   },
 })
