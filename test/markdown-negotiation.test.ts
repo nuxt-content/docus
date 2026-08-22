@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { describe, it } from 'node:test'
 import {
   createCloudflareModuleWorkerRoutes,
@@ -11,6 +12,13 @@ import {
 } from '../layer/modules/runtime/server/utils/markdown-negotiation.ts'
 
 describe('Markdown negotiation', () => {
+  it('publishes Negotiator with its declarations', async () => {
+    const packageJson = JSON.parse(await readFile(new URL('../layer/package.json', import.meta.url), 'utf8'))
+
+    assert.equal(typeof packageJson.dependencies.negotiator, 'string')
+    assert.equal(typeof packageJson.dependencies['@types/negotiator'], 'string')
+  })
+
   it('honors Accept quality and curl fallback', () => {
     assert.equal(negotiateContentType('text/html, text/markdown;q=0.5'), 'text/html')
     assert.equal(negotiateContentType('text/markdown, text/html;q=0.5'), 'text/markdown')

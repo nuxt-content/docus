@@ -35,9 +35,6 @@ importers:
       '@release-it/conventional-changelog':
         specifier: ^11.0.1
         version: 11.0.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(release-it@20.2.1(@types/node@26.1.1)(magicast@0.5.3))
-      '@types/negotiator':
-        specifier: ^0.6.5
-        version: 0.6.5
       eslint:
         specifier: ^10.7.0
         version: 10.7.0(jiti@2.7.0)
@@ -190,6 +187,9 @@ importers:
       '@takumi-rs/core':
         specifier: ^2.2.0
         version: 2.2.0(csstype@3.2.3)
+      '@types/negotiator':
+        specifier: ^0.6.5
+        version: 0.6.5
       '@vueuse/core':
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.39(typescript@6.0.3))
