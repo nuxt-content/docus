@@ -149,6 +149,7 @@ Cette action est irréversible.
 
     ::::u-page-card
     ---
+    spotlight: true
     class: col-span-2 md:col-span-1
     ---
     :assistant-demo
