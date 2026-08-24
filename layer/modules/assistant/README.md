@@ -156,6 +156,7 @@ clearMessages()
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
+| `enabled` | `boolean` | auto-detected | Force enable or disable the assistant. Defaults to `true` when `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` is available at build time |
 | `apiPath` | `string` | `/__docus__/assistant` | API endpoint path for the chat |
 | `mcpServer` | `string` | `/mcp` | MCP server path or full URL (e.g., `https://docs.example.com/mcp` for external servers) |
 | `model` | `string` | `google/gemini-3-flash` | AI model identifier for AI SDK Gateway |
@@ -208,14 +209,27 @@ Composable for syntax highlighting code blocks with Shiki.
 - Nuxt 4.x
 - Nuxt UI 3.x (for `USlideover`, `UButton`, `UTextarea`, `UChatMessages`, etc.)
 - An MCP server running (path configurable via `mcpServer`)
-- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time
+- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time, unless you set `enabled: true` and provide your own endpoint
 
 ## Customization
 
-### System Prompt
+### Custom provider or system prompt
 
-To customize the AI's behavior, edit the system prompt in:
-`runtime/server/api/search.ts`
+The endpoint logic lives in `runtime/server/utils/assistant.ts` and is exposed as the auto-imported `assistantSearchHandler` server util. Set `enabled: true`, point `apiPath` at your own route, and override what you need:
+
+```ts
+// server/api/assistant.ts
+import { createMistral } from '@ai-sdk/mistral'
+
+const mistral = createMistral()
+
+export default defineEventHandler(event => assistantSearchHandler(event, {
+  model: mistral('mistral-large-latest'),
+  systemPrompt: (_event, { siteName }) => `${getAssistantSystemPrompt(siteName)}\n\nExtra instructions.`,
+}))
+```
+
+`assistantSearchHandler` accepts `model`, `systemPrompt`, and `providerOptions`. A server route you define at `apiPath` always takes precedence over the built-in endpoint.
 
 ### Styling
 
