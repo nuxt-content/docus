@@ -45,6 +45,10 @@ Ship fast, flexible, and SEO-optimized documentation with beautiful design out o
 ::
 
 ::u-page-section
+---
+title: Everything you need to write beautiful docs
+description: Docus wires the Nuxt ecosystem together so you can focus on your content.
+---
   :::u-page-grid
     ::::u-page-card
     ---

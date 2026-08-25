@@ -45,6 +45,10 @@ Publiez instantanément une documentation élégante, optimisée pour le SEO, av
 ::
 
 ::u-page-section
+---
+title: Tout ce qu'il faut pour une documentation élégante
+description: Docus assemble l'écosystème Nuxt pour que vous puissiez vous concentrer sur votre contenu.
+---
   :::u-page-grid
     ::::u-page-card
     ---

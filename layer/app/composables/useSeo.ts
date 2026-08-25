@@ -1,4 +1,5 @@
 import type { MaybeRefOrGetter } from 'vue'
+import type { AppConfig } from 'nuxt/schema'
 import type { BreadcrumbItem } from '../utils/navigation'
 import { joinURL, withoutTrailingSlash } from 'ufo'
 
@@ -33,6 +34,82 @@ export interface UseSeoOptions {
   breadcrumbs?: MaybeRefOrGetter<BreadcrumbItem[] | undefined>
 }
 
+type SeoSchemaConfig = NonNullable<AppConfig['seo']['schema']>
+
+/**
+ * `Organization` node for the site publisher, linked from the other schemas.
+ *
+ * `contactPoint` and `address` are intentionally not derived from anything —
+ * they can only come from real business data, so they must be provided by the
+ * site itself if needed.
+ */
+function buildOrganizationSchema(schema: SeoSchemaConfig | undefined, baseUrl: string) {
+  const organization = schema?.organization
+  if (!organization?.name) return undefined
+
+  const node: Record<string, unknown> = {
+    '@type': 'Organization',
+    '@id': `${baseUrl}/#organization`,
+    'name': organization.name,
+    'url': organization.url || baseUrl,
+  }
+
+  if (organization.logo) {
+    node.logo = organization.logo.startsWith('http') ? organization.logo : joinURL(baseUrl, organization.logo)
+  }
+
+  if (organization.sameAs?.length) {
+    node.sameAs = organization.sameAs
+  }
+
+  return node
+}
+
+/**
+ * The node that answers "what is this site?" — a product, a company, a person.
+ */
+function buildIdentitySchema(
+  schema: SeoSchemaConfig | undefined,
+  context: { baseUrl: string, name: string | undefined, description: string | undefined, organizationId?: string },
+) {
+  const type = schema?.type
+  if (!type || !context.name) return undefined
+
+  // The publisher Organization is already emitted as its own node.
+  if (type === 'Organization' && schema?.organization?.name) return undefined
+
+  const node: Record<string, unknown> = {
+    '@type': type,
+    '@id': `${context.baseUrl}/#identity`,
+    'name': context.name,
+    'description': context.description,
+    'url': context.baseUrl,
+  }
+
+  if (schema?.sameAs?.length) {
+    node.sameAs = schema.sameAs
+  }
+
+  if (type === 'SoftwareApplication') {
+    node.applicationCategory = schema?.applicationCategory || 'DeveloperApplication'
+    node.operatingSystem = schema?.operatingSystem || 'Web'
+  }
+
+  if (typeof schema?.price === 'number' && (type === 'SoftwareApplication' || type === 'Product')) {
+    node.offers = {
+      '@type': 'Offer',
+      'price': schema.price,
+      'priceCurrency': schema.priceCurrency || 'USD',
+    }
+  }
+
+  if (context.organizationId && type !== 'Person') {
+    node.publisher = { '@id': context.organizationId }
+  }
+
+  return node
+}
+
 /**
  * Composable for comprehensive SEO setup including:
  * - Meta tags (title, description, og:*, twitter:*)
@@ -43,6 +120,7 @@ export interface UseSeoOptions {
 export function useSeo(options: UseSeoOptions) {
   const route = useRoute()
   const site = useSiteConfig()
+  const seoSchema = useAppConfig().seo?.schema
   const { locale, locales, isEnabled: isI18nEnabled, switchLocalePath } = useDocusI18n()
 
   const title = computed(() => toValue(options.title))
@@ -166,19 +244,41 @@ export function useSeo(options: UseSeoOptions) {
         })
       }
 
-      // WebSite schema for landing pages
+      // WebSite schema for landing pages, plus the site identity when configured
       if (type.value === 'website') {
         const websiteSchema: Record<string, unknown> = {
-          '@context': 'https://schema.org',
           '@type': 'WebSite',
+          '@id': `${baseUrl.value}/#website`,
           'name': site.name || title.value,
           'description': description.value,
           'url': baseUrl.value,
         }
 
+        const graph: Record<string, unknown>[] = [websiteSchema]
+
+        const organizationSchema = buildOrganizationSchema(seoSchema, baseUrl.value)
+        if (organizationSchema) {
+          graph.push(organizationSchema)
+          websiteSchema.publisher = { '@id': organizationSchema['@id'] }
+        }
+
+        const identitySchema = buildIdentitySchema(seoSchema, {
+          baseUrl: baseUrl.value,
+          name: site.name || title.value,
+          description: description.value,
+          organizationId: organizationSchema?.['@id'] as string | undefined,
+        })
+        if (identitySchema) {
+          graph.push(identitySchema)
+          websiteSchema.about = { '@id': identitySchema['@id'] }
+        }
+
         scripts.push({
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(websiteSchema),
+          innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': graph,
+          }),
         })
       }
 

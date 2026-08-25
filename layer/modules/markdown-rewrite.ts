@@ -7,6 +7,10 @@ const log = logger.withTag('docus')
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
 
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 export default defineNuxtModule({
   meta: {
     name: 'markdown-rewrite',
@@ -32,10 +36,18 @@ export default defineNuxtModule({
           return
         }
 
-        // Always redirect / to /llms.txt and ensure plain text content type
+        // Always redirect / to /llms.txt and ensure plain text content type.
+        // `vary` tells CDNs the body depends on the request headers — without
+        // it, whichever variant lands in the cache first is served to everyone.
         const markdownHeaders = {
           'content-type': 'text/markdown; charset=utf-8',
+          'vary': 'Accept, User-Agent',
         }
+
+        // Paths served in two representations. The HTML variant needs the same
+        // `vary` header, otherwise a cached HTML response can be handed to an
+        // agent asking for markdown (and vice versa).
+        const negotiatedPaths: string[] = ['/']
 
         const routes = [
           {
@@ -66,6 +78,8 @@ export default defineNuxtModule({
 
           // Create a regex pattern for all locales (e.g., "en|fr|es")
           const localePattern = localeCodes.join('|')
+
+          negotiatedPaths.push(...localeCodes.map(code => `/${code}`))
 
           // Add routes for each locale homepage: /{locale} → /llms.txt
           routes.push(
@@ -128,10 +142,24 @@ export default defineNuxtModule({
               },
             ]
             routes.push(...docsRoutes)
+            negotiatedPaths.push(pagePath)
           }
           catch {
             // Skip invalid URLs
           }
+        }
+
+        // Advertise the negotiation on the HTML variant too. The routes above
+        // terminate for markdown clients, so this only runs for everyone else.
+        // `User-Agent` is listed because the rules above also key on it — drop
+        // it if downstream cache efficiency matters more than strict
+        // correctness for the `curl` shortcut.
+        if (negotiatedPaths.length) {
+          routes.push({
+            src: `^(${negotiatedPaths.map(escapeRegex).join('|')})$`,
+            headers: { vary: 'Accept, User-Agent' },
+            continue: true,
+          } as unknown as typeof routes[number])
         }
 
         vcConfig.routes.unshift(...routes)

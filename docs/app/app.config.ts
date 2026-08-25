@@ -2,6 +2,31 @@ export default defineAppConfig({
   search: {
     fts: true,
   },
+  seo: {
+    schema: {
+      type: 'SoftwareApplication',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Web',
+      // Docus is free and open source (MIT).
+      price: 0,
+      priceCurrency: 'USD',
+      sameAs: [
+        'https://github.com/nuxt-content/docus',
+        'https://www.npmjs.com/package/docus',
+        'https://x.com/nuxt_js',
+      ],
+      organization: {
+        name: 'Nuxt',
+        url: 'https://nuxt.com',
+        logo: '/logo/logo-dark.svg',
+        sameAs: [
+          'https://github.com/nuxt',
+          'https://x.com/nuxt_js',
+          'https://discord.com/invite/ps2h6QT',
+        ],
+      },
+    },
+  },
   header: {
     title: 'Docus',
     logo: {
