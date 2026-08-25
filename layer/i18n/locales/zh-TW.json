@@ -1,0 +1,77 @@
+{
+  "common": {
+    "or": "或",
+    "error": {
+      "title": "找不到頁面",
+      "description": "很抱歉，找不到您造訪的頁面。"
+    }
+  },
+  "docs": {
+    "copy": {
+      "page": "複製頁面",
+      "link": "複製 Markdown 連結",
+      "view": "以 Markdown 檢視",
+      "gpt": "在 ChatGPT 中開啟",
+      "claude": "在 Claude 中開啟"
+    },
+    "links": "社群",
+    "toc": "本頁目錄",
+    "menu": "選單",
+    "report": "回報問題",
+    "edit": "編輯此頁"
+  },
+  "logo": {
+    "copyLogo": "複製 Logo",
+    "copyWordmark": "複製標準字",
+    "downloadLogo": "下載 Logo",
+    "downloadWordmark": "下載標準字",
+    "brandAssets": "品牌資源",
+    "logoCopied": "已複製 Logo",
+    "wordmarkCopied": "已複製標準字",
+    "logoDownloaded": "已下載 Logo",
+    "wordmarkDownloaded": "已下載標準字",
+    "copyLogoFailed": "複製 Logo 失敗",
+    "copyWordmarkFailed": "複製標準字失敗"
+  },
+  "assistant": {
+    "title": "詢問 AI",
+    "placeholder": "輸入問題...",
+    "tooltip": "向 AI 提問",
+    "tryAsking": "試著問問",
+    "askAnything": "想問什麼都可以...",
+    "clearChat": "清除對話",
+    "close": "關閉",
+    "expand": "展開",
+    "collapse": "收合",
+    "askMeAnything": "有問題儘管問",
+    "askMeAnythingDescription": "協助你瀏覽文件、理解概念，並找到答案。",
+    "faq": "常見問題",
+    "chatCleared": "重新整理將清除對話",
+    "lineBreak": "換行",
+    "explainWithAi": "用 AI 解釋",
+    "toolListPages": "已列出的文件頁面",
+    "toolReadPage": "讀取",
+    "tools": {
+      "searching": "搜尋中",
+      "searched": "已搜尋",
+      "reading": "讀取中",
+      "read": "已讀取",
+      "finding": "尋找中",
+      "found": "已找到",
+      "opening": "開啟中",
+      "opened": "已開啟",
+      "generating": "產生中",
+      "generated": "已產生",
+      "creating": "建立中",
+      "created": "已建立"
+    },
+    "loading": {
+      "thinking": "思考中...",
+      "searching": "搜尋文件中",
+      "reading": "閱讀文件中",
+      "analyzing": "分析內容中",
+      "finding": "尋找最佳答案",
+      "finished": "參考來源"
+    }
+  }
+}
