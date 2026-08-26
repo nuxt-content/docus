@@ -36,20 +36,17 @@ export interface UseSeoOptions {
 
 type SeoSchemaConfig = NonNullable<AppConfig['seo']['schema']>
 
+type SeoOrganizationConfig = NonNullable<SeoSchemaConfig['organization']>
+
 /**
- * `Organization` node for the site publisher, linked from the other schemas.
- *
  * `contactPoint` and `address` are intentionally not derived from anything —
  * they can only come from real business data, so they must be provided by the
  * site itself if needed.
  */
-function buildOrganizationSchema(schema: SeoSchemaConfig | undefined, baseUrl: string) {
-  const organization = schema?.organization
-  if (!organization?.name) return undefined
-
+function buildOrganizationNode(organization: SeoOrganizationConfig, id: string, baseUrl: string) {
   const node: Record<string, unknown> = {
     '@type': 'Organization',
-    '@id': `${baseUrl}/#organization`,
+    '@id': id,
     'name': organization.name,
     'url': organization.url || baseUrl,
   }
@@ -63,6 +60,28 @@ function buildOrganizationSchema(schema: SeoSchemaConfig | undefined, baseUrl: s
   }
 
   return node
+}
+
+/**
+ * `Organization` nodes for the site publisher and, when the publisher belongs to
+ * a larger company, its parent. Both are linked so the graph has no orphan node,
+ * and `publisher` keeps pointing at a single entity.
+ */
+function buildOrganizationSchemas(schema: SeoSchemaConfig | undefined, baseUrl: string) {
+  const organization = schema?.organization
+  if (!organization?.name) return []
+
+  const publisher = buildOrganizationNode(organization, `${baseUrl}/#organization`, baseUrl)
+  const nodes = [publisher]
+
+  const parent = organization.parentOrganization
+  if (parent?.name) {
+    const parentId = `${baseUrl}/#parent-organization`
+    publisher.parentOrganization = { '@id': parentId }
+    nodes.push(buildOrganizationNode(parent, parentId, baseUrl))
+  }
+
+  return nodes
 }
 
 /**
@@ -256,17 +275,19 @@ export function useSeo(options: UseSeoOptions) {
 
         const graph: Record<string, unknown>[] = [websiteSchema]
 
-        const organizationSchema = buildOrganizationSchema(seoSchema, baseUrl.value)
-        if (organizationSchema) {
-          graph.push(organizationSchema)
-          websiteSchema.publisher = { '@id': organizationSchema['@id'] }
+        // The first node is the publisher; any other is a company it belongs to.
+        const organizationSchemas = buildOrganizationSchemas(seoSchema, baseUrl.value)
+        const publisherId = organizationSchemas[0]?.['@id'] as string | undefined
+        if (organizationSchemas.length) {
+          graph.push(...organizationSchemas)
+          websiteSchema.publisher = { '@id': publisherId }
         }
 
         const identitySchema = buildIdentitySchema(seoSchema, {
           baseUrl: baseUrl.value,
           name: site.name || title.value,
           description: description.value,
-          organizationId: organizationSchema?.['@id'] as string | undefined,
+          organizationId: publisherId,
         })
         if (identitySchema) {
           graph.push(identitySchema)

@@ -13,7 +13,6 @@ export default defineAppConfig({
       sameAs: [
         'https://github.com/nuxt-content/docus',
         'https://www.npmjs.com/package/docus',
-        'https://x.com/nuxt_js',
       ],
       organization: {
         name: 'Nuxt',
@@ -24,6 +23,15 @@ export default defineAppConfig({
           'https://x.com/nuxt_js',
           'https://discord.com/invite/ps2h6QT',
         ],
+        parentOrganization: {
+          name: 'Vercel',
+          url: 'https://vercel.com',
+          sameAs: [
+            'https://github.com/vercel',
+            'https://x.com/vercel',
+            'https://www.linkedin.com/company/vercel',
+          ],
+        },
       },
     },
   },

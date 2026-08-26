@@ -2,6 +2,17 @@ import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistan
 
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
+/**
+ * An organization behind the site, emitted as a JSON-LD `Organization` node.
+ */
+export interface DocusSeoOrganization {
+  name: string
+  url?: string
+  logo?: string
+  /** Canonical profile URLs (GitHub, X, LinkedIn…). */
+  sameAs?: string[]
+}
+
 declare module 'nuxt/schema' {
   interface AppConfig {
     docus: {
@@ -61,13 +72,14 @@ declare module 'nuxt/schema' {
          */
         priceCurrency?: string
         /**
-         * Publisher of the site. Emitted as a linked `Organization`.
+         * Publisher of the site, emitted as a linked `Organization`.
+         *
+         * Set `parentOrganization` when the publisher belongs to a larger
+         * company: both are emitted and linked, so `publisher` keeps pointing
+         * at a single entity.
          */
-        organization?: {
-          name: string
-          url?: string
-          logo?: string
-          sameAs?: string[]
+        organization?: DocusSeoOrganization & {
+          parentOrganization?: DocusSeoOrganization
         }
       }
     }
