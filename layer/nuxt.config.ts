@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
     resolve('./modules/routing'),
-    resolve('./modules/markdown-rewrite'),
+    resolve('./modules/vercel-markdown-rewrite'),
     resolve('./modules/skills'),
     resolve('./modules/not-found'),
     resolve('./modules/css'),

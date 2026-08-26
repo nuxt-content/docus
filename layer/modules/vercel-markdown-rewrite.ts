@@ -7,9 +7,29 @@ const log = logger.withTag('docus')
 type I18nLocale = string | { code: string }
 type DocusI18nOptions = { locales?: I18nLocale[] }
 
+/** Subset of the Vercel Build Output API route we generate. */
+type VercelRoute = {
+  src: string
+  dest?: string
+  headers?: Record<string, string>
+  has?: Array<{ type: 'header' | 'cookie' | 'query' | 'host', key: string, value: string }>
+  /** Apply the headers, then keep matching the following routes. */
+  continue?: boolean
+}
+
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
+ * Serve markdown to agents asking for it, by rewriting page URLs to their raw
+ * markdown counterpart at the edge.
+ *
+ * **Only applies to Vercel deployments.**
+ */
 export default defineNuxtModule({
   meta: {
-    name: 'markdown-rewrite',
+    name: 'vercel-markdown-rewrite',
   },
   setup(_options, nuxt) {
     nuxt.hooks.hook('nitro:init', (nitro) => {
@@ -32,12 +52,20 @@ export default defineNuxtModule({
           return
         }
 
-        // Always redirect / to /llms.txt and ensure plain text content type
+        // Always redirect / to /llms.txt and ensure plain text content type.
+        // `vary` tells CDNs the body depends on the request headers:
+        // without it, whichever variant lands in the cache first is served to everyone
         const markdownHeaders = {
           'content-type': 'text/markdown; charset=utf-8',
+          'vary': 'Accept, User-Agent',
         }
 
-        const routes = [
+        // Paths answering in two representations. Their HTML variant needs the
+        // same `vary`, otherwise a cached HTML response can be handed to an
+        // agent asking for markdown (and the other way around).
+        const negotiatedPaths: string[] = ['/']
+
+        const routes: VercelRoute[] = [
           {
             src: '^/$',
             dest: '/llms.txt',
@@ -66,6 +94,8 @@ export default defineNuxtModule({
 
           // Create a regex pattern for all locales (e.g., "en|fr|es")
           const localePattern = localeCodes.join('|')
+
+          negotiatedPaths.push(...localeCodes.map(code => `/${code}`))
 
           // Add routes for each locale homepage: /{locale} → /llms.txt
           routes.push(
@@ -113,7 +143,7 @@ export default defineNuxtModule({
             }
 
             // Add redirect routes: page URL → raw markdown URL
-            const docsRoutes = [
+            const docsRoutes: VercelRoute[] = [
               {
                 src: `^${pagePath}$`,
                 dest: rawPath,
@@ -128,10 +158,21 @@ export default defineNuxtModule({
               },
             ]
             routes.push(...docsRoutes)
+            negotiatedPaths.push(pagePath)
           }
           catch {
             // Skip invalid URLs
           }
+        }
+
+        // Runs after the rewrites above, which terminate for markdown clients,
+        // so only the HTML variant reaches this rule.
+        if (negotiatedPaths.length) {
+          routes.push({
+            src: `^(${negotiatedPaths.map(escapeRegex).join('|')})$`,
+            headers: { vary: 'Accept, User-Agent' },
+            continue: true,
+          })
         }
 
         vcConfig.routes.unshift(...routes)
