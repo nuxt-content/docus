@@ -2,6 +2,38 @@ export default defineAppConfig({
   search: {
     fts: true,
   },
+  seo: {
+    schema: {
+      type: 'SoftwareApplication',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Web',
+      price: 0,
+      priceCurrency: 'USD',
+      sameAs: [
+        'https://github.com/nuxt-content/docus',
+        'https://www.npmjs.com/package/docus',
+      ],
+      organization: {
+        name: 'Nuxt',
+        url: 'https://nuxt.com',
+        logo: '/logo/logo-dark.svg',
+        sameAs: [
+          'https://github.com/nuxt',
+          'https://x.com/nuxt_js',
+          'https://discord.com/invite/ps2h6QT',
+        ],
+        parentOrganization: {
+          name: 'Vercel',
+          url: 'https://vercel.com',
+          sameAs: [
+            'https://github.com/vercel',
+            'https://x.com/vercel',
+            'https://www.linkedin.com/company/vercel',
+          ],
+        },
+      },
+    },
+  },
   header: {
     title: 'Docus',
     logo: {
