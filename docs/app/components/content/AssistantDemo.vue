@@ -115,7 +115,7 @@ function resetChat() {
             >
               <AssistantComark
                 v-if="isTextUIPart(part) && part.text"
-                :markdown="part.text"
+                :value="part.text"
               />
 
               <UChatTool

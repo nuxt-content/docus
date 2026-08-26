@@ -2,6 +2,17 @@ import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistan
 
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
+/**
+ * An organization behind the site, emitted as a JSON-LD `Organization` node.
+ */
+export interface DocusSeoOrganization {
+  name: string
+  url?: string
+  logo?: string
+  /** Profile URLs (GitHub, X, LinkedIn…). */
+  sameAs?: string[]
+}
+
 declare module 'nuxt/schema' {
   interface AppConfig {
     docus: {
@@ -25,6 +36,51 @@ declare module 'nuxt/schema' {
       titleTemplate: string
       title: string
       description: string
+      /**
+       * JSON-LD identity of the site
+       * Allows agents and search engines to understand what the site is about
+       */
+      schema?: {
+        /**
+         * Schema.org type describing the site.
+         * @default undefined (only `WebSite` is emitted)
+         */
+        type?: 'SoftwareApplication' | 'Product' | 'Organization' | 'Person'
+        /**
+         * Canonical profile URLs (GitHub, X, LinkedIn…), used as `sameAs`.
+         */
+        sameAs?: string[]
+        /**
+         * Category of the application, e.g. `DeveloperApplication`.
+         * Only used with `SoftwareApplication`.
+         */
+        applicationCategory?: string
+        /**
+         * Platforms the application runs on, e.g. `Web`.
+         * Only used with `SoftwareApplication`.
+         */
+        operatingSystem?: string
+        /**
+         * Price of the application. Set to `0` to advertise it as free.
+         * Only used with `SoftwareApplication` and `Product`.
+         */
+        price?: number
+        /**
+         * Currency for `price`, as an ISO 4217 code.
+         * @default 'USD'
+         */
+        priceCurrency?: string
+        /**
+         * Publisher of the site, emitted as a linked `Organization`.
+         *
+         * Set `parentOrganization` when the publisher belongs to a larger
+         * company: both are emitted and linked, so `publisher` keeps pointing
+         * at a single entity.
+         */
+        organization?: DocusSeoOrganization & {
+          parentOrganization?: DocusSeoOrganization
+        }
+      }
     }
     header: {
       title: string

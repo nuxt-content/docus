@@ -216,7 +216,7 @@ defineShortcuts({
               chevron="leading"
             >
               <AssistantComark
-                :markdown="part.text"
+                :value="part.text"
                 :streaming="isPartStreaming(part)"
               />
             </UChatReasoning>
@@ -224,7 +224,7 @@ defineShortcuts({
             <template v-else-if="isTextUIPart(part) && part.text.length > 0">
               <AssistantComark
                 v-if="message.role === 'assistant'"
-                :markdown="part.text"
+                :value="part.text"
                 :streaming="isPartStreaming(part)"
               />
               <p
