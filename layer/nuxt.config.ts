@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     resolve('./modules/routing'),
     resolve('./modules/markdown-rewrite'),
     resolve('./modules/skills'),
+    resolve('./modules/not-found'),
     resolve('./modules/css'),
     () => {
       const nuxt = useNuxt()
