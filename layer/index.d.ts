@@ -4,6 +4,7 @@ import type { SkillsModuleOptions } from './modules/skills'
 export interface DocusNuxtConfig {
   assistant?: AssistantModuleOptions
   skills?: SkillsModuleOptions
+  notFound?: boolean
 }
 
 declare module '@nuxt/schema' {
