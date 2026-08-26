@@ -8,13 +8,11 @@ export interface AssistantModuleOptions {
    * When left undefined, the assistant is enabled if `AI_GATEWAY_API_KEY` or
    * `VERCEL_OIDC_TOKEN` is available at build time.
    *
-   * Set it to `true` to use a custom AI SDK provider: Docus then skips
-   * registering its own endpoint, and you provide a route at `apiPath` built
-   * with `assistantSearchHandler`.
+   * Set it to `true` to use a custom AI SDK provider:
+   * - Docus skips registering its own endpoint,
+   * - You provide a route at `apiPath` built with `createAssistantResponse`.
    *
-   * Set it to `false` to disable the assistant even when AI Gateway
-   * credentials are available.
-   *
+   * Set it to `false` to disable the assistant.
    * @default undefined
    */
   enabled?: boolean
@@ -71,7 +69,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
     // be used without AI Gateway credentials.
     const isEnabled = options.enabled ?? hasAiGatewayAuth
     // Docus only owns the endpoint when it can authenticate to the AI Gateway.
-    // Otherwise the user brings their own route built with `assistantSearchHandler`.
+    // Otherwise the user brings their own route at `apiPath`.
     const hasDefaultHandler = isEnabled && hasAiGatewayAuth
 
     const { resolve } = createResolver(import.meta.url)
@@ -115,15 +113,13 @@ export default defineNuxtModule<AssistantModuleOptions>({
 
     // Exposed even when disabled so overriding the endpoint stays type-safe.
     addServerImports([
-      {
-        name: 'assistantSearchHandler',
-        from: resolve('./runtime/server/utils/assistant'),
-      },
-      {
-        name: 'getAssistantSystemPrompt',
-        from: resolve('./runtime/server/utils/assistant'),
-      },
-    ])
+      'getAssistantDefaultOptions',
+      'getAssistantSystemPrompt',
+      'createAssistantResponse',
+    ].map(name => ({
+      name,
+      from: resolve('./runtime/server/utils/assistant'),
+    })))
 
     if (!isEnabled) {
       if (options.enabled === undefined) {
@@ -136,14 +132,14 @@ export default defineNuxtModule<AssistantModuleOptions>({
 
     if (!hasDefaultHandler) {
       nuxt.hook('modules:done', () => {
-        log.info(`AI assistant enabled without AI Gateway credentials: provide a server route at \`${options.apiPath}\` using \`assistantSearchHandler\``)
+        log.info(`AI assistant enabled without AI Gateway credentials: provide a server route at \`${options.apiPath}\` using \`getAssistantDefaultOptions\``)
       })
       return
     }
 
     const routePath = options.apiPath!.replace(/^\//, '')
     const route = `/${routePath}`
-    const handler = resolve('./runtime/server/api/search')
+    const handler = resolve('./runtime/server/api/assistant')
 
     addServerHandler({ route, handler })
 

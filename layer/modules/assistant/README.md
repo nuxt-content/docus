@@ -215,21 +215,47 @@ Composable for syntax highlighting code blocks with Shiki.
 
 ### Custom provider or system prompt
 
-The endpoint logic lives in `runtime/server/utils/assistant.ts` and is exposed as the auto-imported `assistantSearchHandler` server util. Set `enabled: true`, point `apiPath` at your own route, and override what you need:
+The endpoint is not configurable by design. To use another provider or different model parameters, set `enabled: true`, point `apiPath` at your own route, and own the `streamText` call:
 
 ```ts
 // server/api/assistant.ts
+import { streamText, convertToModelMessages } from 'ai'
 import { createMistral } from '@ai-sdk/mistral'
 
 const mistral = createMistral()
 
-export default defineEventHandler(event => assistantSearchHandler(event, {
-  model: mistral('mistral-large-latest'),
-  systemPrompt: (_event, { siteName }) => `${getAssistantSystemPrompt(siteName)}\n\nExtra instructions.`,
-}))
+export default defineEventHandler(async (event) => {
+  const { messages } = await readBody(event)
+
+  return createAssistantResponse(streamText({
+    // Spread first, so your options below win
+    ...await getAssistantDefaultOptions(event),
+    model: mistral('mistral-large-latest'),
+    maxOutputTokens: 4000,
+    messages: await convertToModelMessages(messages),
+  }))
+})
 ```
 
-`assistantSearchHandler` accepts `model`, `systemPrompt`, and `providerOptions`. A server route you define at `apiPath` always takes precedence over the built-in endpoint.
+Auto-imported server utils, all defined in `runtime/server/utils/assistant.ts`:
+
+| Util | Role |
+|------|------|
+| `getAssistantDefaultOptions(event)` | Every `streamText` option the built-in endpoint uses: MCP tools, abort signal, client cleanup, `instructions`, `maxOutputTokens`, `maxRetries`, `stopWhen`, `prepareStep`, `smoothStream`. Spread it first |
+| `getAssistantSystemPrompt(event)` | The documentation prompt on its own, for extending it by concatenation |
+| `createAssistantResponse(result)` | Wraps a `streamText` result in the stream format the UI expects |
+
+`model`, `messages` and provider specific options (`providerOptions`, `temperature`) are excluded, since they don't port across providers.
+
+The built-in endpoint lives in `runtime/server/api/assistant.ts` and is written with these same three utils, so it doubles as the reference implementation to copy.
+
+A working override on a non-Gateway provider lives in `playground/server/api/assistant.ts` (Mistral). Run it with:
+
+```bash
+MISTRAL_API_KEY=... pnpm playground:dev
+```
+
+A server route you define at `apiPath` always takes precedence over the built-in endpoint.
 
 ### Styling
 
