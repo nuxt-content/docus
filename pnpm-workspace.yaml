@@ -3,6 +3,7 @@ packages:
   - cli
   - docs
   - layer
+  - playground
 
 overrides:
   h3: 1.15.11

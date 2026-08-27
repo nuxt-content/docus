@@ -156,6 +156,7 @@ clearMessages()
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
+| `enabled` | `boolean` | auto-detected | Force enable or disable the assistant. Defaults to `true` when `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` is available at build time |
 | `apiPath` | `string` | `/__docus__/assistant` | API endpoint path for the chat |
 | `mcpServer` | `string` | `/mcp` | MCP server path or full URL (e.g., `https://docs.example.com/mcp` for external servers) |
 | `model` | `string` | `google/gemini-3-flash` | AI model identifier for AI SDK Gateway |
@@ -208,14 +209,53 @@ Composable for syntax highlighting code blocks with Shiki.
 - Nuxt 4.x
 - Nuxt UI 3.x (for `USlideover`, `UButton`, `UTextarea`, `UChatMessages`, etc.)
 - An MCP server running (path configurable via `mcpServer`)
-- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time
+- `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` at build time, unless you set `enabled: true` and provide your own endpoint
 
 ## Customization
 
-### System Prompt
+### Custom provider or system prompt
 
-To customize the AI's behavior, edit the system prompt in:
-`runtime/server/api/search.ts`
+The endpoint is not configurable by design. To use another provider or different model parameters, set `enabled: true`, point `apiPath` at your own route, and own the `streamText` call:
+
+```ts
+// server/api/assistant.ts
+import { streamText, convertToModelMessages } from 'ai'
+import { createMistral } from '@ai-sdk/mistral'
+
+const mistral = createMistral()
+
+export default defineEventHandler(async (event) => {
+  const { messages } = await readBody(event)
+
+  return createAssistantResponse(streamText({
+    // Spread first, so your options below win
+    ...await getAssistantDefaultOptions(event),
+    model: mistral('mistral-large-latest'),
+    maxOutputTokens: 4000,
+    messages: await convertToModelMessages(messages),
+  }))
+})
+```
+
+Auto-imported server utils, all defined in `runtime/server/utils/assistant.ts`:
+
+| Util | Role |
+|------|------|
+| `getAssistantDefaultOptions(event)` | Every `streamText` option the built-in endpoint uses: MCP tools, abort signal, client cleanup, `instructions`, `maxOutputTokens`, `maxRetries`, `stopWhen`, `prepareStep`, `smoothStream`. Spread it first |
+| `getAssistantSystemPrompt(event)` | The documentation prompt on its own, for extending it by concatenation |
+| `createAssistantResponse(result)` | Wraps a `streamText` result in the stream format the UI expects |
+
+`model`, `messages` and provider specific options (`providerOptions`, `temperature`) are excluded, since they don't port across providers.
+
+The built-in endpoint lives in `runtime/server/api/assistant.ts` and is written with these same three utils, so it doubles as the reference implementation to copy.
+
+A working override on a non-Gateway provider lives in `playground/server/api/assistant.ts` (Mistral). Run it with:
+
+```bash
+MISTRAL_API_KEY=... pnpm playground:dev
+```
+
+A server route you define at `apiPath` always takes precedence over the built-in endpoint.
 
 ### Styling
 
