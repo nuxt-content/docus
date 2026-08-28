@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.13.0](https://github.com/nuxt-content/docus/compare/v5.12.3...v5.13.0) (2026-08-28)
+
+### Features
+
+* **agentic:** add `vary` header to markdown negotiation ([#1431](https://github.com/nuxt-content/docus/issues/1431)) ([545b05f](https://github.com/nuxt-content/docus/commit/545b05f3fb7ca40764ed0195ddd14a7bcfa2977c))
+* **assistant:** allow agnostic provider ([#1427](https://github.com/nuxt-content/docus/issues/1427)) ([58ad18f](https://github.com/nuxt-content/docus/commit/58ad18fc4112346f7631af79647ee9150290d534))
+* **i18n:** add Traditional Chinese (zh-TW) locale ([#1426](https://github.com/nuxt-content/docus/issues/1426)) ([c6de137](https://github.com/nuxt-content/docus/commit/c6de1373ab18bf6b621e24b2b3d270592871542f))
+* **modules:** agentic 404 to answer agents ([#1429](https://github.com/nuxt-content/docus/issues/1429)) ([dab0da0](https://github.com/nuxt-content/docus/commit/dab0da08a5f7d2ed01d6fca7a01874d7e99e6a01))
+* **seo:** add configurable identity schema to JSON-LD ([#1433](https://github.com/nuxt-content/docus/issues/1433)) ([c55b488](https://github.com/nuxt-content/docus/commit/c55b4881653c15f258b656abe714edc8eb8b74b9))
+
+### Bug Fixes
+
+* **assistant:** local url ([#1425](https://github.com/nuxt-content/docus/issues/1425)) ([677b6af](https://github.com/nuxt-content/docus/commit/677b6af299c6953962b929b00c886e323072dea4))
+* **assistant:** pass value prop to Comark 0.6 ([#1430](https://github.com/nuxt-content/docus/issues/1430)) ([2d1162b](https://github.com/nuxt-content/docus/commit/2d1162b671a2b8d0a48df1e3d7349ab1d4ebb74e))
+* **docs:** correct mdc code fences in components page ([#1411](https://github.com/nuxt-content/docus/issues/1411)) ([c90753b](https://github.com/nuxt-content/docus/commit/c90753bae660d2abc998b64db325452ee06243b1))
+* **docs:** wrong link path in index.md for installation page ([#1409](https://github.com/nuxt-content/docus/issues/1409)) ([87ae614](https://github.com/nuxt-content/docus/commit/87ae61478d450e97a827eb5029e0abafeea02e8b))
+
 ## [5.12.3](https://github.com/nuxt-content/docus/compare/v5.12.2...v5.12.3) (2026-06-25)
 
 ### Bug Fixes
