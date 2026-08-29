@@ -1,5 +1,6 @@
 import { queryCollection } from '@nuxt/content/server'
 import { inferSiteURL } from '../../utils/meta'
+import { getLocaleKey } from '../../utils/locale'
 import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../utils/content'
 
 interface SitemapUrl {
@@ -16,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   if (availableLocales.length > 0) {
     for (const locale of availableLocales) {
-      collections.push(`landing_${locale}`)
+      collections.push(`landing_${getLocaleKey(locale)}`)
     }
   }
   else {

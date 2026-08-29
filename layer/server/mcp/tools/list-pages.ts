@@ -3,7 +3,7 @@ import { queryCollection } from '@nuxt/content/server'
 import { joinURL } from 'ufo'
 import { z } from 'zod'
 import { inferSiteURL } from '../../../utils/meta'
-import { getAvailableLocales, getCollectionsToQuery } from '../../utils/content'
+import { getAvailableLocales, getCollectionsToQuery, getLocaleFromCollection } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -60,7 +60,7 @@ OUTPUT: Returns a structured list with:
             title: page.title,
             path: page.path,
             description: page.description,
-            locale: collectionName.replace('docs_', ''),
+            locale: getLocaleFromCollection(collectionName, availableLocales),
             url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
           }))
         }),

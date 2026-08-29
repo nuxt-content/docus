@@ -1,18 +1,19 @@
 import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { defu } from 'defu'
-import { existsSync } from 'node:fs'
-import { join } from 'node:path'
+import { readdirSync } from 'node:fs'
+import { findLocaleFile, normalizeLocale } from '../utils/locale'
+import { findLocaleFolder } from '../utils/pages'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
 const log = logger.withTag('docus')
 
-type I18nLocale = string | { code: string, name?: string }
-type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }
+type I18nLocale = string | { code: string, name?: string, language?: string }
+type DocusI18nOptions = { locales?: I18nLocale[], defaultLocale?: string, strategy?: string }
 type DocusMcpOptions = { route?: string, enabled?: boolean }
 type RegisterModuleOptions = {
   langDir: string
-  locales: Array<{ code: string, name: string, file: string }>
+  locales: Array<{ code: string, name: string, language: string, file: string }>
 }
 
 export default defineNuxtModule({
@@ -82,34 +83,59 @@ export default defineNuxtModule({
 
     if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
       const { resolve } = createResolver(import.meta.url)
+      const langDir = resolve('../i18n/locales')
+      const localeFileNames = readdirSync(langDir)
+
+      // Keep the original tag as `language` for `html lang` and `hreflang`
+      const normalizeLocaleEntry = (locale: I18nLocale) => {
+        const code = typeof locale === 'string' ? locale : locale.code
+        const base = typeof locale === 'string' ? { name: code, language: code } : locale
+
+        return { ...base, code: normalizeLocale(code), language: base.language || code }
+      }
+
+      const normalizedLocales = i18nOptions.locales.map(normalizeLocaleEntry)
 
       // Filter locales to only include existing ones
-      const filteredLocales = i18nOptions.locales.filter((locale: I18nLocale) => {
-        const localeCode = typeof locale === 'string' ? locale : locale.code
+      const filteredLocales = normalizedLocales.filter((locale) => {
+        const localeCode = locale.code
 
         // Check for JSON locale file
-        const localeFilePath = resolve('../i18n/locales', `${localeCode}.json`)
-        const hasLocaleFile = existsSync(localeFilePath)
+        const localeFile = findLocaleFile(localeCode, localeFileNames)
 
         // Check for content folder
-        const contentPath = join(nuxt.options.rootDir, 'content', localeCode)
-        const hasContentFolder = existsSync(contentPath)
+        const contentFolder = findLocaleFolder(nuxt.options.rootDir, localeCode)
 
-        if (!hasLocaleFile) {
+        if (!localeFile) {
           log.warn(`Locale file not found: ${localeCode}.json - skipping locale "${localeCode}"`)
         }
 
-        if (!hasContentFolder) {
+        if (!contentFolder) {
           log.warn(`Content folder not found: content/${localeCode}/ - skipping locale "${localeCode}"`)
         }
 
-        return hasLocaleFile && hasContentFolder
+        return !!localeFile && !!contentFolder
       })
 
       // Override strategy to prefix
       typedNuxtOptions.i18n = {
         ...i18nOptions,
+        locales: normalizedLocales,
+        defaultLocale: i18nOptions.defaultLocale && normalizeLocale(i18nOptions.defaultLocale),
         strategy: 'prefix',
+      }
+
+      // @nuxtjs/i18n reads locales from each layer config, not from the merged options
+      for (const layer of nuxt.options._layers) {
+        const layerI18n = (layer.config as { i18n?: DocusI18nOptions }).i18n
+
+        if (layerI18n?.locales) {
+          layerI18n.locales = layerI18n.locales.map(normalizeLocaleEntry)
+
+          if (layerI18n.defaultLocale) {
+            layerI18n.defaultLocale = normalizeLocale(layerI18n.defaultLocale)
+          }
+        }
       }
 
       // Expose filtered locales
@@ -120,20 +146,12 @@ export default defineNuxtModule({
       const registerI18nModule = nuxt.hook as unknown as (name: string, callback: (register: (options: RegisterModuleOptions) => void) => void) => void
 
       registerI18nModule('i18n:registerModule', (register) => {
-        const langDir = resolve('../i18n/locales')
+        const locales = filteredLocales.flatMap((locale) => {
+          const file = findLocaleFile(locale.code, localeFileNames)
 
-        const locales = filteredLocales.map((locale: I18nLocale) => {
-          return typeof locale === 'string'
-            ? {
-                code: locale,
-                name: locale,
-                file: `${locale}.json`,
-              }
-            : {
-                code: locale.code,
-                name: locale.name || locale.code,
-                file: `${locale.code}.json`,
-              }
+          return file
+            ? [{ code: locale.code, name: locale.name || locale.code, language: locale.language, file }]
+            : []
         })
 
         register({
