@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { withoutTrailingSlash } from 'ufo'
 import { inferSiteURL } from '../../utils/meta'
 import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../utils/content'
 
@@ -9,7 +10,11 @@ interface SitemapUrl {
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  const siteUrl = inferSiteURL() || ''
+  // Config first: inferSiteURL() only reads env vars, so a configured
+  // site.url would be dropped and every <loc> emitted relative.
+  const siteUrl = withoutTrailingSlash(
+    (config.public.site as { url?: string } | undefined)?.url || inferSiteURL() || '',
+  )
 
   const availableLocales = getAvailableLocales(config.public as Record<string, unknown>)
   const collections = getCollectionsToQuery(undefined, availableLocales)
