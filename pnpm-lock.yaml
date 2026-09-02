@@ -91,8 +91,8 @@ importers:
         specifier: 4.5.2
         version: 4.5.2(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@oxc-project/types@0.144.0)(@parcel/watcher@2.5.6)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.41)(better-sqlite3@12.11.1)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.11.1))(esbuild@0.28.1)(eslint@10.9.0(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.1(supports-color@10.2.2))(lightningcss@1.33.0)(magicast@0.5.4)(meow@13.2.0)(optionator@0.9.4)(oxc-parser@0.141.0)(rolldown@1.2.4)(rollup-plugin-visualizer@7.0.1(rolldown@1.2.4)(rollup@4.62.2))(rollup@4.62.2)(srvx@0.12.7)(supports-color@10.2.2)(terser@5.49.0)(tsx@4.23.12)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(tsx@4.23.12)(yaml@2.9.0))(vue-tsc@3.3.11(typescript@6.0.3))(yaml@2.9.0)
       nuxt-studio:
-        specifier: https://pkg.pr.new/nuxt-studio@553
-        version: https://pkg.pr.new/nuxt-studio@553(db0@0.3.4(better-sqlite3@12.11.1))(ioredis@5.11.1(supports-color@10.2.2))(magic-string@1.2.0)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.4)(srvx@0.12.7)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.4)(rollup@4.62.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(tsx@4.23.12)(yaml@2.9.0)))(vue@3.5.41(typescript@6.0.3))
+        specifier: https://pkg.pr.new/nuxt-studio@d2285f5
+        version: https://pkg.pr.new/nuxt-studio@d2285f5(db0@0.3.4(better-sqlite3@12.11.1))(ioredis@5.11.1(supports-color@10.2.2))(magic-string@1.2.0)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.4)(srvx@0.12.7)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.4)(rollup@4.62.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(tsx@4.23.12)(yaml@2.9.0)))(vue@3.5.41(typescript@6.0.3))
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -7264,8 +7264,8 @@ packages:
     peerDependencies:
       vue: ^3.5.30
 
-  nuxt-studio@https://pkg.pr.new/nuxt-studio@553:
-    resolution: {integrity: sha512-qitrQm19KCJVwl0OlNo2YNKlpm3/qhIg4vyVBoPs2s5lciF1atVERr5adpliggVdlktQ3pi8B2J30swqyUk+HQ==, tarball: https://pkg.pr.new/nuxt-studio@553}
+  nuxt-studio@https://pkg.pr.new/nuxt-studio@d2285f5:
+    resolution: {integrity: sha512-NkJQ5XjyFxffWMhPzsI5ZDsGWTLtdn+BDjaLqyVGA+53TpJw2QANVuLy9bn8Kd6LTq13ZRgg2SvLRsFccr3kLw==, tarball: https://pkg.pr.new/nuxt-studio@d2285f5}
     version: 1.7.0
 
   nuxt@4.4.8:
@@ -18460,7 +18460,7 @@ snapshots:
       - vite
       - zod
 
-  nuxt-studio@https://pkg.pr.new/nuxt-studio@553(db0@0.3.4(better-sqlite3@12.11.1))(ioredis@5.11.1(supports-color@10.2.2))(magic-string@1.2.0)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.4)(srvx@0.12.7)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.4)(rollup@4.62.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(tsx@4.23.12)(yaml@2.9.0)))(vue@3.5.41(typescript@6.0.3)):
+  nuxt-studio@https://pkg.pr.new/nuxt-studio@d2285f5(db0@0.3.4(better-sqlite3@12.11.1))(ioredis@5.11.1(supports-color@10.2.2))(magic-string@1.2.0)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.4)(srvx@0.12.7)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.4)(rollup@4.62.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(tsx@4.23.12)(yaml@2.9.0)))(vue@3.5.41(typescript@6.0.3)):
     dependencies:
       '@ai-sdk/gateway': 4.0.21(zod@4.4.3)
       '@ai-sdk/vue': 4.0.29(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)
