@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     'nuxt-agent-discovery',
     '@nuxt/image',
     '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
     '@nuxtjs/mcp-toolkit',
     'nuxt-og-image',
     'nuxt-llms',
@@ -94,17 +95,22 @@ export default defineNuxtConfig({
       const i18nOptions = (nuxt.options as typeof nuxt.options & { i18n?: DocusI18nOptions }).i18n
 
       const routes: string[] = []
+      nitroConfig.prerender = nitroConfig.prerender || {}
       if (!i18nOptions) {
         routes.push('/')
       }
       else {
         routes.push(...(i18nOptions.locales?.map((locale: string | { code: string }) => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
+        // With one sitemap per locale, `/sitemap.xml` only redirects to the
+        // index, and Nitro would write that redirect as an HTML file the CDN
+        // then serves for the XML URL.
+        nitroConfig.prerender.ignore = nitroConfig.prerender.ignore || []
+        nitroConfig.prerender.ignore.push('/sitemap.xml')
       }
 
-      nitroConfig.prerender = nitroConfig.prerender || {}
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
       nitroConfig.prerender.routes.push(...(routes || []))
-      nitroConfig.prerender.routes.push('/sitemap.xml')
+      nitroConfig.prerender.routes.push('/openapi.json')
     },
   },
   icon: {
@@ -130,6 +136,11 @@ export default defineNuxtConfig({
         allow: '/',
       },
     ],
-    sitemap: '/sitemap.xml',
+  },
+  sitemap: {
+    // Content is the source of truth: the prerendered routes would list every
+    // page anyway, `sitemap: false` in a page's frontmatter included.
+    excludeAppSources: true,
+    sources: ['/api/__sitemap__/urls'],
   },
 })

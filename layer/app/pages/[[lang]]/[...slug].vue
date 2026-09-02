@@ -66,10 +66,6 @@ const editLink = computed(() => {
     `${page.value?.stem}.${page.value?.extension}`,
   ].filter(Boolean).join('/')
 })
-
-// Prerender the raw markdown twin of this page alongside it
-const rawPrefix = (useRuntimeConfig().public.agentDiscovery as { rawPrefix?: string } | undefined)?.rawPrefix || '/raw'
-addPrerenderPath(`${rawPrefix}${route.path}.md`)
 </script>
 
 <template>

@@ -25,6 +25,7 @@ export async function getPackageJsonMetadata(dir: string) {
     return {
       name: parsed.name,
       description: parsed.description,
+      version: parsed.version,
     }
   }
   catch {

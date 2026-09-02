@@ -53,6 +53,12 @@ export default defineNuxtModule({
       description: meta.description || '',
     })
 
+    // `version` feeds the OpenAPI document, `filteredLocales` is filled in by the i18n block below
+    nuxt.options.runtimeConfig.public.docus = defu(nuxt.options.runtimeConfig.public.docus, {
+      version: meta.version || '0.0.0',
+      filteredLocales: [] as I18nLocale[],
+    })
+
     nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github, {
       owner: gitInfo?.owner,
       name: gitInfo?.name,
@@ -99,9 +105,9 @@ export default defineNuxtModule({
               name: mcpOptions?.name || siteName,
               ...(mcpOptions?.browserRedirect && mcpOptions.browserRedirect !== '/' ? { documentation: mcpOptions.browserRedirect } : {}),
             },
-        // The layer serves `sitemap.xml` itself, so the module cannot detect it.
+        // `server/routes/openapi.json.get.ts`, the one document the module cannot know about.
         links: [
-          { href: '/sitemap.xml', rel: 'sitemap', type: 'application/xml', title: 'Sitemap (XML): every page, with its last modification date' },
+          { href: '/openapi.json', rel: 'service-desc', type: 'application/vnd.oai.openapi+json', title: 'OpenAPI document: every route this site serves to agents', anchor: '/' },
         ],
       },
       ...(docusOptions?.skills ? { skills: docusOptions.skills } : {}),
@@ -152,6 +158,7 @@ export default defineNuxtModule({
 
       // Expose filtered locales
       nuxt.options.runtimeConfig.public.docus = {
+        ...nuxt.options.runtimeConfig.public.docus,
         filteredLocales,
       }
 
