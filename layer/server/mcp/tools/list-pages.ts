@@ -1,9 +1,6 @@
-import type { Collections } from '@nuxt/content'
-import { queryCollection } from '@nuxt/content/server'
-import { joinURL } from 'ufo'
+import { listAgentPages } from '#agent-discovery'
 import { z } from 'zod'
-import { inferSiteURL } from '../../../utils/meta'
-import { getAvailableLocales, getCollectionsToQuery } from '../../utils/content'
+import { getAvailableLocales } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -40,36 +37,23 @@ OUTPUT: Returns a structured list with:
   cache: '1h',
   handler: async ({ locale }) => {
     const event = useEvent()
-    const config = useRuntimeConfig(event)
-    const publicConfig = config.public
+    const availableLocales = getAvailableLocales(useRuntimeConfig(event).public)
+    const localeOf = (path: string) => availableLocales.find(code => path === `/${code}` || path.startsWith(`/${code}/`))
 
-    const siteUrl = getRequestURL(event).origin || inferSiteURL()
-    const baseURL = config.app?.baseURL || '/'
-    const availableLocales = getAvailableLocales(publicConfig)
-    const collections = getCollectionsToQuery(locale, availableLocales)
+    // Landing pages (`/`, `/en`) are not documentation, and never were listed here
+    const isLanding = (path: string) => path === '/' || availableLocales.includes(path.slice(1))
 
-    try {
-      const allPages = await Promise.all(
-        collections.map(async (collectionName) => {
-          const pages = await queryCollection(event, collectionName as keyof Collections)
-            .where('path', 'NOT LIKE', '%.navigation')
-            .select('title', 'path', 'description')
-            .all()
+    const pages = await listAgentPages(event)
 
-          return pages.map(page => ({
-            title: page.title,
-            path: page.path,
-            description: page.description,
-            locale: collectionName.replace('docs_', ''),
-            url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
-          }))
-        }),
-      )
-
-      return allPages.flat()
-    }
-    catch {
-      throw createError({ statusCode: 500, message: 'Failed to list pages' })
-    }
+    return pages
+      .filter(page => !isLanding(page.route))
+      .map(page => ({
+        title: page.title,
+        path: page.route,
+        description: page.description,
+        locale: localeOf(page.route),
+        url: page.url,
+      }))
+      .filter(page => !locale || !availableLocales.includes(locale) || page.locale === locale)
   },
 })

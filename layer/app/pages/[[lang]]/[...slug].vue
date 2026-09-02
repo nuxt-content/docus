@@ -67,8 +67,9 @@ const editLink = computed(() => {
   ].filter(Boolean).join('/')
 })
 
-// Add the page path to the prerender list
-addPrerenderPath(`/raw${route.path}.md`)
+// Prerender the raw markdown twin of this page alongside it
+const rawPrefix = (useRuntimeConfig().public.agentDiscovery as { rawPrefix?: string } | undefined)?.rawPrefix || '/raw'
+addPrerenderPath(`${rawPrefix}${route.path}.md`)
 </script>
 
 <template>

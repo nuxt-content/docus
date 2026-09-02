@@ -9,9 +9,6 @@ export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
     resolve('./modules/routing'),
-    resolve('./modules/vercel-markdown-rewrite'),
-    resolve('./modules/skills'),
-    resolve('./modules/not-found'),
     resolve('./modules/css'),
     () => {
       const nuxt = useNuxt()
@@ -24,6 +21,7 @@ export default defineNuxtConfig({
     },
     '@nuxt/ui',
     '@nuxt/content',
+    'nuxt-agent-discovery',
     '@nuxt/image',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',

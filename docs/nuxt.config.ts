@@ -15,6 +15,12 @@ export default defineNuxtConfig({
       sourcemap: false,
     },
   },
+  agentDiscovery: {
+    excludePrefixes: {
+      // Nuxt Studio, a Vue page tree with no markdown twin
+      extend: ['/admin'],
+    },
+  },
   i18n: {
     defaultLocale: 'en',
     locales: [{

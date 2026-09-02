@@ -2,6 +2,7 @@ import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { defu } from 'defu'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import type { ModuleOptions as AgentDiscoveryOptions } from 'nuxt-agent-discovery'
 import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
@@ -9,7 +10,7 @@ const log = logger.withTag('docus')
 
 type I18nLocale = string | { code: string, name?: string }
 type DocusI18nOptions = { locales?: I18nLocale[], strategy?: string }
-type DocusMcpOptions = { route?: string, enabled?: boolean }
+type DocusMcpOptions = { route?: string, enabled?: boolean, name?: string, browserRedirect?: string }
 type RegisterModuleOptions = {
   langDir: string
   locales: Array<{ code: string, name: string, file: string }>
@@ -63,11 +64,49 @@ export default defineNuxtModule({
     ** MCP route (expose to client so the page header dropdown stays in sync
     ** with the user-configured `mcp.route` from @nuxtjs/mcp-toolkit)
     */
-    const mcpOptions = (nuxt.options as typeof nuxt.options & { mcp?: DocusMcpOptions }).mcp
+    const rawMcpOptions = (nuxt.options as typeof nuxt.options & { mcp?: false | DocusMcpOptions }).mcp
+    const mcpOptions = rawMcpOptions || undefined
+    const mcpEnabled = rawMcpOptions !== false && mcpOptions?.enabled !== false
+    const mcpRoute = mcpOptions?.route || '/mcp'
     nuxt.options.runtimeConfig.public.mcp = defu(
       nuxt.options.runtimeConfig.public.mcp as DocusMcpOptions | undefined,
-      { route: mcpOptions?.route || '/mcp' },
+      { route: mcpRoute },
     )
+
+    /*
+    ** Agent discovery (nuxt-agent-discovery): `siteUrl` and `siteName` resolve
+    ** from `site` above, the rest only needs what the layer knows.
+    */
+    const docusOptions = nuxt.options.docus
+    if (docusOptions?.skills) {
+      log.warn('`docus.skills` is deprecated. Move it to `agentDiscovery.skills` in nuxt.config.ts')
+    }
+    if (docusOptions?.notFound !== undefined) {
+      log.warn('`docus.notFound` is deprecated. Use `agentDiscovery.errors` in nuxt.config.ts')
+    }
+
+    const typedNuxtOptions = nuxt.options as typeof nuxt.options & {
+      agentDiscovery?: AgentDiscoveryOptions
+      i18n?: false | DocusI18nOptions
+    }
+
+    typedNuxtOptions.agentDiscovery = defu(typedNuxtOptions.agentDiscovery, {
+      discovery: {
+        mcpServerCard: !mcpEnabled
+          ? false
+          : {
+              endpoint: mcpRoute,
+              name: mcpOptions?.name || siteName,
+              ...(mcpOptions?.browserRedirect && mcpOptions.browserRedirect !== '/' ? { documentation: mcpOptions.browserRedirect } : {}),
+            },
+        // The layer serves `sitemap.xml` itself, so the module cannot detect it.
+        links: [
+          { href: '/sitemap.xml', rel: 'sitemap', type: 'application/xml', title: 'Sitemap (XML): every page, with its last modification date' },
+        ],
+      },
+      ...(docusOptions?.skills ? { skills: docusOptions.skills } : {}),
+      ...(docusOptions?.notFound === false ? { errors: false } : {}),
+    }) as AgentDiscoveryOptions
 
     const forcedColorMode = (nuxt.options.appConfig.docus as Record<string, unknown>)?.colorMode as string | undefined
     if (forcedColorMode === 'light' || forcedColorMode === 'dark') {
@@ -77,7 +116,6 @@ export default defineNuxtModule({
     /*
     ** I18N
     */
-    const typedNuxtOptions = nuxt.options as typeof nuxt.options & { i18n?: false | DocusI18nOptions }
     const i18nOptions = typedNuxtOptions.i18n
 
     if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
@@ -116,6 +154,18 @@ export default defineNuxtModule({
       nuxt.options.runtimeConfig.public.docus = {
         filteredLocales,
       }
+
+      // `sitemap.md` groups pages by first path segment, so label each locale section with its name
+      typedNuxtOptions.agentDiscovery = defu(typedNuxtOptions.agentDiscovery, {
+        sitemap: {
+          markdown: {
+            labels: Object.fromEntries(filteredLocales.map((locale: I18nLocale) => typeof locale === 'string'
+              ? [locale, locale]
+              : [locale.code, locale.name || locale.code],
+            )),
+          },
+        },
+      }) as AgentDiscoveryOptions
 
       const registerI18nModule = nuxt.hook as unknown as (name: string, callback: (register: (options: RegisterModuleOptions) => void) => void) => void
 

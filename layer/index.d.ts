@@ -1,9 +1,10 @@
 import type { AssistantModuleOptions } from './modules/assistant'
-import type { SkillsModuleOptions } from './modules/skills'
 
 export interface DocusNuxtConfig {
   assistant?: AssistantModuleOptions
-  skills?: SkillsModuleOptions
+  /** @deprecated Use `agentDiscovery.skills` instead */
+  skills?: { dir?: string }
+  /** @deprecated Use `agentDiscovery.errors` instead */
   notFound?: boolean
 }
 
