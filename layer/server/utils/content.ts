@@ -15,22 +15,13 @@ export function getAvailableLocales(config: ConfigWithLocales): string[] {
     : []
 }
 
-/**
- * A locale code as `content.config.ts` spells it in a collection name, where a
- * dash is not valid. `pt-BR` is the `docs_pt_BR` collection, and asking for
- * `docs_pt-BR` finds nothing.
- */
-export function collectionSuffix(locale: string): string {
-  return locale.replace('-', '_')
-}
-
 export function getCollectionsToQuery(locale: string | undefined, availableLocales: string[]): string[] {
   if (locale && availableLocales.includes(locale)) {
-    return [`docs_${collectionSuffix(locale)}`]
+    return [`docs_${locale}`]
   }
 
   return availableLocales.length > 0
-    ? availableLocales.map(l => `docs_${collectionSuffix(l)}`)
+    ? availableLocales.map(l => `docs_${l}`)
     : ['docs']
 }
 
