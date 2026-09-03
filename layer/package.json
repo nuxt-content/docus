@@ -51,7 +51,7 @@
     "exsolve": "^1.1.1",
     "git-url-parse": "^16.1.0",
     "motion-v": "^2.4.0",
-    "nuxt-agent-discovery": "^0.3.0",
+    "nuxt-agent-discovery": "^0.4.0",
     "nuxt-llms": "^0.2.0",
     "nuxt-og-image": "~6.7.8",
     "pathe": "^2.0.3",
