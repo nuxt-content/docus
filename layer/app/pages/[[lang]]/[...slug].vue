@@ -66,9 +66,6 @@ const editLink = computed(() => {
     `${page.value?.stem}.${page.value?.extension}`,
   ].filter(Boolean).join('/')
 })
-
-// Add the page path to the prerender list
-addPrerenderPath(`/raw${route.path}.md`)
 </script>
 
 <template>

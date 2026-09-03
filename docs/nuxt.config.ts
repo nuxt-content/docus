@@ -15,6 +15,12 @@ export default defineNuxtConfig({
       sourcemap: false,
     },
   },
+  agentDiscovery: {
+    excludePrefixes: {
+      // Nuxt Studio, a Vue page tree with no markdown twin
+      extend: ['/admin'],
+    },
+  },
   i18n: {
     defaultLocale: 'en',
     locales: [{
@@ -54,8 +60,13 @@ export default defineNuxtConfig({
             href: 'https://docus.dev/.well-known/skills/index.json',
           },
           {
+            title: 'OpenAPI document',
+            description: 'The markdown routes, the discovery documents and the MCP endpoint of this site, as an OpenAPI 3.1 document.',
+            href: 'https://docus.dev/openapi.json',
+          },
+          {
             title: 'Sitemap',
-            description: 'Every page of this documentation, with last modification dates.',
+            description: 'Every page of this documentation, one sitemap per language.',
             href: 'https://docus.dev/sitemap.xml',
           },
         ],

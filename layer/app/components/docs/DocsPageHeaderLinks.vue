@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { joinURL, withTrailingSlash } from 'ufo'
+import { joinURL } from 'ufo'
 import { useRuntimeConfig } from '#imports'
 
 const route = useRoute()
@@ -8,11 +8,13 @@ const toast = useToast()
 const runtimeConfig = useRuntimeConfig()
 const appBaseURL = runtimeConfig.app?.baseURL || '/'
 const mcpRoute = (runtimeConfig.public.mcp as { route?: string } | undefined)?.route || '/mcp'
+const rawPrefix = (runtimeConfig.public.agentDiscovery as { rawPrefix?: string } | undefined)?.rawPrefix || '/raw'
 
 const { copy, copied } = useClipboard()
 const { t } = useDocusI18n()
 
-const markdownLink = computed(() => `${window?.location?.origin}${withTrailingSlash(appBaseURL)}raw${route.path}.md`)
+const rawPath = computed(() => `${joinURL(rawPrefix, route.path)}.md`)
+const markdownLink = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, rawPath.value)}`)
 const mcpServerUrl = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, mcpRoute)}`)
 const mcpDeeplink = computed(() => `${window?.location?.origin}${joinURL(appBaseURL, mcpRoute, 'deeplink')}`)
 const items = computed(() => [
@@ -63,7 +65,7 @@ const items = computed(() => [
 ])
 
 async function copyPage() {
-  const page = await $fetch<string>(`/raw${route.path}.md`)
+  const page = await $fetch<string>(rawPath.value)
   copy(page)
 }
 </script>

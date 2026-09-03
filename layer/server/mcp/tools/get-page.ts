@@ -1,9 +1,6 @@
-import type { Collections } from '@nuxt/content'
-import { queryCollection } from '@nuxt/content/server'
-import { joinURL } from 'ufo'
+import { getAgentDocument } from '#agent-discovery'
 import { z } from 'zod'
-import { inferSiteURL } from '../../../utils/meta'
-import { getAvailableLocales, getCollectionFromPath, isNavigationPath } from '../../utils/content'
+import { isNavigationPath } from '../../utils/content'
 
 export default defineMcpTool({
   description: `Retrieves the full content and details of a specific documentation page.
@@ -39,40 +36,23 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       throw createError({ statusCode: 404, message: 'Page not found' })
     }
 
-    const event = useEvent()
-    const config = useRuntimeConfig(event)
-    const publicConfig = config.public
-    const siteUrl = getRequestURL(event).origin || inferSiteURL()
-    const baseURL = config.app?.baseURL || '/'
+    // The same bytes `/raw/<path>.md` serves, resolved in-process
+    const document = await getAgentDocument(useEvent(), path)
 
-    const availableLocales = getAvailableLocales(publicConfig)
-    const collectionName = publicConfig.i18n?.locales
-      ? getCollectionFromPath(path, availableLocales)
-      : 'docs'
-
-    try {
-      const page = await queryCollection(event, collectionName as keyof Collections)
-        .where('path', '=', path)
-        .select('title', 'path', 'description')
-        .first()
-
-      if (!page) {
-        throw createError({ statusCode: 404, message: 'Page not found' })
-      }
-
-      const content = await event.$fetch<string>(`/raw${path}.md`)
-
-      return {
-        title: page.title,
-        path: page.path,
-        description: page.description,
-        content,
-        url: siteUrl ? joinURL(siteUrl, baseURL, page.path) : joinURL(baseURL, page.path),
-      }
+    if (!document) {
+      throw createError({ statusCode: 404, message: 'Page not found' })
     }
-    catch (error) {
-      if ((error as { statusCode?: number }).statusCode === 404) throw error
-      throw createError({ statusCode: 500, message: 'Failed to get page' })
+
+    if ('redirect' in document) {
+      throw createError({ statusCode: 404, message: `${path} is a section, try ${document.redirect}` })
+    }
+
+    return {
+      title: document.title,
+      path,
+      description: document.description,
+      content: document.markdown,
+      url: document.canonicalUrl,
     }
   },
 })
