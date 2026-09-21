@@ -20,13 +20,12 @@
     "dev": "tsx ./main.ts"
   },
   "dependencies": {
-    "@nuxt/cli": "3.36.1",
+    "@nuxt/cli": "3.37.0",
     "citty": "^0.2.2"
   },
   "devDependencies": {
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.6.2",
     "tsup": "^8.5.1",
-    "tsx": "^4.23.12"
-  },
-  "packageManager": "pnpm@11.22.0"
+    "tsx": "^4.23.13"
+  }
 }
