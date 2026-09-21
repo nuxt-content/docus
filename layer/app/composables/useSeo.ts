@@ -1,5 +1,6 @@
 import type { MaybeRefOrGetter } from 'vue'
 import type { AppConfig } from 'nuxt/schema'
+import type { SoftwareApp } from 'nuxt-schema-org/schema'
 import type { BreadcrumbItem } from '../utils/navigation'
 import { joinURL, withoutTrailingSlash } from 'ufo'
 
@@ -36,8 +37,6 @@ export interface UseSeoOptions {
 
 type SeoSchemaConfig = NonNullable<AppConfig['seo']['schema']>
 
-type SoftwareAppInput = NonNullable<Parameters<typeof defineSoftwareApp>[0]>
-
 type SeoOrganizationConfig = NonNullable<SeoSchemaConfig['organization']>
 
 /**
@@ -72,7 +71,7 @@ function identityNode(schema: SeoSchemaConfig | undefined, name: string, descrip
     case 'SoftwareApplication':
       return defineSoftwareApp({
         ...shared,
-        applicationCategory: (schema.applicationCategory || 'DeveloperApplication') as SoftwareAppInput['applicationCategory'],
+        applicationCategory: (schema.applicationCategory || 'DeveloperApplication') as SoftwareApp['applicationCategory'],
         operatingSystem: schema.operatingSystem || 'Web',
         ...offers,
       })
@@ -133,7 +132,7 @@ export function useSeo(options: UseSeoOptions) {
   // Hreflang tags for i18n
   useHead({
     link: computed(() => {
-      const links: Array<{ rel: string, href?: string, hreflang?: string }> = []
+      const links: Array<{ rel: 'alternate', hreflang: string, href: string }> = []
 
       if (isI18nEnabled.value && baseUrl.value) {
         for (const loc of locales) {
@@ -180,12 +179,12 @@ export function useSeo(options: UseSeoOptions) {
         'datePublished': publishedAt,
         'dateModified': modifiedAt,
       }),
-      defineBreadcrumb({
-        itemListElement: () => (breadcrumbs.value || []).map(item => ({
+      defineBreadcrumb(computed(() => ({
+        itemListElement: (breadcrumbs.value || []).map(item => ({
           name: item.title,
           item: item.path,
         })),
-      }),
+      }))),
     ])
   }
   else {
@@ -195,7 +194,7 @@ export function useSeo(options: UseSeoOptions) {
         name,
         description,
       }),
-      ...[organizationNode(seoSchema?.organization), name ? identityNode(seoSchema, name, description.value) : undefined].filter(Boolean),
+      ...[organizationNode(seoSchema?.organization), name ? identityNode(seoSchema, name, description.value) : undefined].filter(node => node !== undefined),
     ])
   }
 }
