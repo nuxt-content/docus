@@ -127,6 +127,10 @@ export default defineNuxtConfig({
     },
     provider: 'iconify',
   },
+  // TODO: Fix MCP toolkit adding MCP blocks in llms.txt
+  mcp: {
+    llms: false,
+  },
   ogImage: {
     zeroRuntime: true,
   },
