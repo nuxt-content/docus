@@ -28,7 +28,10 @@ export const useAssistant = createSharedComposable(() => {
   const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
 
   const storageOpen = useLocalStorage('assistant-open', false)
-  const messages = useLocalStorage<UIMessage[]>('assistant-messages', [])
+  // Don't sync from other tabs: AssistantPanel regenerates whenever synced
+  // messages end on a user turn, so two open tabs keep restarting each
+  // other's stream and pile up duplicate answers.
+  const messages = useLocalStorage<UIMessage[]>('assistant-messages', [], { listenToStorageChanges: false })
 
   const isOpen = ref(false)
   const isStudioExpanded = ref(false)
