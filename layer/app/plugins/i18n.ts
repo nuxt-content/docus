@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import { consola } from 'consola'
-import { findLocaleFile } from '../../utils/locale'
+import { findLocaleFile, getLocaleRedirect } from '../../utils/locale'
 
 const log = consola.withTag('docus')
 
@@ -47,11 +47,19 @@ export default defineNuxtPlugin(async () => {
     return
   }
 
+  const localeCodes = useDocusI18n().locales.map(locale => locale.code)
+
   addRouteMiddleware((to: RouteLocationNormalized) => {
     if (to.path === '/') {
       const cookieLocale = useCookie('i18n_redirected').value || i18nConfig.defaultLocale || 'en'
 
       return navigateTo(`/${cookieLocale}`)
+    }
+
+    // Content paths are lowercase, so `/zh-TW/...` would 404
+    const redirect = getLocaleRedirect(to.fullPath, localeCodes)
+    if (redirect) {
+      return navigateTo(redirect, { redirectCode: 301 })
     }
   })
 })

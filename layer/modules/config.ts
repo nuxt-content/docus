@@ -140,6 +140,13 @@ export default defineNuxtModule({
 
       const normalizedLocales = i18nOptions.locales.map(normalizeLocaleEntry)
 
+      const renamedCodes = i18nOptions.locales
+        .map(locale => typeof locale === 'string' ? locale : locale.code)
+        .filter(code => code !== normalizeLocale(code))
+      if (renamedCodes.length) {
+        log.info(`Locale codes are lowercased in URLs: ${renamedCodes.map(code => `${code} → ${normalizeLocale(code)}`).join(', ')}. Use the lowercase code to reference a locale, e.g. in \`localePath()\` or \`bundle.onlyLocales\`.`)
+      }
+
       // Filter locales to only include existing ones
       const filteredLocales = normalizedLocales.filter((locale) => {
         const localeCode = locale.code

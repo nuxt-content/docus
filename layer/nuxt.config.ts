@@ -1,5 +1,6 @@
 import { join } from 'node:path'
 import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
+import { getLocaleRedirect } from './utils/locale'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -101,12 +102,16 @@ export default defineNuxtConfig({
         routes.push('/')
       }
       else {
-        routes.push(...(i18nOptions.locales?.map((locale: string | { code: string }) => typeof locale === 'string' ? `/${locale}` : `/${locale.code}`) || []))
+        const localeCodes = i18nOptions.locales?.map((locale: string | { code: string }) => typeof locale === 'string' ? locale : locale.code) || []
+        routes.push(...localeCodes.map(code => `/${code}`))
         // With one sitemap per locale, `/sitemap.xml` only redirects to the
         // index, and Nitro would write that redirect as an HTML file the CDN
         // then serves for the XML URL.
         nitroConfig.prerender.ignore = nitroConfig.prerender.ignore || []
         nitroConfig.prerender.ignore.push('/sitemap.xml')
+        // Uppercase locale links redirect to their lowercase page.
+        // Prerendering them would overwrite that page on case-insensitive disks.
+        nitroConfig.prerender.ignore.push(path => !!getLocaleRedirect(path, localeCodes))
       }
 
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []

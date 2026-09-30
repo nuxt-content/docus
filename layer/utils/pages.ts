@@ -1,5 +1,6 @@
 import { existsSync, readdirSync } from 'node:fs'
 import { joinURL } from 'ufo'
+import { normalizeLocale } from './locale'
 
 /**
  * Checks if the user has their own index.vue file in the pages folder.
@@ -29,5 +30,5 @@ export function findLocaleFolder(rootDir: string, locale: string): string | unde
   const contentDir = joinURL(rootDir, 'content')
   if (!existsSync(contentDir)) return undefined
 
-  return readdirSync(contentDir).find(dir => dir.toLowerCase() === locale)
+  return readdirSync(contentDir).find(dir => normalizeLocale(dir) === normalizeLocale(locale))
 }

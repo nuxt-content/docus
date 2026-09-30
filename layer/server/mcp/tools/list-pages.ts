@@ -1,5 +1,6 @@
 import { listAgentPages } from '#agent-discovery'
 import { z } from 'zod'
+import { normalizeLocale } from '../../../utils/locale'
 import { getAvailableLocales } from '../../utils/content'
 
 export default defineMcpTool({
@@ -38,6 +39,8 @@ OUTPUT: Returns a structured list with:
   handler: async ({ locale }) => {
     const event = useEvent()
     const availableLocales = getAvailableLocales(useRuntimeConfig(event).public)
+    // Agents may pass the tag from `<html lang>`, like `zh-TW`
+    const requestedLocale = locale && normalizeLocale(locale)
     const localeOf = (path: string) => availableLocales.find(code => path === `/${code}` || path.startsWith(`/${code}/`))
 
     // Landing pages (`/`, `/en`) are not documentation, and never were listed here
@@ -54,6 +57,6 @@ OUTPUT: Returns a structured list with:
         locale: localeOf(page.route),
         url: page.url,
       }))
-      .filter(page => !locale || !availableLocales.includes(locale) || page.locale === locale)
+      .filter(page => !requestedLocale || !availableLocales.includes(requestedLocale) || page.locale === requestedLocale)
   },
 })

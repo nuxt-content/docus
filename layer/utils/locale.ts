@@ -18,3 +18,11 @@ export function getLocaleKey(code: string): string {
 export function findLocaleFile(code: string, fileNames: string[]): string | undefined {
   return fileNames.find(fileName => fileName.toLowerCase() === `${normalizeLocale(code)}.json`)
 }
+
+/** Lowercases the locale prefix of a path, or returns `undefined` when there is nothing to redirect. */
+export function getLocaleRedirect(path: string, codes: string[]): string | undefined {
+  const prefix = path.match(/^\/([^/?#]+)/)?.[1] || ''
+  const code = normalizeLocale(prefix)
+
+  return prefix !== code && codes.includes(code) ? `/${code}${path.slice(prefix.length + 1)}` : undefined
+}
