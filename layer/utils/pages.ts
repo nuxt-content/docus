@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs'
+import { existsSync, readdirSync } from 'node:fs'
 import { joinURL } from 'ufo'
 
 /**
@@ -19,4 +19,15 @@ export function docsFolderExists(rootDir: string, locale?: string): boolean {
     ? joinURL(rootDir, 'content', locale, 'docs')
     : joinURL(rootDir, 'content', 'docs')
   return existsSync(docsPath)
+}
+
+/**
+ * Finds the content folder for a locale, ignoring case so `content/zh-TW/` and
+ * `content/zh-tw/` both work. Returns the name as it is on disk.
+ */
+export function findLocaleFolder(rootDir: string, locale: string): string | undefined {
+  const contentDir = joinURL(rootDir, 'content')
+  if (!existsSync(contentDir)) return undefined
+
+  return readdirSync(contentDir).find(dir => dir.toLowerCase() === locale)
 }

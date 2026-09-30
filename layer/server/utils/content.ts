@@ -1,4 +1,5 @@
 import type { LocaleObject } from '@nuxtjs/i18n'
+import { getLocaleKey } from '../../utils/locale'
 
 type ConfigWithLocales = {
   i18n?: { locales?: Array<string | LocaleObject> }
@@ -17,11 +18,11 @@ export function getAvailableLocales(config: ConfigWithLocales): string[] {
 
 export function getCollectionsToQuery(locale: string | undefined, availableLocales: string[]): string[] {
   if (locale && availableLocales.includes(locale)) {
-    return [`docs_${locale}`]
+    return [`docs_${getLocaleKey(locale)}`]
   }
 
   return availableLocales.length > 0
-    ? availableLocales.map(l => `docs_${l}`)
+    ? availableLocales.map(l => `docs_${getLocaleKey(l)}`)
     : ['docs']
 }
 

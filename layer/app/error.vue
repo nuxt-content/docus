@@ -2,6 +2,7 @@
 import type { NuxtError } from '#app'
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import { getLocaleKey } from '../utils/locale'
 import { transformNavigation } from './utils/navigation'
 
 const props = defineProps<{
@@ -10,7 +11,7 @@ const props = defineProps<{
 
 const { locale, locales, isEnabled, t, switchLocalePath } = useDocusI18n()
 
-const nuxtUiLocale = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
+const nuxtUiLocale = computed(() => nuxtUiLocales[getLocaleKey(locale.value) as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
 const lang = computed(() => nuxtUiLocale.value.code)
 const dir = computed(() => nuxtUiLocale.value.dir)
 
@@ -45,7 +46,7 @@ if (isEnabled.value) {
   })
 }
 
-const collectionName = computed(() => isEnabled.value ? `docs_${locale.value}` : 'docs')
+const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')
 
 const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
   transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),

@@ -2,7 +2,8 @@ import type { DefinedCollection } from '@nuxt/content'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { joinURL } from 'ufo'
-import { landingPageExists, docsFolderExists } from './utils/pages'
+import { landingPageExists, docsFolderExists, findLocaleFolder } from './utils/pages'
+import { getLocaleKey, normalizeLocale } from './utils/locale'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
@@ -25,26 +26,28 @@ let collections: Record<string, DefinedCollection>
 if (locales && Array.isArray(locales)) {
   collections = {}
   for (const locale of locales) {
-    const code = (typeof locale === 'string' ? locale : locale.code).replace('-', '_')
-    const hasLocaleDocs = docsFolderExists(options.rootDir, code)
+    const code = normalizeLocale(typeof locale === 'string' ? locale : locale.code)
+    const collectionKey = getLocaleKey(code)
+    const dir = findLocaleFolder(options.rootDir, code) || code
+    const hasLocaleDocs = docsFolderExists(options.rootDir, dir)
 
     if (!hasLandingPage) {
-      collections[`landing_${code}`] = defineCollection({
+      collections[`landing_${collectionKey}`] = defineCollection({
         type: 'page',
         source: {
           cwd,
-          include: `${code}/index.md`,
+          include: `${dir}/index.md`,
         },
       })
     }
 
-    collections[`docs_${code}`] = defineCollection({
+    collections[`docs_${collectionKey}`] = defineCollection({
       type: 'page',
       source: {
         cwd,
-        include: hasLocaleDocs ? `${code}/docs/**` : `${code}/**/*`,
+        include: hasLocaleDocs ? `${dir}/docs/**` : `${dir}/**/*`,
         prefix: hasLocaleDocs ? `/${code}/docs` : `/${code}`,
-        exclude: [`${code}/index.md`],
+        exclude: [`${dir}/index.md`],
       },
       schema: createDocsSchema(),
     })

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
+import { getLocaleKey } from '../../../utils/locale'
 
 const props = defineProps<{
   navigation?: ContentNavigationItem[]
@@ -9,7 +10,7 @@ const appConfig = useAppConfig()
 const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, isEnabled } = useDocusI18n()
 
-const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` : 'docs') as keyof PageCollections)
+const collectionName = computed(() => (isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs') as keyof PageCollections)
 const useFts = appConfig.search.fts
 
 const { data: files } = useFts

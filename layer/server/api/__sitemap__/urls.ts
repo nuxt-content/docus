@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { getLocaleKey } from '../../../utils/locale'
 import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../../utils/content'
 
 type Page = Record<string, unknown> & { path?: string, meta?: Record<string, unknown> }
@@ -15,7 +16,7 @@ export default defineSitemapEventHandler(async (event) => {
 
   if (availableLocales.length > 0) {
     for (const locale of availableLocales) {
-      collections.push(`landing_${locale}`)
+      collections.push(`landing_${getLocaleKey(locale)}`)
     }
   }
   else {

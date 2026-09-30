@@ -1,5 +1,6 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import { consola } from 'consola'
+import { findLocaleFile } from '../../utils/locale'
 
 const log = consola.withTag('docus')
 
@@ -19,9 +20,8 @@ export default defineNuxtPlugin(async () => {
     let locale = configuredLocale
     let resolvedMessages: Record<string, unknown>
 
-    // Try to load the requested locale file
-    const localeKey = `../../i18n/locales/${configuredLocale}.json`
-    const localeLoader = localeFiles[localeKey]
+    const fileName = findLocaleFile(configuredLocale, Object.keys(localeFiles).map(key => key.split('/').pop()!))
+    const localeLoader = fileName ? localeFiles[`../../i18n/locales/${fileName}`] : undefined
 
     if (localeLoader) {
       const localeModule = await localeLoader()
