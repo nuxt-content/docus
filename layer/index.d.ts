@@ -1,8 +1,4 @@
-// `app/types/index.d.ts` is a module, so its `declare module 'nuxt/schema'`
-// block is a module augmentation and only applies once something pulls the file
-// into the program. Nuxt adds this file to a consumer's `tsconfig` via a
-// `/// <reference path>`, so importing it from here is what makes the AppConfig
-// types reach apps extending the layer.
+// Pulls in the AppConfig augmentation for consumers (module augmentations need an import)
 import type {} from './app/types'
 import type { AssistantModuleOptions } from './modules/assistant'
 
