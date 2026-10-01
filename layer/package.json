@@ -19,6 +19,7 @@
     "nuxt.config.ts",
     "nuxt.schema.ts",
     "server",
+    "shared",
     "utils",
     "README.md"
   ],
