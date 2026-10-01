@@ -10,7 +10,8 @@ const localeFiles = import.meta.glob<{ default: Record<string, unknown> }>('../.
 export default defineNuxtPlugin(async () => {
   const nuxtApp = useNuxtApp()
 
-  const i18nConfig = nuxtApp.$config.public.i18n
+  // Only typed when `@nuxtjs/i18n` is installed in the app.
+  const i18nConfig = nuxtApp.$config.public.i18n as { defaultLocale?: string } | undefined
 
   // If i18n is not enabled, fetch and provide the configured locale in app config
   if (!i18nConfig) {

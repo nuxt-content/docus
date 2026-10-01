@@ -38,7 +38,7 @@ export const useDocusI18n = () => {
 
   const locale = nuxtApp.$i18n?.locale || ref('en')
   const t = nuxtApp.$i18n?.t || ((key: string) => key)
-  const filteredLocales = (config.docus as { filteredLocales: LocaleObject<string>[] })?.filteredLocales || []
+  const filteredLocales = (config.docus as unknown as { filteredLocales?: LocaleObject<string>[] } | undefined)?.filteredLocales || []
 
   return {
     isEnabled,

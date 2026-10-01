@@ -16,11 +16,15 @@
     "playground:dev": "cd playground && nuxt dev --extends ../layer",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck layer",
-    "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck && pnpm run docs:build",
+    "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run docs:build",
     "layer:release": "release-it --config .release-it.layer.json && cd layer && npm publish",
     "cli:release": "release-it --config .release-it.cli.json && cd cli && npm publish",
     "release": "pnpm run layer:release && pnpm run cli:release && release-it",
-    "clean": "rm -rf .nuxt .output node_modules cli/node_modules docs/.nuxt docs/.data docs/node_modules layer/node_modules layer/.data analyze cli/dist docs/.nuxt docs/.output layer/.nuxt playground/.nuxt playground/.output playground/node_modules playground/.data pnpm-lock.yaml .pnpm-store"
+    "clean": "rm -rf .nuxt .output node_modules cli/node_modules docs/.nuxt docs/.data docs/node_modules layer/node_modules layer/.data analyze cli/dist docs/.nuxt docs/.output layer/.nuxt playground/.nuxt playground/.output playground/node_modules playground/.data pnpm-lock.yaml .pnpm-store",
+    "test": "vitest run --project unit",
+    "test:smoke": "vitest run --project smoke",
+    "test:starter": "./scripts/test-starter.sh",
+    "check:vercel-output": "node scripts/check-vercel-output.mts"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.137",
@@ -34,6 +38,7 @@
     "nuxt": "4.5.2",
     "release-it": "^21.1.0",
     "typescript": "^6.0.3",
+    "vitest": "^5.0.2",
     "vue-tsc": "^3.3.11"
   },
   "packageManager": "pnpm@12.8.1"

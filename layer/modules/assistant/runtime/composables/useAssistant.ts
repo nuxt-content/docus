@@ -56,7 +56,8 @@ export const useAssistant = createSharedComposable(() => {
     if (!Array.isArray(faqConfig)) {
       const localizedConfig = faqConfig as LocalizedFaqQuestions
       const currentLocale = docusRuntimeConfig?.locale || 'en'
-      const defaultLocale = config.public.i18n?.defaultLocale || 'en'
+      // Only typed when `@nuxtjs/i18n` is installed in the app.
+      const defaultLocale = (config.public.i18n as { defaultLocale?: string } | undefined)?.defaultLocale || 'en'
 
       const questions = localizedConfig[currentLocale]
         || localizedConfig[defaultLocale]
