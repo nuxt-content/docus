@@ -69,8 +69,6 @@ jobs:
   apps:
     name: app (${{ matrix.name }})
     runs-on: ubuntu-latest
-    # Remove once the entry is fixed, see `allow-failure` below.
-    continue-on-error: ${{ matrix.allow-failure == true }}
 
     strategy:
       fail-fast: false
@@ -79,21 +77,18 @@ jobs:
           - name: docs, vercel
             app: docs
             preset: vercel
-          - name: docs, vercel, baseURL
-            app: docs
-            preset: vercel
-            base-url: /docs/
-            # Prose images get the base twice and 404 in IPX (Nuxt UI `ProseImg` + `NuxtImg`).
-            allow-failure: true
           - name: docs, node-server
             app: docs
             preset: node-server
             smoke: true
+          - name: docs, generate
+            app: docs
+            preset: static
+            command: generate
 
     env:
       NUXT_GITHUB_TOKEN: ${{ secrets.NUXT_GITHUB_TOKEN }}
       NITRO_PRESET: ${{ matrix.preset }}
-      NUXT_APP_BASE_URL: ${{ matrix.base-url || '/' }}
       # Always set on Vercel, without it `nuxt-llms` disables `llms.txt`.
       VERCEL_PROJECT_PRODUCTION_URL: docus-ci.vercel.app
 
@@ -121,11 +116,20 @@ jobs:
         run: echo "nitro.prerender.failOnError=true" >> ~/.nuxtrc
 
       - name: Build
-        run: pnpm exec nuxt build ${{ matrix.app }} --extends ../layer
+        run: pnpm exec nuxt ${{ matrix.command || 'build' }} ${{ matrix.app }} --extends ../layer
 
       - name: Check Vercel output
         if: matrix.preset == 'vercel'
         run: pnpm run check:vercel-output ${{ matrix.app }}
+
+      - name: Check static output
+        if: matrix.preset == 'static'
+        working-directory: ${{ matrix.app }}/.output/public
+        run: |
+          for file in en.html llms.txt llms-full.txt sitemap.md robots.txt openapi.json raw/en.md; do
+            test -s "$file" || { echo "::error::$file was not generated"; exit 1; }
+          done
+          ls _og/s/*.png > /dev/null
 
       - name: Smoke tests
         if: matrix.smoke
@@ -140,17 +144,11 @@ jobs:
   starters:
     name: starter (${{ matrix.starter }})
     runs-on: ubuntu-latest
-    # Remove once the entry is fixed, see `allow-failure` below.
-    continue-on-error: ${{ matrix.allow-failure == true }}
 
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - starter: default
-            # Landing OG URL ends with `..png` when the description ends with a period, Nitro never writes it.
-            allow-failure: true
-          - starter: i18n
+        starter: [default, i18n]
 
     steps:
       - name: Checkout
@@ -168,16 +166,8 @@ jobs:
         run: echo "nitro.prerender.failOnError=true" >> ~/.nuxtrc
 
       # Installs the packed layer from npm's point of view: `files`, dependencies and peers as users get them.
-      - name: Pack, install and build
+      - name: Pack, install, build and typecheck
         run: ./scripts/test-starter.sh ${{ matrix.starter }}
         env:
           NITRO_PRESET: vercel
           VERCEL_PROJECT_PRODUCTION_URL: docus-ci.vercel.app
-          WORKDIR: ${{ runner.temp }}/starter
-          SKIP_TYPECHECK: 1
-
-      # Non-blocking until the layer sources typecheck from `node_modules/docus`.
-      - name: Typecheck
-        continue-on-error: true
-        run: npx nuxt typecheck
-        working-directory: ${{ runner.temp }}/starter/app

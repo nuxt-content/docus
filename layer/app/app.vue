@@ -41,7 +41,8 @@ useSeoMeta({
 
 if (isEnabled.value) {
   const route = useRoute()
-  const defaultLocale = useRuntimeConfig().public.i18n.defaultLocale!
+  // Only typed when `@nuxtjs/i18n` is installed in the app.
+  const defaultLocale = (useRuntimeConfig().public.i18n as { defaultLocale: string }).defaultLocale
   onMounted(() => {
     const currentLocale = route.path.split('/')[1]
     if (!locales.some(locale => locale.code === currentLocale)) {
