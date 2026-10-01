@@ -8,6 +8,13 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -19,7 +26,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [22]
+        node: [24]
 
     env:
       NUXT_GITHUB_TOKEN: ${{ secrets.NUXT_GITHUB_TOKEN }}
@@ -49,9 +56,118 @@ jobs:
       - name: Typecheck
         run: pnpm run typecheck
 
+      - name: Unit tests
+        run: pnpm run test
+
       - name: Build CLI
         run: pnpm run build
         working-directory: ./cli
 
       - name: Publish CLI and Layer
         run: npx pkg-pr-new publish --compact './cli' './layer'
+
+  apps:
+    name: app (${{ matrix.name }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: docs, vercel
+            app: docs
+            preset: vercel
+          - name: docs, node-server
+            app: docs
+            preset: node-server
+            smoke: true
+          - name: docs, generate
+            app: docs
+            preset: static
+            command: generate
+
+    env:
+      NUXT_GITHUB_TOKEN: ${{ secrets.NUXT_GITHUB_TOKEN }}
+      NITRO_PRESET: ${{ matrix.preset }}
+      # Always set on Vercel, without it `nuxt-llms` disables `llms.txt`.
+      VERCEL_PROJECT_PRODUCTION_URL: docus-ci.vercel.app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Prepare
+        run: pnpm run dev:prepare
+
+      # The layer sets `failOnError: false` for users, CI wants broken links and missing assets to fail.
+      - name: Fail on prerender errors
+        run: echo "nitro.prerender.failOnError=true" >> ~/.nuxtrc
+
+      - name: Build
+        run: pnpm exec nuxt ${{ matrix.command || 'build' }} ${{ matrix.app }} --extends ../layer
+
+      - name: Check Vercel output
+        if: matrix.preset == 'vercel'
+        run: pnpm run check:vercel-output ${{ matrix.app }}
+
+      - name: Check static output
+        if: matrix.preset == 'static'
+        working-directory: ${{ matrix.app }}/.output/public
+        run: |
+          for file in en.html llms.txt llms-full.txt sitemap.md robots.txt openapi.json raw/en.md; do
+            test -s "$file" || { echo "::error::$file was not generated"; exit 1; }
+          done
+          ls _og/s/*.png > /dev/null
+
+      - name: Smoke tests
+        if: matrix.smoke
+        run: |
+          PORT=3000 node ${{ matrix.app }}/.output/server/index.mjs &
+          timeout 60 bash -c 'until curl -sf -o /dev/null http://localhost:3000/llms.txt; do sleep 1; done'
+          pnpm run test:smoke
+        env:
+          SMOKE_URL: http://localhost:3000
+          SMOKE_TARGET: node
+
+  starters:
+    name: starter (${{ matrix.starter }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        starter: [default, i18n]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Fail on prerender errors
+        run: echo "nitro.prerender.failOnError=true" >> ~/.nuxtrc
+
+      # Installs the packed layer from npm's point of view: `files`, dependencies and peers as users get them.
+      - name: Pack, install, build and typecheck
+        run: ./scripts/test-starter.sh ${{ matrix.starter }}
+        env:
+          NITRO_PRESET: vercel
+          VERCEL_PROJECT_PRODUCTION_URL: docus-ci.vercel.app

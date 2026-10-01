@@ -4,6 +4,7 @@
   "version": "5.13.0",
   "type": "module",
   "main": "./nuxt.config.ts",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-content/docus.git"
@@ -19,6 +20,7 @@
     "nuxt.config.ts",
     "nuxt.schema.ts",
     "server",
+    "shared",
     "utils",
     "README.md"
   ],

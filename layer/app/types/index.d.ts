@@ -1,6 +1,13 @@
+import type { Collections } from '@nuxt/content'
 import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
+
+/**
+ * A docs page, from `docs` or from the `docs_<locale>` collections when i18n is enabled.
+ * `DocsCollectionItem` only exists without i18n.
+ */
+export type DocsPage = Collections[Extract<keyof Collections, 'docs' | `docs_${string}`>]
 
 /**
  * An organization behind the site, emitted as a JSON-LD `Organization` node.

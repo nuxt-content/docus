@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useSubNavigation } from '../../composables/useSubNavigation'
-import type { DocsCollectionItem } from '@nuxt/content'
+import type { DocsPage } from '../../types'
 
 const props = defineProps<{
-  page?: DocsCollectionItem | null
+  page?: DocsPage | null
 }>()
 
 const links = computed(() => props.page?.body?.toc?.links || [])

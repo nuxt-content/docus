@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
-import type { ContentNavigationItem, Collections, DocsCollectionItem } from '@nuxt/content'
+import type { ContentNavigationItem, Collections } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
 import { getLocaleKey } from '../../../utils/locale'
+import type { DocsPage } from '../../types'
 
 definePageMeta({
   layout: 'docs',
@@ -16,7 +17,7 @@ const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')
 
 const [{ data: page }, { data: surround }] = await Promise.all([
-  useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsCollectionItem>),
+  useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsPage>),
   useAsyncData(`${kebabCase(route.path)}-surround`, () => {
     return queryCollectionItemSurroundings(collectionName.value as keyof Collections, route.path, {
       fields: ['description'],
@@ -47,7 +48,7 @@ watch(() => navigation?.value, () => {
 
 defineOgImage('Docs', {
   headline: headline.value,
-  title: title?.slice(0, 60),
+  title: formatOgTitle(title),
   description: formatOgDescription(title, description),
 })
 
@@ -84,7 +85,7 @@ const editLink = computed(() => {
     >
       <template #links>
         <UButton
-          v-for="(link, index) in (page as DocsCollectionItem).links"
+          v-for="(link, index) in (page as DocsPage).links"
           :key="index"
           size="sm"
           v-bind="link"

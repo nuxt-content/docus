@@ -1,0 +1,50 @@
+name: preview
+
+# Vercel's GitHub integration reports every deployment, preview and production, through this event.
+on: deployment_status
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.deployment.id }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: smoke (${{ github.event.deployment.environment }})
+    # `vars.VERCEL_SMOKE_PROJECT` limits the run to one Vercel project, e.g. `docus`, when several deploy from this repo.
+    if: >-
+      github.event.deployment_status.state == 'success'
+      && contains(github.event.deployment.environment, vars.VERCEL_SMOKE_PROJECT || '')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # Test the code that was deployed, not the default branch.
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.deployment.sha }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Smoke tests
+        run: pnpm run test:smoke
+        env:
+          SMOKE_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+          SMOKE_TARGET: vercel
+          # Vercel project → Deployment Protection → Protection Bypass for Automation.
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          # The assistant runs on Vercel through AI Gateway, set the variable to `false` to skip it.
+          SMOKE_ASSISTANT: ${{ vars.SMOKE_ASSISTANT || 'true' }}
