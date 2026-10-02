@@ -27,9 +27,9 @@
     "check:vercel-output": "node scripts/check-vercel-output.mts"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.134",
-    "@iconify-json/simple-icons": "^1.2.96",
-    "@iconify-json/vscode-icons": "^1.2.78",
+    "@iconify-json/lucide": "^1.2.137",
+    "@iconify-json/simple-icons": "^1.2.98",
+    "@iconify-json/vscode-icons": "^1.2.83",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/eslint-config": "^1.17.0",
     "@release-it/bumper": "^8.0.1",
@@ -41,5 +41,5 @@
     "vitest": "^5.0.2",
     "vue-tsc": "^3.3.11"
   },
-  "packageManager": "pnpm@12.5.1"
+  "packageManager": "pnpm@12.8.1"
 }
