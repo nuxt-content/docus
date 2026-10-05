@@ -28,7 +28,8 @@ export const useAssistant = createSharedComposable(() => {
   const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
 
   const storageOpen = useLocalStorage('assistant-open', false)
-  const messages = useLocalStorage<UIMessage[]>('assistant-messages', [])
+  // Avoid cross-tab regenerate loops (#1441)
+  const messages = useLocalStorage<UIMessage[]>('assistant-messages', [], { listenToStorageChanges: false })
 
   const isOpen = ref(false)
   const isStudioExpanded = ref(false)
