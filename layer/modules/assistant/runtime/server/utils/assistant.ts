@@ -1,7 +1,8 @@
 import { toUIMessageStream, createUIMessageStreamResponse, isStepCount, smoothStream } from 'ai'
 import type { streamText, ToolSet } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
-import type { H3Event } from 'h3'
+
+type H3Event = Parameters<typeof getRequestURL>[0]
 
 type StreamTextOptions = Parameters<typeof streamText>[0]
 
