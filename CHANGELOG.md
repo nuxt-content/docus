@@ -1,5 +1,23 @@
 # Changelog
 
+## [5.14.0](https://github.com/nuxt-content/docus/compare/v5.13.0...v5.14.0) (2026-10-05)
+
+### Features
+
+* **agentic:** migrate to `nuxt-agent-discovery` ([#1435](https://github.com/nuxt-content/docus/issues/1435)) ([acb72f4](https://github.com/nuxt-content/docus/commit/acb72f4ed44a8bf1aba8f83f72c4f0f597bc3ab3))
+* **seo:** use `nuxt-schema-org` and `useCanonical` ([#1439](https://github.com/nuxt-content/docus/issues/1439)) ([6090b7e](https://github.com/nuxt-content/docus/commit/6090b7e88c8e5d68a755cf9b345ded1e10921d9e))
+
+### Bug Fixes
+
+* **assistant:** stop cross-tab message sync from looping regenerations ([#1441](https://github.com/nuxt-content/docus/issues/1441)) ([a8f540f](https://github.com/nuxt-content/docus/commit/a8f540f7283ff3a08e0cbaee62651b5f771f79d2))
+* **ci:** pin h3 version to v1 ([#1446](https://github.com/nuxt-content/docus/issues/1446)) ([25600c2](https://github.com/nuxt-content/docus/commit/25600c25d02661ce33f80a48e46be09e1af6655b))
+* **i18n:** redirect uppercase locale URLs and normalize locale inputs ([#1442](https://github.com/nuxt-content/docus/issues/1442)) ([e75bcf3](https://github.com/nuxt-content/docus/commit/e75bcf313774b04c84bdb7d09d9bdb561cfd7957))
+* **i18n:** support hyphenated locale codes ([#1434](https://github.com/nuxt-content/docus/issues/1434)) ([7af6fe1](https://github.com/nuxt-content/docus/commit/7af6fe1f02ff1cdfd858784e94f6c4fd16bf94b5))
+* **layer:** serve agent markdown as `markdown/html` ([#1449](https://github.com/nuxt-content/docus/issues/1449)) ([6881e06](https://github.com/nuxt-content/docus/commit/6881e062230bf382400c427e8548994c0531b4a0))
+* **layer:** use configured `site.url` for llms.txt domain ([#1447](https://github.com/nuxt-content/docus/issues/1447)) ([c229a86](https://github.com/nuxt-content/docus/commit/c229a86c80047f481057b7f32b65e18c415b18c7))
+* **types:** apply the AppConfig augmentation in apps extending the layer ([#1437](https://github.com/nuxt-content/docus/issues/1437)) ([8c971cf](https://github.com/nuxt-content/docus/commit/8c971cf24c7207836394f480ac8405543c5ea8fe))
+* **types:** missing h3 type ([4e13888](https://github.com/nuxt-content/docus/commit/4e13888644427b0f6fc3410cf080d105948ce390))
+
 ## [5.13.0](https://github.com/nuxt-content/docus/compare/v5.12.3...v5.13.0) (2026-08-28)
 
 ### Features
