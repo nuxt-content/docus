@@ -18,6 +18,15 @@ export function inferSiteURL() {
   return url ? withHttps(url) : undefined
 }
 
+/**
+ * `site.url` from `nuxt.config` first, the env-inferred URL otherwise.
+ * Modules reading `inferSiteURL()` alone miss a URL that is only set in config.
+ */
+export function resolveSiteURL(site?: unknown) {
+  const configured = typeof site === 'object' && site !== null && 'url' in site ? site.url : undefined
+  return (typeof configured === 'string' && configured) || inferSiteURL()
+}
+
 export async function getPackageJsonMetadata(dir: string) {
   try {
     const packageJson = await readFile(resolve(dir, 'package.json'), 'utf-8')

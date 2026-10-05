@@ -1,6 +1,10 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import type { DocsPage } from './utils'
-import { assistantEnabled, assistantPath, listPages, mcp, request, requestHTML, siteURL, target, url } from './utils'
+import { assistantEnabled, assistantPath, canonicalSiteURL, listPages, mcp, request, requestHTML, siteURL, target, url } from './utils'
+
+function sitemapLocs(xml: string): string[] {
+  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]!.trim())
+}
 
 let page: DocsPage
 
@@ -90,6 +94,27 @@ describe(`smoke: ${siteURL.href} (${target})`, () => {
       expect(res.status).toBe(200)
       expect(res.headers.get('content-type')).toMatch(/xml/)
       expect(await res.text()).toMatch(/<(?:urlset|sitemapindex)\b/)
+    })
+
+    // The sitemap protocol requires absolute URLs, see https://github.com/nuxt-content/docus/pull/1422
+    it('lists absolute URLs in the XML sitemap', async () => {
+      const index = await (await request('/sitemap.xml')).text()
+      const isIndex = /<sitemapindex\b/.test(index)
+      const sitemaps = isIndex ? sitemapLocs(index) : []
+
+      const locs = isIndex ? [...sitemaps] : sitemapLocs(index)
+      for (const sitemap of sitemaps) {
+        // Child sitemaps carry the canonical origin, fetch them from the site under test.
+        const res = await request(new URL(sitemap, siteURL).pathname)
+        expect(res.status, sitemap).toBe(200)
+        locs.push(...sitemapLocs(await res.text()))
+      }
+
+      expect(locs.length).toBeGreaterThan(0)
+      for (const loc of locs) {
+        expect(loc).toMatch(/^https?:\/\//)
+        if (canonicalSiteURL) expect(new URL(loc).origin).toBe(canonicalSiteURL.origin)
+      }
     })
 
     it('serves robots.txt', async () => {

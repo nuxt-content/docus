@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { getPackageJsonMetadata, inferSiteURL } from '../../layer/utils/meta'
+import { getPackageJsonMetadata, inferSiteURL, resolveSiteURL } from '../../layer/utils/meta'
 
 const SITE_ENV = [
   'NUXT_PUBLIC_SITE_URL',
@@ -48,6 +48,26 @@ describe('inferSiteURL', () => {
     vi.stubEnv('VERCEL_PROJECT_PRODUCTION_URL', 'docus.dev')
     vi.stubEnv('NUXT_PUBLIC_SITE_URL', 'https://docs.example.com')
     expect(inferSiteURL()).toBe('https://docs.example.com')
+  })
+})
+
+describe('resolveSiteURL', () => {
+  // https://github.com/nuxt-content/docus/pull/1422
+  it('uses `site.url` from config without any env', () => {
+    clearSiteEnv()
+    expect(resolveSiteURL({ url: 'https://docs.example.com' })).toBe('https://docs.example.com')
+  })
+
+  it('prefers `site.url` over the platform URL', () => {
+    clearSiteEnv()
+    vi.stubEnv('VERCEL_PROJECT_PRODUCTION_URL', 'docus-abc123.vercel.app')
+    expect(resolveSiteURL({ url: 'https://docs.example.com' })).toBe('https://docs.example.com')
+  })
+
+  it.each([undefined, false, {}, { url: '' }])('falls back to the env for %o', (site) => {
+    clearSiteEnv()
+    vi.stubEnv('VERCEL_URL', 'docus-abc123.vercel.app')
+    expect(resolveSiteURL(site)).toBe('https://docus-abc123.vercel.app')
   })
 })
 

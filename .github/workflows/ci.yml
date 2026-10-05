@@ -140,6 +140,7 @@ jobs:
         env:
           SMOKE_URL: http://localhost:3000
           SMOKE_TARGET: node
+          SMOKE_SITE_URL: https://docus-ci.vercel.app
 
   starters:
     name: starter (${{ matrix.starter }})
