@@ -8,6 +8,9 @@
   },
   "private": false,
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "bin": {
     "create-docus": "dist/main.mjs"
   },

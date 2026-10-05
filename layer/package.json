@@ -11,6 +11,9 @@
   },
   "private": false,
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
     "app",
     "i18n",
