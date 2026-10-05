@@ -4,7 +4,7 @@ import { readdirSync } from 'node:fs'
 import type { ModuleOptions as AgentDiscoveryOptions } from 'nuxt-agent-discovery'
 import { findLocaleFile, normalizeLocale } from '../utils/locale'
 import { findLocaleFolder } from '../utils/pages'
-import { inferSiteURL, getPackageJsonMetadata } from '../utils/meta'
+import { getPackageJsonMetadata, resolveSiteURL } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
 const log = logger.withTag('docus')
@@ -23,7 +23,7 @@ export default defineNuxtModule({
   },
   async setup(_options, nuxt) {
     const dir = nuxt.options.rootDir
-    const url = inferSiteURL()
+    const url = resolveSiteURL(nuxt.options.site)
     const meta = await getPackageJsonMetadata(dir)
     const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
     const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''

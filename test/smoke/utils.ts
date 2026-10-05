@@ -4,6 +4,7 @@
  * - `SMOKE_TARGET`: `vercel` (default) or `node`.
  * - `VERCEL_AUTOMATION_BYPASS_SECRET`: passes Vercel Deployment Protection on previews.
  * - `SMOKE_ASSISTANT`: `true` to also call the assistant (needs AI Gateway on the deployment).
+ * - `SMOKE_SITE_URL`: canonical `site.url` the build was configured with, when it differs from `SMOKE_URL`.
  */
 const rawUrl = process.env.SMOKE_URL
 if (!rawUrl) {
@@ -14,6 +15,7 @@ export const siteURL = new URL(rawUrl.endsWith('/') ? rawUrl : `${rawUrl}/`)
 export const target = process.env.SMOKE_TARGET === 'node' ? 'node' : 'vercel'
 export const assistantEnabled = process.env.SMOKE_ASSISTANT === 'true'
 export const assistantPath = process.env.SMOKE_ASSISTANT_PATH || '/__docus__/assistant'
+export const canonicalSiteURL = process.env.SMOKE_SITE_URL ? new URL(process.env.SMOKE_SITE_URL) : undefined
 
 const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
 
