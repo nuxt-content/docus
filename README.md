@@ -67,8 +67,8 @@ Embed an AI-powered chat in your docs that answers questions, cites sources, and
 
 Every Docus site exposes an MCP server at `/mcp` — install it directly into your editor to query your docs from any AI tool:
 
-[![Install MCP in Cursor](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink)
-[![Install MCP in VS Code](https://mcp-toolkit.nuxt.dev/mcp/badge.svg?ide=vscode&url=https://docus.dev/mcp)](https://docus.dev/mcp/mcp/deeplink?ide=vscode)
+[![Install MCP in Cursor](https://docus.dev/mcp/badge.svg)](https://docus.dev/mcp/deeplink)
+[![Install MCP in VS Code](https://docus.dev/mcp/badge.svg?ide=vscode)](https://docus.dev/mcp/deeplink?ide=vscode)
 
 ### Agent Skills
 
