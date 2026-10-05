@@ -98,6 +98,7 @@ export default defineNuxtModule({
     }
 
     typedNuxtOptions.agentDiscovery = defu(typedNuxtOptions.agentDiscovery, {
+      markdownFormat: 'markdown/html',
       discovery: {
         mcpServerCard: !mcpEnabled
           ? false
