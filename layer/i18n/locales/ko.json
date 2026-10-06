@@ -12,7 +12,8 @@
       "link": "Markdown 페이지 복사",
       "view": "Markdown으로 보기",
       "gpt": "ChatGPT에서 열기",
-      "claude": "Claude에서 열기"
+      "claude": "Claude에서 열기",
+      "more": "추가 옵션"
     },
     "links": "커뮤니티",
     "toc": "이 페이지에서",

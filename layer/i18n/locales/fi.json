@@ -12,7 +12,8 @@
       "link": "Kopioi Markdown-sivu",
       "view": "Näytä Markdownina",
       "gpt": "Avaa ChatGPT:ssä",
-      "claude": "Avaa Claudessa"
+      "claude": "Avaa Claudessa",
+      "more": "Lisää vaihtoehtoja"
     },
     "links": "Yhteisö",
     "toc": "Tällä sivulla",

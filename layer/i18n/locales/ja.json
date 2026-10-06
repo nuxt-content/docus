@@ -12,7 +12,8 @@
       "link": "Markdownページをコピー",
       "view": "Markdownとして表示",
       "gpt": "ChatGPTで開く",
-      "claude": "Claudeで開く"
+      "claude": "Claudeで開く",
+      "more": "その他のオプション"
     },
     "links": "コミュニティ",
     "toc": "このページの内容",

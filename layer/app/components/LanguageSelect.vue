@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { locale, locales, switchLocalePath } = useDocusI18n()
 
+const localeName = computed(() => locales.find(localeItem => localeItem.code === locale.value)?.name || locale.value)
+
 function getEmojiFlag(locale: string): string {
   const languageToCountry: Record<string, string> = {
     ar: 'sa', // Arabic -> Saudi Arabia
@@ -48,6 +50,7 @@ function getEmojiFlag(locale: string): string {
       color="neutral"
       variant="ghost"
       class="size-8"
+      :aria-label="localeName"
     >
       <template #trailing>
         <span class="text-lg">

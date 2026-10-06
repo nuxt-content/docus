@@ -12,7 +12,8 @@
       "link": "Скопіювати Markdown сторінку",
       "view": "Переглянути як Markdown",
       "gpt": "Відкрити в ChatGPT",
-      "claude": "Відкрити в Claude"
+      "claude": "Відкрити в Claude",
+      "more": "Інші параметри"
     },
     "links": "Спільнота",
     "toc": "На цій сторінці",

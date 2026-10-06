@@ -12,7 +12,8 @@
       "link": "Kopeeri Markdown lehekülg",
       "view": "Vaata Markdownina",
       "gpt": "Ava ChatGPT-s",
-      "claude": "Ava Claude'is"
+      "claude": "Ava Claude'is",
+      "more": "Rohkem valikuid"
     },
     "links": "Kogukond",
     "toc": "Sellel lehel",
