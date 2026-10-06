@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocale } from '@nuxt/ui/composables/useLocale'
 import { AnimatePresence, motion } from 'motion-v'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
@@ -6,6 +7,7 @@ const route = useRoute()
 const appConfig = useAppConfig()
 const { open, isOpen, isStudioExpanded } = useAssistant()
 const { t } = useDocusI18n()
+const { t: tUi } = useLocale()
 const input = ref('')
 const isVisible = ref(true)
 const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
@@ -108,6 +110,7 @@ function onKeydown(event: KeyboardEvent) {
                   icon="i-lucide-arrow-up"
                   color="primary"
                   size="xs"
+                  :aria-label="tUi('chatPromptSubmit.label')"
                   :disabled="!input.trim()"
                 />
               </div>

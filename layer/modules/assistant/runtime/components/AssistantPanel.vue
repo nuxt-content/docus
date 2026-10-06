@@ -152,6 +152,7 @@ defineShortcuts({
           icon="i-lucide-list-x"
           color="neutral"
           variant="ghost"
+          :aria-label="t('assistant.clearChat')"
           @click="clearMessages"
         />
       </UTooltip>
@@ -166,7 +167,7 @@ defineShortcuts({
           icon="i-lucide-panel-right-close"
           color="neutral"
           variant="ghost"
-          aria-label="Close"
+          :aria-label="t('assistant.close')"
           @click="() => { open = false }"
         />
       </UTooltip>

@@ -18,6 +18,7 @@ const triggerIcon = computed(() => appConfig.assistant?.icons?.trigger || 'i-cus
       :icon="triggerIcon"
       color="neutral"
       variant="ghost"
+      :aria-label="tooltipText"
       @click="toggle"
     />
   </UTooltip>
