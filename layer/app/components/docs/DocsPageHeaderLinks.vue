@@ -96,6 +96,7 @@ async function copyPage() {
         icon="i-lucide-chevron-down"
         color="neutral"
         variant="soft"
+        :aria-label="t('docs.copy.more')"
         class="border-l border-muted"
       />
     </UDropdownMenu>

@@ -12,7 +12,8 @@
       "link": "Markdown-Seite kopieren",
       "view": "Als Markdown anzeigen",
       "gpt": "In ChatGPT öffnen",
-      "claude": "In Claude öffnen"
+      "claude": "In Claude öffnen",
+      "more": "Weitere Optionen"
     },
     "links": "Community",
     "toc": "Auf dieser Seite",

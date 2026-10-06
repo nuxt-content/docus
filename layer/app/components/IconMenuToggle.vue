@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useLocale } from '@nuxt/ui/composables/useLocale'
 import { motion } from 'motion-v'
 import type { VariantType } from 'motion-v'
 
 const props = defineProps<{
   open: boolean
 }>()
+
+const { t } = useLocale()
 
 const variants: { [k: string]: VariantType | ((custom: unknown) => VariantType) } = {
   normal: {
@@ -37,6 +40,7 @@ const state = computed(() => props.open ? 'close' : 'normal')
     color="neutral"
     class="-me-1.5"
     square
+    :aria-label="props.open ? t('header.close') : t('header.open')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

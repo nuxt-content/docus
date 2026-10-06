@@ -12,7 +12,8 @@
       "link": "Markdown бетін көшіру",
       "view": "Markdown ретінде көру",
       "gpt": "ChatGPT-те ашу",
-      "claude": "Claude-те ашу"
+      "claude": "Claude-те ашу",
+      "more": "Қосымша опциялар"
     },
     "links": "Қауымдастық",
     "toc": "Осы бетте",

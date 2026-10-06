@@ -12,7 +12,8 @@
       "link": "複製 Markdown 連結",
       "view": "以 Markdown 檢視",
       "gpt": "在 ChatGPT 中開啟",
-      "claude": "在 Claude 中開啟"
+      "claude": "在 Claude 中開啟",
+      "more": "更多選項"
     },
     "links": "社群",
     "toc": "本頁目錄",

@@ -12,7 +12,8 @@
       "link": "Markdown барагын көчүрүү",
       "view": "Markdown катары көрүү",
       "gpt": "ChatGPT'те ачуу",
-      "claude": "Claude'да ачуу"
+      "claude": "Claude'да ачуу",
+      "more": "Кошумча параметрлер"
     },
     "links": "Коом",
     "toc": "Бул барактта",

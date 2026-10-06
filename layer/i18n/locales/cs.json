@@ -12,7 +12,8 @@
       "link": "Kopírovat Markdown stránku",
       "view": "Zobrazit jako Markdown",
       "gpt": "Otevřít v ChatGPT",
-      "claude": "Otevřít v Claude"
+      "claude": "Otevřít v Claude",
+      "more": "Další možnosti"
     },
     "links": "Komunita",
     "toc": "Na této stránce",
