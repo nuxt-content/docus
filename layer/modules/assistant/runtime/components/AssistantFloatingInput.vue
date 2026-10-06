@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useLocale } from '@nuxt/ui/composables/useLocale'
-import { AnimatePresence, motion } from 'motion-v'
 import { useDocusI18n } from '../../../../app/composables/useDocusI18n'
 
 const route = useRoute()
@@ -66,14 +65,15 @@ function onKeydown(event: KeyboardEvent) {
 </script>
 
 <template>
-  <AnimatePresence>
-    <motion.div
+  <Transition
+    appear
+    enter-active-class="transition-[translate,opacity] duration-200 ease-[ease-out]"
+    enter-from-class="translate-y-[20px] opacity-0"
+    leave-active-class="transition-[translate,opacity] duration-200 ease-[ease-out]"
+    leave-to-class="translate-y-[100px] opacity-0"
+  >
+    <div
       v-if="isFloatingInputEnabled && isDocsRoute && isVisible && !isOpen && !isStudioExpanded"
-      key="floating-input"
-      :initial="{ y: 20, opacity: 0 }"
-      :animate="{ y: 0, opacity: 1 }"
-      :exit="{ y: 100, opacity: 0 }"
-      :transition="{ duration: 0.2, ease: 'easeOut' }"
       class="pointer-events-none fixed inset-x-0 z-10 bottom-[max(1.5rem,env(safe-area-inset-bottom))] px-4 sm:px-24"
       style="will-change: transform"
     >
@@ -118,6 +118,6 @@ function onKeydown(event: KeyboardEvent) {
           </UInput>
         </div>
       </form>
-    </motion.div>
-  </AnimatePresence>
+    </div>
+  </Transition>
 </template>
