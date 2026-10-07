@@ -74,7 +74,10 @@ const { subNavigationMode } = useSubNavigation(navigation)
         <NuxtLayout>
           <NuxtPage />
         </NuxtLayout>
-        <AppFooter v-if="$route.meta.footer !== false" />
+        <LazyAppFooter
+          v-if="$route.meta.footer !== false"
+          hydrate-on-visible
+        />
 
         <ClientOnly>
           <AppSearch :navigation="navigation" />
