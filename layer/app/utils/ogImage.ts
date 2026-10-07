@@ -30,7 +30,7 @@ export function formatOgDescription(title: string | undefined, description: stri
   const maxLen = OG_BUDGET - titleLen
   if (maxLen <= 0) return undefined
 
-  const cleaned = withoutDotRuns(description.replace(/,/g, ''))
+  const cleaned = withoutDotRuns(description)
   if (cleaned.length <= maxLen) return cleaned
 
   const truncated = cleaned.slice(0, maxLen)

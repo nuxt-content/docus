@@ -21,11 +21,11 @@ describe('formatOgDescription', () => {
   it('drops the trailing dot that would make the URL end with `..png`', () => {
     const description = 'Ship fast, flexible, and SEO-optimized documentation with beautiful design out of the box.'
     expect(formatOgDescription('Write beautiful docs with Markdown', description))
-      .toBe('Ship fast flexible and SEO-optimized documentation with beautiful design out of the box')
+      .toBe('Ship fast, flexible, and SEO-optimized documentation with beautiful design out of the box')
   })
 
-  it('removes commas, the param separator', () => {
-    expect(formatOgDescription('Title', 'One, two, three')).toBe('One two three')
+  it('keeps commas', () => {
+    expect(formatOgDescription('Title', 'One, two, three')).toBe('One, two, three')
   })
 
   it('turns dot runs into an ellipsis', () => {
