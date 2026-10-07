@@ -1,0 +1,230 @@
+name: bundle-size-comment
+
+on:
+  workflow_run:
+    workflows:
+      - bundle-size
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  comment:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Validate triggering workflow
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const run = context.payload.workflow_run
+            const shaPattern = /^[0-9a-f]{40}$/
+
+            if (run.name !== 'bundle-size') {
+              core.setFailed('The triggering workflow name is invalid.')
+              return
+            }
+
+            if (!Number.isSafeInteger(run.id) || run.id <= 0 || !shaPattern.test(run.head_sha) || !Number.isSafeInteger(run.head_repository?.id) || run.head_repository.id <= 0) {
+              core.setFailed('The workflow payload contains invalid head repository metadata.')
+              return
+            }
+      - name: Resolve bundle artifact
+        id: artifact
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const run = context.payload.workflow_run
+            const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: run.id,
+              per_page: 100
+            })
+            const matches = artifacts.filter(artifact => artifact.name === 'bundle-size-report' && !artifact.expired)
+
+            if (matches.length !== 1) {
+              core.setFailed('Expected exactly one bundle report artifact from the triggering run.')
+              return
+            }
+
+            const artifact = matches[0]
+            if (!Number.isSafeInteger(artifact.id) || artifact.id <= 0 || !Number.isSafeInteger(artifact.size_in_bytes) || artifact.size_in_bytes <= 0 || artifact.size_in_bytes > 12 * 1024 * 1024) {
+              core.setFailed('The bundle report artifact metadata is invalid or too large.')
+              return
+            }
+
+            core.setOutput('id', String(artifact.id))
+      - name: Download untrusted bundle snapshots
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ steps.artifact.outputs.id }}
+          path: ${{ runner.temp }}/bundle-size-report
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+      - name: Resolve triggering pull request
+        id: pull
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          BUNDLE_CONTEXT_PATH: ${{ runner.temp }}/bundle-size-report/context.json
+        with:
+          script: |
+            const fs = require('node:fs')
+            const path = require('node:path')
+            const run = context.payload.workflow_run
+            const repository = context.payload.repository
+            const candidates = run.pull_requests || []
+            const contextPath = process.env.BUNDLE_CONTEXT_PATH
+            const shaPattern = /^[0-9a-f]{40}$/
+
+            core.setOutput('should-comment', 'false')
+
+            const artifactDirectory = path.dirname(contextPath)
+            const files = fs.readdirSync(artifactDirectory).sort()
+            if (files.length !== 3 || files[0] !== 'base.json' || files[1] !== 'context.json' || files[2] !== 'pr.json') {
+              core.setFailed('The bundle artifact contains unexpected files.')
+              return
+            }
+
+            const contextStats = fs.lstatSync(contextPath)
+            const baseStats = fs.lstatSync(path.join(artifactDirectory, 'base.json'))
+            const headStats = fs.lstatSync(path.join(artifactDirectory, 'pr.json'))
+            if (!contextStats.isFile() || contextStats.isSymbolicLink() || contextStats.size > 1_024 ||
+                !baseStats.isFile() || baseStats.isSymbolicLink() || baseStats.size > 5 * 1024 * 1024 ||
+                !headStats.isFile() || headStats.isSymbolicLink() || headStats.size > 5 * 1024 * 1024) {
+              core.setFailed('The bundle artifact does not contain bounded regular files.')
+              return
+            }
+
+            const bundleContext = JSON.parse(fs.readFileSync(contextPath, 'utf8'))
+            const contextKeys = Object.keys(bundleContext)
+            if (contextKeys.length !== 1 || contextKeys[0] !== 'prNumber' || !Number.isSafeInteger(bundleContext.prNumber) || bundleContext.prNumber <= 0) {
+              core.setFailed('The bundle context contains an invalid pull request number.')
+              return
+            }
+
+            if (candidates.length > 1 || (candidates.length === 1 && candidates[0].number !== bundleContext.prNumber)) {
+              core.setFailed('The bundle context does not match the workflow payload.')
+              return
+            }
+
+            const { data: pull } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: bundleContext.prNumber
+            })
+
+            if (pull.state !== 'open' || pull.head.sha !== run.head_sha) {
+              core.info(`Skipping stale or closed PR #${bundleContext.prNumber}.`)
+              return
+            }
+
+            if (pull.head.repo?.id !== run.head_repository.id) {
+              core.setFailed('The pull request head repository does not match the triggering workflow.')
+              return
+            }
+
+            if (pull.base.repo.id !== repository.id || pull.base.ref !== repository.default_branch || !shaPattern.test(pull.base.sha)) {
+              core.setFailed('The pull request does not target the expected default branch.')
+              return
+            }
+
+            core.setOutput('should-comment', 'true')
+            core.setOutput('number', String(bundleContext.prNumber))
+            core.setOutput('base-sha', pull.base.sha)
+            core.setOutput('head-sha', run.head_sha)
+      - name: Check out the trusted reporter
+        if: steps.pull.outputs.should-comment == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - if: steps.pull.outputs.should-comment == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: lts/-1
+      - name: Validate snapshots and render report
+        if: steps.pull.outputs.should-comment == 'true'
+        env:
+          BASE_SHA: ${{ steps.pull.outputs.base-sha }}
+          BASE_SNAPSHOT: ${{ runner.temp }}/bundle-size-report/base.json
+          HEAD_SHA: ${{ steps.pull.outputs.head-sha }}
+          HEAD_SNAPSHOT: ${{ runner.temp }}/bundle-size-report/pr.json
+          REPORT_PATH: ${{ runner.temp }}/bundle-size-comment.md
+        run: |
+          node scripts/bundle-size/report.mjs compare \
+            --base "$BASE_SNAPSHOT" \
+            --head "$HEAD_SNAPSHOT" \
+            --base-sha "$BASE_SHA" \
+            --head-sha "$HEAD_SHA" \
+            --output "$REPORT_PATH"
+      - name: Mint bundle report app token
+        if: steps.pull.outputs.should-comment == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.BUNDLE_REPORT_APP_ID }}
+          private-key: ${{ secrets.BUNDLE_REPORT_APP_PRIVATE_KEY }}
+      - name: Update PR comment
+        if: steps.pull.outputs.should-comment == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          BUNDLE_REPORT_PATH: ${{ runner.temp }}/bundle-size-comment.md
+          PR_NUMBER: ${{ steps.pull.outputs.number }}
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const fs = require('node:fs')
+            const marker = '<!-- nuxt.com-bundle-size-report -->'
+            const run = context.payload.workflow_run
+            const prNumber = Number(process.env.PR_NUMBER)
+
+            if (!Number.isSafeInteger(prNumber) || prNumber <= 0) {
+              core.setFailed('The validated pull request number is invalid.')
+              return
+            }
+
+            const report = fs.readFileSync(process.env.BUNDLE_REPORT_PATH, 'utf8')
+            if (Buffer.byteLength(report, 'utf8') > 60_000) {
+              core.setFailed('The bundle report is too large to post safely.')
+              return
+            }
+
+            const body = `${marker}\n${report}\n[Workflow run](${run.html_url})`
+
+            try {
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                per_page: 100
+              })
+              const previous = comments.find(comment => comment.user?.login?.endsWith('[bot]') && comment.body?.includes(marker))
+
+              if (previous) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: previous.id,
+                  body
+                })
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body
+                })
+              }
+            } catch (error) {
+              core.warning(`Unable to post the bundle report comment: ${error.message}`)
+              await core.summary.addRaw(report).write()
+              core.info('The bundle report was written to the workflow run summary instead.')
+            }
