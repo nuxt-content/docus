@@ -27,19 +27,19 @@
     "check:vercel-output": "node scripts/check-vercel-output.mts"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.137",
-    "@iconify-json/simple-icons": "^1.2.98",
-    "@iconify-json/vscode-icons": "^1.2.83",
+    "@iconify-json/lucide": "^1.2.140",
+    "@iconify-json/simple-icons": "^1.2.99",
+    "@iconify-json/vscode-icons": "^1.2.85",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/eslint-config": "^1.17.0",
     "@release-it/bumper": "^8.0.1",
     "@release-it/conventional-changelog": "^12.0.2",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "nuxt": "4.5.2",
     "release-it": "^21.1.0",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2",
-    "vue-tsc": "^3.3.11"
+    "vitest": "^5.0.3",
+    "vue-tsc": "^3.3.12"
   },
-  "packageManager": "pnpm@12.8.1"
+  "packageManager": "pnpm@12.9.1"
 }
