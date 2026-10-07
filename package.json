@@ -35,7 +35,7 @@
     "@release-it/bumper": "^8.0.1",
     "@release-it/conventional-changelog": "^12.0.2",
     "eslint": "^10.12.0",
-    "nuxt": "4.5.2",
+    "nuxt": "4.6.0",
     "release-it": "^21.1.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3",
