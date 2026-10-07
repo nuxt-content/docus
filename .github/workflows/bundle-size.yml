@@ -39,13 +39,12 @@ jobs:
       - name: Prepare the apps
         working-directory: .bundle-base
         run: pnpm run dev:prepare
-      # The CLI keeps only the last `--extends`, so both layers go through `~/.nuxtrc`.
-      # `projectRoot` keeps `layer/` module ids identical between the base and PR checkouts.
       - name: Configure the analyzer
         run: |
           {
             echo "extends[]=../layer"
-            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.template=raw-data"
+            echo "build.analyze.filename=$GITHUB_WORKSPACE/.bundle-base/docs/.nuxt/analyze/{name}.json"
             echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/.bundle-base/"
           } >> ~/.nuxtrc
       - name: Analyze the base bundle
@@ -94,7 +93,8 @@ jobs:
         run: |
           {
             echo "extends[]=../layer"
-            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.template=raw-data"
+            echo "build.analyze.filename=$GITHUB_WORKSPACE/docs/.nuxt/analyze/{name}.json"
             echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/"
           } >> ~/.nuxtrc
       - name: Analyze the PR bundle
