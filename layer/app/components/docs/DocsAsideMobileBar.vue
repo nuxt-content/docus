@@ -6,7 +6,7 @@ defineProps<{
   links?: ContentTocLink[]
 }>()
 
-const { subNavigationMode, sidebarNavigation, currentSection } = useSubNavigation()
+const { sidebarNavigation, currentSection } = useSubNavigation()
 const { t } = useDocusI18n()
 
 const contentNavVariants = useUIConfig('contentNavigation')
@@ -18,7 +18,6 @@ const tocDrawerOpen = ref(false)
 
 <template>
   <div
-    v-if="subNavigationMode"
     class="lg:hidden sticky top-(--ui-header-height) z-10 bg-default/75 backdrop-blur -mx-4 p-2 border-b border-dashed border-default flex justify-between"
   >
     <UDrawer
