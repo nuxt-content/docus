@@ -1,6 +1,7 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import { consola } from 'consola'
-import { findLocaleFile, getLocaleRedirect } from '../../utils/locale'
+import { uiLocaleLoaders } from '#build/docus/ui-locales.mjs'
+import { findLocaleFile, getLocaleKey, getLocaleRedirect } from '../../utils/locale'
 
 const log = consola.withTag('docus')
 
@@ -44,6 +45,7 @@ export default defineNuxtPlugin(async () => {
 
     nuxtApp.provide('locale', locale)
     nuxtApp.provide('localeMessages', resolvedMessages)
+    nuxtApp.provide('uiLocale', await uiLocaleLoaders[getLocaleKey(locale)]?.())
 
     return
   }
