@@ -36,7 +36,6 @@ jobs:
           cache-dependency-path: .bundle-base/pnpm-lock.yaml
           working-directory: .bundle-base
           runtime: node@24
-
       - name: Prepare the layer
         working-directory: .bundle-base
         run: pnpm exec nuxt prepare layer
