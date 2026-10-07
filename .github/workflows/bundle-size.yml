@@ -1,0 +1,149 @@
+name: bundle-size
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bundle-size-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-base:
+    name: analyze (base)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the PR merge
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Check out the base revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: .bundle-base
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.base.sha }}
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        env:
+          npm_config_manage_package_manager_versions: "false"
+        with:
+          cache: true
+          cache-dependency-path: .bundle-base/pnpm-lock.yaml
+          working-directory: .bundle-base
+          runtime: node@24
+      # The CLI keeps only the last `--extends`, so both layers go through `~/.nuxtrc`.
+      # `projectRoot` keeps `layer/` module ids identical between the base and PR checkouts.
+      - name: Configure the analyzer
+        run: |
+          {
+            echo "extends[]=../layer"
+            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/.bundle-base/"
+          } >> ~/.nuxtrc
+      - name: Analyze the base bundle
+        working-directory: .bundle-base/docs
+        run: >-
+          pnpm --package=@nuxt/cli-nightly@3.38.0-20260726-220626-c3c9e90
+          dlx nuxt analyze
+          --no-serve
+          --logLevel=info
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          NUXT_TELEMETRY_DISABLED: 1
+      - name: Snapshot the base bundle
+        run: >-
+          node scripts/bundle-size/report.mjs snapshot
+          --root .bundle-base/docs
+          --analyze .bundle-base/docs/.nuxt/analyze/client.json
+          --label base
+          --sha ${{ github.event.pull_request.base.sha }}
+          --output ${{ runner.temp }}/bundle-size/base.json
+      - name: Upload base bundle snapshot
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bundle-size-base
+          path: ${{ runner.temp }}/bundle-size/base.json
+          if-no-files-found: error
+          retention-days: 1
+
+  analyze-pr:
+    name: analyze (PR)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the PR merge
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          cache: true
+          cache-dependency-path: pnpm-lock.yaml
+          runtime: node@24
+      - name: Configure the analyzer
+        run: |
+          {
+            echo "extends[]=../layer"
+            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/"
+          } >> ~/.nuxtrc
+      - name: Analyze the PR bundle
+        working-directory: docs
+        run: >-
+          pnpm --package=@nuxt/cli-nightly@3.38.0-20260726-220626-c3c9e90
+          dlx nuxt analyze
+          --no-serve
+          --logLevel=info
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          NUXT_TELEMETRY_DISABLED: 1
+      - name: Snapshot the PR bundle
+        run: >-
+          node scripts/bundle-size/report.mjs snapshot
+          --root docs
+          --analyze docs/.nuxt/analyze/client.json
+          --label pr
+          --sha ${{ github.event.pull_request.head.sha }}
+          --output ${{ runner.temp }}/bundle-size/pr.json
+      - name: Upload PR bundle snapshot
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bundle-size-pr
+          path: ${{ runner.temp }}/bundle-size/pr.json
+          if-no-files-found: error
+          retention-days: 1
+
+  report:
+    name: analyze
+    needs:
+      - analyze-base
+      - analyze-pr
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download base bundle snapshot
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: bundle-size-base
+          path: ${{ runner.temp }}/bundle-size
+      - name: Download PR bundle snapshot
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: bundle-size-pr
+          path: ${{ runner.temp }}/bundle-size
+      - name: Write bundle context
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: printf '{"prNumber":%s}\n' "$PR_NUMBER" > "$RUNNER_TEMP/bundle-size/context.json"
+      - name: Upload bundle snapshots
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bundle-size-report
+          path: ${{ runner.temp }}/bundle-size
+          if-no-files-found: error
+          retention-days: 7
