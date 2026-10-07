@@ -36,6 +36,9 @@ jobs:
           cache-dependency-path: .bundle-base/pnpm-lock.yaml
           working-directory: .bundle-base
           runtime: node@24
+      - name: Prepare the layer
+        working-directory: .bundle-base
+        run: pnpm exec nuxt prepare layer
       # The CLI keeps only the last `--extends`, so both layers go through `~/.nuxtrc`.
       # `projectRoot` keeps `layer/` module ids identical between the base and PR checkouts.
       - name: Configure the analyzer
@@ -85,6 +88,8 @@ jobs:
           cache: true
           cache-dependency-path: pnpm-lock.yaml
           runtime: node@24
+      - name: Prepare the layer
+        run: pnpm exec nuxt prepare layer
       - name: Configure the analyzer
         run: |
           {
