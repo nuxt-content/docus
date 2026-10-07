@@ -17,7 +17,7 @@ const open = computed({
   },
 })
 
-const hasOpened = ref(false)
+const hasOpened = ref(open.value)
 watch(open, (value) => {
   if (value) hasOpened.value = true
 })
