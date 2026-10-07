@@ -91,7 +91,7 @@ const editLink = computed(() => {
           v-bind="link"
         />
 
-        <DocsPageHeaderLinks />
+        <LazyDocsPageHeaderLinks hydrate-on-idle />
       </template>
     </UPageHeader>
 
