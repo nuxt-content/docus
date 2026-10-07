@@ -130,7 +130,10 @@ const editLink = computed(() => {
           </template>
         </div>
       </USeparator>
-      <UContentSurround :surround="surround" />
+      <LazyUContentSurround
+        :surround="surround"
+        hydrate-on-visible
+      />
     </UPageBody>
 
     <template
