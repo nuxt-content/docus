@@ -36,21 +36,24 @@ jobs:
           cache-dependency-path: .bundle-base/pnpm-lock.yaml
           working-directory: .bundle-base
           runtime: node@24
-      # The CLI keeps only the last `--extends`, so both layers go through `~/.nuxtrc`.
-      # `projectRoot` keeps `layer/` module ids identical between the base and PR checkouts.
+      - name: Prepare the apps
+        working-directory: .bundle-base
+        run: pnpm run dev:prepare
       - name: Configure the analyzer
         run: |
           {
             echo "extends[]=../layer"
-            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.template=raw-data"
+            echo "build.analyze.filename=$GITHUB_WORKSPACE/.bundle-base/docs/.nuxt/analyze/{name}.json"
             echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/.bundle-base/"
-          } >> ~/.nuxtrc
+          } >> .bundle-base/docs/.nuxtrc
       - name: Analyze the base bundle
         working-directory: .bundle-base/docs
         run: >-
           pnpm --package=@nuxt/cli-nightly@3.38.0-20260726-220626-c3c9e90
           dlx nuxt analyze
           --no-serve
+          --prerender
           --logLevel=info
         env:
           NODE_OPTIONS: --max-old-space-size=8192
@@ -85,19 +88,23 @@ jobs:
           cache: true
           cache-dependency-path: pnpm-lock.yaml
           runtime: node@24
+      - name: Prepare the apps
+        run: pnpm run dev:prepare
       - name: Configure the analyzer
         run: |
           {
             echo "extends[]=../layer"
-            echo "extends[]=$GITHUB_WORKSPACE/scripts/bundle-size/nuxt-layer"
+            echo "build.analyze.template=raw-data"
+            echo "build.analyze.filename=$GITHUB_WORKSPACE/docs/.nuxt/analyze/{name}.json"
             echo "build.analyze.projectRoot=$GITHUB_WORKSPACE/"
-          } >> ~/.nuxtrc
+          } >> docs/.nuxtrc
       - name: Analyze the PR bundle
         working-directory: docs
         run: >-
           pnpm --package=@nuxt/cli-nightly@3.38.0-20260726-220626-c3c9e90
           dlx nuxt analyze
           --no-serve
+          --prerender
           --logLevel=info
         env:
           NODE_OPTIONS: --max-old-space-size=8192
