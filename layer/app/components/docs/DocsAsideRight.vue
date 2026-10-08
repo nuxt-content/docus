@@ -32,6 +32,9 @@ const contentTocVariants = useUIConfig('contentToc')
       </template>
     </UContentToc>
 
-    <DocsAsideMobileBar :links="links" />
+    <LazyDocsAsideMobileBar
+      v-if="subNavigationMode"
+      :links="links"
+    />
   </div>
 </template>

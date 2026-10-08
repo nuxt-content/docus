@@ -91,7 +91,7 @@ const editLink = computed(() => {
           v-bind="link"
         />
 
-        <DocsPageHeaderLinks />
+        <LazyDocsPageHeaderLinks hydrate-on-idle />
       </template>
     </UPageHeader>
 
@@ -130,7 +130,10 @@ const editLink = computed(() => {
           </template>
         </div>
       </USeparator>
-      <UContentSurround :surround="surround" />
+      <LazyUContentSurround
+        :surround="surround"
+        hydrate-on-visible
+      />
     </UPageBody>
 
     <template

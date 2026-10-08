@@ -37,12 +37,12 @@ const links = computed(() => appConfig.github && appConfig.github.url
       <AppHeaderCTA />
 
       <template v-if="isAssistantEnabled">
-        <AssistantChat />
+        <LazyAssistantChat />
       </template>
 
       <template v-if="isEnabled && locales.length > 1">
         <ClientOnly>
-          <LanguageSelect />
+          <LazyLanguageSelect />
 
           <template #fallback>
             <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
@@ -90,7 +90,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
       v-if="subNavigationMode === 'header'"
       #bottom
     >
-      <AppHeaderBottom />
+      <LazyAppHeaderBottom />
     </template>
   </UHeader>
 </template>

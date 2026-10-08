@@ -64,7 +64,7 @@ provide('navigation', navigation)
 
     <UError :error="localizedError" />
 
-    <AppFooter />
+    <LazyAppFooter hydrate-on-visible />
 
     <ClientOnly>
       <AppSearch :navigation="navigation" />
