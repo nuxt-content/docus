@@ -4,10 +4,14 @@ import { dirname, extname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const EMPTY_SIZE = Object.freeze({ raw: 0, gzip: 0, brotli: 0 })
-const SNAPSHOT_SCHEMA_VERSION = 2
+const SNAPSHOT_SCHEMA_VERSION = 3
 const MAX_SNAPSHOT_BYTES = 5 * 1024 * 1024
 const MAX_MODULES = 25_000
 const MAX_MODULE_ID_LENGTH = 2_048
+const MAX_ROUTE_FILES = 1_000
+
+// Prerendered pages whose upfront assets are reported: landing, a light docs page, a component-heavy docs page.
+const ROUTES = Object.freeze(['/en', '/en/getting-started/installation', '/en/essentials/components'])
 
 function addSizes(target, sizes) {
   target.raw += sizes.raw
@@ -109,6 +113,70 @@ async function readAnalyzerModules(analyzePath, root) {
   return Object.fromEntries([...modules.entries()].sort(([a], [b]) => a.localeCompare(b)))
 }
 
+function parseAttributes(source) {
+  const attributes = {}
+  for (const [, name, doubleQuoted, singleQuoted, unquoted] of source.matchAll(/([^\s"'=<>/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+    attributes[name.toLowerCase()] = doubleQuoted ?? singleQuoted ?? unquoted ?? ''
+  }
+  return attributes
+}
+
+// Prefetched chunks are left out: the browser only fetches them when idle.
+export function initialAssetPaths(html) {
+  const paths = new Set()
+
+  for (const [, tag, source] of html.matchAll(/<(link|script)\b([^>]*)>/gi)) {
+    const attributes = parseAttributes(source)
+    const rel = (attributes.rel || '').toLowerCase().split(/\s+/)
+    const url = tag.toLowerCase() === 'script'
+      ? attributes.type === 'module' && attributes.src
+      : (rel.includes('modulepreload') || rel.includes('stylesheet')) && attributes.href
+    const index = url ? url.indexOf('_nuxt/') : -1
+    if (index !== -1) {
+      paths.add(url.slice(index).split(/[?#]/)[0])
+    }
+  }
+
+  return paths
+}
+
+async function readRouteHtml(publicDir, route) {
+  // `autoSubfolderIndex: false` writes `/en` as `en.html`, the Nitro default is `en/index.html`.
+  for (const file of [`${route}.html`, `${route}/index.html`]) {
+    try {
+      return await readFile(resolve(publicDir, `.${file}`), 'utf8')
+    }
+    catch (error) {
+      if (error.code !== 'ENOENT') {
+        throw error
+      }
+    }
+  }
+}
+
+async function measureRoutes(publicDir, assets) {
+  const routes = {}
+
+  for (const route of ROUTES) {
+    const html = await readRouteHtml(publicDir, route)
+    if (html === undefined) {
+      continue
+    }
+
+    const sizes = { javascript: { ...EMPTY_SIZE }, css: { ...EMPTY_SIZE }, files: 0 }
+    for (const file of initialAssetPaths(html)) {
+      const asset = Object.hasOwn(assets, file) ? assets[file] : undefined
+      if (asset && asset.kind !== 'other') {
+        addSizes(sizes[asset.kind], asset.sizes)
+        sizes.files++
+      }
+    }
+    routes[route] = sizes
+  }
+
+  return routes
+}
+
 export async function buildSnapshot({ root, analyzePath, label, sha }) {
   const absoluteRoot = resolve(root)
   const publicDir = resolve(absoluteRoot, '.output/public')
@@ -144,6 +212,7 @@ export async function buildSnapshot({ root, analyzePath, label, sha }) {
     label,
     sha,
     totals,
+    routes: await measureRoutes(publicDir, assets),
     modules: await readAnalyzerModules(resolve(analyzePath), absoluteRoot)
   }
 }
@@ -176,7 +245,7 @@ export function validateSnapshot(snapshot, { label, sha } = {}) {
   if (!isRecord(snapshot)) {
     throw new Error('Snapshot must be an object')
   }
-  validateKeys(snapshot, ['schemaVersion', 'label', 'sha', 'totals', 'modules'], 'Snapshot')
+  validateKeys(snapshot, ['schemaVersion', 'label', 'sha', 'totals', 'routes', 'modules'], 'Snapshot')
 
   if (snapshot.schemaVersion !== SNAPSHOT_SCHEMA_VERSION) {
     throw new Error(`Unsupported snapshot schema version: ${snapshot.schemaVersion}`)
@@ -202,6 +271,25 @@ export function validateSnapshot(snapshot, { label, sha } = {}) {
     const sum = snapshot.totals.javascript[key] + snapshot.totals.css[key] + snapshot.totals.other[key]
     if (snapshot.totals.all[key] !== sum) {
       throw new Error(`Snapshot totals.all.${key} is inconsistent`)
+    }
+  }
+
+  if (!isRecord(snapshot.routes)) {
+    throw new Error('Snapshot routes must be an object')
+  }
+  for (const [route, sizes] of Object.entries(snapshot.routes)) {
+    if (!ROUTES.includes(route)) {
+      throw new Error('Snapshot contains an unexpected route')
+    }
+    const path = `Snapshot route ${JSON.stringify(route)}`
+    if (!isRecord(sizes)) {
+      throw new Error(`${path} must be an object`)
+    }
+    validateKeys(sizes, ['javascript', 'css', 'files'], path)
+    validateSize(sizes.javascript, `${path}.javascript`)
+    validateSize(sizes.css, `${path}.css`)
+    if (!Number.isSafeInteger(sizes.files) || sizes.files < 0 || sizes.files > MAX_ROUTE_FILES) {
+      throw new Error(`${path}.files must be an integer between 0 and ${MAX_ROUTE_FILES}`)
     }
   }
 
@@ -275,6 +363,27 @@ function metricRow(label, base, head) {
   return `| ${label} | ${formatBytes(base.brotli)} | ${formatBytes(head.brotli)} | ${formatDelta(base.brotli, head.brotli)} | ${formatDelta(base.gzip, head.gzip)} |`
 }
 
+function formatCountDelta(base, head) {
+  const delta = head - base
+  if (delta === 0) {
+    return '—'
+  }
+  return delta > 0 ? `+${delta}` : String(delta)
+}
+
+function routeRows(base, head) {
+  return ROUTES.filter(route => Object.hasOwn(base.routes, route) || Object.hasOwn(head.routes, route)).map((route) => {
+    const baseRoute = Object.hasOwn(base.routes, route) ? base.routes[route] : undefined
+    const headRoute = Object.hasOwn(head.routes, route) ? head.routes[route] : undefined
+    const baseJs = baseRoute ? formatBytes(baseRoute.javascript.brotli) : 'n/a'
+    const headJs = headRoute ? formatBytes(headRoute.javascript.brotli) : 'n/a'
+    if (!baseRoute || !headRoute) {
+      return `| ${inlineCode(route)} | ${baseJs} | ${headJs} | n/a | n/a | n/a |`
+    }
+    return `| ${inlineCode(route)} | ${baseJs} | ${headJs} | ${formatDelta(baseRoute.javascript.brotli, headRoute.javascript.brotli)} | ${formatDelta(baseRoute.css.brotli, headRoute.css.brotli)} | ${formatCountDelta(baseRoute.files, headRoute.files)} |`
+  })
+}
+
 function moduleRegressions(base, head) {
   const modules = new Set([...Object.keys(base.modules), ...Object.keys(head.modules)])
   return [...modules].map((id) => {
@@ -298,7 +407,26 @@ export function compareSnapshots(base, head, expected = {}) {
   const lines = [
     '## Production bundle',
     '',
-    `Comparing \`${base.sha.slice(0, 8)}\` with \`${head.sha.slice(0, 8)}\`. Compressed sizes are calculated from the emitted production assets.`,
+    `Comparing \`${base.sha.slice(0, 8)}\` with \`${head.sha.slice(0, 8)}\`. Compressed sizes are calculated from the emitted production assets.`
+  ]
+
+  const routes = routeRows(base, head)
+  if (routes.length > 0) {
+    lines.push(
+      '',
+      '### Initial page load',
+      '',
+      '| Page | Base JS (Brotli) | PR JS (Brotli) | Δ JS | Δ CSS | Δ files |',
+      '| --- | ---: | ---: | ---: | ---: | ---: |',
+      ...routes,
+      '',
+      '> Entry script, `modulepreload` chunks and stylesheets referenced by the prerendered HTML. Lazy and prefetched chunks are excluded.'
+    )
+  }
+
+  lines.push(
+    '',
+    '### All client assets',
     '',
     '| Metric | Base (Brotli) | PR (Brotli) | Δ Brotli | Δ gzip |',
     '| --- | ---: | ---: | ---: | ---: |',
@@ -306,7 +434,7 @@ export function compareSnapshots(base, head, expected = {}) {
     metricRow('Client CSS', base.totals.css, head.totals.css),
     metricRow('Other client assets', base.totals.other, head.totals.other),
     metricRow('Total client assets', base.totals.all, head.totals.all)
-  ]
+  )
 
   const regressions = moduleRegressions(base, head)
   if (regressions.length > 0) {
