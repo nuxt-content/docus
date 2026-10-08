@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
-import * as nuxtUiLocales from '@nuxt/ui/locale'
+import { uiLocales } from '#build/docus/ui-locales.mjs'
 import { getLocaleKey } from '../utils/locale'
 import { transformNavigation } from './utils/navigation'
 import { useDocusShortcuts } from './composables/useDocusShortcuts'
@@ -13,7 +13,8 @@ const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useDocusI18n()
 const { isEnabled: isAssistantEnabled } = useAssistant()
 
-const nuxtUiLocale = computed(() => nuxtUiLocales[getLocaleKey(locale.value) as keyof typeof nuxtUiLocales] || nuxtUiLocales.en)
+const nuxtApp = useNuxtApp()
+const nuxtUiLocale = computed(() => uiLocales[getLocaleKey(locale.value)] || (nuxtApp.$uiLocale as typeof uiLocales[string] | undefined) || uiLocales.en!)
 const lang = computed(() => nuxtUiLocale.value.code)
 const dir = computed(() => nuxtUiLocale.value.dir)
 const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')

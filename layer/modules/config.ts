@@ -1,8 +1,10 @@
-import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addTemplate, addTypeTemplate, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { defu } from 'defu'
+import { resolveModulePath } from 'exsolve'
 import { readdirSync } from 'node:fs'
+import { dirname } from 'pathe'
 import type { ModuleOptions as AgentDiscoveryOptions } from 'nuxt-agent-discovery'
-import { findLocaleFile, normalizeLocale } from '../utils/locale'
+import { findLocaleFile, getLocaleKey, normalizeLocale } from '../utils/locale'
 import { findLocaleFolder } from '../utils/pages'
 import { getPackageJsonMetadata, resolveSiteURL } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
@@ -125,6 +127,7 @@ export default defineNuxtModule({
     ** I18N
     */
     const i18nOptions = typedNuxtOptions.i18n
+    const i18nLocaleKeys: string[] = []
 
     if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
       const { resolve } = createResolver(import.meta.url)
@@ -190,6 +193,8 @@ export default defineNuxtModule({
         }
       }
 
+      i18nLocaleKeys.push(...filteredLocales.map(locale => getLocaleKey(locale.code)))
+
       // Expose filtered locales
       nuxt.options.runtimeConfig.public.docus = {
         ...nuxt.options.runtimeConfig.public.docus,
@@ -225,6 +230,37 @@ export default defineNuxtModule({
         })
       })
     }
+
+    /*
+    ** Nuxt UI locales
+    */
+    const uiLocaleDir = dirname(resolveModulePath('@nuxt/ui/locale', { from: import.meta.url }))
+    const availableUiLocales = readdirSync(uiLocaleDir)
+      .filter(file => file.endsWith('.js') && file !== 'index.js')
+      .map(file => file.slice(0, -3))
+    const bundledUiLocales = [...new Set(['en', ...i18nLocaleKeys])].filter(key => availableUiLocales.includes(key))
+    const lazyUiLocales = i18nLocaleKeys.length ? [] : availableUiLocales.filter(key => !bundledUiLocales.includes(key))
+
+    addTemplate({
+      filename: 'docus/ui-locales.mjs',
+      getContents: () => [
+        `import { ${bundledUiLocales.join(', ')} } from '@nuxt/ui/locale'`,
+        `export const uiLocales = { ${bundledUiLocales.join(', ')} }`,
+        'export const uiLocaleLoaders = {',
+        ...lazyUiLocales.map(key => `  ${key}: () => import('@nuxt/ui/runtime/locale/${key}.js').then(m => m.default),`),
+        '}',
+      ].join('\n'),
+    })
+
+    addTypeTemplate({
+      filename: 'types/docus-ui-locales.d.ts',
+      getContents: () => `declare module '#build/docus/ui-locales.mjs' {
+  type UiLocale = typeof import('@nuxt/ui/locale')['en']
+  export const uiLocales: Record<string, UiLocale>
+  export const uiLocaleLoaders: Record<string, () => Promise<UiLocale>>
+}
+`,
+    })
 
     // TODO: remove once nuxt-schema-org keys its client tree-shaking by `@unhead/schema-org/vue`
     nuxt.hook('modules:done', () => {
