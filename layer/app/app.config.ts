@@ -33,7 +33,8 @@ export default defineAppConfig({
     pageLinks: {
       slots: {
         linkLeadingIcon: 'size-4',
-        linkLabelExternalIcon: 'size-2.5',
+        linkLabel: 'relative pr-3.5',
+        linkLabelExternalIcon: 'size-2.5 right-0',
       },
     },
   },
