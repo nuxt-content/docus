@@ -5,18 +5,10 @@ const OG_BUDGET = 150
 const OG_TITLE_MAX = 60
 
 /**
- * Nitro never prerenders a URL containing `..`, and zero-runtime OG images only exist when prerendered.
- * A trailing dot on the last param becomes `..png`, so dots are dropped at the end and runs become `…`.
- */
-function withoutDotRuns(text: string): string {
-  return text.replace(/\.{2,}/g, '…').replace(/\.+$/, '')
-}
-
-/**
- * Trims the title to fit the OG image and keeps its URL prerenderable.
+ * Trims the title to fit the OG image.
  */
 export function formatOgTitle(title: string | undefined): string | undefined {
-  return title ? withoutDotRuns(title.slice(0, OG_TITLE_MAX)) : undefined
+  return title?.slice(0, OG_TITLE_MAX)
 }
 
 /**
@@ -30,10 +22,9 @@ export function formatOgDescription(title: string | undefined, description: stri
   const maxLen = OG_BUDGET - titleLen
   if (maxLen <= 0) return undefined
 
-  const cleaned = withoutDotRuns(description.replace(/,/g, ''))
-  if (cleaned.length <= maxLen) return cleaned
+  if (description.length <= maxLen) return description
 
-  const truncated = cleaned.slice(0, maxLen)
+  const truncated = description.slice(0, maxLen)
   const lastDot = truncated.lastIndexOf('.')
-  return withoutDotRuns(lastDot > 0 ? truncated.slice(0, lastDot) : truncated)
+  return lastDot > 0 ? truncated.slice(0, lastDot + 1) : truncated
 }

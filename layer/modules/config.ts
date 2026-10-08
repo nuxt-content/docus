@@ -261,5 +261,13 @@ export default defineNuxtModule({
 }
 `,
     })
+
+    // TODO: remove once nuxt-schema-org keys its client tree-shaking by `@unhead/schema-org/vue`
+    nuxt.hook('modules:done', () => {
+      const clientComposables = nuxt.options.optimization.treeShake.composables.client
+      if (clientComposables['nuxt-schema-org']) {
+        clientComposables['@unhead/schema-org/vue'] ||= clientComposables['nuxt-schema-org']
+      }
+    })
   },
 })

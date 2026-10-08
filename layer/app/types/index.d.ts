@@ -24,7 +24,7 @@ export interface DocusSeoOrganization {
   contactPoint?: Record<string, unknown> | Record<string, unknown>[]
 }
 
-declare module 'nuxt/schema' {
+declare module '@nuxt/schema' {
   interface AppConfig {
     docus: {
       locale: string
