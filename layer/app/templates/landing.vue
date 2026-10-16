@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
+import { DocsContentLink } from '#components'
 import { getLocaleKey } from '../../utils/locale'
 
 const route = useRoute()
@@ -35,5 +36,6 @@ if (!page.value?.seo?.ogImage) {
   <ContentRenderer
     v-if="page"
     :value="page"
+    :components="{ a: DocsContentLink }"
   />
 </template>

@@ -26,11 +26,14 @@ export default defineSitemapEventHandler(async (event) => {
   const urls: Array<{ loc: string, lastmod?: string }> = []
 
   for (const collection of collections) {
-    // Collection might not exist, skip it
-    const pages = await (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Page[]> })(event, collection).all().catch(() => [] as Page[])
+    // Collection might not exist, skip it (Content v4 throws instead of rejecting)
+    const pages = await Promise.resolve()
+      .then(() => (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Page[]> })(event, collection).all())
+      .catch(() => [] as Page[])
 
     for (const page of pages) {
-      const meta = page.meta || {}
+      // Content v4 keeps frontmatter outside the schema at the top level, v3 under `meta`
+      const meta = { ...page, ...page.meta }
       const path = page.path || '/'
 
       if (meta.sitemap === false || isNavigationPath(path)) {

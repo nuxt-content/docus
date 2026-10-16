@@ -1,4 +1,4 @@
-import { field, group } from '@nuxt/content/preview'
+import { field, group } from './utils/preview'
 
 export default defineNuxtSchema({
   appConfig: {

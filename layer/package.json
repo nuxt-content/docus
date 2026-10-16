@@ -49,6 +49,7 @@
     "@shikijs/langs": "^4.5.0",
     "@shikijs/stream": "^4.5.0",
     "@shikijs/themes": "^4.5.0",
+    "@sqlite.org/sqlite-wasm": "3.53.0-build1",
     "@takumi-rs/core": "^2.14.0",
     "@vueuse/core": "^15.0.0",
     "ai": "^7.0.127",

@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
+    resolve('./modules/content-v4'),
     '@nuxt/content',
     'nuxt-agent-discovery',
     '@nuxt/image',
@@ -118,6 +119,9 @@ export default defineNuxtConfig({
       nitroConfig.prerender.routes.push(...(routes || []))
       nitroConfig.prerender.routes.push('/openapi.json')
     },
+  },
+  agentDiscovery: {
+    source: resolve('./server/agent-source'),
   },
   icon: {
     customCollections: [

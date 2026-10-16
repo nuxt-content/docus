@@ -1,4 +1,19 @@
 import type { ContentNavigationItem } from '@nuxt/content'
+import { navigationConfigs } from '#build/docus/content-v4.mjs'
+
+/**
+ * Content v4 drops `.navigation.yml` files, so merge them back into their folder node.
+ * Empty on v3, which already does it.
+ */
+function applyNavigationConfigs(items: ContentNavigationItem[]): ContentNavigationItem[] {
+  return items.flatMap((item) => {
+    const { navigation, ...config } = navigationConfigs[item.path] || {}
+    if (navigation === false) return []
+
+    const children = item.children && applyNavigationConfigs(item.children)
+    return [{ ...item, ...config, ...(children ? { children } : {}) }]
+  })
+}
 
 export const flattenNavigation = (items?: ContentNavigationItem[]): ContentNavigationItem[] => items?.flatMap(
   item => item.children
@@ -14,6 +29,7 @@ export function transformNavigation(
   isI18nEnabled: boolean,
   locale?: string,
 ): ContentNavigationItem[] {
+  data = applyNavigationConfigs(data)
   if (isI18nEnabled && locale) {
     // i18n: first strip locale level, then check for docs level
     const localeResult = data.find(item => item.path === `/${locale}`)?.children || data

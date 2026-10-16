@@ -2,6 +2,8 @@
 import { kebabCase } from 'scule'
 import type { ContentNavigationItem, Collections } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
+import { collectionDirs } from '#build/docus/content-v4.mjs'
+import { DocsContentLink } from '#components'
 import { getLocaleKey } from '../../../utils/locale'
 import type { DocsPage } from '../../types'
 
@@ -54,6 +56,14 @@ defineOgImage('Docs', {
 
 const github = computed(() => appConfig.github ? appConfig.github : null)
 
+// Content v4: `stem` is relative to the collection folder, and `extension` keeps its dot.
+const contentFile = computed(() => {
+  const dir = collectionDirs[collectionName.value]
+  const stem = page.value?.stem || ''
+  const extension = String(page.value?.extension || '').replace(/^\./, '')
+  return `${dir && !stem.startsWith(`${dir}/`) ? `${dir}/` : ''}${stem}.${extension}`
+})
+
 const editLink = computed(() => {
   if (!github.value) {
     return
@@ -65,7 +75,7 @@ const editLink = computed(() => {
     github.value.branch,
     github.value.rootDir,
     'content',
-    `${page.value?.stem}.${page.value?.extension}`,
+    contentFile.value,
   ].filter(Boolean).join('/')
 })
 </script>
@@ -99,6 +109,7 @@ const editLink = computed(() => {
       <ContentRenderer
         v-if="page"
         :value="page"
+        :components="{ a: DocsContentLink }"
       />
 
       <USeparator v-if="github">

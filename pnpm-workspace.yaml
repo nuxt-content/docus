@@ -6,6 +6,8 @@ packages:
   - playground
 
 overrides:
+  # Nuxt Content v4 POC (`@nuxt/content4`): PR #7 with shiki as a regular dependency (local fix), tarballs in `.content-v4/` (git-excluded)
+  '@nuxt/content': file:./.content-v4/nuxt-content4-4.0.0-pr7-shiki-dep.tgz
   h3: 1.15.11
   ai: ^7.0.29
   '@ai-sdk/vue': ^4.0.29
@@ -37,6 +39,8 @@ minimumReleaseAgeExclude:
   - 'ai'
   # Comark
   - 'comark'
+  - 'comark-content'
+  - '@comark/*'
 
 allowBuilds:
   '@parcel/watcher': false
@@ -45,3 +49,8 @@ allowBuilds:
   sharp: true
   unrs-resolver: false
   vue-demi: false
+
+patchedDependencies:
+  # Index build race fix, shipped as a patch in content-v4-temp
+  comark-content@0.4.1: patches/comark-content@0.4.1.patch
+  nuxt-agent-discovery@0.7.0: patches/nuxt-agent-discovery@0.7.0.patch
