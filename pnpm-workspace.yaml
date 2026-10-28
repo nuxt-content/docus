@@ -5,23 +5,25 @@ packages:
   - layer
   - playground
 
+blockExoticSubdeps: false
+
 overrides:
   # Nuxt Content v4 POC (`@nuxt/content4`): PR #7 with shiki as a regular dependency (local fix), tarballs in `.content-v4/` (git-excluded)
-  '@nuxt/content': file:./.content-v4/nuxt-content4-4.0.0-pr7-shiki-dep.tgz
+  "@nuxt/content": https://pkg.pr.new/nuxt/content-v4-temp/@nuxt/content4@176680a
   h3: 1.15.11
   ai: ^7.0.29
-  '@ai-sdk/vue': ^4.0.29
-  '@ai-sdk/gateway': ^4.0.21
+  "@ai-sdk/vue": ^4.0.29
+  "@ai-sdk/gateway": ^4.0.21
 
 ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - '@tailwindcss/oxide'
+  - "@parcel/watcher"
+  - "@tailwindcss/oxide"
   - esbuild
   - unrs-resolver
   - vue-demi
 
 onlyBuiltDependencies:
-  - '@vercel/speed-insights'
+  - "@vercel/speed-insights"
   - better-sqlite3
   - sharp
 
@@ -29,21 +31,21 @@ minimumReleaseAge: 2880
 
 minimumReleaseAgeExclude:
   # Nuxt
-  - '@nuxt/*'
-  - '@nuxtjs/*'
-  - 'nuxt'
-  - 'nuxt-*'
+  - "@nuxt/*"
+  - "@nuxtjs/*"
+  - "nuxt"
+  - "nuxt-*"
   # Vercel
-  - '@vercel/*'
-  - '@ai-sdk/*'
-  - 'ai'
+  - "@vercel/*"
+  - "@ai-sdk/*"
+  - "ai"
   # Comark
-  - 'comark'
-  - 'comark-content'
-  - '@comark/*'
+  - "comark"
+  - "comark-content"
+  - "@comark/*"
 
 allowBuilds:
-  '@parcel/watcher': false
+  "@parcel/watcher": false
   better-sqlite3: true
   esbuild: false
   sharp: true
