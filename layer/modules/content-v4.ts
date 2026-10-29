@@ -52,40 +52,27 @@ export default defineNuxtModule({
       highlight.theme = { light: 'material-theme-lighter', default: 'material-theme', dark: 'material-theme-palenight' }
     }
 
-    // v3 registered `components/content/` globally without a path prefix, so `::my-component` resolves.
-    nuxt.hook('components:dirs', (dirs) => {
-      for (const layer of nuxt.options._layers) {
-        const path = join(layer.config.srcDir, 'components/content')
-        if (existsSync(path)) {
-          dirs.unshift({ path, global: true, pathPrefix: false, prefix: '' })
-        }
-      }
-    })
-
-    // v4 re-exports every component eagerly for `ContentRenderer`, load them on demand instead.
+    // `#build/content/components.mjs` skips components from `node_modules`, so Nuxt UI's (`::u-page-hero`…) render as raw tags.
     nuxt.hook('modules:done', () => {
       const template = nuxt.options.build.templates.find(template => template.filename === 'content/components.mjs')
-      if (!template) return
+      const getContents = template?.getContents
+      if (!template || !getContents) return
 
-      template.getContents = () => {
-        const seen = new Set<string>()
-        const lines = (nuxt.apps.default?.components ?? [])
+      template.getContents = async (data) => {
+        const contents = await getContents(data)
+        const names = new Set([...contents.matchAll(/^ {2}"(\w+)":/gm)].map(match => match[1]))
+        const loaders = (nuxt.apps.default?.components ?? [])
           .filter((component) => {
-            if (!component.filePath.endsWith('.vue') || seen.has(component.pascalName)) return false
-            seen.add(component.pascalName)
+            if (component.global || component.island || !component.filePath.endsWith('.vue') || names.has(component.pascalName)) return false
+            names.add(component.pascalName)
             return true
           })
           .map((component) => {
             const pick = component.export === 'default' ? '' : `.then(m => m[${JSON.stringify(component.export)}])`
-            return `export const ${component.pascalName} = /* #__PURE__ */ defineAsyncComponent(() => import(${JSON.stringify(component.filePath)})${pick})`
+            return `  ${JSON.stringify(component.pascalName)}: async () => import(${JSON.stringify(component.filePath)})${pick},\n`
           })
-        return [`import { defineAsyncComponent } from 'vue'`, ...lines].join('\n') + '\n'
+        return contents.replace('export const localComponents = {\n', match => match + loaders.join(''))
       }
-    })
-
-    // The server `$fetch`es its own snapshot, see `server/middleware/content-snapshot.ts`.
-    nuxt.hook('nitro:init', (nitro) => {
-      nitro.options.serverAssets.push({ baseName: 'content-snapshots', dir: join(nitro.options.output.publicDir, '__nuxt_content') })
     })
   },
 })
