@@ -56,6 +56,13 @@ html.dark .shiki span {
 :root {
   --ui-container: 90rem;
 }
+
+/* Shared by app.vue and error.vue: 64px base header + 48px sub-navigation bar */
+@media (min-width: 1024px) {
+  .docus-sub-header {
+    --ui-header-height: 112px;
+  }
+}
 ` + (userDocusPath ? `\n@import ${JSON.stringify(userDocusPath)};` : '')
       },
     })

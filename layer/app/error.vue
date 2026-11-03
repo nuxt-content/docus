@@ -4,6 +4,7 @@ import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import { uiLocales } from '#build/docus/ui-locales.mjs'
 import { getLocaleKey } from '../utils/locale'
 import { transformNavigation } from './utils/navigation'
+import { useSubNavigation } from './composables/useSubNavigation'
 
 const props = defineProps<{
   error: NuxtError
@@ -56,11 +57,16 @@ const { data: navigation } = await useAsyncData(`navigation_${collectionName.val
 })
 
 provide('navigation', navigation)
+
+const { subNavigationMode } = useSubNavigation(navigation)
 </script>
 
 <template>
   <UApp :locale="nuxtUiLocale">
-    <div class="flex flex-col min-h-svh">
+    <div
+      class="flex flex-col min-h-svh"
+      :class="{ 'docus-sub-header': subNavigationMode === 'header' }"
+    >
       <AppHeader />
 
       <UError

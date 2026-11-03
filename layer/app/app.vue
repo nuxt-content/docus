@@ -94,12 +94,3 @@ const { subNavigationMode } = useSubNavigation(navigation)
     </div>
   </UApp>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .docus-sub-header {
-    /* 64px base header + 48px sub-navigation bar */
-    --ui-header-height: 112px;
-  }
-}
-</style>
