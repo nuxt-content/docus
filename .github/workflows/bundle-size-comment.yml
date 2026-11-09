@@ -48,8 +48,8 @@ jobs:
           app-id: ${{ secrets.BUNDLE_REPORT_APP_ID }}
           private-key: ${{ secrets.BUNDLE_REPORT_APP_PRIVATE_KEY }}
           # What `comment --post` calls: it lists the open PRs, then creates or updates its comment.
-          permission-issues: write
-          permission-pull-requests: read
+          # On a PR, GitHub checks Pull requests for these calls, so `issues: write` alone answers 403.
+          permission-pull-requests: write
       - name: Comment on the PR
         run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" comment --runs runs --post --link "$LINK"
         env:
