@@ -17,9 +17,6 @@ export default createConfigForNuxt({
   ],
 }).append(
   {
-    ignores: ['scripts/bundle-size/**'],
-  },
-  {
     rules: {
       'vue/multi-word-component-names': 'off',
     },
