@@ -31,7 +31,7 @@
     "@ai-sdk/gateway": "^4.0.139",
     "@ai-sdk/mcp": "^2.0.93",
     "@ai-sdk/vue": "^4.0.166",
-    "@comark/vue": "^0.9.0",
+    "@comark/vue": "^0.7.0",
     "@iconify-json/lucide": "^1.2.152",
     "@iconify-json/simple-icons": "^1.2.101",
     "@iconify-json/vscode-icons": "^1.2.96",
