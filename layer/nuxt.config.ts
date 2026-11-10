@@ -89,6 +89,11 @@ export default defineNuxtConfig({
       // Don't generate observability routes for now
       vercel: '2025-07-14',
     },
+    externals: {
+      // `@nuxtjs/mdc` inlines `yaml`, so Nitro bundles a second copy next to the one `remark-mdc` loads.
+      // TODO: remove with the Nuxt Content v4 integration.
+      external: ['yaml'],
+    },
   },
   hooks: {
     'nitro:config'(nitroConfig) {
