@@ -9,6 +9,6 @@
     "ai": "^7.0.77",
     "better-sqlite3": "^12.5.0",
     "docus": "workspace:*",
-    "nuxt": "^4.6.0"
+    "nuxt": "4.6.3"
   }
 }
