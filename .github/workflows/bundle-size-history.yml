@@ -13,7 +13,11 @@ permissions:
 env:
   # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
   NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
-  NUXT_BUNDLE_ANALYZER_SHA: cb999552ea188661171b012de2f43e57d52ea688
+  NUXT_BUNDLE_ANALYZER_SHA: 3c75d8e860fb3cff86e3796efb59f26fc9a806a9
+  # The pages `--urls` renders, the same in `bundle-size.yml` and `bundle-size-history.yml`. Besides the landing page,
+  # they load the heaviest lazy prose components, such as images and code trees. English only, as the French pages
+  # load the same files.
+  NUXT_BUNDLE_ANALYZER_URLS: /en,/en/getting-started/installation,/en/essentials/components,/en/essentials/code-blocks,/en/essentials/images-embeds
   # The upload is the same in that version.
   NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
 
@@ -41,9 +45,8 @@ jobs:
           git checkout --quiet "$NUXT_BUNDLE_ANALYZER_SHA"
           pnpm install --frozen-lockfile
           pnpm build
-      # `bundle-prerender` picks the pages `--prerender` records.
       - name: Analyze the bundle
-        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --extends ./bundle-prerender --prerender --name main --no-serve
+        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --urls "$NUXT_BUNDLE_ANALYZER_URLS" --name main --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1

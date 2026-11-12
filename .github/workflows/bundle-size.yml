@@ -15,7 +15,11 @@ concurrency:
 env:
   # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
   NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
-  NUXT_BUNDLE_ANALYZER_SHA: cb999552ea188661171b012de2f43e57d52ea688
+  NUXT_BUNDLE_ANALYZER_SHA: 3c75d8e860fb3cff86e3796efb59f26fc9a806a9
+  # The pages `--urls` renders, the same in `bundle-size.yml` and `bundle-size-history.yml`. Besides the landing page,
+  # they load the heaviest lazy prose components, such as images and code trees. English only, as the French pages
+  # load the same files.
+  NUXT_BUNDLE_ANALYZER_URLS: /en,/en/getting-started/installation,/en/essentials/components,/en/essentials/code-blocks,/en/essentials/images-embeds
 
 jobs:
   # Analyzes the docs of the base and the PR side by side, compared and posted by `bundle-size-comment.yml`.
@@ -39,12 +43,6 @@ jobs:
           runtime: node@24
       - name: Prepare
         run: pnpm run dev:prepare
-      # Both runs prerender the pages this pull request lists, which the base may not have yet.
-      - name: Use the pull request's prerendered pages
-        if: matrix.target == 'base'
-        run: |
-          git fetch --quiet --depth=1 origin "$GITHUB_SHA"
-          git checkout "$GITHUB_SHA" -- docs/bundle-prerender
       - name: Build the analyzer
         run: |
           git clone --quiet "$NUXT_BUNDLE_ANALYZER_REPO" "$RUNNER_TEMP/nuxt-bundle-analyzer"
@@ -52,9 +50,8 @@ jobs:
           git checkout --quiet "$NUXT_BUNDLE_ANALYZER_SHA"
           pnpm install --frozen-lockfile
           pnpm build
-      # `bundle-prerender` picks the pages `--prerender` records.
       - name: Analyze the bundle
-        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --extends ./bundle-prerender --prerender --name ${{ matrix.target }} --no-serve
+        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --urls "$NUXT_BUNDLE_ANALYZER_URLS" --name ${{ matrix.target }} --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1
