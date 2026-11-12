@@ -13,7 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
+  # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
+  NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
+  NUXT_BUNDLE_ANALYZER_SHA: 64d9e0a65407ce7fd77c4c8581054264c7ab77ce
 
 jobs:
   # Analyzes the docs of the base and the PR side by side, compared and posted by `bundle-size-comment.yml`.
@@ -37,9 +39,22 @@ jobs:
           runtime: node@24
       - name: Prepare
         run: pnpm run dev:prepare
-      # With npx, so the analyzer needs no entry in the lockfile of either revision.
+      # Both runs prerender the pages this pull request lists, which the base may not have yet.
+      - name: Use the pull request's prerendered pages
+        if: matrix.target == 'base'
+        run: |
+          git fetch --quiet --depth=1 origin "$GITHUB_SHA"
+          git checkout "$GITHUB_SHA" -- docs/bundle-prerender
+      - name: Build the analyzer
+        run: |
+          git clone --quiet "$NUXT_BUNDLE_ANALYZER_REPO" "$RUNNER_TEMP/nuxt-bundle-analyzer"
+          cd "$RUNNER_TEMP/nuxt-bundle-analyzer"
+          git checkout --quiet "$NUXT_BUNDLE_ANALYZER_SHA"
+          pnpm install --frozen-lockfile
+          pnpm build
+      # `bundle-prerender` picks the pages `--prerender` records.
       - name: Analyze the bundle
-        run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" docs --extends ../layer --name ${{ matrix.target }} --no-serve
+        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --extends ./bundle-prerender --prerender --name ${{ matrix.target }} --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1

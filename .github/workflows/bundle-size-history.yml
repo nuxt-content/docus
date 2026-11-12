@@ -11,6 +11,10 @@ permissions:
   contents: read
 
 env:
+  # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
+  NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
+  NUXT_BUNDLE_ANALYZER_SHA: 64d9e0a65407ce7fd77c4c8581054264c7ab77ce
+  # The upload is the same in that version.
   NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
 
 jobs:
@@ -30,9 +34,16 @@ jobs:
           runtime: node@24
       - name: Prepare the commit
         run: pnpm run dev:prepare
-      # With npx, so the analyzer needs no entry in the lockfile.
+      - name: Build the analyzer
+        run: |
+          git clone --quiet "$NUXT_BUNDLE_ANALYZER_REPO" "$RUNNER_TEMP/nuxt-bundle-analyzer"
+          cd "$RUNNER_TEMP/nuxt-bundle-analyzer"
+          git checkout --quiet "$NUXT_BUNDLE_ANALYZER_SHA"
+          pnpm install --frozen-lockfile
+          pnpm build
+      # `bundle-prerender` picks the pages `--prerender` records.
       - name: Analyze the bundle
-        run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" docs --extends ../layer --name main --no-serve
+        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --extends ./bundle-prerender --prerender --name main --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1
