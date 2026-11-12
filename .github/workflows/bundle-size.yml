@@ -15,7 +15,7 @@ concurrency:
 env:
   # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
   NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
-  NUXT_BUNDLE_ANALYZER_SHA: 64d9e0a65407ce7fd77c4c8581054264c7ab77ce
+  NUXT_BUNDLE_ANALYZER_SHA: cb999552ea188661171b012de2f43e57d52ea688
 
 jobs:
   # Analyzes the docs of the base and the PR side by side, compared and posted by `bundle-size-comment.yml`.
