@@ -1,7 +1,13 @@
-// The pages the bundle size workflows prerender with `--prerender --extends ./bundle-prerender`,
-// to measure what their HTML preloads: the landing page and two docs pages, in English only, as
-// the French pages load the same files.
-const urls = ['/en', '/en/getting-started/installation', '/en/essentials/components']
+// The pages the bundle size workflows prerender with `--prerender --extends ./bundle-prerender`.
+// Besides the landing page, they load the heaviest lazy prose components, such as images and code trees.
+// English only, as the French pages load the same files.
+const urls = [
+  '/en',
+  '/en/getting-started/installation',
+  '/en/essentials/components',
+  '/en/essentials/code-blocks',
+  '/en/essentials/images-embeds',
+]
 
 export default defineNuxtConfig({
   nitro: {
