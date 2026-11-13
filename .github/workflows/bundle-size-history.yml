@@ -11,15 +11,11 @@ permissions:
   contents: read
 
 env:
-  # The analyzer from atinux/nuxt-bundle-analyzer#27, which records prerendered pages, until it is released.
-  NUXT_BUNDLE_ANALYZER_REPO: https://github.com/larbish/nuxt-bundle-analyzer
-  NUXT_BUNDLE_ANALYZER_SHA: d0205866ea08e082a78124910d2947a61f134e10
   # The pages `--urls` renders, the same in `bundle-size.yml` and `bundle-size-history.yml`. Besides the landing page,
   # they load the heaviest lazy prose components, such as images and code trees. English only, as the French pages
   # load the same files.
   NUXT_BUNDLE_ANALYZER_URLS: /en,/en/getting-started/installation,/en/essentials/components,/en/essentials/code-blocks,/en/essentials/images-embeds
-  # The upload is the same in that version.
-  NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
+  NUXT_BUNDLE_ANALYZER_VERSION: 0.2.0
 
 jobs:
   analyze:
@@ -38,15 +34,9 @@ jobs:
           runtime: node@24
       - name: Prepare the commit
         run: pnpm run dev:prepare
-      - name: Build the analyzer
-        run: |
-          git clone --quiet "$NUXT_BUNDLE_ANALYZER_REPO" "$RUNNER_TEMP/nuxt-bundle-analyzer"
-          cd "$RUNNER_TEMP/nuxt-bundle-analyzer"
-          git checkout --quiet "$NUXT_BUNDLE_ANALYZER_SHA"
-          pnpm install --frozen-lockfile
-          pnpm build
+      # With npx, so the analyzer needs no entry in the lockfile.
       - name: Analyze the bundle
-        run: node "$RUNNER_TEMP/nuxt-bundle-analyzer/dist/cli.mjs" docs --extends ../layer --urls "$NUXT_BUNDLE_ANALYZER_URLS" --name main --no-serve
+        run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" docs --extends ../layer --urls "$NUXT_BUNDLE_ANALYZER_URLS" --name main --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1
