@@ -1,5 +1,5 @@
 import { defineMarkdownComponent } from '@comark/vue'
-import highlight from '@comark/vue/plugins/highlight'
+import highlight from '@comark/vue/plugins/shiki'
 
 export default defineMarkdownComponent({
   name: 'AssistantComark',

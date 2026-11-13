@@ -5,10 +5,10 @@
     "build": "nuxt build --extends docus"
   },
   "dependencies": {
-    "@ai-sdk/mistral": "^4.0.33",
-    "ai": "^7.0.77",
+    "@ai-sdk/mistral": "^4.0.86",
+    "ai": "^7.0.172",
     "better-sqlite3": "^12.5.0",
     "docus": "workspace:*",
-    "nuxt": "^4.6.0"
+    "nuxt": "^4.6.4"
   }
 }
