@@ -16,7 +16,7 @@ permissions:
   id-token: write
 
 env:
-  NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
+  NUXT_BUNDLE_ANALYZER_VERSION: 0.2.0
 
 jobs:
   comment:

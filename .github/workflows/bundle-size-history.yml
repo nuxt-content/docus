@@ -11,7 +11,11 @@ permissions:
   contents: read
 
 env:
-  NUXT_BUNDLE_ANALYZER_VERSION: 0.1.7
+  # The pages `--urls` renders, the same in `bundle-size.yml` and `bundle-size-history.yml`. Besides the landing page,
+  # they load the heaviest lazy prose components, such as images and code trees. English only, as the French pages
+  # load the same files.
+  NUXT_BUNDLE_ANALYZER_URLS: /en,/en/getting-started/installation,/en/essentials/components,/en/essentials/code-blocks,/en/essentials/images-embeds
+  NUXT_BUNDLE_ANALYZER_VERSION: 0.2.0
 
 jobs:
   analyze:
@@ -32,7 +36,7 @@ jobs:
         run: pnpm run dev:prepare
       # With npx, so the analyzer needs no entry in the lockfile.
       - name: Analyze the bundle
-        run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" docs --extends ../layer --name main --no-serve
+        run: npx --yes "nuxt-bundle-analyzer@$NUXT_BUNDLE_ANALYZER_VERSION" docs --extends ../layer --urls "$NUXT_BUNDLE_ANALYZER_URLS" --name main --no-serve
         env:
           NODE_OPTIONS: --max-old-space-size=8192
           NUXT_TELEMETRY_DISABLED: 1
