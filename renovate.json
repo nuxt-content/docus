@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>nuxt/renovate-config-nuxt"
+  ],
+  "minimumReleaseAge": "2 days",
+  "packageRules": [
+    {
+      "description": "Mirror minimumReleaseAgeExclude from pnpm-workspace.yaml",
+      "matchPackageNames": ["@nuxt/**", "@nuxtjs/**", "nuxt", "nuxt-*", "@vercel/**", "@ai-sdk/**", "ai", "comark"],
+      "minimumReleaseAge": "0"
+    },
+    {
+      "description": "h3 is pinned through pnpm overrides",
+      "matchPackageNames": ["h3"],
+      "enabled": false
+    }
+  ]
+}
