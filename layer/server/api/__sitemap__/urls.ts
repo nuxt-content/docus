@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { tables } from '#content/manifest'
 import { getLocaleKey } from '../../../utils/locale'
 import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../../utils/content'
 
@@ -26,7 +27,8 @@ export default defineSitemapEventHandler(async (event) => {
   const urls: Array<{ loc: string, lastmod?: string }> = []
 
   for (const collection of collections) {
-    // Collection might not exist, skip it
+    if (!Object.hasOwn(tables, collection)) continue
+
     const pages = await (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Page[]> })(event, collection).all().catch(() => [] as Page[])
 
     for (const page of pages) {
