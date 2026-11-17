@@ -109,6 +109,12 @@ declare module '@nuxt/schema' {
         brandAssetsUrl?: string
       }
     }
+    navigation?: {
+      /**
+       * Sub-navigation for multi-section docs: `header` adds a tab bar below the header, `aside` adds section anchors at the top of the sidebar.
+       */
+      sub?: 'header' | 'aside'
+    }
     socials: Record<string, string>
     toc: {
       title: string

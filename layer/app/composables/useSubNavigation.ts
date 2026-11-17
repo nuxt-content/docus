@@ -17,7 +17,7 @@ export function useSubNavigation(providedNavigation?: Ref<ContentNavigationItem[
 
   const subNavigationMode = computed(() => {
     if (!isDocsPage.value) return undefined
-    return (appConfig.navigation as { sub?: 'header' | 'aside' } | undefined)?.sub
+    return appConfig.navigation?.sub
   })
 
   const currentSection = computed(() => {
