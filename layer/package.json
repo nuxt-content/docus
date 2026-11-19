@@ -68,7 +68,7 @@
     "zod-to-json-schema": "^3.25.2"
   },
   "peerDependencies": {
-    "better-sqlite3": "12.x",
+    "better-sqlite3": "12.x || 13.x",
     "nuxt": "4.x"
   }
 }
