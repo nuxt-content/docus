@@ -18,7 +18,7 @@ A Nuxt module that provides an AI-powered chat interface using MCP (Model Contex
 2. Install the required dependencies:
 
 ```bash
-pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai shiki shiki-stream
+pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai @comark/vue shiki
 ```
 
 3. Add the module to your `nuxt.config.ts`:
@@ -199,10 +199,6 @@ const {
   clearPending,   // () => void
 } = useAssistant()
 ```
-
-### `useHighlighter`
-
-Composable for syntax highlighting code blocks with Shiki.
 
 ## Requirements
 

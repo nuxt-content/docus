@@ -315,21 +315,6 @@ importers:
       '@nuxtjs/sitemap':
         specifier: ^9.1.0
         version: 9.1.0(7bcc82ef88544bd74caf9ca759c75328)
-      '@shikijs/core':
-        specifier: ^4.6.0
-        version: 4.6.0
-      '@shikijs/engine-javascript':
-        specifier: ^4.6.0
-        version: 4.6.0
-      '@shikijs/langs':
-        specifier: ^4.6.0
-        version: 4.6.0
-      '@shikijs/stream':
-        specifier: ^4.6.0
-        version: 4.6.0(vue@3.5.45(typescript@6.0.3))
-      '@shikijs/themes':
-        specifier: ^4.6.0
-        version: 4.6.0
       '@takumi-rs/core':
         specifier: ^2.20.0
         version: 2.20.0(csstype@3.2.4)
@@ -3056,24 +3041,6 @@ packages:
   '@shikijs/primitive@4.6.0':
     resolution: {integrity: sha512-c54+TQEo9ToqgfL/AU8FpjnV09+GA9Oa7M5ROkkXteZfp5XzpAJGXjjvZQFQioJOwm/w/6Z3lIzQstAkl8coag==}
     engines: {node: '>=20'}
-
-  '@shikijs/stream@4.6.0':
-    resolution: {integrity: sha512-iJLx6hgvlLBVYwz2G10jenDdloQHML76fHSzz/ErccRhKAKoi+dvb8NjMV+sQMNHWvmMRvIo/iXTfDbuTnp8Ng==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      react: ^19.0.0
-      solid-js: ^1.9.0
-      svelte: ^5.0.0-0
-      vue: ^3.2.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      solid-js:
-        optional: true
-      svelte:
-        optional: true
-      vue:
-        optional: true
 
   '@shikijs/themes@4.6.0':
     resolution: {integrity: sha512-qHAVAs80RiGD+IRuH9G+JPDOEc9A/kHsng4EzCUCwB9bLzW6Z0y9WETh2YyCcADJBmfrIaJ1Jp7KBNP6FHkgtQ==}
@@ -12891,12 +12858,6 @@ snapshots:
       '@shikijs/types': 4.6.0
       '@shikijs/vscode-textmate': 10.1.0
       '@types/hast': 3.0.5
-
-  '@shikijs/stream@4.6.0(vue@3.5.45(typescript@6.0.3))':
-    dependencies:
-      '@shikijs/core': 4.6.0
-    optionalDependencies:
-      vue: 3.5.45(typescript@6.0.3)
 
   '@shikijs/themes@4.6.0':
     dependencies:
