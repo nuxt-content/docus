@@ -6,7 +6,8 @@ packages:
   - playground
 
 overrides:
-  h3: 1.15.11
+  # devframe (via @nuxt/fonts) needs h3 v2.
+  h3@1: 1.15.11
   ai: ^7.0.177
   '@ai-sdk/vue': ^4.0.177
   '@ai-sdk/gateway': ^4.0.150

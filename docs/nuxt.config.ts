@@ -10,6 +10,12 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2025-07-18',
+  vite: {
+    optimizeDeps: {
+      // Imported by `AssistantDemo.vue` and the Vercel plugin, found too late by Vite's scan.
+      include: ['@ai-sdk/vue', 'ai', '@vercel/analytics', '@vercel/speed-insights'],
+    },
+  },
   agentDiscovery: {
     excludePrefixes: {
       // Nuxt Studio, a Vue page tree with no markdown twin

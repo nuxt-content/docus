@@ -1,0 +1,2 @@
+# Dev-only (not published): gives nuxt-llms a domain when preparing the layer alone
+site.url=https://docus.dev
