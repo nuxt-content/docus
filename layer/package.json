@@ -69,6 +69,6 @@
   },
   "peerDependencies": {
     "better-sqlite3": "12.x",
-    "nuxt": "4.x"
+    "nuxt": "4.6.4"
   }
 }
