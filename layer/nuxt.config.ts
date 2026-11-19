@@ -36,6 +36,8 @@ export default defineNuxtConfig({
         config.optimizeDeps ||= {}
         config.optimizeDeps.include ||= []
         config.optimizeDeps.include.push('@nuxt/content > slugify')
+        // `AssistantComark` is always registered, so Vite otherwise finds these on first render and reloads the page.
+        config.optimizeDeps.include.push('docus > @comark/vue', 'docus > @comark/vue/plugins/shiki')
         config.optimizeDeps.include = config.optimizeDeps.include
           .map(id => id.replace(/^@nuxt\/content > /, 'docus > @nuxt/content > '))
 
