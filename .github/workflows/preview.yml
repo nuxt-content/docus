@@ -23,7 +23,7 @@ jobs:
     steps:
       # Test the code that was deployed, not the default branch.
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.deployment.sha }}
 
