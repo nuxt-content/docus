@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { extendViteConfig, createResolver, useNuxt } from '@nuxt/kit'
+import { createResolver, useNuxt } from '@nuxt/kit'
 import { getLocaleRedirect } from './utils/locale'
 
 const { resolve } = createResolver(import.meta.url)
@@ -30,51 +30,17 @@ export default defineNuxtConfig({
     'nuxt-schema-org',
     'nuxt-og-image',
     'nuxt-llms',
-    () => {
-      // Update @nuxt/content optimizeDeps options
-      extendViteConfig((config) => {
-        config.optimizeDeps ||= {}
-        config.optimizeDeps.include ||= []
-        config.optimizeDeps.include.push('@nuxt/content > slugify')
-        // `AssistantComark` is always registered, so Vite otherwise finds these on first render and reloads the page.
-        config.optimizeDeps.include.push('docus > @comark/vue', 'docus > @comark/vue/plugins/shiki')
-        config.optimizeDeps.include = config.optimizeDeps.include
-          .map(id => id.replace(/^@nuxt\/content > /, 'docus > @nuxt/content > '))
-
-        // Fix @vercel/oidc ESM export issue (transitive dep of @ai-sdk/gateway)
-        // Only needed when AI assistant is enabled.
-        if (process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN) {
-          config.optimizeDeps.include.push('@vercel/oidc')
-          config.optimizeDeps.include = config.optimizeDeps.include.map(id =>
-            id.replace(/^@vercel\/oidc$/, 'docus > @vercel/oidc'),
-          )
-        }
-      })
-    },
   ],
   devtools: {
     enabled: true,
   },
   content: {
-    experimental: { sqliteConnector: 'native' },
     build: {
       markdown: {
         highlight: {
           langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml'],
         },
-        remarkPlugins: {
-          'remark-mdc': {
-            options: {
-              autoUnwrap: true,
-            },
-          },
-        },
       },
-    },
-  },
-  mdc: {
-    highlight: {
-      shikiEngine: 'javascript',
     },
   },
   experimental: {
@@ -90,11 +56,6 @@ export default defineNuxtConfig({
     compatibilityDate: {
       // Don't generate observability routes for now
       vercel: '2025-07-14',
-    },
-    externals: {
-      // `@nuxtjs/mdc` inlines `yaml`, so Nitro bundles a second copy next to the one `remark-mdc` loads.
-      // TODO: remove with the Nuxt Content v4 integration.
-      external: ['yaml'],
     },
   },
   hooks: {
