@@ -6,6 +6,13 @@ packages:
   - playground
 
 overrides:
+  # Nuxt Content v4 isn't on npm yet: `feat/docus-edge` of nuxt/content-v4-temp, which is `v4` with #53, #54 and #55.
+  '@nuxt/content': https://pkg.pr.new/nuxt/content-v4-temp/@nuxt/content4@0acf606
+  # nuxt/content-v4-temp#53 needs the `external-links` plugin of comark 0.10.0, which isn't released yet.
+  comark: https://pkg.pr.new/comarkdown/comark/comark@74ba41b
+  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@74ba41b
+  # 0.8.2 refuses Nuxt Content v4: latest build of benjamincanac/nuxt-agent-discovery#61.
+  nuxt-agent-discovery: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145
   # devframe (via @nuxt/fonts) needs h3 v2.
   h3@1: 1.15.11
   ai: ^7.0.177
@@ -21,8 +28,10 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - '@vercel/speed-insights'
-  - better-sqlite3
   - sharp
+
+# The overrides above are pkg.pr.new tarballs.
+blockExoticSubdeps: false
 
 minimumReleaseAge: 2880
 
@@ -42,7 +51,6 @@ minimumReleaseAgeExclude:
 
 allowBuilds:
   '@parcel/watcher': false
-  better-sqlite3: true
   esbuild: false
   sharp: true
   unrs-resolver: false
