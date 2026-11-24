@@ -3,9 +3,6 @@ export default defineAppConfig({
     locale: 'en',
     colorMode: '',
   },
-  search: {
-    fts: false,
-  },
   ui: {
     colors: {
       primary: 'emerald',

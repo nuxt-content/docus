@@ -11,6 +11,13 @@ overrides:
   ai: ^7.0.181
   '@ai-sdk/vue': ^4.0.181
   '@ai-sdk/gateway': ^4.0.154
+  # Nuxt Content v4 isn't on npm yet: latest `v4` of nuxt/content.
+  '@nuxt/content': https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a
+  # Comark `main` until comark 0.10.0 is released.
+  comark: https://pkg.pr.new/comarkdown/comark/comark@9f43d25
+  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@9f43d25
+  # 0.8.3 refuses Nuxt Content v4: latest build of benjamincanac/nuxt-agent-discovery#61.
+  nuxt-agent-discovery: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'
@@ -21,7 +28,6 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - '@vercel/speed-insights'
-  - better-sqlite3
   - sharp
 
 minimumReleaseAge: 2880
@@ -46,11 +52,14 @@ minimumReleaseAgeExclude:
   # Comark
   - 'comark'
   - '@comark/*'
+  - 'comark-content'
 
 allowBuilds:
   '@parcel/watcher': false
-  better-sqlite3: true
   esbuild: false
   sharp: true
   unrs-resolver: false
   vue-demi: false
+
+# The overrides above are pkg.pr.new tarballs.
+blockExoticSubdeps: false

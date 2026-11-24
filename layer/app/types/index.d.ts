@@ -1,13 +1,23 @@
-import type { Collections } from '@nuxt/content'
+import type { ContentFile } from 'comark-content'
+import type { z } from 'zod'
+import type { docsSchema } from '../../utils/schema'
 import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
 export type { FaqCategory, FaqQuestions, LocalizedFaqQuestions } from '../../modules/assistant/runtime/types'
 
 /**
- * A docs page, from `docs` or from the `docs_<locale>` collections when i18n is enabled.
- * `DocsCollectionItem` only exists without i18n.
+ * A page of the `docs` content source, docs and landing pages alike.
+ * `meta.title` and `meta.description` are the leading h1 and paragraph.
  */
-export type DocsPage = Collections[Extract<keyof Collections, 'docs' | `docs_${string}`>]
+export type DocsPage = ContentFile<z.infer<typeof docsSchema>, { title?: string, description?: string, toc?: { links: DocsTocLink[] } }>
+
+/** A heading in `meta.toc`, from Comark's `toc` plugin. */
+export interface DocsTocLink {
+  id: string
+  text: string
+  depth: number
+  children?: DocsTocLink[]
+}
 
 /**
  * An organization behind the site, emitted as a JSON-LD `Organization` node.
@@ -137,11 +147,9 @@ declare module '@nuxt/schema' {
     } | false
     search: {
       /**
-       * Use SQLite FTS5 full-text search instead of Fuse.js.
-       * Requires @nuxt/content v3.14+.
-       * @default false
+       * @deprecated Search always runs SQLite FTS5 in a web worker. Setting it logs a warning.
        */
-      fts: boolean
+      fts?: boolean
     }
     assistant?: {
       /**

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
-import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import { uiLocales } from '#build/docus/ui-locales.mjs'
 import { getLocaleKey } from '../utils/locale'
 import { transformNavigation } from './utils/navigation'
@@ -49,12 +48,9 @@ if (isEnabled.value) {
   })
 }
 
-const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')
-
-const { data: navigation } = await useAsyncData(`navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),
-  watch: [locale],
-})
+// One tree for every locale, so switching locale reuses it instead of fetching from the server
+const { data: contentNavigation } = await useAsyncData('navigation', () => content.navigation())
+const navigation = computed(() => contentNavigation.value ? transformNavigation(contentNavigation.value, isEnabled.value, locale.value) : undefined)
 
 provide('navigation', navigation)
 

@@ -7,22 +7,41 @@ export const flattenNavigation = (items?: ContentNavigationItem[]): ContentNavig
 ) || []
 
 /**
- * Transform navigation data by stripping locale and docs levels
+ * Transform navigation data by stripping locale and docs levels, and the landing page
  */
 export function transformNavigation(
   data: ContentNavigationItem[],
   isI18nEnabled: boolean,
   locale?: string,
 ): ContentNavigationItem[] {
-  if (isI18nEnabled && locale) {
-    // i18n: first strip locale level, then check for docs level
-    const localeResult = data.find(item => item.path === `/${locale}`)?.children || data
-    return localeResult.find(item => item.path === `/${locale}/docs`)?.children || localeResult
-  }
-  else {
-    // non-i18n: strip docs level if exists
-    return data.find(item => item.path === '/docs')?.children || data
-  }
+  const root = isI18nEnabled && locale ? `/${locale}` : ''
+  const localeResult = root ? data.find(item => item.path === root)?.children || data : data
+  const items = localeResult.find(item => item.path === `${root}/docs`)?.children || localeResult
+
+  // The landing page shares the docs source but isn't a docs page
+  return items.filter(item => item.path !== (root || '/'))
+}
+
+/**
+ * Previous and next pages in reading order. A folder is skipped when it has no page or lists its own index.
+ */
+export function findSurround(
+  navigation: ContentNavigationItem[] | undefined,
+  path: string,
+): [ContentNavigationItem | null, ContentNavigationItem | null] {
+  const flatten = (items: ContentNavigationItem[]): ContentNavigationItem[] => items.flatMap((item) => {
+    const children = item.children ? flatten(item.children) : []
+    if (item.page === false || children.some(child => child.path === item.path)) {
+      return children
+    }
+    return [{ ...item, children: undefined }, ...children]
+  })
+
+  const pages = flatten(navigation || [])
+  const index = pages.findIndex(item => item.path === path)
+  if (index === -1) return [null, null]
+
+  return [pages[index - 1] || null, pages[index + 1] || null]
 }
 
 export interface BreadcrumbItem {

@@ -6,7 +6,7 @@ const props = defineProps<{
   page?: DocsPage | null
 }>()
 
-const links = computed(() => props.page?.body?.toc?.links || [])
+const links = computed(() => props.page?.meta.toc?.links || [])
 
 const { subNavigationMode } = useSubNavigation()
 const appConfig = useAppConfig()

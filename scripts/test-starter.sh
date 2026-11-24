@@ -36,6 +36,12 @@ cd "$work/app"
 
 echo "› Installing the packed layer"
 npm pkg set "dependencies.docus=file:$tarball"
+# Same edge packages as the pnpm overrides in `pnpm-workspace.yaml`, until Nuxt Content v4 is on npm.
+npm pkg set \
+  "overrides.@nuxt/content=https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a" \
+  "overrides.comark=https://pkg.pr.new/comarkdown/comark/comark@9f43d25" \
+  "overrides.@comark/vue=https://pkg.pr.new/comarkdown/comark/@comark/vue@9f43d25" \
+  "overrides.nuxt-agent-discovery=https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145"
 npm install --no-audit --no-fund
 npm install --save-dev --no-audit --no-fund typescript vue-tsc
 

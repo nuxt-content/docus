@@ -83,6 +83,25 @@ describe(`smoke: ${siteURL.href} (${target})`, () => {
       expect(await res.text()).toMatch(/^# /)
     })
 
+    it('lists each locale, landing page included, in one llms.txt section', async ({ skip }) => {
+      if (!page.locale) skip('i18n is not enabled')
+
+      const sections = new Map<string, string>()
+      let heading = ''
+      for (const line of (await (await request('/llms.txt')).text()).split('\n')) {
+        heading = line.match(/^## (.+)/)?.[1] ?? heading
+        const path = line.match(/^- \[.*\]\([^)]*\/raw(\/[^)\s]*)\.md\)/)?.[1]
+        if (path) sections.set(path, heading)
+      }
+
+      const pages = await listPages()
+      for (const locale of new Set(pages.map(p => p.locale))) {
+        const paths = [`/${locale}`, ...pages.filter(p => p.locale === locale).map(p => p.path)]
+        expect(new Set(paths.map(path => sections.get(path))), locale).toEqual(new Set([sections.get(`/${locale}`)]))
+        expect(sections.get(`/${locale}`), locale).toBeTruthy()
+      }
+    })
+
     it('serves sitemap.md', async () => {
       const res = await request('/sitemap.md')
       expect(res.status).toBe(200)
@@ -110,7 +129,7 @@ describe(`smoke: ${siteURL.href} (${target})`, () => {
         locs.push(...sitemapLocs(await res.text()))
       }
 
-      expect(locs.length).toBeGreaterThan(0)
+      expect(locs.map(loc => new URL(loc).pathname)).toContain(url(page.path).pathname)
       for (const loc of locs) {
         expect(loc).toMatch(/^https?:\/\//)
         if (canonicalSiteURL) expect(new URL(loc).origin).toBe(canonicalSiteURL.origin)

@@ -1,49 +1,23 @@
-import { queryCollection } from '@nuxt/content/server'
-import { getLocaleKey } from '../../../utils/locale'
-import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../../utils/content'
-
-type Page = Record<string, unknown> & { path?: string, meta?: Record<string, unknown> }
+import type { ContentListFile } from 'comark-content'
+import type { z } from 'zod'
+import type { docsSchema } from '../../../utils/schema'
+import { content } from '#imports'
+import { isNavigationPath } from '../../utils/content'
 
 /**
  * Every content page, for `@nuxtjs/sitemap`. Content is the single source of
  * truth here: the prerendered routes are excluded, so a page opting out with
  * `sitemap: false` in its frontmatter stays out.
  */
-export default defineSitemapEventHandler(async (event) => {
-  const config = useRuntimeConfig(event)
-  const availableLocales = getAvailableLocales(config.public as Record<string, unknown>)
-  const collections = getCollectionsToQuery(undefined, availableLocales)
+export default defineSitemapEventHandler(async () => {
+  // `content` is typed as an instance or a hub, whose `list()` signatures don't combine
+  const files = await (content as unknown as { list: () => Promise<ContentListFile<z.infer<typeof docsSchema>>[]> }).list()
 
-  if (availableLocales.length > 0) {
-    for (const locale of availableLocales) {
-      collections.push(`landing_${getLocaleKey(locale)}`)
-    }
-  }
-  else {
-    collections.push('landing')
-  }
-
-  const urls: Array<{ loc: string, lastmod?: string }> = []
-
-  for (const collection of collections) {
-    // Collection might not exist, skip it
-    const pages = await (queryCollection as unknown as (event: unknown, collection: string) => { all: () => Promise<Page[]> })(event, collection).all().catch(() => [] as Page[])
-
-    for (const page of pages) {
-      const meta = page.meta || {}
-      const path = page.path || '/'
-
-      if (meta.sitemap === false || isNavigationPath(path)) {
-        continue
-      }
-
-      urls.push({
-        loc: path,
-        // Date part only (YYYY-MM-DD)
-        lastmod: typeof meta.modifiedAt === 'string' ? meta.modifiedAt.split('T')[0] : undefined,
-      })
-    }
-  }
-
-  return urls
+  return files
+    .filter(file => file.meta.kind === 'document' && file.meta.extension === 'md' && !isNavigationPath(file.path) && file.data?.sitemap !== false)
+    .map(file => ({
+      loc: file.path,
+      // Date part only (YYYY-MM-DD)
+      lastmod: typeof file.data?.modifiedAt === 'string' ? file.data.modifiedAt.split('T')[0] : undefined,
+    }))
 })
