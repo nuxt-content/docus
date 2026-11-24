@@ -12,7 +12,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
     "docus": "workspace:*",
-    "nuxt": "4.6.4",
+    "nuxt": "4.7.0",
     "nuxt-studio": "^1.8.2",
     "tailwindcss": "^4.3.5"
   },

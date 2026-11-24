@@ -10,6 +10,6 @@
     "ai": "^7.0.177",
     "better-sqlite3": "^13.2.0",
     "docus": "workspace:*",
-    "nuxt": "^4.6.4"
+    "nuxt": "^4.7.0"
   }
 }
