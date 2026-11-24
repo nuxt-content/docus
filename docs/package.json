@@ -7,17 +7,17 @@
     "dev": "nuxt dev"
   },
   "dependencies": {
-    "@nuxt/ui": "^4.13.0",
+    "@nuxt/ui": "^4.13.1",
     "@nuxtjs/i18n": "^10.6.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
     "docus": "workspace:*",
-    "nuxt": "4.6.4",
+    "nuxt": "4.7.0",
     "nuxt-studio": "^1.8.2",
     "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
-    "@ai-sdk/vue": "^4.0.177",
-    "ai": "^7.0.177"
+    "@ai-sdk/vue": "^4.0.181",
+    "ai": "^7.0.181"
   }
 }
