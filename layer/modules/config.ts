@@ -59,7 +59,7 @@ export default defineNuxtModule({
     // `version` feeds the OpenAPI document, `filteredLocales` is filled in by the i18n block below
     nuxt.options.runtimeConfig.public.docus = defu(nuxt.options.runtimeConfig.public.docus, {
       version: meta.version || '0.0.0',
-      filteredLocales: [] as I18nLocale[],
+      filteredLocales: [] as Exclude<I18nLocale, string>[],
     })
 
     nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github, {
