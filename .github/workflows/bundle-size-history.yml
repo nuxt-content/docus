@@ -31,7 +31,7 @@ jobs:
         with:
           cache: true
           cache-dependency-path: pnpm-lock.yaml
-          runtime: node@24
+          runtime: node@24.22.3
       - name: Prepare the commit
         run: pnpm run dev:prepare
       # With npx, so the analyzer needs no entry in the lockfile.
