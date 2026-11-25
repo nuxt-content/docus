@@ -102,7 +102,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 24.22.3
           cache: pnpm
 
       - name: Install dependencies
@@ -161,7 +161,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 24.22.3
           package-manager-cache: false
 
       - name: Fail on prerender errors
