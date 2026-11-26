@@ -13,9 +13,9 @@ overrides:
   '@ai-sdk/gateway': ^4.0.154
   # Nuxt Content v4 isn't on npm yet: latest `v4` of nuxt/content.
   '@nuxt/content': https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a
-  # Comark `main` until comark 0.10.0 is released.
-  comark: https://pkg.pr.new/comarkdown/comark/comark@9f43d25
-  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@9f43d25
+  # comarkdown/comark#632 keeps the parser out of `<ContentDocument>`'s chunk, until comark 0.10.0 is released.
+  comark: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2
+  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2
   # 0.8.3 refuses Nuxt Content v4: latest build of benjamincanac/nuxt-agent-discovery#61.
   nuxt-agent-discovery: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145
 
