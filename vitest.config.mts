@@ -20,6 +20,15 @@ export default defineConfig({
           hookTimeout: 60_000,
         },
       },
+      {
+        test: {
+          name: 'dev',
+          include: ['test/dev/**/*.test.ts'],
+          environment: 'node',
+          // Cold-starts `nuxt dev` on the playground.
+          testTimeout: 180_000,
+        },
+      },
     ],
   },
 })

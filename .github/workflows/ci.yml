@@ -59,6 +59,9 @@ jobs:
       - name: Unit tests
         run: pnpm run test
 
+      - name: Dev server tests
+        run: pnpm run test:dev
+
       - name: Build CLI
         run: pnpm run build
         working-directory: ./cli
@@ -102,7 +105,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 24.22.3
           cache: pnpm
 
       - name: Install dependencies
@@ -161,7 +164,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 24.22.3
           package-manager-cache: false
 
       - name: Fail on prerender errors
