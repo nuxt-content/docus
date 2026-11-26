@@ -186,9 +186,10 @@ overrides:
   ai: ^7.0.181
   '@ai-sdk/vue': ^4.0.181
   '@ai-sdk/gateway': ^4.0.154
-  '@nuxt/content': https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a
-  comark: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2
-  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2
+  '@nuxt/content': https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56
+  comark-content: https://pkg.pr.new/comark-content@ec7a084
+  comark: https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a
+  '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a
   nuxt-agent-discovery: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145
 
 importers:
@@ -288,8 +289,8 @@ importers:
         specifier: ^4.0.181
         version: 4.0.181(vue@3.5.46(typescript@6.0.3))(zod@4.6.7)
       '@comark/vue':
-        specifier: https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2
-        version: https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))
+        specifier: https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a
+        version: https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))
       '@iconify-json/lucide':
         specifier: ^1.2.158
         version: 1.2.158
@@ -300,8 +301,8 @@ importers:
         specifier: ^1.2.100
         version: 1.2.100
       '@nuxt/content':
-        specifier: https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a
-        version: '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
+        specifier: https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56
+        version: '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
       '@nuxt/image':
         specifier: ^2.2.1
         version: 2.2.1(@nuxt/schema@4.7.0)(@types/node@26.6.6)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))
@@ -310,7 +311,7 @@ importers:
         version: 4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))
       '@nuxt/ui':
         specifier: ^4.13.1
-        version: 4.13.1(9712f5f7bc223c63187cbb66bafc0a52)
+        version: 4.13.1(2ab0aac76e2b0bc5e973763ea19e97c3)
       '@nuxtjs/i18n':
         specifier: ^10.6.0
         version: 10.6.0(@nuxt/schema@4.7.0)(db0@0.3.4(better-sqlite3@13.2.0))(dotenv@17.4.2)(esbuild@0.28.2)(giget@3.3.1)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(rolldown@1.2.19)(rollup@4.68.8)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(vue@3.5.46(typescript@6.0.3))
@@ -336,8 +337,8 @@ importers:
         specifier: ^7.0.181
         version: 7.0.181(zod@4.6.7)
       comark-content:
-        specifier: ^0.6.3
-        version: 0.6.3(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))
+        specifier: https://pkg.pr.new/comark-content@ec7a084
+        version: https://pkg.pr.new/comark-content@ec7a084(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))
       defu:
         specifier: ^6.1.7
         version: 6.1.7
@@ -355,7 +356,7 @@ importers:
         version: 4.7.0(e8c462a1aa8c88642a37a83121048aa6)
       nuxt-agent-discovery:
         specifier: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145
-        version: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145(f375edee8dc1e7e595c2a3410602350b)
+        version: https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145(9036f15b65653c8e214a56e17bf18d2e)
       nuxt-llms:
         specifier: ^0.3.2
         version: 0.3.2(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))
@@ -621,8 +622,8 @@ packages:
   '@colordx/core@7.3.0':
     resolution: {integrity: sha512-LVzTTPhX7wpy7TkGjouA9zbbCBIw92RGm7ZQqSKFE0oYE3sMx2FGXz90eVpgw7k/+wrrY+qJ86nHXifZWMS5jA==}
 
-  '@comark/vue@https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2':
-    resolution: {integrity: sha512-48Sd0Yzo0Rn0727DWrbAh2axiVGMD0dCA+sDBuwZxZGuIsI0y8ZhWeVIM3/AV22VkNDZ43jx+z/x+4MjzkWhdw==, tarball: https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2}
+  '@comark/vue@https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a':
+    resolution: {integrity: sha512-vAmb43qcJcnRkYoxUPJsSkfNOhAAlNk9SBv3rFTH3IsWUqA5zP4NMFBBFJhE07QTYOqoj1zmQTmPjEzPtPjS9A==, tarball: https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a}
     version: 0.9.2
     peerDependencies:
       '@nuxt/kit': ^4.6.3
@@ -1505,8 +1506,8 @@ packages:
       serve:
         optional: true
 
-  '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a':
-    resolution: {integrity: sha512-XOiYfst/dWZzcq+8apfefC1ydylGG0qJRlcQ+78D/6RjzalauOcg/9lCAAaPiDfjHcF92SVthnrHwlYW3HEZYg==, tarball: https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a}
+  '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56':
+    resolution: {integrity: sha512-wCCuVnMfN++WM/BrNo/Jl/EljdZTkQuWG4ey/8KBb0kQChveB8ucqo6X9kZSSFx9El5QB6rljCUEF2f6Hw6dQg==, tarball: https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56}
     version: 4.0.0
     peerDependencies:
       shiki: ^4.3.1
@@ -4025,8 +4026,9 @@ packages:
   colortranslator@5.0.0:
     resolution: {integrity: sha512-Z3UPUKasUVDFCDYAjP2fmlVRf1jFHJv1izAmPjiOa0OCIw1W7iC8PZ2GsoDa8uZv+mKyWopxxStT9q05+27h7w==}
 
-  comark-content@0.6.3:
-    resolution: {integrity: sha512-AgQOrcmkymyu4PMaDBc97bvmIiZ7DAcvR0c83bmGrzUrf+yJ9khvpRxG0ZzpNDtmm7ahRlrrh8a+pPMK3f41Ng==}
+  comark-content@https://pkg.pr.new/comark-content@ec7a084:
+    resolution: {integrity: sha512-7rdCw/uPqoPTRe0arZWw/wc18LYS89613vtb544Nb4oojpsWXhD36he1j50dFr4vr59W1snCKZPmNptfRW3yEA==, tarball: https://pkg.pr.new/comark-content@ec7a084}
+    version: 0.6.3
     hasBin: true
     peerDependencies:
       forges: ^0.3.0
@@ -4037,8 +4039,8 @@ packages:
       unstorage:
         optional: true
 
-  comark@https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2:
-    resolution: {integrity: sha512-l7lTZB8lnG/0mZgy/VVc5EzwT96J53O7P1OasLrQ3DLKkZcPE8Z/CzgHJvJtb2Qe5EAu+tfijYyEAn2ZDE947w==, tarball: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2}
+  comark@https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a:
+    resolution: {integrity: sha512-l7lTZB8lnG/0mZgy/VVc5EzwT96J53O7P1OasLrQ3DLKkZcPE8Z/CzgHJvJtb2Qe5EAu+tfijYyEAn2ZDE947w==, tarball: https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a}
     version: 0.9.2
     peerDependencies:
       '@pierre/highlights': ^0.5.1
@@ -7562,9 +7564,9 @@ snapshots:
 
   '@colordx/core@7.3.0': {}
 
-  '@comark/vue@https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))':
+  '@comark/vue@https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))':
     dependencies:
-      comark: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2(rangi@2.2.0)(shiki@4.6.0)
+      comark: https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a(rangi@2.2.0)(shiki@4.6.0)
       vue: 3.5.46(typescript@6.0.3)
     optionalDependencies:
       '@nuxt/kit': 4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))
@@ -8441,13 +8443,13 @@ snapshots:
     transitivePeerDependencies:
       - vite
 
-  '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))':
+  '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))':
     dependencies:
-      '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@0cf98c107c14bc528624e7901675b869533d94c2(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))
+      '@comark/vue': https://pkg.pr.new/comarkdown/comark/@comark/vue@ff4661da9422748e74bcfcee497cd6835185344a(@nuxt/kit@4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))))(@nuxt/schema@4.7.0)(rangi@2.2.0)(shiki@4.6.0)(vue@3.5.46(typescript@6.0.3))
       '@nuxt/kit': 4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))
       '@sqlite.org/sqlite-wasm': 3.54.1-build1
-      comark: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2(rangi@2.2.0)(shiki@4.6.0)
-      comark-content: 0.6.3(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))
+      comark: https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a(rangi@2.2.0)(shiki@4.6.0)
+      comark-content: https://pkg.pr.new/comark-content@ec7a084(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))
       defu: 6.1.7
       forges: 0.3.2
       jiti: 2.7.0
@@ -9752,7 +9754,7 @@ snapshots:
       rc9: 3.1.0
       std-env: 4.3.0
 
-  '@nuxt/ui@4.13.1(9712f5f7bc223c63187cbb66bafc0a52)':
+  '@nuxt/ui@4.13.1(2ab0aac76e2b0bc5e973763ea19e97c3)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@iconify/vue': 5.0.5(vue@3.5.46(typescript@6.0.3))
@@ -9821,7 +9823,7 @@ snapshots:
       vaul-vue: 0.4.1(reka-ui@2.11.0(vue@3.5.46(typescript@6.0.3)))(vue@3.5.46(typescript@6.0.3))
       vue-component-type-helpers: 3.3.14
     optionalDependencies:
-      '@nuxt/content': '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
+      '@nuxt/content': '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
       ai: 7.0.181(zod@4.6.7)
       vue-router: 5.5.1(@vue/compiler-sfc@3.5.46)(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(vue@3.5.46(typescript@6.0.3))
       zod: 4.6.7
@@ -12363,9 +12365,9 @@ snapshots:
 
   colortranslator@5.0.0: {}
 
-  comark-content@0.6.3(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2))):
+  comark-content@https://pkg.pr.new/comark-content@ec7a084(forges@0.3.2)(rangi@2.2.0)(shiki@4.6.0)(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2))):
     dependencies:
-      comark: https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2(rangi@2.2.0)(shiki@4.6.0)
+      comark: https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a(rangi@2.2.0)(shiki@4.6.0)
       hookable: 6.1.2
       pathe: 2.0.3
       picomatch: 4.0.7
@@ -12380,7 +12382,7 @@ snapshots:
       - rangi
       - shiki
 
-  comark@https://pkg.pr.new/comarkdown/comark/comark@0cf98c107c14bc528624e7901675b869533d94c2(rangi@2.2.0)(shiki@4.6.0):
+  comark@https://pkg.pr.new/comarkdown/comark/comark@ff4661da9422748e74bcfcee497cd6835185344a(rangi@2.2.0)(shiki@4.6.0):
     dependencies:
       character-entities: 2.0.2
       character-entities-legacy: 3.0.0
@@ -14273,7 +14275,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-agent-discovery@https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145(f375edee8dc1e7e595c2a3410602350b):
+  nuxt-agent-discovery@https://pkg.pr.new/benjamincanac/nuxt-agent-discovery@584d145(9036f15b65653c8e214a56e17bf18d2e):
     dependencies:
       '@nuxt/kit': 4.7.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))
       defu: 6.1.7
@@ -14281,7 +14283,7 @@ snapshots:
       ufo: 1.6.4
       yaml: 2.9.1
     optionalDependencies:
-      '@nuxt/content': '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@1e99a5a(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
+      '@nuxt/content': '@nuxt/content4@https://pkg.pr.new/nuxt/content/@nuxt/content4@afe2c56(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rangi@2.2.0)(rolldown@1.2.19)(shiki@4.6.0)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.6(db0@0.3.4(better-sqlite3@13.2.0))(ioredis@5.11.1(supports-color@10.2.2)))(vue@3.5.46(typescript@6.0.3))'
       '@nuxtjs/mcp-toolkit': 0.24.4(@nuxt/schema@4.7.0)(@vue/compiler-sfc@3.5.46)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(h3@1.15.11)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.19)(rollup@4.68.8)(supports-color@10.2.2)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(vue@3.5.46(typescript@6.0.3))(zod@4.6.7)
       '@nuxtjs/robots': 7.1.0(@nuxt/schema@4.7.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(nuxt@4.7.0(e8c462a1aa8c88642a37a83121048aa6))(oxc-parser@0.155.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(vue@3.5.46(typescript@6.0.3))(zod@4.6.7)
       '@nuxtjs/sitemap': 9.2.0(@nuxt/schema@4.7.0)(@oxc-project/types@0.156.0)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(nuxt@4.7.0(e8c462a1aa8c88642a37a83121048aa6))(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)))(vue@3.5.46(typescript@6.0.3))(zod@4.6.7)
