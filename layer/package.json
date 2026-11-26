@@ -56,6 +56,7 @@
     "nuxt-schema-org": "^7.1.1",
     "pathe": "^2.0.3",
     "pkg-types": "^2.4.0",
+    "rangi": "^2.2.0",
     "scule": "^1.3.0",
     "shiki": "^4.6.0",
     "tailwindcss": "^4.3.5",
