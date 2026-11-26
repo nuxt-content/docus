@@ -5,7 +5,7 @@ import { readdirSync } from 'node:fs'
 import { dirname } from 'pathe'
 import type { ModuleOptions as AgentDiscoveryOptions } from 'nuxt-agent-discovery'
 import { findLocaleFile, getLocaleKey, normalizeLocale } from '../utils/locale'
-import { findLocaleFolder, getContentExclude } from '../utils/pages'
+import { findLocaleFolder, getContentSources } from '../utils/pages'
 import { getPackageJsonMetadata, resolveSiteURL } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
@@ -260,9 +260,9 @@ export default defineNuxtModule({
     }
 
     // Read by the layer's `server/content.ts`, at build here and on the server through `nitro.replace`
-    process.env.DOCUS_CONTENT_EXCLUDE = JSON.stringify(getContentExclude(dir, contentLocales))
+    process.env.DOCUS_CONTENT_SOURCES = JSON.stringify(getContentSources(dir, contentLocales))
     nuxt.options.nitro.replace = defu(nuxt.options.nitro.replace, {
-      'process.env.DOCUS_CONTENT_EXCLUDE': JSON.stringify(process.env.DOCUS_CONTENT_EXCLUDE),
+      'process.env.DOCUS_CONTENT_SOURCES': JSON.stringify(process.env.DOCUS_CONTENT_SOURCES),
     })
 
     /*

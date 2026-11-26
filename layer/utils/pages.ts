@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from 'node:fs'
 import { joinURL } from 'ufo'
-import { normalizeLocale } from './locale'
+import { getLocaleKey, normalizeLocale } from './locale'
 
 /**
  * Checks if the user has their own index.vue file in the pages folder.
@@ -22,36 +22,44 @@ export function docsFolderExists(rootDir: string, locale?: string): boolean {
   return existsSync(docsPath)
 }
 
-/**
- * Globs, relative to `content/`, of the files Docus doesn't serve. With `locales`, only their folders are served.
- * In each served folder: `index.md` is left to an app `app/pages/index.vue`, and a `docs/` folder hides its siblings.
- */
-export function getContentExclude(rootDir: string, locales?: string[]): string[] {
-  const contentDir = joinURL(rootDir, 'content')
-  if (!existsSync(contentDir)) return []
+export interface ContentSourceOptions {
+  /** Instance name, `docs` or `docs_<locale key>`. */
+  name: string
+  /** Folder in `content/`, as written on disk. */
+  dir: string
+  prefix: string
+  /** Globs, relative to `dir`, of the files Docus doesn't serve. */
+  exclude: string[]
+}
 
+/**
+ * The content sources Docus serves: `content/` as one source, or one per locale that has a folder.
+ * In each: `index.md` is left to an app `app/pages/index.vue`, and a `docs/` folder hides its siblings.
+ */
+export function getContentSources(rootDir: string, locales?: string[]): ContentSourceOptions[] {
+  const contentDir = joinURL(rootDir, 'content')
   const hasLandingPage = landingPageExists(rootDir)
-  const entries = (dir: string) => readdirSync(joinURL(contentDir, dir), { withFileTypes: true })
-    .map(entry => ({ path: dir ? `${dir}/${entry.name}` : entry.name, name: entry.name, isDirectory: entry.isDirectory() }))
-  const glob = (entry: { path: string, isDirectory: boolean }) => entry.isDirectory ? `${entry.path}/**` : entry.path
 
   const excludeIn = (dir: string) => {
     const exclude: string[] = []
     if (hasLandingPage && existsSync(joinURL(contentDir, dir, 'index.md'))) {
-      exclude.push(dir ? `${dir}/index.md` : 'index.md')
+      exclude.push('index.md')
     }
     if (existsSync(joinURL(contentDir, dir, 'docs'))) {
-      exclude.push(...entries(dir).filter(entry => entry.name !== 'docs' && entry.name !== 'index.md').map(glob))
+      exclude.push(...readdirSync(joinURL(contentDir, dir), { withFileTypes: true })
+        .filter(entry => entry.name !== 'docs' && entry.name !== 'index.md')
+        .map(entry => entry.isDirectory() ? `${entry.name}/**` : entry.name))
     }
     return exclude
   }
 
-  if (!locales) return excludeIn('')
+  if (!locales) return [{ name: 'docs', dir: '', prefix: '', exclude: excludeIn('') }]
 
-  const codes = locales.map(normalizeLocale)
-  return entries('').flatMap(entry => entry.isDirectory && codes.includes(normalizeLocale(entry.name))
-    ? excludeIn(entry.name)
-    : [glob(entry)])
+  return locales.flatMap((locale) => {
+    const code = normalizeLocale(locale)
+    const dir = findLocaleFolder(rootDir, code)
+    return dir ? [{ name: `docs_${getLocaleKey(code)}`, dir, prefix: `/${code}`, exclude: excludeIn(dir) }] : []
+  })
 }
 
 /**
