@@ -2,7 +2,7 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 import { getLocaleKey } from '../../../utils/locale'
 
-defineProps<{
+const props = defineProps<{
   navigation?: ContentNavigationItem[]
 }>()
 
@@ -20,6 +20,13 @@ const { status, warmup, search } = useNuxtContentWorker({
 
 // Loads the snapshot once the page is ready, so the first query doesn't wait for it
 onNuxtReady(warmup)
+
+// With `search`, the palette hides the navigation until a query is typed, so list the main sections
+const links = computed(() => props.navigation?.filter(item => item.children?.length).map(item => ({
+  label: item.title,
+  icon: item.icon as string | undefined,
+  to: item.children![0]!.path,
+})))
 </script>
 
 <template>
@@ -27,6 +34,7 @@ onNuxtReady(warmup)
     :navigation="navigation"
     :search="search"
     :search-status="status"
+    :links="links"
     :color-mode="!forcedColorMode"
   />
 </template>
