@@ -1,29 +1,24 @@
 <script setup lang="ts">
-import type { Collections } from '@nuxt/content'
-import { getLocaleKey } from '../../utils/locale'
+import type { DocsPage } from '../types'
 
 const route = useRoute()
-const { locale, isEnabled } = useDocusI18n()
 
-// Dynamic collection name based on i18n status
-const collectionName = computed(() => isEnabled.value ? `landing_${getLocaleKey(locale.value)}` : 'landing')
-
-const { data: page } = await useAsyncData(collectionName.value, () => queryCollection(collectionName.value as keyof Collections).path(route.path).first())
+const { data: page } = await useAsyncData(`landing-${route.path}`, () => content.get<DocsPage['data']>(route.path) as Promise<DocsPage | null>)
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const title = page.value.seo?.title || page.value.title
-const description = page.value.seo?.description || page.value.description
+const title = page.value.data.seo?.title || page.value.data.title || page.value.meta.title
+const description = page.value.data.seo?.description || page.value.data.description || page.value.meta.description
 
 useSeo({
   title,
   description,
   type: 'website',
-  ogImage: page.value?.seo?.ogImage as string | undefined,
+  ogImage: page.value?.data.seo?.ogImage as string | undefined,
 })
 
-if (!page.value?.seo?.ogImage) {
+if (!page.value?.data.seo?.ogImage) {
   defineOgImage('Landing', {
     title: formatOgTitle(title),
     description: formatOgDescription(title, description),
@@ -32,7 +27,7 @@ if (!page.value?.seo?.ogImage) {
 </script>
 
 <template>
-  <ContentRenderer
+  <ContentDocument
     v-if="page"
     :value="page"
   />

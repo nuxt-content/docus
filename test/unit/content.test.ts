@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getAvailableLocales, getCollectionsToQuery, isNavigationPath } from '../../layer/server/utils/content'
+import { getAvailableLocales, isNavigationPath } from '../../layer/server/utils/content'
 
 describe('getAvailableLocales', () => {
   it('prefers the filtered locales', () => {
@@ -15,26 +15,6 @@ describe('getAvailableLocales', () => {
 
   it('returns an empty list without i18n', () => {
     expect(getAvailableLocales({})).toEqual([])
-  })
-})
-
-describe('getCollectionsToQuery', () => {
-  it('queries the single docs collection without i18n', () => {
-    expect(getCollectionsToQuery(undefined, [])).toEqual(['docs'])
-    expect(getCollectionsToQuery('en', [])).toEqual(['docs'])
-  })
-
-  it('queries one collection for a known locale', () => {
-    expect(getCollectionsToQuery('fr', ['en', 'fr'])).toEqual(['docs_fr'])
-  })
-
-  it('uses identifier-safe names for hyphenated locales', () => {
-    expect(getCollectionsToQuery('pt-br', ['en', 'pt-br'])).toEqual(['docs_pt_br'])
-  })
-
-  it('queries every locale when none or an unknown one is given', () => {
-    expect(getCollectionsToQuery(undefined, ['en', 'zh-tw'])).toEqual(['docs_en', 'docs_zh_tw'])
-    expect(getCollectionsToQuery('de', ['en', 'fr'])).toEqual(['docs_en', 'docs_fr'])
   })
 })
 

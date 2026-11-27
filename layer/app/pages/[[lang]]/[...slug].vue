@@ -1,36 +1,31 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
-import type { ContentNavigationItem, Collections } from '@nuxt/content'
+import type { ContentNavigationItem } from '@nuxt/content'
 import { findPageHeadline } from '@nuxt/content/utils'
-import { getLocaleKey } from '../../../utils/locale'
 import type { DocsPage } from '../../types'
+import { findSurround } from '../../utils/navigation'
 
 definePageMeta({
   layout: 'docs',
 })
 
 const route = useRoute()
-const { locale, isEnabled, t } = useDocusI18n()
+const { t } = useDocusI18n()
 const { isOpen } = useAssistant()
 const appConfig = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')
-
-const [{ data: page }, { data: surround }] = await Promise.all([
-  useAsyncData(kebabCase(route.path), () => queryCollection(collectionName.value as keyof Collections).path(route.path).first() as Promise<DocsPage>),
-  useAsyncData(`${kebabCase(route.path)}-surround`, () => {
-    return queryCollectionItemSurroundings(collectionName.value as keyof Collections, route.path, {
-      fields: ['description'],
-    })
-  }),
-])
+const { data: page } = await useAsyncData(kebabCase(route.path), () => content.get<DocsPage['data']>(route.path) as Promise<DocsPage | null>)
+const surround = computed(() => findSurround(navigation?.value, route.path))
 
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const title = page.value.seo?.title || page.value.title
-const description = page.value.seo?.description || page.value.description
+// The leading h1 and paragraph stand in for a missing frontmatter `title` and `description`
+const pageTitle = page.value.data.title || page.value.meta.title
+const pageDescription = page.value.data.description || page.value.meta.description
+const title = page.value.data.seo?.title || pageTitle
+const description = page.value.data.seo?.description || pageDescription
 
 const headline = ref(findPageHeadline(navigation?.value, page.value?.path))
 const breadcrumbs = computed(() => findPageBreadcrumbs(navigation?.value, page.value?.path || ''))
@@ -39,7 +34,7 @@ useSeo({
   title,
   description,
   type: 'article',
-  modifiedAt: (page.value as unknown as Record<string, unknown>).modifiedAt as string | undefined,
+  modifiedAt: (page.value.data as Record<string, unknown>).modifiedAt as string | undefined,
   breadcrumbs,
 })
 watch(() => navigation?.value, () => {
@@ -65,7 +60,7 @@ const editLink = computed(() => {
     github.value.branch,
     github.value.rootDir,
     'content',
-    `${page.value?.stem}.${page.value?.extension}`,
+    `${page.value?.meta.stem}.${page.value?.meta.extension}`,
   ].filter(Boolean).join('/')
 })
 </script>
@@ -76,8 +71,8 @@ const editLink = computed(() => {
     :ui="isOpen ? { center: 'lg:col-span-10' } : undefined"
   >
     <UPageHeader
-      :title="page.title"
-      :description="page.description"
+      :title="pageTitle"
+      :description="pageDescription"
       :headline="headline"
       :ui="{
         wrapper: 'flex-row items-center flex-wrap justify-between',
@@ -85,7 +80,7 @@ const editLink = computed(() => {
     >
       <template #links>
         <UButton
-          v-for="(link, index) in (page as DocsPage).links"
+          v-for="(link, index) in page.data.links"
           :key="index"
           size="sm"
           v-bind="link"
@@ -96,10 +91,7 @@ const editLink = computed(() => {
     </UPageHeader>
 
     <UPageBody>
-      <ContentRenderer
-        v-if="page"
-        :value="page"
-      />
+      <ContentDocument :value="page" />
 
       <USeparator v-if="github">
         <div

@@ -1,55 +1,40 @@
 <script setup lang="ts">
-import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
+import type { ContentNavigationItem } from '@nuxt/content'
 import { getLocaleKey } from '../../../utils/locale'
 
 const props = defineProps<{
   navigation?: ContentNavigationItem[]
 }>()
 
-const appConfig = useAppConfig()
 const { forced: forcedColorMode } = useDocusColorMode()
 const { locale, isEnabled } = useDocusI18n()
 
-const collectionName = computed(() => (isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs') as keyof PageCollections)
-const useFts = appConfig.search.fts
-
-const { data: files } = useFts
-  ? { data: ref(null) }
-  : useLazyAsyncData(`search_${collectionName.value}`, () => queryCollectionSearchSections(collectionName.value), {
-      server: false,
-      watch: [locale],
-    })
-
-const { search, status: searchStatus, init } = useFts
-  ? useSearchCollection(collectionName, { immediate: false, ignoredTags: ['style'] })
-  : { search: undefined, status: ref(undefined), init: () => {} }
-
-if (useFts) {
-  const { open } = useContentSearch()
-  watch(open, (value) => {
-    if (value && searchStatus.value === 'idle') {
-      init()
-    }
-  })
+if (import.meta.dev && useAppConfig().search?.fts !== undefined) {
+  console.warn('[docus] `search.fts` in `app.config.ts` is deprecated: search always runs SQLite FTS5 in a web worker.')
 }
 
-const links = computed(() => useFts
-  ? props.navigation?.filter(item => item.children?.length).map(item => ({
-      label: item.title,
-      icon: item.icon,
-      to: item.children![0]!.path,
-    }))
-  : undefined,
-)
+// One source per locale, so the worker only downloads the current locale's snapshot
+const { status, warmup, search } = useNuxtContentWorker({
+  instances: () => [isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs'],
+})
+
+// Loads the snapshot once the page is ready, so the first query doesn't wait for it
+onNuxtReady(warmup)
+
+// With `search`, the palette hides the navigation until a query is typed, so list the main sections
+const links = computed(() => props.navigation?.filter(item => item.children?.length).map(item => ({
+  label: item.title,
+  icon: item.icon as string | undefined,
+  to: item.children![0]!.path,
+})))
 </script>
 
 <template>
   <LazyUContentSearch
-    :files="files"
-    :search="search"
-    :search-status="searchStatus"
-    :links="links"
     :navigation="navigation"
+    :search="search"
+    :search-status="status"
+    :links="links"
     :color-mode="!forcedColorMode"
   />
 </template>

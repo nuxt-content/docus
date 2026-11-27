@@ -3,6 +3,11 @@ import type {} from './app/types'
 import type { AssistantModuleOptions } from './modules/assistant'
 
 export interface DocusNuxtConfig {
+  /**
+   * How Docus serves content. `prerender` prerenders every page and runs search in the browser.
+   * @default 'prerender'
+   */
+  mode?: 'prerender'
   assistant?: AssistantModuleOptions
   /** @deprecated Use `agentDiscovery.skills` instead */
   skills?: { dir?: string }

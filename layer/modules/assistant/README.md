@@ -18,7 +18,7 @@ A Nuxt module that provides an AI-powered chat interface using MCP (Model Contex
 2. Install the required dependencies:
 
 ```bash
-pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai @comark/vue shiki
+pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway ai @comark/vue rangi
 ```
 
 3. Add the module to your `nuxt.config.ts`:

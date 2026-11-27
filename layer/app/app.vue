@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ContentNavigationItem, PageCollections } from '@nuxt/content'
 import { uiLocales } from '#build/docus/ui-locales.mjs'
 import { getLocaleKey } from '../utils/locale'
 import { transformNavigation } from './utils/navigation'
@@ -17,7 +16,6 @@ const nuxtApp = useNuxtApp()
 const nuxtUiLocale = computed(() => uiLocales[getLocaleKey(locale.value)] || (nuxtApp.$uiLocale as typeof uiLocales[string] | undefined) || uiLocales.en!)
 const lang = computed(() => nuxtUiLocale.value.code)
 const dir = computed(() => nuxtUiLocale.value.dir)
-const collectionName = computed(() => isEnabled.value ? `docs_${getLocaleKey(locale.value)}` : 'docs')
 const favicon = computed(() => appConfig.header?.logo?.favicon || '/favicon.ico')
 
 useHead({
@@ -53,10 +51,9 @@ if (isEnabled.value) {
   })
 }
 
-const { data: navigation } = await useAsyncData(() => `navigation_${collectionName.value}`, () => queryCollectionNavigation(collectionName.value as keyof PageCollections), {
-  transform: (data: ContentNavigationItem[]) => transformNavigation(data, isEnabled.value, locale.value),
-  watch: [locale],
-})
+// One tree for every locale, so switching locale reuses it instead of fetching from the server
+const { data: contentNavigation } = await useAsyncData('navigation', () => content.navigation())
+const navigation = computed(() => contentNavigation.value ? transformNavigation(contentNavigation.value, isEnabled.value, locale.value) : undefined)
 
 provide('navigation', navigation)
 

@@ -1,7 +1,4 @@
 export default defineAppConfig({
-  search: {
-    fts: true,
-  },
   seo: {
     schema: {
       type: 'SoftwareApplication',

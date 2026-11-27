@@ -5,7 +5,7 @@ import { readdirSync } from 'node:fs'
 import { dirname } from 'pathe'
 import type { ModuleOptions as AgentDiscoveryOptions } from 'nuxt-agent-discovery'
 import { findLocaleFile, getLocaleKey, normalizeLocale } from '../utils/locale'
-import { findLocaleFolder } from '../utils/pages'
+import { findLocaleFolder, getContentSources } from '../utils/pages'
 import { getPackageJsonMetadata, resolveSiteURL } from '../utils/meta'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 
@@ -14,6 +14,8 @@ const log = logger.withTag('docus')
 type I18nLocale = string | { code: string, name?: string, language?: string }
 type DocusI18nOptions = { locales?: I18nLocale[], defaultLocale?: string, strategy?: string }
 type DocusMcpOptions = { route?: string, enabled?: boolean, name?: string, browserRedirect?: string }
+type DocusLlmsSection = { title: string, description?: string, navigation?: string }
+type ContentOptions = { mode?: string, compatibilityVersion?: number }
 type RegisterModuleOptions = {
   langDir: string
   locales: Array<{ code: string, name: string, language: string, file: string }>
@@ -128,6 +130,7 @@ export default defineNuxtModule({
     */
     const i18nOptions = typedNuxtOptions.i18n
     const i18nLocaleKeys: string[] = []
+    let contentLocales: string[] | undefined
 
     if (i18nOptions && typeof i18nOptions === 'object' && i18nOptions.locales) {
       const { resolve } = createResolver(import.meta.url)
@@ -194,6 +197,14 @@ export default defineNuxtModule({
       }
 
       i18nLocaleKeys.push(...filteredLocales.map(locale => getLocaleKey(locale.code)))
+      contentLocales = filteredLocales.map(locale => locale.code)
+
+      // One `llms.txt` section per locale, after the app's own sections
+      const llms = nuxt.options.llms as { sections?: DocusLlmsSection[] }
+      llms.sections = [
+        ...(llms.sections || []),
+        ...filteredLocales.map(locale => ({ title: locale.name || locale.code, description: 'Every page below is available as raw markdown.', navigation: `/${locale.code}` })),
+      ]
 
       // Expose filtered locales
       nuxt.options.runtimeConfig.public.docus = {
@@ -230,6 +241,29 @@ export default defineNuxtModule({
         })
       })
     }
+
+    /*
+    ** Content: `docus.mode` decides how Nuxt Content runs
+    */
+    const mode = docusOptions?.mode ?? 'prerender'
+    if (mode !== 'prerender') {
+      throw new Error(`[docus] \`docus.mode: '${mode}'\` is not supported. Supported modes: 'prerender'.`)
+    }
+
+    const contentOptions = ((nuxt.options as typeof nuxt.options & { content?: ContentOptions }).content ||= {})
+    const prerenderContentOptions = { mode: 'server-only', compatibilityVersion: 4 } as const
+    for (const [key, value] of Object.entries(prerenderContentOptions) as [keyof ContentOptions, string | number][]) {
+      if (contentOptions[key] !== undefined && contentOptions[key] !== value) {
+        log.warn(`\`content.${key}: ${JSON.stringify(contentOptions[key])}\` is replaced by \`${JSON.stringify(value)}\`, which \`docus.mode: 'prerender'\` needs.`)
+      }
+      (contentOptions as Record<string, unknown>)[key] = value
+    }
+
+    // Read by the layer's `server/content.ts`, at build here and on the server through `nitro.replace`
+    process.env.DOCUS_CONTENT_SOURCES = JSON.stringify(getContentSources(dir, contentLocales))
+    nuxt.options.nitro.replace = defu(nuxt.options.nitro.replace, {
+      'process.env.DOCUS_CONTENT_SOURCES': JSON.stringify(process.env.DOCUS_CONTENT_SOURCES),
+    })
 
     /*
     ** Nuxt UI locales
